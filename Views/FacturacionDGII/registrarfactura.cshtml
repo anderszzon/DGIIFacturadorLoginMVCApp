@@ -1,0 +1,99 @@
+﻿@model FacturaDGIIModel
+
+<form asp-action="registrarfactura" method="post">
+    <h3>Datos Generales</h3>
+    <div>
+        <label>Versión</label>
+        <input asp-for="ECF.Encabezado.Version" />
+    </div>
+
+    <h3>Identificación del Documento</h3>
+    <div>
+        <label>Tipo eCF</label>
+        <input asp-for="ECF.Encabezado.IdDoc.TipoeCF" />
+    </div>
+    <div>
+        <label>eNCF</label>
+        <input asp-for="ECF.Encabezado.IdDoc.eNCF" />
+    </div>
+    <div>
+        <label>Fecha Vencimiento Secuencia</label>
+        <input asp-for="ECF.Encabezado.IdDoc.FechaVencimientoSecuencia" />
+    </div>
+    <div>
+        <label>Indicador Envío Diferido</label>
+        <input asp-for="ECF.Encabezado.IdDoc.IndicadorEnvioDiferido" />
+    </div>
+    <div>
+        <label>Indicador Monto Gravado</label>
+        <input asp-for="ECF.Encabezado.IdDoc.IndicadorMontoGravado" />
+    </div>
+    <div>
+        <label>Tipo Ingresos</label>
+        <input asp-for="ECF.Encabezado.IdDoc.TipoIngresos" />
+    </div>
+    <div>
+        <label>Tipo Pago</label>
+        <input asp-for="ECF.Encabezado.IdDoc.TipoPago" />
+    </div>
+
+    <h3>Datos del Emisor</h3>
+    <div><label>RNC Emisor</label><input asp-for="ECF.Encabezado.Emisor.RNCEmisor" /></div>
+    <div><label>Razón Social</label><input asp-for="ECF.Encabezado.Emisor.RazonSocialEmisor" /></div>
+    <div><label>Nombre Comercial</label><input asp-for="ECF.Encabezado.Emisor.NombreComercial" /></div>
+    <div><label>Dirección</label><input asp-for="ECF.Encabezado.Emisor.DireccionEmisor" /></div>
+    <div><label>Municipio</label><input asp-for="ECF.Encabezado.Emisor.Municipio" /></div>
+    <div><label>Provincia</label><input asp-for="ECF.Encabezado.Emisor.Provincia" /></div>
+    <div><label>Correo</label><input asp-for="ECF.Encabezado.Emisor.CorreoEmisor" /></div>
+    <div><label>WebSite</label><input asp-for="ECF.Encabezado.Emisor.WebSite" /></div>
+    <div><label>Código Vendedor</label><input asp-for="ECF.Encabezado.Emisor.CodigoVendedor" /></div>
+    <div><label>Número Factura Interna</label><input asp-for="ECF.Encabezado.Emisor.NumeroFacturaInterna" /></div>
+    <div><label>Número Pedido Interno</label><input asp-for="ECF.Encabezado.Emisor.NumeroPedidoInterno" /></div>
+    <div><label>Zona Venta</label><input asp-for="ECF.Encabezado.Emisor.ZonaVenta" /></div>
+    <div><label>Fecha Emisión</label><input asp-for="ECF.Encabezado.Emisor.FechaEmision" /></div>
+
+    <h3>Datos del Comprador</h3>
+    <div><label>RNC Comprador</label><input asp-for="ECF.Encabezado.Comprador.RNCComprador" /></div>
+    <div><label>Razón Social</label><input asp-for="ECF.Encabezado.Comprador.RazonSocialComprador" /></div>
+    <div><label>Contacto</label><input asp-for="ECF.Encabezado.Comprador.ContactoComprador" /></div>
+    <div><label>Correo</label><input asp-for="ECF.Encabezado.Comprador.CorreoComprador" /></div>
+    <div><label>Dirección</label><input asp-for="ECF.Encabezado.Comprador.DireccionComprador" /></div>
+    <div><label>Municipio</label><input asp-for="ECF.Encabezado.Comprador.MunicipioComprador" /></div>
+    <div><label>Provincia</label><input asp-for="ECF.Encabezado.Comprador.ProvinciaComprador" /></div>
+    <div><label>Fecha Entrega</label><input asp-for="ECF.Encabezado.Comprador.FechaEntrega" /></div>
+    <div><label>Fecha Orden Compra</label><input asp-for="ECF.Encabezado.Comprador.FechaOrdenCompra" /></div>
+    <div><label>Número Orden Compra</label><input asp-for="ECF.Encabezado.Comprador.NumeroOrdenCompra" /></div>
+    <div><label>Código Interno Comprador</label><input asp-for="ECF.Encabezado.Comprador.CodigoInternoComprador" /></div>
+
+    <h3>Totales</h3>
+    <div><label>Monto Gravado Total</label><input asp-for="ECF.Encabezado.Totales.MontoGravadoTotal" /></div>
+    <div><label>Monto Gravado I1</label><input asp-for="ECF.Encabezado.Totales.MontoGravadoI1" /></div>
+    <div><label>ITBIS1 (%)</label><input asp-for="ECF.Encabezado.Totales.ITBIS1" /></div>
+    <div><label>Total ITBIS</label><input asp-for="ECF.Encabezado.Totales.TotalITBIS" /></div>
+    <div><label>Total ITBIS1</label><input asp-for="ECF.Encabezado.Totales.TotalITBIS1" /></div>
+    <div><label>Monto Total</label><input asp-for="ECF.Encabezado.Totales.MontoTotal" /></div>
+
+    <h3>Detalle de Items</h3>
+    @for (int i = 0; i < Model.ECF.DetallesItems.Item.Count; i++)
+    {
+        <fieldset>
+            <legend>Item @i</legend>
+            <div><label>Número Línea</label><input asp-for="ECF.DetallesItems.Item[@i].NumeroLinea" /></div>
+            <div><label>Indicador Facturación</label><input asp-for="ECF.DetallesItems.Item[@i].IndicadorFacturacion" /></div>
+            <div><label>Nombre Item</label><input asp-for="ECF.DetallesItems.Item[@i].NombreItem" /></div>
+            <div><label>Indicador Bien o Servicio</label><input asp-for="ECF.DetallesItems.Item[@i].IndicadorBienoServicio" /></div>
+            <div><label>Cantidad</label><input asp-for="ECF.DetallesItems.Item[@i].CantidadItem" /></div>
+            <div><label>Unidad Medida</label><input asp-for="ECF.DetallesItems.Item[@i].UnidadMedida" /></div>
+            <div><label>Precio Unitario</label><input asp-for="ECF.DetallesItems.Item[@i].PrecioUnitarioItem" /></div>
+            <div><label>Monto Item</label><input asp-for="ECF.DetallesItems.Item[@i].MontoItem" /></div>
+        </fieldset>
+    }
+
+    <h3>Fecha y Hora de Firma</h3>
+    <div>
+        <label>Fecha y Hora Firma</label>
+        <input asp-for="ECF.FechaHoraFirma" />
+    </div>
+
+    <button type="submit">Registrar Factura</button>
+</form>

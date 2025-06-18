@@ -1,0 +1,23 @@
+﻿@model FacturaDGIIResponseModel
+
+@if (Model != null)
+{
+    <table class="table table-bordered">
+        <tr><th>Json Invoice</th><td>@Model.JsonInvoice</td></tr>
+        <tr><th>ENCF</th><td>@Model.ENCF</td></tr>
+        <tr><th>Xml Semilla</th><td>@Model.XmlSemilla</td></tr>
+        <tr><th>Xml Semilla Firmada</th><td>@Model.XmlSemillaFirmada</td></tr>
+        <tr><th>Token</th><td>@Model.Token</td></tr>
+        <tr><th>Xml Factura</th><td>@Model.XmlFactura</td></tr>
+        <tr><th>Xml Factura Firmada</th><td>@Model.XmlFacturaFirmada</td></tr>
+        <tr><th>Código Seguridad</th><td>@Model.CodigoSeguridad</td></tr>
+        <tr><th>Código Respuesta</th><td>@Model.CodigoRespuesta</td></tr>
+        <tr><th>Estado Respuesta</th><td>@Model.EstadoRespuesta</td></tr>
+        <tr><th>Mensaje</th><td>@Model.Mensaje</td></tr>
+
+    </table>
+}
+else
+{
+    <p style="color:red">Ocurrió un error al procesar la factura: @ViewBag.Error</p>
+}
