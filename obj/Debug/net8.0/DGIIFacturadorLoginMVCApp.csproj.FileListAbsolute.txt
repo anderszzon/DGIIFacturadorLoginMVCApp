@@ -156,3 +156,4 @@ C:\Users\andersonmgordilloh\source\repos\DGIIFacturadorLoginMVCApp\obj\Debug\net
 C:\Users\andersonmgordilloh\source\repos\DGIIFacturadorLoginMVCApp\obj\Debug\net8.0\DGIIFacturadorLoginMVCApp.pdb
 C:\Users\andersonmgordilloh\source\repos\DGIIFacturadorLoginMVCApp\obj\Debug\net8.0\DGIIFacturadorLoginMVCApp.genruntimeconfig.cache
 C:\Users\andersonmgordilloh\source\repos\DGIIFacturadorLoginMVCApp\obj\Debug\net8.0\ref\DGIIFacturadorLoginMVCApp.dll
+C:\Users\andersonmgordilloh\source\repos\DGIIFacturadorLoginMVCApp\obj\Debug\net8.0\DGIIFacturadorLoginMVCApp.sourcelink.json
