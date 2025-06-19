@@ -2,22 +2,75 @@
 
 @if (Model != null)
 {
-    <table class="table table-bordered">
-        <tr><th>Json Invoice</th><td>@Model.JsonInvoice</td></tr>
-        <tr><th>ENCF</th><td>@Model.ENCF</td></tr>
-        <tr><th>Xml Semilla</th><td>@Model.XmlSemilla</td></tr>
-        <tr><th>Xml Semilla Firmada</th><td>@Model.XmlSemillaFirmada</td></tr>
-        <tr><th>Token</th><td>@Model.Token</td></tr>
-        <tr><th>Xml Factura</th><td>@Model.XmlFactura</td></tr>
-        <tr><th>Xml Factura Firmada</th><td>@Model.XmlFacturaFirmada</td></tr>
-        <tr><th>Código Seguridad</th><td>@Model.CodigoSeguridad</td></tr>
-        <tr><th>Código Respuesta</th><td>@Model.CodigoRespuesta</td></tr>
-        <tr><th>Estado Respuesta</th><td>@Model.EstadoRespuesta</td></tr>
-        <tr><th>Mensaje</th><td>@Model.Mensaje</td></tr>
-
-    </table>
+    <div class="container mt-4">
+        @* Add a container for better layout and spacing *@
+        <div class="card">
+            @* Use a card to visually group the information *@
+            <div class="card-header bg-primary text-white">
+                @* Card header with primary background and white text *@
+                <h4 class="mb-0">Detalles de la Factura DGII</h4> @* Heading for the card *@
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-hover table-striped">
+                    @* Add table-hover for row highlighting and table-striped for alternating row colors *@
+                    <tbody>
+                        @* Use tbody for table content *@
+                        <tr>
+                            <th scope="row" class="w-25">Json Invoice</th> @* Use scope="row" for accessibility and w-25 for column width *@
+                            <td>@Model.JsonInvoice</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">ENCF</th>
+                            <td>@Model.ENCF</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Xml Semilla</th>
+                            <td>@Model.XmlSemilla</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Xml Semilla Firmada</th>
+                            <td>@Model.XmlSemillaFirmada</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Token</th>
+                            <td>@Model.Token</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Xml Factura</th>
+                            <td>@Model.XmlFactura</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Xml Factura Firmada</th>
+                            <td>@Model.XmlFacturaFirmada</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Código Seguridad</th>
+                            <td>@Model.CodigoSeguridad</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Código Respuesta</th>
+                            <td>@Model.CodigoRespuesta</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Estado Respuesta</th>
+                            <td>@Model.EstadoRespuesta</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Mensaje</th>
+                            <td>@Model.Mensaje</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 }
 else
 {
-    <p style="color:red">Ocurrió un error al procesar la factura: @ViewBag.Error</p>
+    <div class="container mt-4">
+        <div class="alert alert-danger" role="alert">
+            @* Use Bootstrap alert for error messages *@
+            <strong>Error:</strong> Ocurrió un error al procesar la factura: @ViewBag.Error
+        </div>
+    </div>
 }

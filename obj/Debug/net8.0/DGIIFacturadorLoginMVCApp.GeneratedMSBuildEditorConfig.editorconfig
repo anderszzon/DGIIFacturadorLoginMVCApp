@@ -28,8 +28,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFjdHVyYWNpb25ER0lJXHJlZ2lzdHJhcmZhY3R1cmEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/andersonmgordilloh/source/repos/DGIIFacturadorLoginMVCApp/Views/FacturacionDGII/registrarfacturaBootstrap.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFjdHVyYWNpb25ER0lJXHJlZ2lzdHJhcmZhY3R1cmFCb290c3RyYXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/andersonmgordilloh/source/repos/DGIIFacturadorLoginMVCApp/Views/FacturacionDGII/registrarfacturaCopia.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFjdHVyYWNpb25ER0lJXHJlZ2lzdHJhcmZhY3R1cmFDb3BpYS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/andersonmgordilloh/source/repos/DGIIFacturadorLoginMVCApp/Views/FacturacionDGII/verfactura.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFjdHVyYWNpb25ER0lJXHZlcmZhY3R1cmEuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/andersonmgordilloh/source/repos/DGIIFacturadorLoginMVCApp/Views/FacturacionDGII/verfacturaCopia.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFjdHVyYWNpb25ER0lJXHZlcmZhY3R1cmFDb3BpYS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/andersonmgordilloh/source/repos/DGIIFacturadorLoginMVCApp/Views/Home/Index.cshtml]

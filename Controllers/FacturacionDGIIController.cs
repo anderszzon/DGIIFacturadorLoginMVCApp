@@ -1,6 +1,5 @@
 ﻿using ConexionDGII;
 using DGIIFacturadorLoginMVCApp.Data;
-using DGIIFacturadorLoginMVCApp.Data;
 using DGIIFacturadorLoginMVCApp.Data.Migrations;
 using DGIIFacturadorLoginMVCApp.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -270,8 +269,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
-
-
 
                 _context.FacturasDGII.Add(registro);
                 _context.SaveChanges();
