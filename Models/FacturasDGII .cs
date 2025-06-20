@@ -49,6 +49,7 @@
         public decimal TotalITBIS { get; set; }
         public decimal TotalITBIS1 { get; set; }
         public decimal MontoTotal { get; set; }
+        public List<ItemFactura> Items { get; set; } = new List<ItemFactura>();
 
         // Fecha
         public string FechaHoraFirma { get; set; }
@@ -56,4 +57,20 @@
         public DateTime FechaRegistro { get; set; } = DateTime.Now;
 
     }
+
+    public class ItemFactura
+    {
+        public int Id { get; set; }
+        public int FacturaId { get; set; } // FK para FacturasDGII
+        public string NumeroLinea { get; set; }
+        public string IndicadorFacturacion { get; set; }
+        public string NombreItem { get; set; }
+        public string IndicadorBienoServicio { get; set; }
+        public decimal CantidadItem { get; set; }
+        public string UnidadMedida { get; set; }
+        public decimal PrecioUnitarioItem { get; set; }
+        public decimal MontoItem { get; set; }
+    }
+
+
 }

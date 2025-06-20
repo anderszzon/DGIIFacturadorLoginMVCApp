@@ -270,11 +270,33 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     FechaRegistro = DateTime.Now
                 };
 
+
                 _context.FacturasDGII.Add(registro);
                 _context.SaveChanges();
 
-                return View("verFactura", respuesta);
+                if (model?.ECF?.DetallesItems?.Item != null)
+                {
+                    foreach (var item in model.ECF.DetallesItems.Item)
+                    {
+                        var detalle = new ItemFactura
+                        {
+                            FacturaId = registro.Id, // Asignamos el ID de la factura recién creada
+                            NumeroLinea = item.NumeroLinea,
+                            IndicadorFacturacion = item.IndicadorFacturacion,
+                            NombreItem = item.NombreItem,
+                            IndicadorBienoServicio = item.IndicadorBienoServicio,
+                            CantidadItem = Convert.ToDecimal(item.CantidadItem ?? "0"),
+                            UnidadMedida = item.UnidadMedida,
+                            PrecioUnitarioItem = Convert.ToDecimal(item.PrecioUnitarioItem ?? "0"),
+                            MontoItem = Convert.ToDecimal(item.MontoItem ?? "0")
+                        };
 
+                        _context.ItemsFactura.Add(detalle);
+                    }
+                }
+                _context.SaveChanges();
+
+                return View("verFactura", respuesta);
                 return View(null);
 
                 //return View("NombreDeLaVista", model);

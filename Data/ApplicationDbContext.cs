@@ -13,6 +13,8 @@ namespace DGIIFacturadorLoginMVCApp.Data
         }
 
         public DbSet<FacturasDGII> FacturasDGII { get; set; }
+        public DbSet<ItemFactura> ItemsFactura { get; set; }
+
 
     }
 }
