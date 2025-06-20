@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\andersonmgordilloh\\source\\repos\\DGIIFacturadorLoginMVCApp\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{F7D350B4-DE37-4150-BE20-0CA129E3265D}|DGIIFacturadorLoginMVCApp.csproj|c:\\users\\andersonmgordilloh\\source\\repos\\dgiifacturadorloginmvcapp\\controllers\\facturaciondgiicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F7D350B4-DE37-4150-BE20-0CA129E3265D}|DGIIFacturadorLoginMVCApp.csproj|solutionrelative:controllers\\facturaciondgiicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{BC099EB5-29CF-473E-909B-F9B84743E13B}|..\\FacturacionElectronicaDGII\\ConexionDGIINETFramework.csproj|c:\\users\\andersonmgordilloh\\source\\repos\\facturacionelectronicadgii\\fedgii.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -22,12 +26,25 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "FacturacionDGIIController.cs",
+              "DocumentMoniker": "C:\\Users\\andersonmgordilloh\\source\\repos\\DGIIFacturadorLoginMVCApp\\Controllers\\FacturacionDGIIController.cs",
+              "RelativeDocumentMoniker": "Controllers\\FacturacionDGIIController.cs",
+              "ToolTip": "C:\\Users\\andersonmgordilloh\\source\\repos\\DGIIFacturadorLoginMVCApp\\Controllers\\FacturacionDGIIController.cs",
+              "RelativeToolTip": "Controllers\\FacturacionDGIIController.cs",
+              "ViewState": "AgIAAIoAAAAAAAAAAAAowJ4AAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-20T22:08:09.097Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "FEDGII.cs",
               "DocumentMoniker": "C:\\Users\\andersonmgordilloh\\source\\repos\\FacturacionElectronicaDGII\\FEDGII.cs",
               "RelativeDocumentMoniker": "..\\FacturacionElectronicaDGII\\FEDGII.cs",
               "ToolTip": "C:\\Users\\andersonmgordilloh\\source\\repos\\FacturacionElectronicaDGII\\FEDGII.cs",
               "RelativeToolTip": "..\\FacturacionElectronicaDGII\\FEDGII.cs",
-              "ViewState": "AgIAABcAAAAAAAAAAAAAwCsAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAHwAAAAAAAAAAAAmwGcAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-20T21:11:31.248Z",
               "EditorCaption": ""

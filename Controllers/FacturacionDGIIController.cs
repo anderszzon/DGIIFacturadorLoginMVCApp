@@ -150,10 +150,17 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 PdfDocument pdf = new PdfDocument(writer);
                 Document doc = new Document(pdf);
 
-                //doc.Add(new Paragraph("FACTURA").SetBold().SetFontSize(18));
-                doc.Add(new Paragraph($"Cliente: {factura.ENCF}"));
-                //doc.Add(new Paragraph($"Número: {factura.NumeroFactura}"));
-                //doc.Add(new Paragraph($"Fecha: {factura.Fecha:dd/MM/yyyy}"));
+                doc.Add(new Paragraph("FACTURA").SetFontSize(18));
+
+                doc.Add(new Paragraph($"Tipo eCF: {factura.TipoeCF}"));
+                doc.Add(new Paragraph($"eNCF: {factura.ENCF}"));
+                doc.Add(new Paragraph($"FechaVencimientoSecuencia: {factura.FechaVencimientoSecuencia}"));
+                doc.Add(new Paragraph($"IndicadorEnvioDiferido: {factura.IndicadorEnvioDiferido}"));
+                doc.Add(new Paragraph($"IndicadorMontoGravado: {factura.IndicadorMontoGravado}"));
+
+
+
+
                 doc.Add(new Paragraph(" "));
 
                 // Tabla de productos
