@@ -16,7 +16,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DGIIFacturadorLoginMVCApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9fe2b396c1169fef2fe3fa7012b17cff9fe1a170")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5f4b459e0b1c44cc9da0f559cff1e276acbf5501")]
 [assembly: System.Reflection.AssemblyProductAttribute("DGIIFacturadorLoginMVCApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DGIIFacturadorLoginMVCApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
