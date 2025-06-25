@@ -3,19 +3,23 @@
   "WorkspaceRootPath": "C:\\Users\\andersonmgordilloh\\source\\repos\\DGIIFacturadorLoginMVCApp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F7D350B4-DE37-4150-BE20-0CA129E3265D}|DGIIFacturadorLoginMVCApp.csproj|c:\\users\\andersonmgordilloh\\source\\repos\\dgiifacturadorloginmvcapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F7D350B4-DE37-4150-BE20-0CA129E3265D}|DGIIFacturadorLoginMVCApp.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F7D350B4-DE37-4150-BE20-0CA129E3265D}|DGIIFacturadorLoginMVCApp.csproj|c:\\users\\andersonmgordilloh\\source\\repos\\dgiifacturadorloginmvcapp\\controllers\\facturaciondgiicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F7D350B4-DE37-4150-BE20-0CA129E3265D}|DGIIFacturadorLoginMVCApp.csproj|solutionrelative:controllers\\facturaciondgiicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F7D350B4-DE37-4150-BE20-0CA129E3265D}|DGIIFacturadorLoginMVCApp.csproj|c:\\users\\andersonmgordilloh\\source\\repos\\dgiifacturadorloginmvcapp\\models\\facturadgiimodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F7D350B4-DE37-4150-BE20-0CA129E3265D}|DGIIFacturadorLoginMVCApp.csproj|solutionrelative:models\\facturadgiimodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F7D350B4-DE37-4150-BE20-0CA129E3265D}|DGIIFacturadorLoginMVCApp.csproj|c:\\users\\andersonmgordilloh\\source\\repos\\dgiifacturadorloginmvcapp\\views\\facturaciondgii\\registrarfacturae310000000002.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F7D350B4-DE37-4150-BE20-0CA129E3265D}|DGIIFacturadorLoginMVCApp.csproj|solutionrelative:views\\facturaciondgii\\registrarfacturae310000000002.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{BC099EB5-29CF-473E-909B-F9B84743E13B}|..\\FacturacionElectronicaDGII\\ConexionDGIINETFramework.csproj|c:\\users\\andersonmgordilloh\\source\\repos\\facturacionelectronicadgii\\fedgii.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F7D350B4-DE37-4150-BE20-0CA129E3265D}|DGIIFacturadorLoginMVCApp.csproj|c:\\users\\andersonmgordilloh\\source\\repos\\dgiifacturadorloginmvcapp\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F7D350B4-DE37-4150-BE20-0CA129E3265D}|DGIIFacturadorLoginMVCApp.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F7D350B4-DE37-4150-BE20-0CA129E3265D}|DGIIFacturadorLoginMVCApp.csproj|c:\\users\\andersonmgordilloh\\source\\repos\\dgiifacturadorloginmvcapp\\controllers\\facturaciondgiicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F7D350B4-DE37-4150-BE20-0CA129E3265D}|DGIIFacturadorLoginMVCApp.csproj|solutionrelative:controllers\\facturaciondgiicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F7D350B4-DE37-4150-BE20-0CA129E3265D}|DGIIFacturadorLoginMVCApp.csproj|c:\\users\\andersonmgordilloh\\source\\repos\\dgiifacturadorloginmvcapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F7D350B4-DE37-4150-BE20-0CA129E3265D}|DGIIFacturadorLoginMVCApp.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -25,7 +29,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -33,54 +37,67 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\andersonmgordilloh\\source\\repos\\DGIIFacturadorLoginMVCApp\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\andersonmgordilloh\\source\\repos\\DGIIFacturadorLoginMVCApp\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAADAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-24T17:18:19.82Z",
+              "DocumentIndex": 2,
+              "Title": "registrarfacturaE310000000002.cshtml",
+              "DocumentMoniker": "C:\\Users\\andersonmgordilloh\\source\\repos\\DGIIFacturadorLoginMVCApp\\Views\\FacturacionDGII\\registrarfacturaE310000000002.cshtml",
+              "RelativeDocumentMoniker": "Views\\FacturacionDGII\\registrarfacturaE310000000002.cshtml",
+              "ToolTip": "C:\\Users\\andersonmgordilloh\\source\\repos\\DGIIFacturadorLoginMVCApp\\Views\\FacturacionDGII\\registrarfacturaE310000000002.cshtml",
+              "RelativeToolTip": "Views\\FacturacionDGII\\registrarfacturaE310000000002.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-25T22:22:40.04Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "FacturaDGIIModel.cs",
+              "DocumentMoniker": "C:\\Users\\andersonmgordilloh\\source\\repos\\DGIIFacturadorLoginMVCApp\\Models\\FacturaDGIIModel.cs",
+              "RelativeDocumentMoniker": "Models\\FacturaDGIIModel.cs",
+              "ToolTip": "C:\\Users\\andersonmgordilloh\\source\\repos\\DGIIFacturadorLoginMVCApp\\Models\\FacturaDGIIModel.cs",
+              "RelativeToolTip": "Models\\FacturaDGIIModel.cs",
+              "ViewState": "AgIAAHYAAAAAAAAAAAA2wH8AAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-25T22:09:47.608Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "FacturacionDGIIController.cs",
+              "DocumentMoniker": "C:\\Users\\andersonmgordilloh\\source\\repos\\DGIIFacturadorLoginMVCApp\\Controllers\\FacturacionDGIIController.cs",
+              "RelativeDocumentMoniker": "Controllers\\FacturacionDGIIController.cs",
+              "ToolTip": "C:\\Users\\andersonmgordilloh\\source\\repos\\DGIIFacturadorLoginMVCApp\\Controllers\\FacturacionDGIIController.cs",
+              "RelativeToolTip": "Controllers\\FacturacionDGIIController.cs",
+              "ViewState": "AgIAABsCAAAAAAAAAIAwwDACAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-25T21:57:49.5Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "FEDGII.cs",
               "DocumentMoniker": "C:\\Users\\andersonmgordilloh\\source\\repos\\FacturacionElectronicaDGII\\FEDGII.cs",
               "RelativeDocumentMoniker": "..\\FacturacionElectronicaDGII\\FEDGII.cs",
               "ToolTip": "C:\\Users\\andersonmgordilloh\\source\\repos\\FacturacionElectronicaDGII\\FEDGII.cs",
               "RelativeToolTip": "..\\FacturacionElectronicaDGII\\FEDGII.cs",
-              "ViewState": "AgIAABIAAAAAAAAAAAAAACQAAAC/AAAAAAAAAA==",
+              "ViewState": "AgIAACMAAAAAAAAAAAAAwEwAAABPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-24T17:12:26.307Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "C:\\Users\\andersonmgordilloh\\source\\repos\\DGIIFacturadorLoginMVCApp\\Views\\Shared\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "C:\\Users\\andersonmgordilloh\\source\\repos\\DGIIFacturadorLoginMVCApp\\Views\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-24T17:09:14.735Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "FacturacionDGIIController.cs",
-              "DocumentMoniker": "C:\\Users\\andersonmgordilloh\\source\\repos\\DGIIFacturadorLoginMVCApp\\Controllers\\FacturacionDGIIController.cs",
-              "RelativeDocumentMoniker": "Controllers\\FacturacionDGIIController.cs",
-              "ToolTip": "C:\\Users\\andersonmgordilloh\\source\\repos\\DGIIFacturadorLoginMVCApp\\Controllers\\FacturacionDGIIController.cs",
-              "RelativeToolTip": "Controllers\\FacturacionDGIIController.cs",
-              "ViewState": "AgIAABsBAAAAAAAAAAAwwCcBAAAnAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\andersonmgordilloh\\source\\repos\\DGIIFacturadorLoginMVCApp\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\andersonmgordilloh\\source\\repos\\DGIIFacturadorLoginMVCApp\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAABQAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-24T15:54:30.548Z",
+              "WhenOpened": "2025-06-24T17:18:19.82Z",
               "EditorCaption": ""
             }
           ]

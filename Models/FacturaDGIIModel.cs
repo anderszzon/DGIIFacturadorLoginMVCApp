@@ -89,6 +89,22 @@
         public string TotalITBIS { get; set; }
         public string TotalITBIS1 { get; set; }
         public string MontoTotal { get; set; }
+        public string MontoImpuestoAdicional { get; set; }
+        public ImpuestosAdicionalesModel ImpuestosAdicionales { get; set; }
+
+    }
+
+    public class ImpuestosAdicionalesModel
+    {
+        public List<ImpuestoAdicionalTotalesModel> ImpuestoAdicional { get; set; }
+    }
+
+    public class ImpuestoAdicionalTotalesModel
+    {
+        public string TipoImpuesto { get; set; }
+        public string TasaImpuestoAdicional { get; set; }
+        public string MontoImpuestoSelectivoConsumoEspecifico { get; set; }
+        public string MontoImpuestoSelectivoConsumoAdvalorem { get; set; }
     }
 
     public class DetallesItemsModel
@@ -106,6 +122,36 @@
         public string UnidadMedida { get; set; }
         public string PrecioUnitarioItem { get; set; }
         public string MontoItem { get; set; }
+        public string CantidadReferencia { get; set; }
+        public string UnidadReferencia { get; set; }
+        public TablaSubcantidadModel TablaSubcantidad { get; set; }
+        public string GradosAlcohol { get; set; }
+        public string PrecioUnitarioReferencia { get; set; }
+        public TablaImpuestoAdicionalModel TablaImpuestoAdicional { get; set; }
+
     }
+
+    public class TablaSubcantidadModel
+    {
+        public List<SubcantidadItemModel> SubcantidadItem { get; set; }
+    }
+
+    public class SubcantidadItemModel
+    {
+        public string Subcantidad { get; set; }
+        public string CodigoSubcantidad { get; set; }
+    }
+
+    public class TablaImpuestoAdicionalModel
+    {
+        public List<ImpuestoAdicionalItemModel> ImpuestoAdicional { get; set; }
+    }
+
+    public class ImpuestoAdicionalItemModel
+    {
+        public string TipoImpuesto { get; set; }
+    }
+
+
 
 }
