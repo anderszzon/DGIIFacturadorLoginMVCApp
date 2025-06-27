@@ -429,7 +429,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
             try
             {
-                // Llamada al método de la DLL
+                // Llamada al método de la DLL's
                 string invoice = FacturacionElectronicaDGII.EnviarTokenSincrona(urlSemilla, passCert, jsonInvoiceFO);
                 string response = FacturacionElectronicaDGII.EnviarFacturaElectronicaSincrona(urlValidarSemilla, urlRecepcionFactura, urlConsultaFactura);
 
