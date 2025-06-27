@@ -207,15 +207,15 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpGet]
         public IActionResult registrarfacturaE310000000001()
         {
-            var model = new FacturaDGIIModel
+            var model = new FacturaDGIIModel1
             {
-                ECF = new ECFModel
+                ECF = new ECFModel1
                 {
                     FechaHoraFirma = "01-03-2025 05:07:00",
-                    Encabezado = new EncabezadoModel
+                    Encabezado = new EncabezadoModel1
                     {
                         Version = "1.0",
-                        IdDoc = new VersionIdDocModel
+                        IdDoc = new VersionIdDocModel1
                         {
                             TipoeCF = "31",
                             eNCF = "E310000000030",
@@ -225,7 +225,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                             TipoIngresos = "01",
                             TipoPago = "1"
                         },
-                        Emisor = new EmisorModel
+                        Emisor = new EmisorModel1
                         {
                             RNCEmisor = "130322791",
                             RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
@@ -241,7 +241,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                             ZonaVenta = "NORT",
                             FechaEmision = "01-04-2020"
                         },
-                        Comprador = new CompradorModel
+                        Comprador = new CompradorModel1
                         {
                             RNCComprador = "131880681",
                             RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
@@ -255,7 +255,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                             NumeroOrdenCompra = "4500352238",
                             CodigoInternoComprador = "10633440"
                         },
-                        Totales = new TotalesModel
+                        Totales = new TotalesModel1
                         {
                             MontoGravadoTotal = "6000.00",
                             MontoGravadoI1 = "6000.00",
@@ -265,11 +265,11 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                             MontoTotal = "7080.00"
                         }
                     },
-                    DetallesItems = new DetallesItemsModel
+                    DetallesItems = new DetallesItemsModel1
                     {
-                        Item = new List<ItemModel>
+                        Item = new List<ItemModel1>
                 {
-                    new ItemModel
+                    new ItemModel1
                     {
                         NumeroLinea = "1",
                         IndicadorFacturacion = "1",
@@ -417,7 +417,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
 
         [HttpPost]
-        public IActionResult registrarfacturaE310000000001(FacturaDGIIModel model)
+        public IActionResult registrarfacturaE310000000001(FacturaDGIIModel1 model)
         {
             string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
             string passCert = "LD271167";
