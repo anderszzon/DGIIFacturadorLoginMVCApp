@@ -71,32 +71,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             }
         }
 
-        // Mostrar formulario vacío (GET)
-        [HttpGet]
-        public IActionResult registrarfacturavacia()
-        {
-            // Opcionalmente puedes inicializar un modelo vacío con un item ya cargado
-            var model = new FacturaDGIIModel
-            {
-                ECF = new ECFModel
-                {
-                    Encabezado = new EncabezadoModel
-                    {
-                        Emisor = new EmisorModel(),
-                        Comprador = new CompradorModel(),
-                        Totales = new TotalesModel(),
-                        IdDoc = new VersionIdDocModel()
-                    },
-                    DetallesItems = new DetallesItemsModel
-                    {
-                        Item = new List<ItemModel> { new ItemModel() }
-                    }
-                }
-            };
-
-            return View(model); // Esto abre el formulario
-        }
-
         [HttpGet]
         public IActionResult GenerarPDF(int id)
         {
@@ -157,9 +131,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 doc.Add(new Paragraph($"FechaVencimientoSecuencia: {factura.FechaVencimientoSecuencia}"));
                 doc.Add(new Paragraph($"IndicadorEnvioDiferido: {factura.IndicadorEnvioDiferido}"));
                 doc.Add(new Paragraph($"IndicadorMontoGravado: {factura.IndicadorMontoGravado}"));
-
-
-
 
                 doc.Add(new Paragraph(" "));
 
@@ -288,134 +259,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             return View(model);
         }
 
-        [HttpGet]
-        public IActionResult registrarfacturaE310000000002()
-        {
-            var model = new FacturaDGIIModel
-            {
-                ECF = new ECFModel
-                {
-                    FechaHoraFirma = "01-03-2025 05:07:00",
-                    Encabezado = new EncabezadoModel
-                    {
-                        Version = "1.0",
-                        IdDoc = new VersionIdDocModel
-                        {
-                            TipoeCF = "31",
-                            eNCF = "E310000000002",
-                            FechaVencimientoSecuencia = "31-12-2025",
-                            IndicadorEnvioDiferido = "1",
-                            IndicadorMontoGravado = "0",
-                            TipoIngresos = "01",
-                            TipoPago = "1"
-                        },
-                        Emisor = new EmisorModel
-                        {
-                            RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
-                            DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
-                            Municipio = "010100",
-                            Provincia = "010000",
-                            CorreoEmisor = "DOCUMENTOSELECTRONICOSDE0612345678969789+9000000000000000000000000000001@123.COM",
-                            WebSite = "www.facturaelectronica.com",
-                            CodigoVendedor = "AA0000000100000000010000000002000000000300000000050000000006",
-                            NumeroFacturaInterna = "123456789016",
-                            NumeroPedidoInterno = "123456789016",
-                            ZonaVenta = "NORTE",
-                            FechaEmision = "01-04-2020"
-                        },
-                        Comprador = new CompradorModel
-                        {
-                            RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
-                            ContactoComprador = "MARCOS LATIPLOL",
-                            CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
-                            DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
-                            MunicipioComprador = "010100",
-                            ProvinciaComprador = "010000",
-                            FechaEntrega = "10-10-2020",
-                            FechaOrdenCompra = "10-11-2018",
-                            NumeroOrdenCompra = "4500352238",
-                            CodigoInternoComprador = "10633440"
-                        },
-                        Totales = new TotalesModel
-                        {
-                            MontoGravadoTotal = "3230.00",
-                            MontoGravadoI1 = "3230.00",
-                            ITBIS1 = "18",
-                            TotalITBIS = "713.04",
-                            TotalITBIS1 = "713.04",
-                            MontoImpuestoAdicional = "731.32",
-
-                            ImpuestosAdicionales = new ImpuestosAdicionalesModel
-                            {
-                                ImpuestoAdicional = new List<ImpuestoAdicionalTotalesModel>
-                        {
-                            new ImpuestoAdicionalTotalesModel
-                            {
-                                TipoImpuesto = "006",
-                                TasaImpuestoAdicional = "633.85",
-                                MontoImpuestoSelectivoConsumoEspecifico = "540.04"
-                            },
-                            new ImpuestoAdicionalTotalesModel
-                            {
-                                TipoImpuesto = "023",
-                                TasaImpuestoAdicional = "10",
-                                MontoImpuestoSelectivoConsumoAdvalorem = "191.28"
-                            }
-                        }
-                            },
-                            MontoTotal = "4674.35"
-                        }
-                    },
-                    DetallesItems = new DetallesItemsModel
-                    {
-                        Item = new List<ItemModel>
-                {
-                    new ItemModel
-                    {
-                        NumeroLinea = "1",
-                        IndicadorFacturacion = "1",
-                        NombreItem = "PTE. CJ 24/12OZ",
-                        IndicadorBienoServicio = "1",
-                        CantidadItem = "2.00",
-                        UnidadMedida = "6",
-                        CantidadReferencia = "24",
-                        UnidadReferencia = "5",
-                        TablaSubcantidad = new TablaSubcantidadModel
-                        {
-                            SubcantidadItem = new List<SubcantidadItemModel>
-                            {
-                                new SubcantidadItemModel
-                                {
-                                    Subcantidad = "0.355",
-                                    CodigoSubcantidad = "24"
-                                }
-                            }
-                        },
-                        GradosAlcohol = "5.00",
-                        PrecioUnitarioReferencia = "65.00",
-                        PrecioUnitarioItem = "1615.00",
-                        TablaImpuestoAdicional = new TablaImpuestoAdicionalModel
-                        {
-                            ImpuestoAdicional = new List<ImpuestoAdicionalItemModel>
-                            {
-                                new ImpuestoAdicionalItemModel { TipoImpuesto = "006" },
-                                new ImpuestoAdicionalItemModel { TipoImpuesto = "023" }
-                            }
-                        },
-                        MontoItem = "3230.00"
-                    }
-                }
-                    }
-                }
-            };
-
-            return View(model);
-        }
-
-
         [HttpPost]
         public IActionResult registrarfacturaE310000000001(FacturaDGIIModel1 model)
         {
@@ -535,7 +378,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 _context.SaveChanges();
 
                 return View("verFactura", respuesta);
-                return View(null);
+                //return View(null);
 
                 //return View("NombreDeLaVista", model);
                 //return View("verFactura", model); // o mostrar resultados
@@ -555,12 +398,146 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
         }
 
+        [HttpGet]
+        public IActionResult registrarfacturaE310000000002()
+        {
+            var model = new FacturaDGIIModel2
+            {
+                ECF = new ECFModel
+                {
+                    FechaHoraFirma = "01-03-2025 05:07:00",
+                    Encabezado = new EncabezadoModel
+                    {
+                        Version = "1.0",
+                        IdDoc = new VersionIdDocModel
+                        {
+                            TipoeCF = "31",
+                            eNCF = "E310000000002",
+                            FechaVencimientoSecuencia = "31-12-2025",
+                            IndicadorEnvioDiferido = "1",
+                            IndicadorMontoGravado = "0",
+                            TipoIngresos = "01",
+                            TipoPago = "1"
+                        },
+                        Emisor = new EmisorModel
+                        {
+                            RNCEmisor = "130322791",
+                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
+                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
+                            Municipio = "010100",
+                            Provincia = "010000",
+                            CorreoEmisor = "DOCUMENTOSELECTRONICOSDE0612345678969789+9000000000000000000000000000001@123.COM",
+                            WebSite = "www.facturaelectronica.com",
+                            CodigoVendedor = "AA0000000100000000010000000002000000000300000000050000000006",
+                            NumeroFacturaInterna = "123456789016",
+                            NumeroPedidoInterno = "123456789016",
+                            ZonaVenta = "NORTE",
+                            FechaEmision = "01-04-2020"
+                        },
+                        Comprador = new CompradorModel
+                        {
+                            RNCComprador = "131880681",
+                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            ContactoComprador = "MARCOS LATIPLOL",
+                            CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
+                            DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
+                            MunicipioComprador = "010100",
+                            ProvinciaComprador = "010000",
+                            FechaEntrega = "10-10-2020",
+                            FechaOrdenCompra = "10-11-2018",
+                            NumeroOrdenCompra = "4500352238",
+                            CodigoInternoComprador = "10633440"
+                        },
+                        Totales = new TotalesModel
+                        {
+                            MontoGravadoTotal = "3230.00",
+                            MontoGravadoI1 = "3230.00",
+                            ITBIS1 = "18",
+                            TotalITBIS = "713.04",
+                            TotalITBIS1 = "713.04",
+                            MontoImpuestoAdicional = "731.32",
+
+                            ImpuestosAdicionales = new ImpuestosAdicionalesModel
+                            {
+                                ImpuestoAdicional = new List<ImpuestoAdicionalTotalesModel>
+                                {
+                                    new ImpuestoAdicionalTotalesModel
+                                    {
+                                        TipoImpuesto = "006",
+                                        TasaImpuestoAdicional = "633.85",
+                                        MontoImpuestoSelectivoConsumoEspecifico = "540.04"
+                                    },
+                                    new ImpuestoAdicionalTotalesModel
+                                    {
+                                        TipoImpuesto = "023",
+                                        TasaImpuestoAdicional = "10",
+                                        MontoImpuestoSelectivoConsumoAdvalorem = "191.28"
+                                    }
+                                }
+                            },
+                            MontoTotal = "4674.35"
+                        }
+                    },
+                    DetallesItems = new DetallesItemsModel
+                    {
+                        Item = new List<ItemModel>
+                {
+                    new ItemModel
+                    {
+                        NumeroLinea = "1",
+                        IndicadorFacturacion = "1",
+                        NombreItem = "PTE. CJ 24/12OZ",
+                        IndicadorBienoServicio = "1",
+                        CantidadItem = "2.00",
+                        UnidadMedida = "6",
+                        CantidadReferencia = "24",
+                        UnidadReferencia = "5",
+                        TablaSubcantidad = new TablaSubcantidadModel
+                        {
+                            SubcantidadItem = new List<SubcantidadItemModel>
+                            {
+                                new SubcantidadItemModel
+                                {
+                                    Subcantidad = "0.355",
+                                    CodigoSubcantidad = "24"
+                                }
+                            }
+                        },
+                        GradosAlcohol = "5.00",
+                        PrecioUnitarioReferencia = "65.00",
+                        PrecioUnitarioItem = "1615.00",
+                        TablaImpuestoAdicional = new TablaImpuestoAdicionalModel
+                        {
+                            ImpuestoAdicional = new List<ImpuestoAdicionalItemModel>
+                            {
+                                new ImpuestoAdicionalItemModel { TipoImpuesto = "006" },
+                                new ImpuestoAdicionalItemModel { TipoImpuesto = "023" }
+                            }
+                        },
+                        MontoItem = "3230.00"
+                    }
+                }
+                    }
+                }
+            };
+
+            return View(model);
+        }
+
         [HttpPost]
-        public IActionResult registrarfacturaE310000000002(FacturaDGIIModel model)
+        public IActionResult registrarfacturaE310000000002(FacturaDGIIModel2 model)
         {
             string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
             string passCert = "LD271167";
-            string jsonInvoiceFO = JsonConvert.SerializeObject(model);
+
+            //string jsonInvoiceFO = JsonConvert.SerializeObject(model);
+
+            string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
+
 
             string urlValidarSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/ValidarSemilla";
             string urlRecepcionFactura = "https://ecf.dgii.gov.do/certecf/recepcion/api/FacturasElectronicas";
@@ -674,7 +651,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 _context.SaveChanges();
 
                 return View("verFactura", respuesta);
-                return View(null);
+                //return View(null);
 
                 //return View("NombreDeLaVista", model);
                 //return View("verFactura", model); // o mostrar resultados

@@ -1,4 +1,6 @@
-﻿namespace DGIIFacturadorLoginMVCApp.Models
+﻿using System.Text.Json.Serialization;
+
+namespace DGIIFacturadorLoginMVCApp.Models
 {
     public class FacturaDGIIResponseModel
     {
@@ -16,7 +18,7 @@
 
     }
 
-    public class FacturaDGIIModel
+    public class FacturaDGIIModel2
     {
         public ECFModel ECF { get; set; } = new ECFModel();
     }
@@ -88,9 +90,9 @@
         public string ITBIS1 { get; set; }
         public string TotalITBIS { get; set; }
         public string TotalITBIS1 { get; set; }
-        public string MontoTotal { get; set; }
         public string MontoImpuestoAdicional { get; set; }
         public ImpuestosAdicionalesModel ImpuestosAdicionales { get; set; }
+        public string MontoTotal { get; set; }
 
     }
 
@@ -103,7 +105,11 @@
     {
         public string TipoImpuesto { get; set; }
         public string TasaImpuestoAdicional { get; set; }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string MontoImpuestoSelectivoConsumoEspecifico { get; set; }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string MontoImpuestoSelectivoConsumoAdvalorem { get; set; }
     }
 
@@ -120,14 +126,15 @@
         public string IndicadorBienoServicio { get; set; }
         public string CantidadItem { get; set; }
         public string UnidadMedida { get; set; }
-        public string PrecioUnitarioItem { get; set; }
-        public string MontoItem { get; set; }
         public string CantidadReferencia { get; set; }
         public string UnidadReferencia { get; set; }
         public TablaSubcantidadModel TablaSubcantidad { get; set; }
         public string GradosAlcohol { get; set; }
         public string PrecioUnitarioReferencia { get; set; }
+        public string PrecioUnitarioItem { get; set; }
         public TablaImpuestoAdicionalModel TablaImpuestoAdicional { get; set; }
+        public string MontoItem { get; set; }
+
 
     }
 
