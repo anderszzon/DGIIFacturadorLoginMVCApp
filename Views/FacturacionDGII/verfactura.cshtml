@@ -1,22 +1,17 @@
-﻿@model FacturaDGIIResponseModel
+﻿ @model FacturaDGIIResponseModel
 
 @if (Model != null)
 {
     <div class="container mt-4">
-        @* Add a container for better layout and spacing *@
         <div class="card">
-            @* Use a card to visually group the information *@
             <div class="card-header bg-primary text-white">
-                @* Card header with primary background and white text *@
-                <h4 class="mb-0">Detalles de la Factura DGII</h4> @* Heading for the card *@
+                <h4 class="mb-0">Detalles de la Factura DGII</h4> 
             </div>
             <div class="card-body">
                 <table class="table table-bordered table-hover table-striped">
-                    @* Add table-hover for row highlighting and table-striped for alternating row colors *@
                     <tbody>
-                        @* Use tbody for table content *@
                         <tr>
-                            <th scope="row" class="w-25">Json Invoice</th> @* Use scope="row" for accessibility and w-25 for column width *@
+                            <th scope="row" class="w-25">Json Invoice</th> 
                             <td>@Model.JsonInvoice</td>
                         </tr>
                         <tr>
@@ -69,8 +64,9 @@ else
 {
     <div class="container mt-4">
         <div class="alert alert-danger" role="alert">
-            @* Use Bootstrap alert for error messages *@
             <strong>Error:</strong> Ocurrió un error al procesar la factura: @ViewBag.Error
         </div>
     </div>
 }
+
+                              

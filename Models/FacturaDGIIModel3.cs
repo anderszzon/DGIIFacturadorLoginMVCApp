@@ -1,6 +1,8 @@
-﻿namespace DGIIFacturadorLoginMVCApp.Models
+﻿using System.Text.Json.Serialization;
+
+namespace DGIIFacturadorLoginMVCApp.Models
 {
-    //public class FacturaDGIIResponseModel
+    //public class FacturaDGIIResponseModel3
     //{
     //    public string JsonInvoice { get; set; }
     //    public string ENCF { get; set; }
@@ -16,29 +18,29 @@
 
     //}
 
-    public class FacturaDGIIModel1
+    public class FacturaDGIIModel3
     {
-        public ECFModel1 ECF { get; set; } = new ECFModel1();
+        public ECFModel3 ECF { get; set; } = new ECFModel3();
     }
 
-    public class ECFModel1
+    public class ECFModel3
     {
-        public EncabezadoModel1 Encabezado { get; set; } = new EncabezadoModel1();
-        public DetallesItemsModel1 DetallesItems { get; set; } = new DetallesItemsModel1();
+        public EncabezadoModel3 Encabezado { get; set; } = new EncabezadoModel3();
+        public DetallesItemsModel3 DetallesItems { get; set; } = new DetallesItemsModel3();
         public string FechaHoraFirma { get; set; }
     }
 
-    public class EncabezadoModel1
+    public class EncabezadoModel3
     {
         public string Version { get; set; }
 
-        public VersionIdDocModel1 IdDoc { get; set; } = new VersionIdDocModel1();
-        public EmisorModel1 Emisor { get; set; } = new EmisorModel1();
-        public CompradorModel1 Comprador { get; set; } = new CompradorModel1();
-        public TotalesModel1 Totales { get; set; } = new TotalesModel1();
+        public VersionIdDocModel3 IdDoc { get; set; } = new VersionIdDocModel3();
+        public EmisorModel3 Emisor { get; set; } = new EmisorModel3();
+        public CompradorModel3 Comprador { get; set; } = new CompradorModel3();
+        public TotalesModel3 Totales { get; set; } = new TotalesModel3();
     }
 
-    public class VersionIdDocModel1
+    public class VersionIdDocModel3
     {
         public string TipoeCF { get; set; }
         public string eNCF { get; set; }
@@ -49,7 +51,7 @@
         public string TipoPago { get; set; }
     }
 
-    public class EmisorModel1
+    public class EmisorModel3
     {
         public string RNCEmisor { get; set; }
         public string RazonSocialEmisor { get; set; }
@@ -66,7 +68,7 @@
         public string FechaEmision { get; set; }
     }
 
-    public class CompradorModel1
+    public class CompradorModel3
     {
         public string RNCComprador { get; set; }
         public string RazonSocialComprador { get; set; }
@@ -81,40 +83,37 @@
         public string CodigoInternoComprador { get; set; }
     }
 
-    public class TotalesModel1
+    public class TotalesModel3
     {
         public string MontoGravadoTotal { get; set; }
         public string MontoGravadoI1 { get; set; }
         public string ITBIS1 { get; set; }
         public string TotalITBIS { get; set; }
         public string TotalITBIS1 { get; set; }
+        public string MontoImpuestoAdicional { get; set; }
+        public ImpuestosAdicionalesModel3 ImpuestosAdicionales { get; set; }
         public string MontoTotal { get; set; }
 
-
-        //public string MontoImpuestoAdicional { get; set; }
-        //public ImpuestosAdicionalesModel1 ImpuestosAdicionales { get; set; }
-
     }
 
-    //public class ImpuestosAdicionalesModel1
-    //{
-    //    public List<ImpuestoAdicionalTotalesModel1> ImpuestoAdicional { get; set; }
-    //}
-
-    //public class ImpuestoAdicionalTotalesModel1
-    //{
-    //    public string TipoImpuesto { get; set; }
-    //    public string TasaImpuestoAdicional { get; set; }
-    //    public string MontoImpuestoSelectivoConsumoEspecifico { get; set; }
-    //    public string MontoImpuestoSelectivoConsumoAdvalorem { get; set; }
-    //}
-
-    public class DetallesItemsModel1
+    public class ImpuestosAdicionalesModel3
     {
-        public List<ItemModel1> Item { get; set; } = new List<ItemModel1>();
+        public List<ImpuestoAdicionalTotalesModel3> ImpuestoAdicional { get; set; }
     }
 
-    public class ItemModel1
+    public class ImpuestoAdicionalTotalesModel3
+    {
+        public string TipoImpuesto { get; set; }
+        public string TasaImpuestoAdicional { get; set; }
+        public string OtrosImpuestosAdicionales { get; set; }
+    }
+
+    public class DetallesItemsModel3
+    {
+        public List<ItemModel3> Item { get; set; } = new List<ItemModel3>();
+    }
+
+    public class ItemModel3
     {
         public string NumeroLinea { get; set; }
         public string IndicadorFacturacion { get; set; }
@@ -123,39 +122,19 @@
         public string CantidadItem { get; set; }
         public string UnidadMedida { get; set; }
         public string PrecioUnitarioItem { get; set; }
+        public TablaImpuestoAdicionalModel3 TablaImpuestoAdicional { get; set; }
         public string MontoItem { get; set; }
-
-
-        //public string CantidadReferencia { get; set; }
-        //public string UnidadReferencia { get; set; }
-        //public TablaSubcantidadModel1 TablaSubcantidad { get; set; }
-        //public string GradosAlcohol { get; set; }
-        //public string PrecioUnitarioReferencia { get; set; }
-        //public TablaImpuestoAdicionalModel1 TablaImpuestoAdicional { get; set; }
 
     }
 
-    //public class TablaSubcantidadModel1
-    //{
-    //    public List<SubcantidadItemModel1> SubcantidadItem { get; set; }
-    //}
+    public class TablaImpuestoAdicionalModel3
+    {
+        public List<ImpuestoAdicionalItemModel3> ImpuestoAdicional { get; set; }
+    }
 
-    //public class SubcantidadItemModel1
-    //{
-    //    public string Subcantidad { get; set; }
-    //    public string CodigoSubcantidad { get; set; }
-    //}
-
-    //public class TablaImpuestoAdicionalModel1
-    //{
-    //    public List<ImpuestoAdicionalItemModel1> ImpuestoAdicional { get; set; }
-    //}
-
-    //public class ImpuestoAdicionalItemModel1
-    //{
-    //    public string TipoImpuesto { get; set; }
-    //}
-
-
+    public class ImpuestoAdicionalItemModel3
+    {
+        public string TipoImpuesto { get; set; }
+    }
 
 }
