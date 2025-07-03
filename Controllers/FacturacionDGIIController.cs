@@ -8,6 +8,7 @@ using iText.Layout;
 using iText.Layout.Element;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Win32;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -77,44 +78,66 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             // Obtener la factura desde la base de datos
             var factura = _context.FacturasDGII
                 //.Include(f => f.)
-                .FirstOrDefault(f => f.Id == 31);
+                //.FirstOrDefault(f => f.Id == 31);
+                .FirstOrDefault(f => f.Id == id);
 
             if (factura == null)
                 return NotFound();
 
-            byte[] pdfBytes = CrearFacturaPDF(factura);
+            byte[] pdfBytes = CrearFacturaPDFInMemory(factura);
 
             //return File(pdfBytes, "application/pdf", $"Factura_{factura.ENCF}.pdf");
             //return File(pdfBytes, "application/pdf");
             //return Content("mensaje");
-            return View("verfacturaPDF");
+            //return File(pdfBytes, "application/pdf", $"Factura_{factura.ENCF}.pdf");
+
+            //return View("verfacturaPDF");
+            return File(pdfBytes, "application/pdf", $"Factura_{factura.ENCF}.pdf");
+
+            //return View("verfacturaPDF", $"Factura_{factura.ENCF}.pdf");
+            //return RedirectToAction("VerFacturaPDF", new { id = id });
 
         }
 
-
-        [HttpGet]
-        public IActionResult VerFacturaPDF(int id)
+        private byte[] CrearFacturaPDFInMemory(FacturasDGII factura)
         {
-            // Obtener la factura desde la base de datos
-            var factura = _context.FacturasDGII
-                //.Include(f => f.)
-                .FirstOrDefault(f => f.Id == 33);
-            
-            if (factura == null)
-                return NotFound();
-
-            string rutaPDF = $"C:\\Users\\andersonmgordilloh\\source\\repos\\FacturacionElectronicaDGII\\ArchivosDGII\\sample.pdf";
-
-            if (System.IO.File.Exists(rutaPDF))
+            using (var ms = new MemoryStream())
             {
-                byte[] pdfBytes = System.IO.File.ReadAllBytes(rutaPDF);
-                ViewBag.PdfData = $"data:application/pdf;base64,{Convert.ToBase64String(pdfBytes)}";
-            }
+                PdfWriter writer = new PdfWriter(ms); // ← usar memoria, NO disco
+                PdfDocument pdf = new PdfDocument(writer);
+                Document doc = new Document(pdf);
 
-            return View("verfacturaPDF");
+                doc.Add(new Paragraph("FACTURA").SetFontSize(18));
+                doc.Add(new Paragraph($"Tipo eCF: {factura.TipoeCF}"));
+                doc.Add(new Paragraph($"eNCF: {factura.ENCF}"));
+                doc.Add(new Paragraph($"FechaVencimientoSecuencia: {factura.FechaVencimientoSecuencia}"));
+                doc.Add(new Paragraph($"IndicadorEnvioDiferido: {factura.IndicadorEnvioDiferido}"));
+                doc.Add(new Paragraph($"IndicadorMontoGravado: {factura.IndicadorMontoGravado}"));
+
+                doc.Add(new Paragraph(" "));
+
+                Table table = new Table(4);
+                table.AddHeaderCell("Producto");
+                table.AddHeaderCell("Cantidad");
+                table.AddHeaderCell("Precio Unitario");
+                table.AddHeaderCell("Total");
+                // Aquí puedes agregar los productos reales si los tienes
+
+                doc.Add(table);
+
+                string url = $"https://ecf.dgii.gov.do/certecf/ConsultaTimbre?RncEmisor=130322791&RncComprador=131880681&ENCF=E310000000029&FechaEmision=01-04-2020&MontoTotal=7080.00&FechaFirma=01-03-2025%2005:07:00&CodigoSeguridad=p1NsBj"; 
+                BarcodeQRCode qrCode = new BarcodeQRCode(url);
+                Image qrCodeImage = new Image(qrCode.CreateFormXObject(pdf));
+                qrCodeImage.ScaleToFit(100, 100);
+                doc.Add(new Paragraph("Código QR:"));
+                doc.Add(qrCodeImage);
+
+                doc.Close();
+                return ms.ToArray(); // ← ahora retorna el PDF generado en memoria
+            }
         }
 
-        private byte[] CrearFacturaPDF(FacturasDGII factura)
+        private byte[] CrearFacturaPDFenLocal(FacturasDGII factura)
         {
             using (var ms = new MemoryStream())
             {
@@ -174,6 +197,37 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 return ms.ToArray();
             }
         }
+
+        [HttpGet]
+        public IActionResult VerFacturaPDFenLocal(int id)
+        {
+            // Obtener la factura desde la base de datos
+            var factura = _context.FacturasDGII
+                //.Include(f => f.)
+                .FirstOrDefault(f => f.Id == 33);
+                //.FirstOrDefault(f => f.Id == id);
+
+            if (factura == null)
+                return NotFound();
+
+            string rutaPDF = $"C:\\Users\\andersonmgordilloh\\source\\repos\\FacturacionElectronicaDGII\\ArchivosDGII\\sample.pdf";
+
+            if (System.IO.File.Exists(rutaPDF))
+            {
+                byte[] pdfBytes = System.IO.File.ReadAllBytes(rutaPDF);
+                ViewBag.PdfData = $"data:application/pdf;base64,{Convert.ToBase64String(pdfBytes)}";
+            }
+
+            return View("verfacturaPDF");
+        }
+
+        [HttpGet]
+        public IActionResult VerFacturaPDF(int id)
+        {
+            ViewBag.IdFactura = id;
+            return View();
+        }
+
 
         [HttpGet]
         public IActionResult registrarfacturaE310000000001()
@@ -377,7 +431,9 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 }
                 _context.SaveChanges();
 
-                return View("verFactura", respuesta);
+                //return View("verFactura", respuesta);
+                return RedirectToAction("GenerarPDF", new { id = registro.Id });
+
                 //return View(null);
 
                 //return View("NombreDeLaVista", model);
