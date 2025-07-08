@@ -1239,5 +1239,159 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             }
 
         }
+
+        [HttpGet]
+        public IActionResult registrarfacturaE320000000002()
+        {
+            var model = new FacturaDGIIModel7
+            {
+                ECF = new ECFModel7
+                {
+                    FechaHoraFirma = "01-03-2025 05:07:00",
+                    Encabezado = new EncabezadoModel7
+                    {
+                        Version = "1.0",
+                        IdDoc = new VersionIdDocModel7
+                        {
+                            TipoeCF = "32",
+                            eNCF = "E320000000002",
+                            IndicadorMontoGravado = "0",
+                            TipoIngresos = "01",
+                            TipoPago = "1"
+                        },
+                        Emisor = new EmisorModel7
+                        {
+                            RNCEmisor = "130322791",
+                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
+                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
+                            Municipio = "320301",
+                            Provincia = "320000",
+                            CorreoEmisor = "DOCUMENTOSELECTRONICOSDE0612345678969789+9000000000000000000000000000001@123.COM",
+                            WebSite = "www.facturaelectronica.com",
+                            CodigoVendedor = "AA0000000100000000010000000002000000000300000000050000000006",
+                            NumeroFacturaInterna = "123456789016",
+                            NumeroPedidoInterno = "123456789016",
+                            ZonaVenta = "NORTE",
+                            FechaEmision = "01-04-2020"
+                        },
+                        Comprador = new CompradorModel7
+                        {
+                            RNCComprador = "131880681",
+                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            ContactoComprador = "MARCOS LATIPLOL",
+                            CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
+                            DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
+                            MunicipioComprador = "010100",
+                            ProvinciaComprador = "010000",
+                            FechaEntrega = "10-10-2020",
+                            FechaOrdenCompra = "10-11-2018",
+                            NumeroOrdenCompra = "4500352238",
+                            CodigoInternoComprador = "10633440"
+                        },
+                        Totales = new TotalesModel7
+                        {
+                            MontoGravadoTotal = "152800.00",
+                            MontoGravadoI1 = "27625.00",
+                            MontoGravadoI2 = "125175.00",
+                            MontoExento = "82750.00",
+                            ITBIS1 = "18",
+                            ITBIS2 = "16",
+                            TotalITBIS = "25000.50",
+                            TotalITBIS1 = "4972.50",
+                            TotalITBIS2 = "20028.00",
+                            MontoTotal = "260550.50",
+                            ValorPagar = "260550.50"
+                        }
+                    },
+                    DetallesItems = new DetallesItemsModel7
+                    {
+                        Item = new List<ItemModel7>
+                {
+                    new ItemModel7
+                    {
+                        NumeroLinea = "1",
+                        TablaCodigosItem = new TablaCodigosItem7
+                        {
+                            CodigosItem = new List<CodigosItem7>
+                            {
+                                new CodigosItem7
+                                {
+                                    TipoCodigo = "INTERNA",
+                                    CodigoItem = "ASDFJKL"
+                                }
+                            }
+                        },
+                        IndicadorFacturacion = "1",
+                        NombreItem = "ALIMENTOS ENTEROS",
+                        IndicadorBienoServicio = "1",
+                        CantidadItem = "5.00",
+                        UnidadMedida = "6",
+                        PrecioUnitarioItem = "1100.00",
+                        RecargoMonto = "25.00",
+                        TablaSubRecargo = new TablaSubRecargo7
+                        {
+                            SubRecargo = new List<SubRecargo7>
+                            {
+                                new SubRecargo7
+                                {
+                                    TipoSubRecargo = "$",
+                                    MontoSubRecargo = "25.00"
+                                }
+                            }
+                        },
+                        MontoItem = "5525.00"
+                    },
+                    // Agrega aquí los demás ítems (2 al 15) replicando la misma estructura
+                    // Puedes usar un bucle si los datos son repetitivos o lo deseas hacer dinámico
+                }
+                    }
+                }
+            };
+
+            // Rellenar dinámicamente los 14 ítems restantes si todos tienen el mismo contenido base:
+            for (int i = 2; i <= 15; i++)
+            {
+                var item = new ItemModel7
+                {
+                    NumeroLinea = i.ToString(),
+                    TablaCodigosItem = new TablaCodigosItem7
+                    {
+                        CodigosItem = new List<CodigosItem7>
+                {
+                    new CodigosItem7
+                    {
+                        TipoCodigo = "INTERNA",
+                        CodigoItem = "ASDFJKL"
+                    }
+                }
+                    },
+                    IndicadorFacturacion = (i <= 5) ? "1" : (i <= 10) ? "2" : "4",
+                    NombreItem = (i <= 5) ? "ALIMENTOS ENTEROS" : (i <= 10) ? "LECHE" : "MAH",
+                    IndicadorBienoServicio = "1",
+                    CantidadItem = (i <= 5) ? "5.00" : (i <= 10) ? "10.00" : "15.00",
+                    UnidadMedida = "6",
+                    PrecioUnitarioItem = (i <= 5 || i >= 11) ? "1100.00" : "2500.00",
+                    RecargoMonto = (i <= 5) ? "25.00" : (i <= 10) ? "35.00" : "50.00",
+                    TablaSubRecargo = new TablaSubRecargo7
+                    {
+                        SubRecargo = new List<SubRecargo7>
+                {
+                    new SubRecargo7
+                    {
+                        TipoSubRecargo = "$",
+                        MontoSubRecargo = (i <= 5) ? "25.00" : (i <= 10) ? "35.00" : "50.00"
+                    }
+                }
+                    },
+                    MontoItem = (i <= 5) ? "5525.00" : (i <= 10) ? "25035.00" : "16550.00"
+                };
+
+                model.ECF.DetallesItems.Item.Add(item);
+            }
+
+            return View(model);
+        }
+
     }
 }
