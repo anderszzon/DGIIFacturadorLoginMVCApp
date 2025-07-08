@@ -1144,7 +1144,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     // IdDoc
                     TipoeCF = model?.ECF?.Encabezado?.IdDoc?.TipoeCF,
                     ENCF = model?.ECF?.Encabezado?.IdDoc?.eNCF,
-                    //FechaVencimientoSecuencia = model?.ECF?.Encabezado?.IdDoc?.FechaVencimientoSecuencia,
+                    FechaVencimientoSecuencia = model?.ECF?.Encabezado?.IdDoc?.FechaVencimientoSecuencia,
                     TipoPago = model?.ECF?.Encabezado?.IdDoc?.TipoPago,
                     IndicadorEnvioDiferido = model?.ECF?.Encabezado?.IdDoc?.IndicadorEnvioDiferido,
                     IndicadorMontoGravado = model?.ECF?.Encabezado?.IdDoc?.IndicadorMontoGravado,

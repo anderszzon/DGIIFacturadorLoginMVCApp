@@ -22,14 +22,10 @@
         <div class="card-body row">
             <div class="form-group col-md-3">
                 <label asp-for="ECF.Encabezado.IdDoc.TipoeCF"></label>
-                <input asp-for="ECF.Encabezado.IdDoc.TipoeCF" class="form-control"@*  value="1.0" *@ />
-                @*
                 <select asp-for="ECF.Encabezado.IdDoc.TipoeCF" class="form-control">
                     <option value="31">Factura (31)</option>
                     <option value="32">Nota de Crédito (32)</option>
-                </select> 
-                *@
-
+                </select>
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="ECF.Encabezado.IdDoc.eNCF"></label>
@@ -55,21 +51,18 @@
             </div> *@
             <div class="form-group col-md-3">
                 <label asp-for="ECF.Encabezado.IdDoc.TipoIngresos"></label>
-                <input asp-for="ECF.Encabezado.IdDoc.TipoIngresos" class="form-control" />
-
-@*                 <select asp-for="ECF.Encabezado.IdDoc.TipoIngresos" class="form-control">
+                <select asp-for="ECF.Encabezado.IdDoc.TipoIngresos" class="form-control">
                     <option value="01">Venta de bienes</option>
                     <option value="02">Servicios</option>
                     <option value="03">Mixto</option>
-                </select> *@
+                </select>
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="ECF.Encabezado.IdDoc.TipoPago"></label>
-                <input asp-for="ECF.Encabezado.IdDoc.TipoPago" class="form-control" />
-@*                 <select asp-for="ECF.Encabezado.IdDoc.TipoPago" class="form-control">
+                <select asp-for="ECF.Encabezado.IdDoc.TipoPago" class="form-control">
                     <option value="1">Contado</option>
                     <option value="2">Crédito</option>
-                </select> *@
+                </select>
             </div>
         </div>
     </div>
@@ -238,36 +231,35 @@
                     </div>
                     <div class="card-body row">
                         <input type="hidden" asp-for="ECF.DetallesItems.Item[i].NumeroLinea" value="@(i + 1)" />
-                        <div class="form-group col-md-1">
-                            <label>Ind. Fact.</label>
-                            <input asp-for="ECF.DetallesItems.Item[i].IndicadorFacturacion" class="form-control" @* value="1" *@ />
-                        </div>
                         <div class="form-group col-md-3">
                             <label>Nombre del Item</label>
                             <input asp-for="ECF.DetallesItems.Item[i].NombreItem" class="form-control item-name" />
                         </div>
                         <div class="form-group col-md-2">
-                            <label>Indicador Bien ó Servicio</label>
-                            <input asp-for="ECF.DetallesItems.Item[i].IndicadorBienoServicio" class="form-control item-name" />
-@*                             <select asp-for="ECF.DetallesItems.Item[i].IndicadorBienoServicio" class="form-control">
+                            <label>Tipo</label>
+                            <select asp-for="ECF.DetallesItems.Item[i].IndicadorBienoServicio" class="form-control">
                                 <option value="1">Bien</option>
                                 <option value="2">Servicio</option>
-                            </select> *@
+                            </select>
+                        </div>
+                        <div class="form-group col-md-1">
+                            <label>Ind. Fact.</label>
+                            <input asp-for="ECF.DetallesItems.Item[i].IndicadorFacturacion" class="form-control" value="1" />
                         </div>
                         <div class="form-group col-md-2">
-                            <label>Cantidad Item</label>
+                            <label>Cantidad</label>
                             <input asp-for="ECF.DetallesItems.Item[i].CantidadItem" type="number" step="0.01" class="form-control item-quantity" />
                         </div>
                         <div class="form-group col-md-2">
-                            <label>Unidad Medida</label>
+                            <label>Unidad</label>
                             <input asp-for="ECF.DetallesItems.Item[i].UnidadMedida" type="number" step="0.01" class="form-control item-quantity" />
                         </div>
                         <div class="form-group col-md-2">
-                            <label>Precio Unitario Item</label>
+                            <label>Precio Unitario</label>
                             <input asp-for="ECF.DetallesItems.Item[i].PrecioUnitarioItem" type="number" step="0.01" class="form-control item-price" />
                         </div>
                         <div class="form-group col-md-2">
-                            <label>Monto Item</label>
+                            <label>Total</label>
                             <input asp-for="ECF.DetallesItems.Item[i].MontoItem" type="number" step="0.01" class="form-control item-total" @* readonly *@ />
                         </div>
                     </div>
