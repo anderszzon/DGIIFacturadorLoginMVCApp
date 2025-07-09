@@ -243,7 +243,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         IdDoc = new VersionIdDocModel1
                         {
                             TipoeCF = "31",
-                            eNCF = "E310000000030",
+                            eNCF = "E310000000001",
                             FechaVencimientoSecuencia = "31-12-2025",
                             IndicadorEnvioDiferido = "1",
                             IndicadorMontoGravado = "0",
@@ -1349,48 +1349,263 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 }
             };
 
-            // Rellenar dinámicamente los 14 ítems restantes si todos tienen el mismo contenido base:
-            for (int i = 2; i <= 15; i++)
+
+            for (int i = 1; i <= 14; i++)
             {
                 var item = new ItemModel7
                 {
                     NumeroLinea = i.ToString(),
-                    TablaCodigosItem = new TablaCodigosItem7
-                    {
-                        CodigosItem = new List<CodigosItem7>
-                {
-                    new CodigosItem7
-                    {
-                        TipoCodigo = "INTERNA",
-                        CodigoItem = "ASDFJKL"
-                    }
-                }
-                    },
-                    IndicadorFacturacion = (i <= 5) ? "1" : (i <= 10) ? "2" : "4",
-                    NombreItem = (i <= 5) ? "ALIMENTOS ENTEROS" : (i <= 10) ? "LECHE" : "MAH",
+                    IndicadorFacturacion = (i <= 4) ? "1" : (i <= 9) ? "2" : "4",
+                    NombreItem = (i <= 4) ? "ALIMENTOS ENTEROS" : (i <= 9) ? "LECHE" : "MAH",
                     IndicadorBienoServicio = "1",
-                    CantidadItem = (i <= 5) ? "5.00" : (i <= 10) ? "10.00" : "15.00",
+                    CantidadItem = (i <= 4) ? "5.00" : (i <= 9) ? "10.00" : "15.00",
                     UnidadMedida = "6",
-                    PrecioUnitarioItem = (i <= 5 || i >= 11) ? "1100.00" : "2500.00",
-                    RecargoMonto = (i <= 5) ? "25.00" : (i <= 10) ? "35.00" : "50.00",
+                    PrecioUnitarioItem = (i <= 4 || i >= 10) ? "1100.00" : "2500.00",
+                    RecargoMonto = (i <= 4) ? "25.00" : (i <= 9) ? "35.00" : "50.00",
                     TablaSubRecargo = new TablaSubRecargo7
                     {
                         SubRecargo = new List<SubRecargo7>
-                {
-                    new SubRecargo7
-                    {
-                        TipoSubRecargo = "$",
-                        MontoSubRecargo = (i <= 5) ? "25.00" : (i <= 10) ? "35.00" : "50.00"
-                    }
-                }
+                        {
+                            new SubRecargo7
+                            {
+                                TipoSubRecargo = "$",
+                                MontoSubRecargo = (i <= 4) ? "25.00" : (i <= 9) ? "35.00" : "50.00"
+                            }
+                        }
                     },
-                    MontoItem = (i <= 5) ? "5525.00" : (i <= 10) ? "25035.00" : "16550.00"
+                    MontoItem = (i <= 4) ? "5525.00" : (i <= 9) ? "25035.00" : "16550.00"
                 };
+
+                // Solo agregar TablaCodigosItem si i <= 5
+                if (i <= 4)
+                {
+                    item.TablaCodigosItem = new TablaCodigosItem7
+                    {
+                        CodigosItem = new List<CodigosItem7>
+                        {
+                            new CodigosItem7
+                            {
+                                TipoCodigo = "INTERNA",
+                                CodigoItem = "ASDFJKL"
+                            }
+                        }
+                    };
+                }
 
                 model.ECF.DetallesItems.Item.Add(item);
             }
 
+
+
+            // Rellenar dinámicamente los 14 ítems restantes si todos tienen el mismo contenido base:
+            //for (int i = 2; i <= 15; i++)
+            //{
+            //    var item = new ItemModel7
+            //    {
+            //        NumeroLinea = i.ToString(),
+            //        TablaCodigosItem = new TablaCodigosItem7
+            //        {
+            //            CodigosItem = new List<CodigosItem7>
+            //    {
+            //        new CodigosItem7
+            //        {
+            //            TipoCodigo = "INTERNA",
+            //            CodigoItem = "ASDFJKL"
+            //        }
+            //    }
+            //        },
+            //        IndicadorFacturacion = (i <= 5) ? "1" : (i <= 10) ? "2" : "4",
+            //        NombreItem = (i <= 5) ? "ALIMENTOS ENTEROS" : (i <= 10) ? "LECHE" : "MAH",
+            //        IndicadorBienoServicio = "1",
+            //        CantidadItem = (i <= 5) ? "5.00" : (i <= 10) ? "10.00" : "15.00",
+            //        UnidadMedida = "6",
+            //        PrecioUnitarioItem = (i <= 5 || i >= 11) ? "1100.00" : "2500.00",
+            //        RecargoMonto = (i <= 5) ? "25.00" : (i <= 10) ? "35.00" : "50.00",
+            //        TablaSubRecargo = new TablaSubRecargo7
+            //        {
+            //            SubRecargo = new List<SubRecargo7>
+            //    {
+            //        new SubRecargo7
+            //        {
+            //            TipoSubRecargo = "$",
+            //            MontoSubRecargo = (i <= 5) ? "25.00" : (i <= 10) ? "35.00" : "50.00"
+            //        }
+            //    }
+            //        },
+            //        MontoItem = (i <= 5) ? "5525.00" : (i <= 10) ? "25035.00" : "16550.00"
+            //    };
+
+            //    model.ECF.DetallesItems.Item.Add(item);
+            //}
+
             return View(model);
+        }
+
+
+        [HttpPost]
+        public IActionResult registrarfacturaE320000000002(FacturaDGIIModel7 model)
+        {
+            string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
+            string passCert = "LD271167";
+
+            //string jsonInvoiceFO = JsonConvert.SerializeObject(model);
+
+            foreach (var item in model.ECF.DetallesItems.Item)
+            {
+                // Si TablaCodigosItem no es null
+                if (item.TablaCodigosItem?.CodigosItem != null)
+                {
+                    // Filtrar objetos vacíos
+                    item.TablaCodigosItem.CodigosItem = item.TablaCodigosItem.CodigosItem
+                        .Where(ci => ci != null && !string.IsNullOrWhiteSpace(ci.TipoCodigo) && !string.IsNullOrWhiteSpace(ci.CodigoItem))
+                        .ToList();
+
+                    // Si después de filtrar está vacío, eliminar la tabla entera
+                    if (!item.TablaCodigosItem.CodigosItem.Any())
+                    {
+                        item.TablaCodigosItem = null;
+                    }
+                }
+            }
+
+            string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
+
+
+            string urlValidarSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/ValidarSemilla";
+            string urlRecepcionFactura = "https://ecf.dgii.gov.do/certecf/recepcion/api/FacturasElectronicas";
+            string urlConsultaFactura = "https://ecf.dgii.gov.do/certecf/consultaresultado/api/Consultas/Estado";
+
+            try
+            {
+                // Llamada al método de la DLL
+                string invoice = FacturacionElectronicaDGII.EnviarTokenSincrona(urlSemilla, passCert, jsonInvoiceFO);
+                string response = FacturacionElectronicaDGII.EnviarFacturaElectronicaSincrona(urlValidarSemilla, urlRecepcionFactura, urlConsultaFactura);
+
+                // Parsear el JSON 'invoice'
+                JObject jsonObject = JObject.Parse(invoice);
+                JObject jsonObjectResponse = JObject.Parse(response);
+
+                string mensajeValor = jsonObjectResponse["mensajes"]?[0]?["valor"]?.ToString();
+
+
+                var respuesta = new FacturaDGIIResponseModel
+                {
+                    JsonInvoice = jsonObject.GetValue("json")?.ToString(),
+                    ENCF = jsonObject.GetValue("encf")?.ToString(),
+                    XmlSemilla = jsonObject.GetValue("xmlsemilla")?.ToString(),
+                    XmlSemillaFirmada = jsonObject.GetValue("xmlsemillafirmada")?.ToString(),
+                    Token = jsonObject.GetValue("token")?.ToString(),
+                    XmlFactura = jsonObject.GetValue("xmlfactura")?.ToString(),
+                    XmlFacturaFirmada = jsonObject.GetValue("xmlfacturafirmada")?.ToString(),
+                    CodigoSeguridad = jsonObject.GetValue("codigoseguridad")?.ToString(),
+                    CodigoRespuesta = jsonObjectResponse.GetValue("codigo")?.ToString(),
+                    EstadoRespuesta = jsonObjectResponse.GetValue("estado")?.ToString(),
+                    Mensaje = mensajeValor
+
+                };
+
+                var registro = new FacturasDGII
+                {
+                    // IdDoc
+                    TipoeCF = model?.ECF?.Encabezado?.IdDoc?.TipoeCF,
+                    ENCF = model?.ECF?.Encabezado?.IdDoc?.eNCF,
+                    //FechaVencimientoSecuencia = model?.ECF?.Encabezado?.IdDoc?.FechaVencimientoSecuencia,
+                    TipoPago = model?.ECF?.Encabezado?.IdDoc?.TipoPago,
+                    IndicadorEnvioDiferido = model?.ECF?.Encabezado?.IdDoc?.IndicadorEnvioDiferido,
+                    IndicadorMontoGravado = model?.ECF?.Encabezado?.IdDoc?.IndicadorMontoGravado,
+                    TipoIngresos = model?.ECF?.Encabezado?.IdDoc?.TipoIngresos,
+
+                    // Emisor
+                    RNCEmisor = model?.ECF?.Encabezado?.Emisor?.RNCEmisor,
+                    RazonSocialEmisor = model?.ECF?.Encabezado?.Emisor?.RazonSocialEmisor,
+                    NombreComercial = model?.ECF?.Encabezado?.Emisor?.NombreComercial,
+                    DireccionEmisor = model?.ECF?.Encabezado?.Emisor?.DireccionEmisor,
+                    Municipio = model?.ECF?.Encabezado?.Emisor?.Municipio,
+                    Provincia = model?.ECF?.Encabezado?.Emisor?.Provincia,
+                    CorreoEmisor = model?.ECF?.Encabezado?.Emisor?.CorreoEmisor,
+                    WebSite = model?.ECF?.Encabezado?.Emisor?.WebSite,
+                    CodigoVendedor = model?.ECF?.Encabezado?.Emisor?.CodigoVendedor,
+                    NumeroFacturaInterna = model?.ECF?.Encabezado?.Emisor?.NumeroFacturaInterna,
+                    NumeroPedidoInterno = model?.ECF?.Encabezado?.Emisor?.NumeroPedidoInterno,
+                    ZonaVenta = model?.ECF?.Encabezado?.Emisor?.ZonaVenta,
+                    FechaEmision = model?.ECF?.Encabezado?.Emisor?.FechaEmision,
+
+                    // Comprador
+                    RNCComprador = model?.ECF?.Encabezado?.Comprador?.RNCComprador,
+                    RazonSocialComprador = model?.ECF?.Encabezado?.Comprador?.RazonSocialComprador,
+                    ContactoComprador = model?.ECF?.Encabezado?.Comprador?.ContactoComprador,
+                    CorreoComprador = model?.ECF?.Encabezado?.Comprador?.CorreoComprador,
+                    DireccionComprador = model?.ECF?.Encabezado?.Comprador?.DireccionComprador,
+                    MunicipioComprador = model?.ECF?.Encabezado?.Comprador?.MunicipioComprador,
+                    ProvinciaComprador = model?.ECF?.Encabezado?.Comprador?.ProvinciaComprador,
+                    FechaEntrega = model?.ECF?.Encabezado?.Comprador?.FechaEntrega,
+                    FechaOrdenCompra = model?.ECF?.Encabezado?.Comprador?.FechaOrdenCompra,
+                    NumeroOrdenCompra = model?.ECF?.Encabezado?.Comprador?.NumeroOrdenCompra,
+                    CodigoInternoComprador = model?.ECF?.Encabezado?.Comprador?.CodigoInternoComprador,
+
+                    // Totales
+                    MontoGravadoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
+                    MontoGravadoI1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoI1 ?? "0"),
+                    ITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.ITBIS1 ?? "0"),
+                    TotalITBIS = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS ?? "0"),
+                    TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
+                    MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
+
+                    // Fechas
+                    FechaHoraFirma = model?.ECF?.FechaHoraFirma,
+                    FechaRegistro = DateTime.Now
+                };
+
+
+                _context.FacturasDGII.Add(registro);
+                _context.SaveChanges();
+
+                if (model?.ECF?.DetallesItems?.Item != null)
+                {
+                    foreach (var item in model.ECF.DetallesItems.Item)
+                    {
+                        var detalle = new ItemFactura
+                        {
+                            FacturaId = registro.Id, // Asignamos el ID de la factura recién creada
+                            NumeroLinea = item.NumeroLinea,
+                            IndicadorFacturacion = item.IndicadorFacturacion,
+                            NombreItem = item.NombreItem,
+                            IndicadorBienoServicio = item.IndicadorBienoServicio,
+                            CantidadItem = Convert.ToDecimal(item.CantidadItem ?? "0"),
+                            UnidadMedida = item.UnidadMedida,
+                            PrecioUnitarioItem = Convert.ToDecimal(item.PrecioUnitarioItem ?? "0"),
+                            MontoItem = Convert.ToDecimal(item.MontoItem ?? "0")
+                        };
+
+                        _context.ItemsFactura.Add(detalle);
+                    }
+                }
+                _context.SaveChanges();
+
+                return RedirectToAction("GenerarPDF", new { id = registro.Id });
+
+                //return View("verFactura", respuesta);
+                //return View(null);
+
+                //return View("NombreDeLaVista", model);
+                //return View("verFactura", model); // o mostrar resultados
+
+
+            }
+            catch (DbUpdateException ex)
+            {
+                string error = ex.Message;
+
+                if (ex.InnerException != null)
+                    error += " | Inner Exception: " + ex.InnerException.Message;
+
+                ViewBag.Error = error;
+                return View(null);
+            }
+
         }
 
     }

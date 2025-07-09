@@ -21,7 +21,7 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public VersionIdDocModel7 IdDoc { get; set; } = new VersionIdDocModel7();
         public EmisorModel7 Emisor { get; set; } = new EmisorModel7();
         public CompradorModel7 Comprador { get; set; } = new CompradorModel7();
-        public InformacionesAdicionales7 InformacionesAdicionales { get; set; } = new InformacionesAdicionales7();
+        //public InformacionesAdicionales7 InformacionesAdicionales { get; set; } = new InformacionesAdicionales7();
         public TotalesModel7 Totales { get; set; } = new TotalesModel7();
     }
 
@@ -68,16 +68,17 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public string CodigoInternoComprador { get; set; }
     }
 
-    public class InformacionesAdicionales7
-    {
-        public string NumeroContenedor { get; set; }
-        public string NumeroReferencia { get; set; }
-    }
+    //public class InformacionesAdicionales7
+    //{
+    //    public string NumeroContenedor { get; set; }
+    //    public string NumeroReferencia { get; set; }
+    //}
     public class TotalesModel7
     {
         public string MontoGravadoTotal { get; set; }
         public string MontoGravadoI1 { get; set; }
         public string MontoGravadoI2 { get; set; }
+        public string MontoExento { get; set; }
 
         public string ITBIS1 { get; set; }
         public string ITBIS2 { get; set; }
@@ -88,7 +89,6 @@ namespace DGIIFacturadorLoginMVCApp.Models
 
         public string MontoImpuestoAdicional { get; set; }
         public ImpuestosAdicionalesModel7 ImpuestosAdicionales { get; set; }
-        public string MontoExento { get; set; }
         public string MontoTotal { get; set; }
         public string ValorPagar { get; set; }
 
