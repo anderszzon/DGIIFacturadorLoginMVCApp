@@ -1423,11 +1423,11 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                             }
                         },
                         RecargoMonto = "50.00",
-                        TablaSubRecargo = new TablaSubRecargoModel5
+                        TablaSubRecargo = new TablaSubRecargo5
                         {
-                            SubRecargo = new List<SubRecargoModel5>
+                            SubRecargo = new List<SubRecargo5>
                             {
-                                new SubRecargoModel5
+                                new SubRecargo5
                                 {
                                     TipoSubRecargo = "$",
                                     MontoSubRecargo = "50.00"
@@ -1452,6 +1452,42 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             string passCert = "LD271167";
 
             //string jsonInvoiceFO = JsonConvert.SerializeObject(model);
+
+            foreach (var item in model.ECF.DetallesItems.Item)
+            {
+                // Si TablaCodigosItem no es null
+                if (item.TablaSubDescuento?.SubDescuento != null)
+                {
+                    // Filtrar objetos vacíos
+                    item.TablaSubDescuento.SubDescuento = item.TablaSubDescuento.SubDescuento
+                        .Where(ci => ci != null && !string.IsNullOrWhiteSpace(ci.TipoSubDescuento) && !string.IsNullOrWhiteSpace(ci.MontoSubDescuento))
+                        .ToList();
+
+                    // Si después de filtrar está vacío, eliminar la tabla entera
+                    if (!item.TablaSubDescuento.SubDescuento.Any())
+                    {
+                        item.TablaSubDescuento = null;
+                    }
+                }
+            }
+
+            foreach (var item in model.ECF.DetallesItems.Item)
+            {
+                // Si TablaCodigosItem no es null
+                if (item.TablaSubRecargo?.SubRecargo != null)
+                {
+                    // Filtrar objetos vacíos
+                    item.TablaSubRecargo.SubRecargo = item.TablaSubRecargo.SubRecargo
+                        .Where(ci => ci != null && !string.IsNullOrWhiteSpace(ci.TipoSubRecargo) && !string.IsNullOrWhiteSpace(ci.MontoSubRecargo))
+                        .ToList();
+
+                    // Si después de filtrar está vacío, eliminar la tabla entera
+                    if (!item.TablaSubRecargo.SubRecargo.Any())
+                    {
+                        item.TablaSubRecargo = null;
+                    }
+                }
+            }
 
             string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
             {

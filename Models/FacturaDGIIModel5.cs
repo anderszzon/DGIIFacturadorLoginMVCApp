@@ -11,7 +11,7 @@ namespace DGIIFacturadorLoginMVCApp.Models
     {
         public EncabezadoModel5 Encabezado { get; set; } = new EncabezadoModel5();
         public DetallesItemsModel5 DetallesItems { get; set; } = new DetallesItemsModel5();
-        public DescuentosORecargosModel5 DescuentosORecargos { get; set; } = new DescuentosORecargosModel5();
+        //public DescuentosORecargosModel5 DescuentosORecargos { get; set; } = new DescuentosORecargosModel5();
         public string FechaHoraFirma { get; set; }
     }
 
@@ -38,7 +38,7 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public VersionIdDocModel5 IdDoc { get; set; } = new VersionIdDocModel5();
         public EmisorModel5 Emisor { get; set; } = new EmisorModel5();
         public CompradorModel5 Comprador { get; set; } = new CompradorModel5();
-        public InformacionesAdicionales5 InformacionesAdicionales { get; set; } = new InformacionesAdicionales5();
+        //public InformacionesAdicionales5 InformacionesAdicionales { get; set; } = new InformacionesAdicionales5();
         public TotalesModel5 Totales { get; set; } = new TotalesModel5();
     }
 
@@ -147,9 +147,9 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public string UnidadMedida { get; set; }
         public string PrecioUnitarioItem { get; set; }
         public string DescuentoMonto { get; set; }
-
         public TablaSubDescuento5 TablaSubDescuento { get; set; }
-
+        public string RecargoMonto { get; set; }
+        public TablaSubRecargo5 TablaSubRecargo { get; set; }
         public string MontoItem { get; set; }
 
     }
@@ -157,6 +157,18 @@ namespace DGIIFacturadorLoginMVCApp.Models
     public class TablaSubDescuento5
     {
         public List<SubDescuento5> SubDescuento { get; set; }
+    }
+
+    public class TablaSubRecargo5
+    {
+        public List<SubRecargo5> SubRecargo { get; set; }
+    }
+
+    public class SubRecargo5
+    {
+        public string TipoSubRecargo { get; set; }
+        public string MontoSubRecargo { get; set; }
+
     }
 
     public class SubDescuento5
