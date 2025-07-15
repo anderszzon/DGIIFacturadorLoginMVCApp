@@ -5,12 +5,15 @@ using DGIIFacturadorLoginMVCApp.Models;
 using iText.Barcodes;
 using iText.Kernel.Pdf;
 using iText.Layout;
+using iText.Layout.Borders;
 using iText.Layout.Element;
+using iText.Layout.Properties;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Globalization;
 
 namespace DGIIFacturadorLoginMVCApp.Controllers
 {
@@ -73,18 +76,17 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult GenerarPDF(int id)
+        public IActionResult GenerarPDF(int id, string codigoSeguridad)
         {
             // Obtener la factura desde la base de datos
             var factura = _context.FacturasDGII
-                //.Include(f => f.)
-                //.FirstOrDefault(f => f.Id == 31);
-                .FirstOrDefault(f => f.Id == id);
+                    .Include(f => f.Items)
+                    .FirstOrDefault(f => f.Id == id);
 
             if (factura == null)
                 return NotFound();
 
-            byte[] pdfBytes = CrearFacturaPDFInMemory(factura);
+            byte[] pdfBytes = CrearFacturaPDFInMemory(factura, codigoSeguridad);
 
             //return File(pdfBytes, "application/pdf", $"Factura_{factura.ENCF}.pdf");
             //return File(pdfBytes, "application/pdf");
@@ -99,7 +101,33 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
         }
 
-        private byte[] CrearFacturaPDFInMemory(FacturasDGII factura)
+        [HttpGet]
+        public IActionResult GenerarPDFTest(int id, string codigoSeguridad)
+        {
+            // Obtener la factura desde la base de datos
+            var factura = _context.FacturasDGII
+                    .Include(f => f.Items)
+                    .FirstOrDefault(f => f.Id == 102);
+
+            if (factura == null)
+                return NotFound();
+
+            byte[] pdfBytes = CrearFacturaPDFInMemory(factura, codigoSeguridad);
+
+            //return File(pdfBytes, "application/pdf", $"Factura_{factura.ENCF}.pdf");
+            //return File(pdfBytes, "application/pdf");
+            //return Content("mensaje");
+            //return File(pdfBytes, "application/pdf", $"Factura_{factura.ENCF}.pdf");
+
+            //return View("verfacturaPDF");
+            return File(pdfBytes, "application/pdf", $"Factura_{factura.ENCF}.pdf");
+
+            //return View("verfacturaPDF", $"Factura_{factura.ENCF}.pdf");
+            //return RedirectToAction("VerFacturaPDF", new { id = id });
+
+        }
+
+        private byte[] CrearFacturaPDFInMemory(FacturasDGII factura, string codigoSeguridad)
         {
             using (var ms = new MemoryStream())
             {
@@ -107,25 +135,61 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 PdfDocument pdf = new PdfDocument(writer);
                 Document doc = new Document(pdf);
 
-                doc.Add(new Paragraph("FACTURA").SetFontSize(18));
-                doc.Add(new Paragraph($"Tipo eCF: {factura.TipoeCF}"));
-                doc.Add(new Paragraph($"eNCF: {factura.ENCF}"));
-                doc.Add(new Paragraph($"FechaVencimientoSecuencia: {factura.FechaVencimientoSecuencia}"));
-                doc.Add(new Paragraph($"IndicadorEnvioDiferido: {factura.IndicadorEnvioDiferido}"));
-                doc.Add(new Paragraph($"IndicadorMontoGravado: {factura.IndicadorMontoGravado}"));
+
+
+                // Crear tabla contenedora con dos columnas (izquierda y derecha)
+                Table headerTable = new Table(UnitValue.CreatePercentArray(new float[] { 50, 50 }));
+                headerTable.SetWidth(UnitValue.CreatePercentValue(100));
+                headerTable.SetMarginBottom(10);
+
+                // Lado izquierdo: información del emisor
+                Cell leftCell = new Cell().SetBorder(Border.NO_BORDER);
+                leftCell.Add(new Paragraph("Mora Tapia Peralta & Asociado, SRL").SetFontSize(14));
+                leftCell.Add(new Paragraph($"Dirección: {factura.RNCEmisor}"));
+                leftCell.Add(new Paragraph($"Teléfono: {factura.RNCEmisor}"));
+                leftCell.Add(new Paragraph($"Email: {factura.RNCEmisor}"));
+
+                // Lado derecho: información de la factura
+                Cell rightCell = new Cell().SetBorder(Border.NO_BORDER);
+                rightCell.Add(new Paragraph("Factura de Crédito Fiscal").SetFontSize(14));
+                rightCell.Add(new Paragraph($"NCF: {factura.ENCF}"));
+                rightCell.Add(new Paragraph($"Fecha Vencimiento: {factura.ENCF}"));
+                rightCell.Add(new Paragraph($"Fecha: {factura.FechaVencimientoSecuencia}"));
+                rightCell.Add(new Paragraph($"Número Factura: {factura.IndicadorEnvioDiferido}"));
+                rightCell.Add(new Paragraph($"Orden de venta: {factura.IndicadorMontoGravado}"));
+                rightCell.Add(new Paragraph($"Moneda: {factura.IndicadorMontoGravado}"));
+
+                // Agregar las celdas a la tabla
+                headerTable.AddCell(leftCell);
+                headerTable.AddCell(rightCell);
+
+                // Agregar tabla al documento
+                doc.Add(headerTable);
+
 
                 doc.Add(new Paragraph(" "));
 
-                Table table = new Table(4);
-                table.AddHeaderCell("Producto");
-                table.AddHeaderCell("Cantidad");
-                table.AddHeaderCell("Precio Unitario");
-                table.AddHeaderCell("Total");
-                // Aquí puedes agregar los productos reales si los tienes
+                Table table = new Table(1).UseAllAvailableWidth();
+                table.AddHeaderCell("Numero de Linea");
+                foreach (var linea in factura.Items)
+                {
+                    table.AddCell(linea.NumeroLinea ?? "");
+                    //table.AddCell(linea.Cantidad.ToString());
+                    //table.AddCell(linea.Unidad ?? "");
+                    //table.AddCell(linea.PrecioUnitario.ToString("N2"));
+                    //table.AddCell(linea.PorcentajeDescuento.ToString("P2")); // % formato
+                    //table.AddCell(linea.MontoDescuento.ToString("N2"));
+                    //table.AddCell(linea.MontoTotal.ToString("N2"));
+                }
 
                 doc.Add(table);
 
-                string url = $"https://ecf.dgii.gov.do/certecf/ConsultaTimbre?RncEmisor=130322791&RncComprador=131880681&ENCF=E310000000029&FechaEmision=01-04-2020&MontoTotal=7080.00&FechaFirma=01-03-2025%2005:07:00&CodigoSeguridad=p1NsBj"; 
+                DateTime fechaFirma = DateTime.ParseExact(factura.FechaHoraFirma, "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+                string fechaFirmaFormateada = Uri.EscapeDataString(fechaFirma.ToString("dd-MM-yyyy HH:mm:ss"));
+
+                //string url = $"https://ecf.dgii.gov.do/certecf/ConsultaTimbre?RncEmisor=130322791&RncComprador=131880681&ENCF=E310000000029&FechaEmision=01-04-2020&MontoTotal=7080.00&FechaFirma=01-03-2025%2005:07:00&CodigoSeguridad=p1NsBj";
+                string url = $"https://ecf.dgii.gov.do/certecf/ConsultaTimbre?RncEmisor={factura.RNCEmisor}&RncComprador={factura.RNCComprador}&ENCF={factura.ENCF}&FechaEmision={factura.FechaEmision}&MontoTotal={factura.MontoTotal}&FechaFirma={fechaFirmaFormateada}&CodigoSeguridad={codigoSeguridad}";
+
                 BarcodeQRCode qrCode = new BarcodeQRCode(url);
                 Image qrCodeImage = new Image(qrCode.CreateFormXObject(pdf));
                 qrCodeImage.ScaleToFit(100, 100);
@@ -432,7 +496,9 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 _context.SaveChanges();
 
                 //return View("verFactura", respuesta);
-                return RedirectToAction("GenerarPDF", new { id = registro.Id });
+                //return RedirectToAction("GenerarPDF", new { id = registro.Id });
+                return RedirectToAction("GenerarPDF", new { id = registro.Id, codigoSeguridad = respuesta.CodigoSeguridad });
+
 
                 //return View(null);
 
