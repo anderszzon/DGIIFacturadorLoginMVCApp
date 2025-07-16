@@ -1,7 +1,14 @@
 ﻿ @model FacturaDGIIResponseModel
 
-@if (Model != null)
+@* @if (Model != null)
+ *@
+
+@if (Model?.CodigoRespuesta == "1")
 {
+    <a class="btn btn-success" href="@Url.Action("GenerarPDF", "FacturacionDGII", new { id = Model.FacturaId, codigoSeguridad = Model.CodigoSeguridad })" target="_blank">
+        Ver PDF
+    </a>
+
     <div class="container mt-4">
         <div class="card">
             <div class="card-header bg-primary text-white">
@@ -60,13 +67,25 @@
         </div>
     </div>
 }
-else
+@* else *@
+else if (!string.IsNullOrEmpty(Model?.Mensaje))
 {
+    @*     
     <div class="container mt-4">
         <div class="alert alert-danger" role="alert">
             <strong>Error:</strong> Ocurrió un error al procesar la factura: @ViewBag.Error
         </div>
+    </div> 
+    *@
+
+    <div class="container mt-4">
+        <div class="alert alert-danger" role="alert">
+            <strong>Error:</strong> @Model?.Mensaje 
+@*             <strong>Error:</strong> @Model?.Mensaje ?? "Ocurrió un error al procesar la factura."
+ *@
+        </div>
     </div>
+
 }
 
                               

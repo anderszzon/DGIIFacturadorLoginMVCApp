@@ -13,6 +13,7 @@
         public string CodigoRespuesta { get; set; }
         public string EstadoRespuesta { get; set; }
         public string Mensaje { get; set; }
+        public int FacturaId { get; set; } // FK para FacturasDGII
 
     }
 }

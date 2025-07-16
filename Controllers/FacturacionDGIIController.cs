@@ -101,32 +101,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
         }
 
-        [HttpGet]
-        public IActionResult GenerarPDFTest(int id, string codigoSeguridad)
-        {
-            // Obtener la factura desde la base de datos
-            var factura = _context.FacturasDGII
-                    .Include(f => f.Items)
-                    .FirstOrDefault(f => f.Id == 102);
-
-            if (factura == null)
-                return NotFound();
-
-            byte[] pdfBytes = CrearFacturaPDFInMemory(factura, codigoSeguridad);
-
-            //return File(pdfBytes, "application/pdf", $"Factura_{factura.ENCF}.pdf");
-            //return File(pdfBytes, "application/pdf");
-            //return Content("mensaje");
-            //return File(pdfBytes, "application/pdf", $"Factura_{factura.ENCF}.pdf");
-
-            //return View("verfacturaPDF");
-            return File(pdfBytes, "application/pdf", $"Factura_{factura.ENCF}.pdf");
-
-            //return View("verfacturaPDF", $"Factura_{factura.ENCF}.pdf");
-            //return RedirectToAction("VerFacturaPDF", new { id = id });
-
-        }
-
         private byte[] CrearFacturaPDFInMemory(FacturasDGII factura, string codigoSeguridad)
         {
             using (var ms = new MemoryStream())
@@ -410,7 +384,10 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     Token = jsonObject.GetValue("token")?.ToString(),
                     XmlFactura = jsonObject.GetValue("xmlfactura")?.ToString(),
                     XmlFacturaFirmada = jsonObject.GetValue("xmlfacturafirmada")?.ToString(),
+
                     CodigoSeguridad = jsonObject.GetValue("codigoseguridad")?.ToString(),
+
+
                     CodigoRespuesta = jsonObjectResponse.GetValue("codigo")?.ToString(),
                     EstadoRespuesta = jsonObjectResponse.GetValue("estado")?.ToString(),
                     Mensaje = mensajeValor
@@ -473,6 +450,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 _context.FacturasDGII.Add(registro);
                 _context.SaveChanges();
 
+                respuesta.FacturaId = registro.Id;
+
                 if (model?.ECF?.DetallesItems?.Item != null)
                 {
                     foreach (var item in model.ECF.DetallesItems.Item)
@@ -493,12 +472,30 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         _context.ItemsFactura.Add(detalle);
                     }
                 }
+
+
                 _context.SaveChanges();
 
                 //return View("verFactura", respuesta);
                 //return RedirectToAction("GenerarPDF", new { id = registro.Id });
-                return RedirectToAction("GenerarPDF", new { id = registro.Id, codigoSeguridad = respuesta.CodigoSeguridad });
 
+                if (respuesta.CodigoRespuesta == "1")
+                {
+                    //return RedirectToAction("GenerarPDF", new { id = registro.Id, codigoSeguridad = respuesta.CodigoSeguridad });
+
+                    // Primero generas el PDF (ejecutas el método, pero no rediriges)
+                    //var result = GenerarPDF(registro.Id, respuesta.CodigoSeguridad); // o llamas un método que lo cree en segundo plano
+
+                    // Luego muestras la vista con la respuesta
+                    return View("verFactura", respuesta);
+
+                }
+                else
+                {
+                    // Puedes mostrar una vista de error, o un mensaje
+                    ViewBag.MensajeError = respuesta.Mensaje;
+                    return View("verFactura", respuesta); // O la vista que estés usando para mostrar resultados
+                }
 
                 //return View(null);
 
