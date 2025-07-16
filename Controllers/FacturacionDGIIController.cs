@@ -384,10 +384,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     Token = jsonObject.GetValue("token")?.ToString(),
                     XmlFactura = jsonObject.GetValue("xmlfactura")?.ToString(),
                     XmlFacturaFirmada = jsonObject.GetValue("xmlfacturafirmada")?.ToString(),
-
                     CodigoSeguridad = jsonObject.GetValue("codigoseguridad")?.ToString(),
-
-
                     CodigoRespuesta = jsonObjectResponse.GetValue("codigo")?.ToString(),
                     EstadoRespuesta = jsonObjectResponse.GetValue("estado")?.ToString(),
                     Mensaje = mensajeValor
@@ -473,35 +470,19 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     }
                 }
 
-
                 _context.SaveChanges();
-
-                //return View("verFactura", respuesta);
-                //return RedirectToAction("GenerarPDF", new { id = registro.Id });
 
                 if (respuesta.CodigoRespuesta == "1")
                 {
                     //return RedirectToAction("GenerarPDF", new { id = registro.Id, codigoSeguridad = respuesta.CodigoSeguridad });
-
-                    // Primero generas el PDF (ejecutas el método, pero no rediriges)
-                    //var result = GenerarPDF(registro.Id, respuesta.CodigoSeguridad); // o llamas un método que lo cree en segundo plano
-
-                    // Luego muestras la vista con la respuesta
                     return View("verFactura", respuesta);
 
                 }
                 else
                 {
-                    // Puedes mostrar una vista de error, o un mensaje
                     ViewBag.MensajeError = respuesta.Mensaje;
-                    return View("verFactura", respuesta); // O la vista que estés usando para mostrar resultados
+                    return View("verFactura", respuesta); 
                 }
-
-                //return View(null);
-
-                //return View("NombreDeLaVista", model);
-                //return View("verFactura", model); // o mostrar resultados
-
 
             }
             catch (DbUpdateException ex)
@@ -743,9 +724,10 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     FechaRegistro = DateTime.Now
                 };
 
-
                 _context.FacturasDGII.Add(registro);
                 _context.SaveChanges();
+
+                respuesta.FacturaId = registro.Id;
 
                 if (model?.ECF?.DetallesItems?.Item != null)
                 {
@@ -769,14 +751,17 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 }
                 _context.SaveChanges();
 
-                return RedirectToAction("GenerarPDF", new { id = registro.Id });
+                if (respuesta.CodigoRespuesta == "1")
+                {
+                    //return RedirectToAction("GenerarPDF", new { id = registro.Id, codigoSeguridad = respuesta.CodigoSeguridad });
+                    return View("verFactura", respuesta);
 
-                //return View("verFactura", respuesta);
-                //return View(null);
-
-                //return View("NombreDeLaVista", model);
-                //return View("verFactura", model); // o mostrar resultados
-
+                }
+                else
+                {
+                    ViewBag.MensajeError = respuesta.Mensaje;
+                    return View("verFactura", respuesta);
+                }
 
             }
             catch (DbUpdateException ex)
@@ -1021,9 +1006,10 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     FechaRegistro = DateTime.Now
                 };
 
-
                 _context.FacturasDGII.Add(registro);
                 _context.SaveChanges();
+
+                respuesta.FacturaId = registro.Id;
 
                 if (model?.ECF?.DetallesItems?.Item != null)
                 {
@@ -1047,14 +1033,17 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 }
                 _context.SaveChanges();
 
-                return RedirectToAction("GenerarPDF", new { id = registro.Id });
+                if (respuesta.CodigoRespuesta == "1")
+                {
+                    //return RedirectToAction("GenerarPDF", new { id = registro.Id, codigoSeguridad = respuesta.CodigoSeguridad });
+                    return View("verFactura", respuesta);
 
-                //return View("verFactura", respuesta);
-                //return View(null);
-
-                //return View("NombreDeLaVista", model);
-                //return View("verFactura", model); // o mostrar resultados
-
+                }
+                else
+                {
+                    ViewBag.MensajeError = respuesta.Mensaje;
+                    return View("verFactura", respuesta);
+                }
 
             }
             catch (DbUpdateException ex)
@@ -1314,6 +1303,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 _context.FacturasDGII.Add(registro);
                 _context.SaveChanges();
 
+                respuesta.FacturaId = registro.Id;
+
                 if (model?.ECF?.DetallesItems?.Item != null)
                 {
                     foreach (var item in model.ECF.DetallesItems.Item)
@@ -1336,13 +1327,17 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 }
                 _context.SaveChanges();
 
-                return RedirectToAction("GenerarPDF", new { id = registro.Id });
+                if (respuesta.CodigoRespuesta == "1")
+                {
+                    //return RedirectToAction("GenerarPDF", new { id = registro.Id, codigoSeguridad = respuesta.CodigoSeguridad });
+                    return View("verFactura", respuesta);
 
-                //return View("verFactura", respuesta);
-                //return View(null);
-
-                //return View("NombreDeLaVista", model);
-                //return View("verFactura", model); // o mostrar resultados
+                }
+                else
+                {
+                    ViewBag.MensajeError = respuesta.Mensaje;
+                    return View("verFactura", respuesta);
+                }
 
 
             }
@@ -1647,6 +1642,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 _context.FacturasDGII.Add(registro);
                 _context.SaveChanges();
 
+                respuesta.FacturaId = registro.Id;
+
                 if (model?.ECF?.DetallesItems?.Item != null)
                 {
                     foreach (var item in model.ECF.DetallesItems.Item)
@@ -1669,14 +1666,17 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 }
                 _context.SaveChanges();
 
-                return RedirectToAction("GenerarPDF", new { id = registro.Id });
+                if (respuesta.CodigoRespuesta == "1")
+                {
+                    //return RedirectToAction("GenerarPDF", new { id = registro.Id, codigoSeguridad = respuesta.CodigoSeguridad });
+                    return View("verFactura", respuesta);
 
-                //return View("verFactura", respuesta);
-                //return View(null);
-
-                //return View("NombreDeLaVista", model);
-                //return View("verFactura", model); // o mostrar resultados
-
+                }
+                else
+                {
+                    ViewBag.MensajeError = respuesta.Mensaje;
+                    return View("verFactura", respuesta);
+                }
 
             }
             catch (DbUpdateException ex)
@@ -1880,6 +1880,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 _context.FacturasDGII.Add(registro);
                 _context.SaveChanges();
 
+                respuesta.FacturaId = registro.Id;
+
                 if (model?.ECF?.DetallesItems?.Item != null)
                 {
                     foreach (var item in model.ECF.DetallesItems.Item)
@@ -1902,14 +1904,17 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 }
                 _context.SaveChanges();
 
-                return RedirectToAction("GenerarPDF", new { id = registro.Id });
+                if (respuesta.CodigoRespuesta == "1")
+                {
+                    //return RedirectToAction("GenerarPDF", new { id = registro.Id, codigoSeguridad = respuesta.CodigoSeguridad });
+                    return View("verFactura", respuesta);
 
-                //return View("verFactura", respuesta);
-                //return View(null);
-
-                //return View("NombreDeLaVista", model);
-                //return View("verFactura", model); // o mostrar resultados
-
+                }
+                else
+                {
+                    ViewBag.MensajeError = respuesta.Mensaje;
+                    return View("verFactura", respuesta);
+                }
 
             }
             catch (DbUpdateException ex)
@@ -2080,49 +2085,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 model.ECF.DetallesItems.Item.Add(item);
             }
 
-
-
-            // Rellenar dinámicamente los 14 ítems restantes si todos tienen el mismo contenido base:
-            //for (int i = 2; i <= 15; i++)
-            //{
-            //    var item = new ItemModel7
-            //    {
-            //        NumeroLinea = i.ToString(),
-            //        TablaCodigosItem = new TablaCodigosItem7
-            //        {
-            //            CodigosItem = new List<CodigosItem7>
-            //    {
-            //        new CodigosItem7
-            //        {
-            //            TipoCodigo = "INTERNA",
-            //            CodigoItem = "ASDFJKL"
-            //        }
-            //    }
-            //        },
-            //        IndicadorFacturacion = (i <= 5) ? "1" : (i <= 10) ? "2" : "4",
-            //        NombreItem = (i <= 5) ? "ALIMENTOS ENTEROS" : (i <= 10) ? "LECHE" : "MAH",
-            //        IndicadorBienoServicio = "1",
-            //        CantidadItem = (i <= 5) ? "5.00" : (i <= 10) ? "10.00" : "15.00",
-            //        UnidadMedida = "6",
-            //        PrecioUnitarioItem = (i <= 5 || i >= 11) ? "1100.00" : "2500.00",
-            //        RecargoMonto = (i <= 5) ? "25.00" : (i <= 10) ? "35.00" : "50.00",
-            //        TablaSubRecargo = new TablaSubRecargo7
-            //        {
-            //            SubRecargo = new List<SubRecargo7>
-            //    {
-            //        new SubRecargo7
-            //        {
-            //            TipoSubRecargo = "$",
-            //            MontoSubRecargo = (i <= 5) ? "25.00" : (i <= 10) ? "35.00" : "50.00"
-            //        }
-            //    }
-            //        },
-            //        MontoItem = (i <= 5) ? "5525.00" : (i <= 10) ? "25035.00" : "16550.00"
-            //    };
-
-            //    model.ECF.DetallesItems.Item.Add(item);
-            //}
-
             return View(model);
         }
 
@@ -2174,7 +2136,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 JObject jsonObjectResponse = JObject.Parse(response);
 
                 string mensajeValor = jsonObjectResponse["mensajes"]?[0]?["valor"]?.ToString();
-
 
                 var respuesta = new FacturaDGIIResponseModel
                 {
@@ -2248,6 +2209,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 _context.FacturasDGII.Add(registro);
                 _context.SaveChanges();
 
+                respuesta.FacturaId = registro.Id;
+
                 if (model?.ECF?.DetallesItems?.Item != null)
                 {
                     foreach (var item in model.ECF.DetallesItems.Item)
@@ -2270,14 +2233,17 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 }
                 _context.SaveChanges();
 
-                return RedirectToAction("GenerarPDF", new { id = registro.Id });
+                if (respuesta.CodigoRespuesta == "1")
+                {
+                    //return RedirectToAction("GenerarPDF", new { id = registro.Id, codigoSeguridad = respuesta.CodigoSeguridad });
+                    return View("verFactura", respuesta);
 
-                //return View("verFactura", respuesta);
-                //return View(null);
-
-                //return View("NombreDeLaVista", model);
-                //return View("verFactura", model); // o mostrar resultados
-
+                }
+                else
+                {
+                    ViewBag.MensajeError = respuesta.Mensaje;
+                    return View("verFactura", respuesta);
+                }
 
             }
             catch (DbUpdateException ex)
@@ -2534,6 +2500,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 _context.FacturasDGII.Add(registro);
                 _context.SaveChanges();
 
+                respuesta.FacturaId = registro.Id;
+
                 if (model?.ECF?.DetallesItems?.Item != null)
                 {
                     foreach (var item in model.ECF.DetallesItems.Item)
@@ -2556,14 +2524,17 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 }
                 _context.SaveChanges();
 
-                return RedirectToAction("GenerarPDF", new { id = registro.Id });
+                if (respuesta.CodigoRespuesta == "1")
+                {
+                    //return RedirectToAction("GenerarPDF", new { id = registro.Id, codigoSeguridad = respuesta.CodigoSeguridad });
+                    return View("verFactura", respuesta);
 
-                //return View("verFactura", respuesta);
-                //return View(null);
-
-                //return View("NombreDeLaVista", model);
-                //return View("verFactura", model); // o mostrar resultados
-
+                }
+                else
+                {
+                    ViewBag.MensajeError = respuesta.Mensaje;
+                    return View("verFactura", respuesta);
+                }
 
             }
             catch (DbUpdateException ex)
