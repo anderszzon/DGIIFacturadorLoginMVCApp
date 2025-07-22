@@ -111,7 +111,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 Document doc = new Document(pdf);
 
                 // Agregar logotipo al inicio
-                string logoPath = "C:\\Users\\andersonmgordilloh\\Downloads\\logo.jgeg"; // Cambia esta ruta según donde tengas tu imagen
+                string logoPath = "C:\\Users\\andersonmgordilloh\\Downloads\\logo.jpeg"; // Cambia esta ruta según donde tengas tu imagen
                 ImageData imageData = ImageDataFactory.Create(logoPath);
                 Image logo = new Image(imageData);
                 logo.ScaleToFit(120, 120);
