@@ -3607,5 +3607,286 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
         }
 
+
+        [HttpGet]
+        public IActionResult registrarfacturaE450000000001()
+        {
+            var model = new FacturaDGIIModel13
+            {
+                ECF = new ECFModel13
+                {
+                    FechaHoraFirma = "01-03-2025 05:07:00",
+                    Encabezado = new EncabezadoModel13
+                    {
+                        Version = "1.0",
+                        IdDoc = new VersionIdDocModel13
+                        {
+                            TipoeCF = "45",
+                            eNCF = "E450000000001",
+                            FechaVencimientoSecuencia = "31-12-2025",
+                            IndicadorMontoGravado = "0",
+                            TipoIngresos = "01",
+                            TipoPago = "1"
+                        },
+                        Emisor = new EmisorModel13
+                        {
+                            RNCEmisor = "130322791",
+                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
+                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
+                            Municipio = "010101",
+                            Provincia = "010000",
+                            CorreoEmisor = "DOCUMENTOSELECTRONICOSDE0612345678969789+9000000000000000000000000000001@123.COM",
+                            WebSite = "www.facturaelectronica.com",
+                            CodigoVendedor = "AA0000000100000000010000000002000000000300000000050000000006",
+                            NumeroFacturaInterna = "123456789016",
+                            NumeroPedidoInterno = "123456789016",
+                            ZonaVenta = "NORT",
+                            FechaEmision = "01-04-2020"
+                        },
+                        Comprador = new CompradorModel13
+                        {
+                            RNCComprador = "131880657",
+                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 04",
+                            ContactoComprador = "MARCOS LATIPLOL",
+                            CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
+                            DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
+                            MunicipioComprador = "010100",
+                            ProvinciaComprador = "010000",
+                            FechaEntrega = "10-10-2020",
+                            FechaOrdenCompra = "10-11-2018",
+                            NumeroOrdenCompra = "4500352238",
+                            CodigoInternoComprador = "10633440"
+                        },
+                        InformacionesAdicionales = new InformacionesAdicionales13
+                        {
+                            NumeroContenedor = "8019289",
+                            NumeroReferencia = "1447"
+                        },
+                        Totales = new TotalesModel13
+                        {
+                            MontoGravadoTotal = "30000.00",
+                            MontoGravadoI1 = "30000.00",
+                            ITBIS1 = "18",
+                            TotalITBIS = "5400.00",
+                            TotalITBIS1 = "5400.00",
+                            MontoTotal = "35400.00",
+                            ValorPagar = "35400.00"
+                        }
+                    },
+                    DetallesItems = new DetallesItemsModel13
+                    {
+                        Item = new List<ItemModel13>
+                {
+                    new ItemModel13
+                    {
+                        NumeroLinea = "1",
+                        IndicadorFacturacion = "1",
+                        NombreItem = "SERVICIO PUBLICIDAD",
+                        IndicadorBienoServicio = "2",
+                        DescripcionItem = "prestación de servicios relacionados con la creación, ejecución y distribución de campañas publicitarias.",
+                        CantidadItem = "1.00",
+                        UnidadMedida = "43",
+                        PrecioUnitarioItem = "30000.00",
+                        MontoItem = "30000.00"
+                    }
+                }
+                    }
+                }
+            };
+
+            return View(model);
+        }
+
+
+        [HttpPost]
+        public IActionResult registrarfacturaE450000000001(FacturaDGIIModel13 model)
+        {
+            string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
+            string passCert = "LD271167";
+
+            //string jsonInvoiceFO = JsonConvert.SerializeObject(model);
+
+            foreach (var item in model.ECF.DetallesItems.Item)
+            {
+                // Si TablaCodigosItem no es null
+                if (item.TablaSubDescuento?.SubDescuento != null)
+                {
+                    // Filtrar objetos vacíos
+                    item.TablaSubDescuento.SubDescuento = item.TablaSubDescuento.SubDescuento
+                        .Where(ci => ci != null && !string.IsNullOrWhiteSpace(ci.TipoSubDescuento) && !string.IsNullOrWhiteSpace(ci.MontoSubDescuento))
+                        .ToList();
+
+                    // Si después de filtrar está vacío, eliminar la tabla entera
+                    if (!item.TablaSubDescuento.SubDescuento.Any())
+                    {
+                        item.TablaSubDescuento = null;
+                    }
+                }
+            }
+
+            foreach (var item in model.ECF.DetallesItems.Item)
+            {
+                // Si TablaCodigosItem no es null
+                if (item.TablaSubRecargo?.SubRecargo != null)
+                {
+                    // Filtrar objetos vacíos
+                    item.TablaSubRecargo.SubRecargo = item.TablaSubRecargo.SubRecargo
+                        .Where(ci => ci != null && !string.IsNullOrWhiteSpace(ci.TipoSubRecargo) && !string.IsNullOrWhiteSpace(ci.MontoSubRecargo))
+                        .ToList();
+
+                    // Si después de filtrar está vacío, eliminar la tabla entera
+                    if (!item.TablaSubRecargo.SubRecargo.Any())
+                    {
+                        item.TablaSubRecargo = null;
+                    }
+                }
+            }
+
+            string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
+
+
+            string urlValidarSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/ValidarSemilla";
+            string urlRecepcionFactura = "https://ecf.dgii.gov.do/certecf/recepcion/api/FacturasElectronicas";
+            string urlConsultaFactura = "https://ecf.dgii.gov.do/certecf/consultaresultado/api/Consultas/Estado";
+
+            try
+            {
+                // Llamada al método de la DLL
+                string invoice = FacturacionElectronicaDGII.EnviarTokenSincrona(urlSemilla, passCert, jsonInvoiceFO);
+                string response = FacturacionElectronicaDGII.EnviarFacturaElectronicaSincrona(urlValidarSemilla, urlRecepcionFactura, urlConsultaFactura);
+
+                // Parsear el JSON 'invoice'
+                JObject jsonObject = JObject.Parse(invoice);
+                JObject jsonObjectResponse = JObject.Parse(response);
+
+                string mensajeValor = jsonObjectResponse["mensajes"]?[0]?["valor"]?.ToString();
+
+
+                var respuesta = new FacturaDGIIResponseModel
+                {
+                    JsonInvoice = jsonObject.GetValue("json")?.ToString(),
+                    ENCF = jsonObject.GetValue("encf")?.ToString(),
+                    XmlSemilla = jsonObject.GetValue("xmlsemilla")?.ToString(),
+                    XmlSemillaFirmada = jsonObject.GetValue("xmlsemillafirmada")?.ToString(),
+                    Token = jsonObject.GetValue("token")?.ToString(),
+                    XmlFactura = jsonObject.GetValue("xmlfactura")?.ToString(),
+                    XmlFacturaFirmada = jsonObject.GetValue("xmlfacturafirmada")?.ToString(),
+                    CodigoSeguridad = jsonObject.GetValue("codigoseguridad")?.ToString(),
+                    CodigoRespuesta = jsonObjectResponse.GetValue("codigo")?.ToString(),
+                    EstadoRespuesta = jsonObjectResponse.GetValue("estado")?.ToString(),
+                    Mensaje = mensajeValor
+
+                };
+
+                var registro = new FacturasDGII
+                {
+                    // IdDoc
+                    TipoeCF = model?.ECF?.Encabezado?.IdDoc?.TipoeCF,
+                    ENCF = model?.ECF?.Encabezado?.IdDoc?.eNCF,
+                    FechaVencimientoSecuencia = model?.ECF?.Encabezado?.IdDoc?.FechaVencimientoSecuencia,
+                    TipoPago = model?.ECF?.Encabezado?.IdDoc?.TipoPago,
+                    IndicadorEnvioDiferido = model?.ECF?.Encabezado?.IdDoc?.IndicadorEnvioDiferido,
+                    IndicadorMontoGravado = model?.ECF?.Encabezado?.IdDoc?.IndicadorMontoGravado,
+                    TipoIngresos = model?.ECF?.Encabezado?.IdDoc?.TipoIngresos,
+
+                    // Emisor
+                    RNCEmisor = model?.ECF?.Encabezado?.Emisor?.RNCEmisor,
+                    RazonSocialEmisor = model?.ECF?.Encabezado?.Emisor?.RazonSocialEmisor,
+                    NombreComercial = model?.ECF?.Encabezado?.Emisor?.NombreComercial,
+                    DireccionEmisor = model?.ECF?.Encabezado?.Emisor?.DireccionEmisor,
+                    Municipio = model?.ECF?.Encabezado?.Emisor?.Municipio,
+                    Provincia = model?.ECF?.Encabezado?.Emisor?.Provincia,
+                    CorreoEmisor = model?.ECF?.Encabezado?.Emisor?.CorreoEmisor,
+                    WebSite = model?.ECF?.Encabezado?.Emisor?.WebSite,
+                    CodigoVendedor = model?.ECF?.Encabezado?.Emisor?.CodigoVendedor,
+                    NumeroFacturaInterna = model?.ECF?.Encabezado?.Emisor?.NumeroFacturaInterna,
+                    NumeroPedidoInterno = model?.ECF?.Encabezado?.Emisor?.NumeroPedidoInterno,
+                    ZonaVenta = model?.ECF?.Encabezado?.Emisor?.ZonaVenta,
+                    FechaEmision = model?.ECF?.Encabezado?.Emisor?.FechaEmision,
+
+                    // Comprador
+                    RNCComprador = model?.ECF?.Encabezado?.Comprador?.RNCComprador,
+                    RazonSocialComprador = model?.ECF?.Encabezado?.Comprador?.RazonSocialComprador,
+                    ContactoComprador = model?.ECF?.Encabezado?.Comprador?.ContactoComprador,
+                    CorreoComprador = model?.ECF?.Encabezado?.Comprador?.CorreoComprador,
+                    DireccionComprador = model?.ECF?.Encabezado?.Comprador?.DireccionComprador,
+                    MunicipioComprador = model?.ECF?.Encabezado?.Comprador?.MunicipioComprador,
+                    ProvinciaComprador = model?.ECF?.Encabezado?.Comprador?.ProvinciaComprador,
+                    FechaEntrega = model?.ECF?.Encabezado?.Comprador?.FechaEntrega,
+                    FechaOrdenCompra = model?.ECF?.Encabezado?.Comprador?.FechaOrdenCompra,
+                    NumeroOrdenCompra = model?.ECF?.Encabezado?.Comprador?.NumeroOrdenCompra,
+                    CodigoInternoComprador = model?.ECF?.Encabezado?.Comprador?.CodigoInternoComprador,
+
+                    // Totales
+                    MontoGravadoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
+                    MontoGravadoI1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoI1 ?? "0"),
+                    ITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.ITBIS1 ?? "0"),
+                    TotalITBIS = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS ?? "0"),
+                    TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
+                    MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
+
+                    // Fechas
+                    FechaHoraFirma = model?.ECF?.FechaHoraFirma,
+                    FechaRegistro = DateTime.Now
+                };
+
+
+                _context.FacturasDGII.Add(registro);
+                _context.SaveChanges();
+
+                respuesta.FacturaId = registro.Id;
+
+                if (model?.ECF?.DetallesItems?.Item != null)
+                {
+                    foreach (var item in model.ECF.DetallesItems.Item)
+                    {
+                        var detalle = new ItemFactura
+                        {
+                            FacturaId = registro.Id, // Asignamos el ID de la factura recién creada
+                            NumeroLinea = item.NumeroLinea,
+                            IndicadorFacturacion = item.IndicadorFacturacion,
+                            NombreItem = item.NombreItem,
+                            IndicadorBienoServicio = item.IndicadorBienoServicio,
+                            CantidadItem = Convert.ToDecimal(item.CantidadItem ?? "0"),
+                            UnidadMedida = item.UnidadMedida,
+                            PrecioUnitarioItem = Convert.ToDecimal(item.PrecioUnitarioItem ?? "0"),
+                            MontoItem = Convert.ToDecimal(item.MontoItem ?? "0")
+                        };
+
+                        _context.ItemsFactura.Add(detalle);
+                    }
+                }
+                _context.SaveChanges();
+
+                if (respuesta.CodigoRespuesta == "1")
+                {
+                    //return RedirectToAction("GenerarPDF", new { id = registro.Id, codigoSeguridad = respuesta.CodigoSeguridad });
+                    return View("verFactura", respuesta);
+
+                }
+                else
+                {
+                    ViewBag.MensajeError = respuesta.Mensaje;
+                    return View("verFactura", respuesta);
+                }
+
+            }
+            catch (DbUpdateException ex)
+            {
+                string error = ex.Message;
+
+                if (ex.InnerException != null)
+                    error += " | Inner Exception: " + ex.InnerException.Message;
+
+                ViewBag.Error = error;
+                return View(null);
+            }
+
+        }
+
     }
 }
