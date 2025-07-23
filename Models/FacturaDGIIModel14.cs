@@ -12,7 +12,6 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public EncabezadoModel14 Encabezado { get; set; } = new EncabezadoModel14();
         public DetallesItemsModel14 DetallesItems { get; set; } = new DetallesItemsModel14();
 
-        public InformacionReferencia14 InformacionReferencia { get; set; } = new InformacionReferencia14();
         public string FechaHoraFirma { get; set; }
     }
 
