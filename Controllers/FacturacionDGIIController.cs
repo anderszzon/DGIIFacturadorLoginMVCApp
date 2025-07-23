@@ -4,6 +4,7 @@ using DGIIFacturadorLoginMVCApp.Data.Migrations;
 using DGIIFacturadorLoginMVCApp.Models;
 using iText.Barcodes;
 using iText.IO.Image;
+using iText.Kernel.Colors;
 using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Borders;
@@ -110,75 +111,211 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 PdfDocument pdf = new PdfDocument(writer);
                 Document doc = new Document(pdf);
 
-                // Agregar logotipo al inicio
+                //string logoPath = "C:\\Users\\andersonmgordilloh\\Downloads\\logo.jpeg";
+                ////string logoPath = "C:\\Users\\home\\source\\repos\\logo.jpg";
+                //ImageData imageData = ImageDataFactory.Create(logoPath);
+                //Image logo = new Image(imageData);
+                //logo.ScaleToFit(150, 150); // Más pequeño
+                //logo.SetMarginBottom(5);
+                //logo.SetHorizontalAlignment(HorizontalAlignment.LEFT);
+                //doc.Add(logo);
 
-                string logoPath = "C:\\Users\\andersonmgordilloh\\Downloads\\logo.jpeg"; 
-                //string logoPath = "C:\\Users\\home\\source\\repos\\logo.jpg";
+                doc.Add(new Paragraph(" "));
 
-                ImageData imageData = ImageDataFactory.Create(logoPath);
-                Image logo = new Image(imageData);
-                logo.ScaleToFit(120, 120);
-                logo.SetHorizontalAlignment(HorizontalAlignment.LEFT);
-                doc.Add(logo);
-
-                // Crear tabla contenedora con dos columnas (izquierda y derecha)
-                Table headerTable = new Table(UnitValue.CreatePercentArray(new float[] { 50, 50 }));
+                // Crear la tabla con dos columnas más estrechas y espacio en el medio
+                Table headerTable = new Table(UnitValue.CreatePercentArray(new float[] { 48, 4, 48 })); // columna izquierda, espaciado, columna derecha
                 headerTable.SetWidth(UnitValue.CreatePercentValue(100));
                 headerTable.SetMarginBottom(10);
 
-                // Lado izquierdo: información del emisor
-                Cell leftCell = new Cell().SetBorder(Border.NO_BORDER);
-                leftCell.Add(new Paragraph("Mora Tapia Peralta & Asociado, SRL").SetFontSize(14));
-                leftCell.Add(new Paragraph($"Dirección: {factura.RNCEmisor}"));
-                leftCell.Add(new Paragraph($"Teléfono: {factura.RNCEmisor}"));
-                leftCell.Add(new Paragraph($"Email: {factura.RNCEmisor}"));
+                // Cargar el logo
+                string logoPath = "C:\\Users\\andersonmgordilloh\\Downloads\\logo.jpeg";
+                ImageData imageData = ImageDataFactory.Create(logoPath);
+                Image logo = new Image(imageData);
+                logo.ScaleToFit(150, 150); // Más pequeño para ajustarse bien dentro de la tabla
+                logo.SetMarginBottom(5);
+                logo.SetHorizontalAlignment(HorizontalAlignment.CENTER);
 
-                // Lado derecho: información de la factura
-                Cell rightCell = new Cell().SetBorder(Border.NO_BORDER);
-                rightCell.Add(new Paragraph("Factura de Crédito Fiscal").SetFontSize(14));
-                rightCell.Add(new Paragraph($"NCF: {factura.ENCF}"));
-                rightCell.Add(new Paragraph($"Fecha Vencimiento: {factura.ENCF}"));
-                rightCell.Add(new Paragraph($"Fecha: {factura.FechaVencimientoSecuencia}"));
-                rightCell.Add(new Paragraph($"Número Factura: {factura.IndicadorEnvioDiferido}"));
-                rightCell.Add(new Paragraph($"Orden de venta: {factura.IndicadorMontoGravado}"));
-                rightCell.Add(new Paragraph($"Moneda: {factura.IndicadorMontoGravado}"));
+                // Celda izquierda - Emisor
+                Cell leftCell = new Cell().SetBorder(Border.NO_BORDER).SetTextAlignment(TextAlignment.LEFT);
+
+                leftCell.Add(logo);
+
+                leftCell.Add(new Paragraph("Mora Tapia Peralta & Asociado, SRL").SetFontSize(10));
+                leftCell.Add(new Paragraph($"RNC: {factura.RNCEmisor}").SetFontSize(9));
+                leftCell.Add(new Paragraph("Dirección: Calle Ciudad Heredia CR No.37 Local 303").SetFontSize(9));
+                leftCell.Add(new Paragraph("Teléfono: (829)-435-9277").SetFontSize(9));
+                leftCell.Add(new Paragraph("Email: mtp@mtpasociados.com").SetFontSize(9));
+
+                // Celda vacía como separador
+                Cell spacerCell = new Cell().SetBorder(Border.NO_BORDER);
+
+                // Celda derecha - Factura
+                Cell rightCell = new Cell().SetBorder(Border.NO_BORDER).SetTextAlignment(TextAlignment.RIGHT);
+                rightCell.Add(new Paragraph("Factura de Crédito Fiscal").SetFontSize(10));
+                rightCell.Add(new Paragraph($"NCF: {factura.ENCF}").SetFontSize(9));
+                rightCell.Add(new Paragraph($"Fecha Vencimiento: {factura.FechaVencimientoSecuencia}").SetFontSize(9));
+                rightCell.Add(new Paragraph($"Fecha: {factura.FechaEmision}").SetFontSize(9));
+                rightCell.Add(new Paragraph($"Número Factura: {factura.NumeroFacturaInterna}").SetFontSize(9));
+                rightCell.Add(new Paragraph($"Orden de venta: {factura.NumeroOrdenCompra}").SetFontSize(9));
+                rightCell.Add(new Paragraph("Condición de pago: ... ").SetFontSize(9));
+                rightCell.Add(new Paragraph("Moneda: DOP").SetFontSize(9));
 
                 // Agregar las celdas a la tabla
                 headerTable.AddCell(leftCell);
+                headerTable.AddCell(spacerCell); // espacio entre columnas
                 headerTable.AddCell(rightCell);
 
-                // Agregar tabla al documento
+                // Agregar la tabla al documento
                 doc.Add(headerTable);
+
+                doc.Add(new Paragraph(" "));
+
+                Table clienteTable = new Table(1);
+                clienteTable.SetWidth(UnitValue.CreatePercentValue(48)); // Tamaño compacto
+                clienteTable.SetHorizontalAlignment(HorizontalAlignment.LEFT); // Alineación izquierda
+                clienteTable.SetMarginBottom(10);
+
+                // Celda del encabezado
+                clienteTable.AddHeaderCell(new Cell()
+                    .Add(new Paragraph("Información del Cliente")
+                    .SetFontSize(8)
+                    .SetTextAlignment(TextAlignment.CENTER))
+                    .SetBackgroundColor(ColorConstants.LIGHT_GRAY)
+                    .SetBorder(Border.NO_BORDER)
+                    .SetPadding(5)
+                );
+
+                // Celdas de contenido
+                clienteTable.AddCell(new Cell().Add(new Paragraph($"RNC o Identificación: {factura.RNCComprador}").SetFontSize(7)).SetBorder(Border.NO_BORDER).SetPadding(2));
+                clienteTable.AddCell(new Cell().Add(new Paragraph($"Nombre o Razón Social: {factura.RazonSocialComprador}").SetFontSize(7)).SetBorder(Border.NO_BORDER).SetPadding(2));
+                clienteTable.AddCell(new Cell().Add(new Paragraph($"Dirección: {factura.DireccionComprador}").SetFontSize(7)).SetBorder(Border.NO_BORDER).SetPadding(2));
+                clienteTable.AddCell(new Cell().Add(new Paragraph($"Contacto: {factura.ContactoComprador}").SetFontSize(7)).SetBorder(Border.NO_BORDER).SetPadding(2));
+                clienteTable.AddCell(new Cell().Add(new Paragraph($"Correo: {factura.CorreoComprador}").SetFontSize(7)).SetBorder(Border.NO_BORDER).SetPadding(2));
+
+                doc.Add(clienteTable);
+
+                doc.Add(new Paragraph(" "));
+
+                Table table = new Table(UnitValue.CreatePercentArray(new float[] { 6, 8, 32, 8, 8, 8, 15, 15 })).UseAllAvailableWidth().SetMarginBottom(10).SetFontSize(9);
+                table.AddHeaderCell("Numero de Linea");
+                table.AddHeaderCell("IndicadorFacturacion");
+                table.AddHeaderCell("NombreItem");
+                table.AddHeaderCell("IndicadorBienoServicio");
+                table.AddHeaderCell("CantidadItem");
+                table.AddHeaderCell("UnidadMedida");
+                table.AddHeaderCell("PrecioUnitarioItem");
+                table.AddHeaderCell("MontoItem");
+                foreach (var linea in factura.Items)
+                {
+                    table.AddCell(linea.NumeroLinea ?? "");
+                    table.AddCell(linea.IndicadorFacturacion ?? "");
+                    table.AddCell(linea.NombreItem ?? "");
+                    table.AddCell(linea.IndicadorBienoServicio ?? "");
+                    table.AddCell(linea.CantidadItem.ToString() );
+                    table.AddCell(linea.UnidadMedida ?? "");
+                    table.AddCell(linea.PrecioUnitarioItem.ToString());
+                    table.AddCell(linea.MontoItem.ToString());
+                }
+                doc.Add(table);
+
+                doc.Add(new Paragraph(" "));
+
+                // Crear la tabla con dos columnas (comentario + totales)
+                Table resumenTable = new Table(UnitValue.CreatePercentArray(new float[] { 65, 35 }))
+                    .UseAllAvailableWidth()
+                    .SetMarginTop(20)
+                    .SetMarginBottom(10);
+
+                // --------- BLOQUE IZQUIERDO: Comentario ---------
+                Table comentarioInterno = new Table(1);
+                comentarioInterno.SetWidth(UnitValue.CreatePercentValue(50));
+                comentarioInterno.SetBorder(Border.NO_BORDER);
+
+                // Fila de título
+                comentarioInterno.AddCell(new Cell()
+                    .Add(new Paragraph("Comentario:").SetFontSize(10))
+                    .SetBorder(Border.NO_BORDER)
+                );
+
+                // Fila del cuadro de comentario
+                comentarioInterno.AddCell(new Cell()
+                    .Add(new Paragraph("\n\n\n")) // espacio para simular el cuadro
+                    .SetBorder(new SolidBorder(1))
+                    .SetPadding(5)
+                );
+
+                // Ahora crea la celda izquierda que contiene la tabla interna
+                Cell comentarioCell = new Cell().SetBorder(Border.NO_BORDER);
+                comentarioCell.Add(comentarioInterno);
+
+
+
+                // --------- BLOQUE DERECHO: Subtotal, Descuento, Total ---------
+                Cell totalesCell = new Cell().SetBorder(Border.NO_BORDER).SetTextAlignment(TextAlignment.RIGHT);
+
+                totalesCell.Add(new Paragraph($"Subtotal: $ {factura.MontoGravadoTotal:N2}").SetFontSize(9));
+                totalesCell.Add(new Paragraph($"Descuento: $ {factura.TotalITBIS:N2}").SetFontSize(9));
+                totalesCell.Add(new Paragraph($"Total: $ {factura.MontoTotal:N2}").SetFontSize(10));
+
+                // --------- Agregar ambos a la tabla ---------
+                resumenTable.AddCell(comentarioCell);
+                resumenTable.AddCell(totalesCell);
+
+                // Agregar al documento
+                doc.Add(resumenTable);
 
 
                 doc.Add(new Paragraph(" "));
 
-                Table table = new Table(1).UseAllAvailableWidth();
-                table.AddHeaderCell("Numero de Linea");
-                foreach (var linea in factura.Items)
-                {
-                    table.AddCell(linea.NumeroLinea ?? "");
-                    //table.AddCell(linea.Cantidad.ToString());
-                    //table.AddCell(linea.Unidad ?? "");
-                    //table.AddCell(linea.PrecioUnitario.ToString("N2"));
-                    //table.AddCell(linea.PorcentajeDescuento.ToString("P2")); // % formato
-                    //table.AddCell(linea.MontoDescuento.ToString("N2"));
-                    //table.AddCell(linea.MontoTotal.ToString("N2"));
-                }
+                // Crear una tabla con 2 columnas: firma (izquierda) y QR/info (derecha)
+                Table finalTable = new Table(UnitValue.CreatePercentArray(new float[] { 50, 50 }))
+                    .UseAllAvailableWidth()
+                    .SetMarginTop(20);
 
-                doc.Add(table);
+                // ---------- COLUMNA IZQUIERDA: Firma ----------
+                Cell leftCell1 = new Cell().SetBorder(Border.NO_BORDER).SetTextAlignment(TextAlignment.LEFT);
 
+                // Línea para firmar
+                Paragraph lineaFirma = new Paragraph("______________________________")
+                    .SetTextAlignment(TextAlignment.LEFT)
+                    .SetFontSize(10)
+                    .SetMarginBottom(0);
+
+                // Texto "Autorizado por"
+                Paragraph autorizadoPor = new Paragraph("Autorizado por")
+                    .SetFontSize(9)
+                    .SetTextAlignment(TextAlignment.LEFT)
+                    .SetMarginTop(2);
+
+                leftCell1.Add(lineaFirma);
+                leftCell1.Add(autorizadoPor);
+
+                // ---------- COLUMNA DERECHA: QR y detalles ----------
+                Cell rightCell1 = new Cell().SetBorder(Border.NO_BORDER).SetTextAlignment(TextAlignment.RIGHT);
+
+                // Crear código QR
                 DateTime fechaFirma = DateTime.ParseExact(factura.FechaHoraFirma, "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture);
                 string fechaFirmaFormateada = Uri.EscapeDataString(fechaFirma.ToString("dd-MM-yyyy HH:mm:ss"));
 
-                //string url = $"https://ecf.dgii.gov.do/certecf/ConsultaTimbre?RncEmisor=130322791&RncComprador=131880681&ENCF=E310000000029&FechaEmision=01-04-2020&MontoTotal=7080.00&FechaFirma=01-03-2025%2005:07:00&CodigoSeguridad=p1NsBj";
                 string url = $"https://ecf.dgii.gov.do/certecf/ConsultaTimbre?RncEmisor={factura.RNCEmisor}&RncComprador={factura.RNCComprador}&ENCF={factura.ENCF}&FechaEmision={factura.FechaEmision}&MontoTotal={factura.MontoTotal}&FechaFirma={fechaFirmaFormateada}&CodigoSeguridad={codigoSeguridad}";
 
                 BarcodeQRCode qrCode = new BarcodeQRCode(url);
                 Image qrCodeImage = new Image(qrCode.CreateFormXObject(pdf));
                 qrCodeImage.ScaleToFit(100, 100);
-                doc.Add(new Paragraph("Código QR:"));
-                doc.Add(qrCodeImage);
+                qrCodeImage.SetHorizontalAlignment(HorizontalAlignment.RIGHT);
+
+                // Agregar contenido
+                //rightCell1.Add(new Paragraph("Código QR:").SetTextAlignment(TextAlignment.RIGHT));
+                rightCell1.Add(qrCodeImage);
+                rightCell1.Add(new Paragraph($"Código de Seguridad: {codigoSeguridad}").SetFontSize(9).SetTextAlignment(TextAlignment.RIGHT).SetMarginTop(5));
+                rightCell1.Add(new Paragraph($"FechaHoraFirma: {factura.FechaHoraFirma}").SetFontSize(9).SetTextAlignment(TextAlignment.RIGHT));
+
+                // Agregar celdas a la tabla
+                finalTable.AddCell(leftCell1);
+                finalTable.AddCell(rightCell1);
+
+                // Agregar al documento
+                doc.Add(finalTable);
 
                 doc.Close();
                 return ms.ToArray(); // ← ahora retorna el PDF generado en memoria

@@ -65,7 +65,6 @@
         public int Id { get; set; }
         public int FacturaId { get; set; } // FK para FacturasDGII
         public FacturasDGII Factura { get; set; }  // ← AGREGA ESTO
-
         public string NumeroLinea { get; set; }
         public string IndicadorFacturacion { get; set; }
         public string NombreItem { get; set; }
