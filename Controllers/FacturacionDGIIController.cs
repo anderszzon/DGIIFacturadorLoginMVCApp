@@ -2784,7 +2784,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         NCFModificado = "E310000000001",
                         FechaNCFModificado = "01-04-2020",
                         CodigoModificacion = "2",
-                        RazonModificacion = "Error en datos"
+                        RazonModificacion = ""
                     }
                 }
             };
