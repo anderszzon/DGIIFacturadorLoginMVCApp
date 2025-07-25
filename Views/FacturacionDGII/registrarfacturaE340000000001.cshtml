@@ -9,7 +9,7 @@
         <div class="card-body">
             <div class="form-group">
                 <label asp-for="ECF.Encabezado.Version"></label>
-                <input asp-for="ECF.Encabezado.Version" class="form-control" value="1.0" />
+                <input asp-for="ECF.Encabezado.Version" class="form-control" value="1.0" readonly />
             </div>
         </div>
     </div>
@@ -22,7 +22,7 @@
         <div class="card-body row">
             <div class="form-group col-md-3">
                 <label asp-for="ECF.Encabezado.IdDoc.TipoeCF"></label>
-                <input asp-for="ECF.Encabezado.IdDoc.TipoeCF" class="form-control" />
+                <input asp-for="ECF.Encabezado.IdDoc.TipoeCF" class="form-control" value="34" readonly />
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="ECF.Encabezado.IdDoc.eNCF"></label>
@@ -35,7 +35,6 @@
                     <option value="0">Si la fecha de emisión del e-CF afectado es ≤ 30 días calendario</option>
                     <option value="1">Si la fecha de emisión del e-CF afectado es > 30 días calendario</option>
                 </select>
-@*                 <input asp-for="ECF.Encabezado.IdDoc.IndicadorNotaCredito" class="form-control" />*@
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="ECF.Encabezado.IdDoc.IndicadorMontoGravado"></label>
@@ -44,7 +43,6 @@
                     <option value="0">Detalle de Bienes o Servicios no tienen ITBIS incluido</option>
                     <option value="1">Detalle de Bienes o Servicios se encuentran con ITBIS incluido</option>
                 </select>
-@*                 <input asp-for="ECF.Encabezado.IdDoc.IndicadorMontoGravado" class="form-control" />*@
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="ECF.Encabezado.IdDoc.TipoIngresos"></label>
@@ -57,7 +55,6 @@
                     <option value="05">Ingresos por Venta de Activo Depreciable</option>
                     <option value="06">Otros Ingresos</option>
                 </select>
-@*                 <input asp-for="ECF.Encabezado.IdDoc.TipoIngresos" class="form-control" />*@
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="ECF.Encabezado.IdDoc.TipoPago"></label>
@@ -67,7 +64,6 @@
                     <option value="2">Crédito</option>
                     <option value="3">Gratuito</option>
                 </select>
-@*                 <input asp-for="ECF.Encabezado.IdDoc.TipoPago" class="form-control" />*@
         </div>
         </div>
     </div>
@@ -310,7 +306,6 @@
                     <option value="4">Reemplazo NCF emitido en contingencia</option>
                     <option value="5">Referencia Factura Consumo Electrónica.81</option>
                 </select> 
-@*                 <input asp-for="ECF.InformacionReferencia.CodigoModificacion" class="form-control" />*@
             </div>
             <div class="form-group col-md-4">
                 <label asp-for="ECF.InformacionReferencia.RazonModificacion"></label>

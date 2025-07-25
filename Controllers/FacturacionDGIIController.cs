@@ -424,10 +424,10 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     FechaHoraFirma = "01-03-2025 05:07:00",
                     Encabezado = new EncabezadoModel1
                     {
-                        Version = "1.0",
+                        Version = "",
                         IdDoc = new VersionIdDocModel1
                         {
-                            TipoeCF = "31",
+                            TipoeCF = "",
                             eNCF = "E310000000001",
                             FechaVencimientoSecuencia = "31-12-2025",
                             IndicadorEnvioDiferido = "1",
@@ -655,10 +655,10 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     FechaHoraFirma = "01-03-2025 05:07:00",
                     Encabezado = new EncabezadoModel2
                     {
-                        Version = "1.0",
+                        Version = "",
                         IdDoc = new VersionIdDocModel2
                         {
-                            TipoeCF = "31",
+                            TipoeCF = "",
                             eNCF = "E310000000002",
                             FechaVencimientoSecuencia = "31-12-2025",
                             IndicadorEnvioDiferido = "1",
@@ -934,10 +934,10 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     FechaHoraFirma = "01-03-2025 05:07:00",
                     Encabezado = new EncabezadoModel3
                     {
-                        Version = "1.0",
+                        Version = "",
                         IdDoc = new VersionIdDocModel3
                         {
-                            TipoeCF = "31",
+                            TipoeCF = "",
                             eNCF = "E310000000003",
                             FechaVencimientoSecuencia = "31-12-2025",
                             IndicadorEnvioDiferido = "1",
@@ -1217,10 +1217,10 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     FechaHoraFirma = "01-03-2025 05:07:00",
                     Encabezado = new EncabezadoModel4
                     {
-                        Version = "1.0",
+                        Version = "",
                         IdDoc = new VersionIdDocModel4
                         {
-                            TipoeCF = "31",
+                            TipoeCF = "",
                             eNCF = "E310000000004",
                             FechaVencimientoSecuencia = "31-12-2025",
                             IndicadorEnvioDiferido = "1",
@@ -1512,10 +1512,10 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     FechaHoraFirma = "01-03-2025 05:07:00",
                     Encabezado = new EncabezadoModel5
                     {
-                        Version = "1.0",
+                        Version = "",
                         IdDoc = new VersionIdDocModel5
                         {
-                            TipoeCF = "31",
+                            TipoeCF = "",
                             eNCF = "E310000000005",
                             FechaVencimientoSecuencia = "31-12-2025",
                             IndicadorEnvioDiferido = "1",
@@ -1849,10 +1849,10 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     FechaHoraFirma = "01-03-2025 05:07:00",
                     Encabezado = new EncabezadoModel6
                     {
-                        Version = "1.0",
+                        Version = "",
                         IdDoc = new VersionIdDocModel6
                         {
-                            TipoeCF = "32",
+                            TipoeCF = "",
                             eNCF = "E320000000001",
                             TipoIngresos = "01",
                             TipoPago = "1"
@@ -2087,10 +2087,10 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     FechaHoraFirma = "01-03-2025 05:07:00",
                     Encabezado = new EncabezadoModel7
                     {
-                        Version = "1.0",
+                        Version = "",
                         IdDoc = new VersionIdDocModel7
                         {
-                            TipoeCF = "32",
+                            TipoeCF = "",
                             eNCF = "E320000000002",
                             IndicadorMontoGravado = "0",
                             TipoIngresos = "01",
@@ -2416,10 +2416,10 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     FechaHoraFirma = "01-03-2025 05:07:00",
                     Encabezado = new EncabezadoModel8
                     {
-                        Version = "1.0",
+                        Version = "",
                         IdDoc = new VersionIdDocModel8
                         {
-                            TipoeCF = "33",
+                            TipoeCF = "",
                             eNCF = "E330000000001",
                             FechaVencimientoSecuencia = "31-12-2025",
                             TipoIngresos = "01",
@@ -2707,10 +2707,10 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     FechaHoraFirma = "01-03-2025 05:07:00",
                     Encabezado = new EncabezadoModel9
                     {
-                        Version = "1.0",
+                        Version = "",
                         IdDoc = new VersionIdDocModel9
                         {
-                            TipoeCF = "34",
+                            TipoeCF = "",
                             eNCF = "E340000000001",
                             IndicadorNotaCredito = "0",
                             IndicadorMontoGravado = "0",
@@ -2991,10 +2991,10 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     FechaHoraFirma = "01-03-2025 05:07:00",
                     Encabezado = new EncabezadoModel10
                     {
-                        Version = "1.0",
+                        Version = "",
                         IdDoc = new VersionIdDocModel10
                         {
-                            TipoeCF = "41",
+                            TipoeCF = "",
                             eNCF = "E410000000001",
                             FechaVencimientoSecuencia = "31-12-2025",
                             IndicadorMontoGravado = "0",
@@ -3272,10 +3272,10 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     FechaHoraFirma = "01-03-2025 05:07:00",
                     Encabezado = new EncabezadoModel11
                     {
-                        Version = "1.0",
+                        Version = "",
                         IdDoc = new VersionIdDocModel11
                         {
-                            TipoeCF = "43",
+                            TipoeCF = "",
                             eNCF = "E430000000001",
                             FechaVencimientoSecuencia = "31-12-2025"
                         },
@@ -3468,10 +3468,10 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     FechaHoraFirma = "01-03-2025 05:07:00",
                     Encabezado = new EncabezadoModel12
                     {
-                        Version = "1.0",
+                        Version = "",
                         IdDoc = new VersionIdDocModel12
                         {
-                            TipoeCF = "44",
+                            TipoeCF = "",
                             eNCF = "E440000000002",
                             FechaVencimientoSecuencia = "31-12-2025",
                             TipoIngresos = "01",
@@ -3765,10 +3765,10 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     FechaHoraFirma = "01-03-2025 05:07:00",
                     Encabezado = new EncabezadoModel13
                     {
-                        Version = "1.0",
+                        Version = "",
                         IdDoc = new VersionIdDocModel13
                         {
-                            TipoeCF = "45",
+                            TipoeCF = "",
                             eNCF = "E450000000001",
                             FechaVencimientoSecuencia = "31-12-2025",
                             IndicadorMontoGravado = "0",
@@ -4045,10 +4045,10 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     FechaHoraFirma = "01-03-2025 05:07:00",
                     Encabezado = new EncabezadoModel14
                     {
-                        Version = "1.0",
+                        Version = "",
                         IdDoc = new VersionIdDocModel14
                         {
-                            TipoeCF = "46",
+                            TipoeCF = "",
                             eNCF = "E460000000001",
                             FechaVencimientoSecuencia = "31-12-2025",
                             TipoIngresos = "01",
@@ -4338,10 +4338,10 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     FechaHoraFirma = "01-03-2025 05:07:00",
                     Encabezado = new EncabezadoModel15
                     {
-                        Version = "1.0",
+                        Version = "",
                         IdDoc = new VersionIdDocModel15
                         {
-                            TipoeCF = "47",
+                            TipoeCF = "",
                             eNCF = "E470000000001",
                             FechaVencimientoSecuencia = "31-12-2025",
                             NumeroCuentaPago = "BB00058745214789635111111111",

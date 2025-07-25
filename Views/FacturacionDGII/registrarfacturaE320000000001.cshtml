@@ -9,7 +9,7 @@
         <div class="card-body">
             <div class="form-group">
                 <label asp-for="ECF.Encabezado.Version"></label>
-                <input asp-for="ECF.Encabezado.Version" class="form-control" value="1.0" />
+                <input asp-for="ECF.Encabezado.Version" class="form-control" value="1.0" readonly />
             </div>
         </div>
     </div>
@@ -22,14 +22,7 @@
         <div class="card-body row">
             <div class="form-group col-md-3">
                 <label asp-for="ECF.Encabezado.IdDoc.TipoeCF"></label>
-                <input asp-for="ECF.Encabezado.IdDoc.TipoeCF" class="form-control"@*  value="1.0" *@ />
-                @*
-                <select asp-for="ECF.Encabezado.IdDoc.TipoeCF" class="form-control">
-                    <option value="31">Factura (31)</option>
-                    <option value="32">Nota de Crédito (32)</option>
-                </select> 
-                *@
-
+                <input asp-for="ECF.Encabezado.IdDoc.TipoeCF" class="form-control" value="32" readonly />
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="ECF.Encabezado.IdDoc.eNCF"></label>
