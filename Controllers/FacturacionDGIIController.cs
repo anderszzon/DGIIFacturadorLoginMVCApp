@@ -188,7 +188,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 //doc.Add(new Paragraph(" "));
 
                 Table clienteTable = new Table(1);
-                clienteTable.SetWidth(UnitValue.CreatePercentValue(48)); // Tamaño compacto
+                clienteTable.SetWidth(UnitValue.CreatePercentValue(40)); // Tamaño compacto
                 clienteTable.SetHorizontalAlignment(HorizontalAlignment.LEFT); // Alineación izquierda
                 clienteTable.SetMarginBottom(10);
                 clienteTable.SetBorder(new SolidBorder(0.5f));
@@ -223,7 +223,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 Table table = new Table(UnitValue.CreatePercentArray(new float[] { 10, 30, 20, 20, 20 }))
                     .UseAllAvailableWidth()
                     .SetFontSize(9)
-                    .SetFont(boldFont);
+                    .SetFont(boldFont)
+                    .SetTextAlignment(TextAlignment.RIGHT);
 
                 // 2. Configurar encabezados (sin bordes visibles)
                 for (int i = 0; i < 5; i++)
@@ -266,6 +267,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 Cell totalesCell = new Cell(1, 5)
                     //.SetBorder(Border.NO_BORDER) // Sin borde exhttps://localhost:7088/FacturacionDGII/registrarfacturaE310000000002terior (se manejará en la tabla interna)
                     .SetBorderBottom(Border.NO_BORDER)
+                    .SetBorderLeft(Border.NO_BORDER)    // ← Esta línea es clave
                     .SetBorderRight(Border.NO_BORDER)
                     .SetPadding(0) // Eliminar espacio interno
                     .SetMargin(0)  // Eliminar margen
@@ -283,14 +285,15 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 innerTable.AddCell(
                     new Cell()
                         .Add(new Paragraph("Subtotal:").SetFontSize(9))
-                        .SetBorder(new SolidBorder(1))
+                        .SetBorder(new SolidBorder(0.5f))
                         .SetTextAlignment(TextAlignment.LEFT)
+                        .SetFont(boldFont2) // Negrita para el título   
 
                 );
                 innerTable.AddCell(
                     new Cell()
                         .Add(new Paragraph($"$ {factura.MontoGravadoTotal:N2}").SetFontSize(9))
-                        .SetBorder(new SolidBorder(1))
+                        .SetBorder(new SolidBorder(0.5f))
                         .SetTextAlignment(TextAlignment.RIGHT)
                 );
 
@@ -298,13 +301,15 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 innerTable.AddCell(
                     new Cell()
                         .Add(new Paragraph("ITBIS:").SetFontSize(9))
-                        .SetBorder(new SolidBorder(1))
+                        .SetBorder(new SolidBorder(0.5f))
                         .SetTextAlignment(TextAlignment.LEFT)
+                        .SetFont(boldFont2) // Negrita para el título   
+
                 );
                 innerTable.AddCell(
                     new Cell()
                         .Add(new Paragraph($"$ {factura.TotalITBIS:N2}").SetFontSize(9))
-                        .SetBorder(new SolidBorder(1))
+                        .SetBorder(new SolidBorder(0.5f))
                         .SetTextAlignment(TextAlignment.RIGHT)
                 );
 
@@ -312,13 +317,14 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 innerTable.AddCell(
                     new Cell()
                         .Add(new Paragraph("Total RD:").SetFontSize(9))
-                        .SetBorder(new SolidBorder(1))
+                        .SetBorder(new SolidBorder(0.5f))
                         .SetTextAlignment(TextAlignment.LEFT)
+                        .SetFont(boldFont2) // Negrita para el título   
                 );
                 innerTable.AddCell(
                     new Cell()
                         .Add(new Paragraph($"$ {factura.MontoTotal:N2}").SetFontSize(9))
-                        .SetBorder(new SolidBorder(1))
+                        .SetBorder(new SolidBorder(0.5f))
                         .SetTextAlignment(TextAlignment.RIGHT)
                 );
 
