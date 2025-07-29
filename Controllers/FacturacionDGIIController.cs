@@ -114,6 +114,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 Document doc = new Document(pdf);
 
                 PdfFont boldFont = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
+                PdfFont boldFont2 = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
+
                 string logoPath = "C:\\Users\\andersonmgordilloh\\source\\repos\\FacturacionElectronicaDGII\\ArchivosDGII\\logo.jpeg";
 
 
@@ -144,7 +146,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 leftCell.Add(logo);
 
-                leftCell.Add(new Paragraph("Mora Tapia Peralta & Asociado, SRL").SetFontSize(10));
+                leftCell.Add(new Paragraph("Mora Tapia Peralta & Asociado, SRL").SetFontSize(9));
                 leftCell.Add(new Paragraph($"RNC: {factura.RNCEmisor}").SetFontSize(9));
                 leftCell.Add(new Paragraph("Dirección: Calle Ciudad Heredia de Costa Rica No.37 Local \r\n303 Hondura La Feria").SetFontSize(9));
                 leftCell.Add(new Paragraph("Teléfono: (829)-435-9277").SetFontSize(9));
@@ -155,7 +157,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 // Celda derecha - Factura
                 Cell rightCell = new Cell().SetBorder(Border.NO_BORDER).SetTextAlignment(TextAlignment.LEFT).SetFont(boldFont);
-                rightCell.Add(new Paragraph("Factura de Crédito Fiscal").SetFontSize(10));
+                rightCell.Add(new Paragraph("Factura de Crédito Fiscal").SetFontSize(11).SetFont(boldFont2));
                 rightCell.Add(new Paragraph($"NCF: {factura.ENCF}").SetFontSize(9));
                 rightCell.Add(new Paragraph($"Fecha Vencimiento: {factura.FechaVencimientoSecuencia}").SetFontSize(9));
                 rightCell.Add(new Paragraph($"Fecha: {factura.FechaEmision}").SetFontSize(9));
@@ -202,11 +204,11 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 );
 
                 // Celdas de contenido
-                clienteTable.AddCell(new Cell().Add(new Paragraph($"Nombre: {factura.RazonSocialComprador}").SetFontSize(7)).SetBorder(Border.NO_BORDER).SetPadding(2));
-                clienteTable.AddCell(new Cell().Add(new Paragraph($"RNC: {factura.RNCComprador}").SetFontSize(7)).SetBorder(Border.NO_BORDER).SetPadding(2));
-                clienteTable.AddCell(new Cell().Add(new Paragraph($"Dirección: {factura.DireccionComprador}").SetFontSize(7)).SetBorder(Border.NO_BORDER).SetPadding(2));
-                clienteTable.AddCell(new Cell().Add(new Paragraph($"Contacto: {factura.ContactoComprador}").SetFontSize(7)).SetBorder(Border.NO_BORDER).SetPadding(2));
-                clienteTable.AddCell(new Cell().Add(new Paragraph($"Correo: {factura.CorreoComprador}").SetFontSize(7)).SetBorder(Border.NO_BORDER).SetPadding(2));
+                clienteTable.AddCell(new Cell().Add(new Paragraph($"Nombre: {factura.RazonSocialComprador}").SetFontSize(8)).SetBorder(Border.NO_BORDER).SetPadding(2));
+                clienteTable.AddCell(new Cell().Add(new Paragraph($"RNC: {factura.RNCComprador}").SetFontSize(8)).SetBorder(Border.NO_BORDER).SetPadding(2));
+                clienteTable.AddCell(new Cell().Add(new Paragraph($"Dirección: {factura.DireccionComprador}").SetFontSize(8)).SetBorder(Border.NO_BORDER).SetPadding(2));
+                clienteTable.AddCell(new Cell().Add(new Paragraph($"Contacto: {factura.ContactoComprador}").SetFontSize(8)).SetBorder(Border.NO_BORDER).SetPadding(2));
+                clienteTable.AddCell(new Cell().Add(new Paragraph($"Correo: {factura.CorreoComprador}").SetFontSize(8)).SetBorder(Border.NO_BORDER).SetPadding(2));
 
                 doc.Add(clienteTable);
 
@@ -217,67 +219,127 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
 
 
-
-                // Crear la tabla principal para los ítems
+                // 1. Tabla principal (conserva bordes)
                 Table table = new Table(UnitValue.CreatePercentArray(new float[] { 10, 30, 20, 20, 20 }))
                     .UseAllAvailableWidth()
-                    .SetMarginBottom(10)
                     .SetFontSize(9)
                     .SetFont(boldFont);
 
-                // Agregar encabezados
-                table.AddHeaderCell("ITEM");
-                table.AddHeaderCell("DESCRIPCIÓN");
-                table.AddHeaderCell("CANTIDAD");
-                table.AddHeaderCell("PRECIO");
-                table.AddHeaderCell("MONTO");
-
-                // Agregar filas con los ítems
-                foreach (var linea in factura.Items)
+                // 2. Configurar encabezados (sin bordes visibles)
+                for (int i = 0; i < 5; i++)
                 {
-                    table.AddCell(linea.CantidadItem.ToString());
-                    table.AddCell(linea.NombreItem ?? "");
-                    table.AddCell(linea.UnidadMedida ?? "");
-                    table.AddCell(linea.PrecioUnitarioItem.ToString());
-                    table.AddCell(linea.MontoItem.ToString());
+                    string titulo = i == 0 ? "ITEM" :
+                                    i == 1 ? "DESCRIPCIÓN" :
+                                    i == 2 ? "CANTIDAD" :
+                                    i == 3 ? "PRECIO" : "MONTO";
+
+                    Cell headerCell = new Cell()
+                        .Add(new Paragraph(titulo));
+
+                    table.AddHeaderCell(headerCell);
                 }
 
-                // Crear celda que combina todas las columnas para los totales
-                Cell totalesContainerCell = new Cell(1, 5)  // 1 fila, 5 columnas combinadas
-                    .SetBorder(Border.NO_BORDER)
-                    .SetPadding(0);
 
-                // Crear tabla interna para los totales con bordes
-                Table tablaTotales = new Table(UnitValue.CreatePercentArray(new float[] { 70, 30 }))
-                    .UseAllAvailableWidth()
-                    .SetMarginTop(5)
-                    .SetBorder(new SolidBorder(1));  // Borde alrededor de toda la tabla de totales
+                // 3. Agregar filas de datos (sin bordes visibles)
+                foreach (var linea in factura.Items)
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        string content = i == 0 ? linea.CantidadItem.ToString() :
+                                        i == 1 ? linea.NombreItem ?? "" :
+                                        i == 2 ? linea.UnidadMedida ?? "" :
+                                        i == 3 ? linea.PrecioUnitarioItem.ToString() :
+                                        linea.MontoItem.ToString();
 
-                // Celda vacía para alinear
-                tablaTotales.AddCell(new Cell().SetBorder(Border.NO_BORDER).Add(new Paragraph("")));
+                        Cell dataCell = new Cell()
+                            .Add(new Paragraph(content))
+                            .SetBorderTop(Border.NO_BORDER)
+                            .SetBorderBottom(Border.NO_BORDER);
 
-                // Celda con los totales y bordes individuales
-                Cell totalesCell = new Cell()
-                    .SetBorderLeft(new SolidBorder(1))
-                    .SetBorderRight(new SolidBorder(1))
-                    .SetBorderBottom(new SolidBorder(1))
-                    .SetTextAlignment(TextAlignment.RIGHT)
-                    .SetPadding(5)
-                    .SetFont(boldFont)
-                    .Add(new Paragraph($"Subtotal: $ {factura.MontoGravadoTotal:N2}").SetFontSize(9))
-                    .Add(new Paragraph($"ITBIS: $ {factura.TotalITBIS:N2}").SetFontSize(9))
-                    .Add(new Paragraph($"Total RD: $ {factura.MontoTotal:N2}").SetFontSize(10));
+                        table.AddCell(dataCell);
+                    }
+                }
 
-                tablaTotales.AddCell(totalesCell);
 
-                // Agregar la tabla de totales a la celda combinada
-                totalesContainerCell.Add(tablaTotales);
 
-                // Agregar la celda de totales a la tabla principal
-                table.AddCell(totalesContainerCell);
+                // 1. Celda de totales (ocupa todas las columnas pero alineada a la derecha)
+                Cell totalesCell = new Cell(1, 5)
+                    //.SetBorder(Border.NO_BORDER) // Sin borde exhttps://localhost:7088/FacturacionDGII/registrarfacturaE310000000002terior (se manejará en la tabla interna)
+                    .SetBorderBottom(Border.NO_BORDER)
+                    .SetBorderRight(Border.NO_BORDER)
+                    .SetPadding(0) // Eliminar espacio interno
+                    .SetMargin(0)  // Eliminar margen
+                    .SetTextAlignment(TextAlignment.RIGHT); // Alinear contenido a la derecha
 
-                // Agregar la tabla completa al documento
+                // 2. Tabla interna para etiquetas y valores (ancho ajustado + bordes)
+                Table innerTable = new Table(UnitValue.CreatePercentArray(new float[] { 10, 10 })) // Columnas más estrechas
+                    .SetWidth(UnitValue.CreatePercentValue(35)) // Ocupa solo el 50% del espacio (ajustable)
+                    .SetHorizontalAlignment(HorizontalAlignment.RIGHT) // Alinear tabla a la derecha
+                    //.SetBorder(new SolidBorder(1))
+                    .SetBorderBottom(Border.NO_BORDER); // Bordes completos
+
+                // 3. Agregar filas con bordes:
+                // - Subtotal
+                innerTable.AddCell(
+                    new Cell()
+                        .Add(new Paragraph("Subtotal:").SetFontSize(9))
+                        .SetBorder(new SolidBorder(1))
+                        .SetTextAlignment(TextAlignment.LEFT)
+
+                );
+                innerTable.AddCell(
+                    new Cell()
+                        .Add(new Paragraph($"$ {factura.MontoGravadoTotal:N2}").SetFontSize(9))
+                        .SetBorder(new SolidBorder(1))
+                        .SetTextAlignment(TextAlignment.RIGHT)
+                );
+
+                // - ITBIS
+                innerTable.AddCell(
+                    new Cell()
+                        .Add(new Paragraph("ITBIS:").SetFontSize(9))
+                        .SetBorder(new SolidBorder(1))
+                        .SetTextAlignment(TextAlignment.LEFT)
+                );
+                innerTable.AddCell(
+                    new Cell()
+                        .Add(new Paragraph($"$ {factura.TotalITBIS:N2}").SetFontSize(9))
+                        .SetBorder(new SolidBorder(1))
+                        .SetTextAlignment(TextAlignment.RIGHT)
+                );
+
+                // - Total RD
+                innerTable.AddCell(
+                    new Cell()
+                        .Add(new Paragraph("Total RD:").SetFontSize(9))
+                        .SetBorder(new SolidBorder(1))
+                        .SetTextAlignment(TextAlignment.LEFT)
+                );
+                innerTable.AddCell(
+                    new Cell()
+                        .Add(new Paragraph($"$ {factura.MontoTotal:N2}").SetFontSize(9))
+                        .SetBorder(new SolidBorder(1))
+                        .SetTextAlignment(TextAlignment.RIGHT)
+                );
+
+                // 4. Integrar en la tabla principal
+                totalesCell.Add(innerTable);
+                table.AddCell(totalesCell);
+
+                // Agregar al documento
                 doc.Add(table);
+
+
+
+
+
+
+
+
+
+
+
+
                 doc.Add(new Paragraph(" "));
 
 
@@ -294,7 +356,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 // Línea para firmar
                 Paragraph lineaFirma = new Paragraph("______________________________")
                     .SetTextAlignment(TextAlignment.LEFT)
-                    .SetFontSize(10)
+                    .SetFontSize(9)
                     .SetMarginBottom(0);
 
                 // Texto "Autorizado por"
