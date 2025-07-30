@@ -172,9 +172,9 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 rightCell.Add(new Paragraph($"Fecha Vencimiento: {factura.FechaVencimientoSecuencia}").SetFontSize(9));
                 rightCell.Add(new Paragraph($"Fecha: {factura.FechaEmision}").SetFontSize(9));
                 rightCell.Add(new Paragraph($"Número Factura: {factura.NumeroFacturaInterna}").SetFontSize(9));
-                rightCell.Add(new Paragraph($"Orden de venta: {factura.NumeroOrdenCompra}").SetFontSize(9));
-                rightCell.Add(new Paragraph("Condición de pago: x ").SetFontSize(9));
-                rightCell.Add(new Paragraph("Moneda: x ").SetFontSize(9));
+                //rightCell.Add(new Paragraph($"Orden de venta: {factura.NumeroOrdenCompra}").SetFontSize(9));
+                //rightCell.Add(new Paragraph("Condición de pago: x ").SetFontSize(9));
+                //rightCell.Add(new Paragraph("Moneda: x ").SetFontSize(9));
 
                 // Agregar las celdas a la tabla
                 headerTable.AddCell(leftCell);
