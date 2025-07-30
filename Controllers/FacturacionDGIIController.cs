@@ -148,7 +148,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 leftCell.Add(new Paragraph("Mora Tapia Peralta & Asociado, SRL").SetFontSize(9));
                 leftCell.Add(new Paragraph($"RNC: {factura.RNCEmisor}").SetFontSize(9));
-                leftCell.Add(new Paragraph("Dirección: Calle Ciudad Heredia de Costa Rica No.37 Local \r\n303 Hondura La Feria").SetFontSize(9));
+                leftCell.Add(new Paragraph("Dirección: Calle Ciudad Heredia de Costa Rica No.37 Local 303 Hondura La Feria").SetFontSize(9));
                 leftCell.Add(new Paragraph("Teléfono: (829)-435-9277").SetFontSize(9));
                 leftCell.Add(new Paragraph("Email: mtp@mtpasociados.com").SetFontSize(9));
 
@@ -157,14 +157,24 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 // Celda derecha - Factura
                 Cell rightCell = new Cell().SetBorder(Border.NO_BORDER).SetTextAlignment(TextAlignment.LEFT).SetFont(boldFont);
+
+                rightCell.Add(
+                    new Paragraph("Página 1 de 1")
+                        .SetFontSize(9)
+                        //.SetHorizontalAlignment(HorizontalAlignment.RIGHT)
+                        .SetTextAlignment(TextAlignment.RIGHT)
+                        .SetMarginBottom(10) // Espacio de 10 puntos debajo del texto
+                );
+
+
                 rightCell.Add(new Paragraph("Factura de Crédito Fiscal").SetFontSize(11).SetFont(boldFont2));
                 rightCell.Add(new Paragraph($"NCF: {factura.ENCF}").SetFontSize(9));
                 rightCell.Add(new Paragraph($"Fecha Vencimiento: {factura.FechaVencimientoSecuencia}").SetFontSize(9));
                 rightCell.Add(new Paragraph($"Fecha: {factura.FechaEmision}").SetFontSize(9));
                 rightCell.Add(new Paragraph($"Número Factura: {factura.NumeroFacturaInterna}").SetFontSize(9));
                 rightCell.Add(new Paragraph($"Orden de venta: {factura.NumeroOrdenCompra}").SetFontSize(9));
-                rightCell.Add(new Paragraph("Condición de pago: ... ").SetFontSize(9));
-                rightCell.Add(new Paragraph("Moneda: DOP").SetFontSize(9));
+                rightCell.Add(new Paragraph("Condición de pago: x ").SetFontSize(9));
+                rightCell.Add(new Paragraph("Moneda: x ").SetFontSize(9));
 
                 // Agregar las celdas a la tabla
                 headerTable.AddCell(leftCell);
@@ -204,11 +214,11 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 );
 
                 // Celdas de contenido
-                clienteTable.AddCell(new Cell().Add(new Paragraph($"Nombre: {factura.RazonSocialComprador}").SetFontSize(8)).SetBorder(Border.NO_BORDER).SetPadding(2));
                 clienteTable.AddCell(new Cell().Add(new Paragraph($"RNC: {factura.RNCComprador}").SetFontSize(8)).SetBorder(Border.NO_BORDER).SetPadding(2));
-                clienteTable.AddCell(new Cell().Add(new Paragraph($"Dirección: {factura.DireccionComprador}").SetFontSize(8)).SetBorder(Border.NO_BORDER).SetPadding(2));
-                clienteTable.AddCell(new Cell().Add(new Paragraph($"Contacto: {factura.ContactoComprador}").SetFontSize(8)).SetBorder(Border.NO_BORDER).SetPadding(2));
-                clienteTable.AddCell(new Cell().Add(new Paragraph($"Correo: {factura.CorreoComprador}").SetFontSize(8)).SetBorder(Border.NO_BORDER).SetPadding(2));
+                clienteTable.AddCell(new Cell().Add(new Paragraph($"CLIENTE: {factura.RazonSocialComprador}").SetFontSize(8)).SetBorder(Border.NO_BORDER).SetPadding(2));
+                clienteTable.AddCell(new Cell().Add(new Paragraph($"DIRECCIÓN: {factura.DireccionComprador}").SetFontSize(8)).SetBorder(Border.NO_BORDER).SetPadding(2));
+                //clienteTable.AddCell(new Cell().Add(new Paragraph($"Contacto: {factura.ContactoComprador}").SetFontSize(8)).SetBorder(Border.NO_BORDER).SetPadding(2));
+                //clienteTable.AddCell(new Cell().Add(new Paragraph($"Correo: {factura.CorreoComprador}").SetFontSize(8)).SetBorder(Border.NO_BORDER).SetPadding(2));
 
                 doc.Add(clienteTable);
 
@@ -246,11 +256,11 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 {
                     for (int i = 0; i < 5; i++)
                     {
-                        string content = i == 0 ? linea.CantidadItem.ToString() :
+                        string content = i == 0 ? linea.CantidadItem.ToString("N0") :
                                         i == 1 ? linea.NombreItem ?? "" :
-                                        i == 2 ? linea.UnidadMedida ?? "" :
-                                        i == 3 ? linea.PrecioUnitarioItem.ToString() :
-                                        linea.MontoItem.ToString();
+                                        i == 2 ? Convert.ToDecimal(linea.UnidadMedida).ToString("N2") :
+                                        i == 3 ? linea.PrecioUnitarioItem.ToString("N2") :
+                                        linea.MontoItem.ToString("N2");
 
                         Cell dataCell = new Cell()
                             .Add(new Paragraph(content))
@@ -275,7 +285,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 // 2. Tabla interna para etiquetas y valores (ancho ajustado + bordes)
                 Table innerTable = new Table(UnitValue.CreatePercentArray(new float[] { 10, 10 })) // Columnas más estrechas
-                    .SetWidth(UnitValue.CreatePercentValue(35)) // Ocupa solo el 50% del espacio (ajustable)
+                    .SetWidth(UnitValue.CreatePercentValue(40)) // Ocupa solo el 50% del espacio (ajustable)
                     .SetHorizontalAlignment(HorizontalAlignment.RIGHT) // Alinear tabla a la derecha
                     //.SetBorder(new SolidBorder(1))
                     .SetBorderBottom(Border.NO_BORDER); // Bordes completos
@@ -292,7 +302,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 );
                 innerTable.AddCell(
                     new Cell()
-                        .Add(new Paragraph($"$ {factura.MontoGravadoTotal:N2}").SetFontSize(9))
+                        .Add(new Paragraph($"{factura.MontoGravadoTotal:N2}").SetFontSize(9))
                         .SetBorder(new SolidBorder(0.5f))
                         .SetTextAlignment(TextAlignment.RIGHT)
                 );
@@ -308,7 +318,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 );
                 innerTable.AddCell(
                     new Cell()
-                        .Add(new Paragraph($"$ {factura.TotalITBIS:N2}").SetFontSize(9))
+                        .Add(new Paragraph($"{factura.TotalITBIS:N2}").SetFontSize(9))
                         .SetBorder(new SolidBorder(0.5f))
                         .SetTextAlignment(TextAlignment.RIGHT)
                 );
@@ -316,14 +326,14 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 // - Total RD
                 innerTable.AddCell(
                     new Cell()
-                        .Add(new Paragraph("Total RD:").SetFontSize(9))
+                        .Add(new Paragraph("Total:").SetFontSize(9))
                         .SetBorder(new SolidBorder(0.5f))
                         .SetTextAlignment(TextAlignment.LEFT)
                         .SetFont(boldFont2) // Negrita para el título   
                 );
                 innerTable.AddCell(
                     new Cell()
-                        .Add(new Paragraph($"$ {factura.MontoTotal:N2}").SetFontSize(9))
+                        .Add(new Paragraph($"{factura.MontoTotal:N2}").SetFontSize(9))
                         .SetBorder(new SolidBorder(0.5f))
                         .SetTextAlignment(TextAlignment.RIGHT)
                 );
@@ -360,7 +370,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 Cell leftCell1 = new Cell().SetBorder(Border.NO_BORDER).SetTextAlignment(TextAlignment.LEFT);
 
                 // Línea para firmar
-                Paragraph lineaFirma = new Paragraph("______________________________")
+                Paragraph lineaFirma = new Paragraph("_____________________________________")
                     .SetTextAlignment(TextAlignment.LEFT)
                     .SetFontSize(9)
                     .SetMarginBottom(0);
@@ -380,6 +390,9 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 // Crear código QR
                 DateTime fechaFirma = DateTime.ParseExact(factura.FechaHoraFirma, "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+
+                string soloFecha = fechaFirma.ToString("dd-MM-yyyy");
+
                 string fechaFirmaFormateada = Uri.EscapeDataString(fechaFirma.ToString("dd-MM-yyyy HH:mm:ss"));
 
                 string url = $"https://ecf.dgii.gov.do/certecf/ConsultaTimbre?RncEmisor={factura.RNCEmisor}&RncComprador={factura.RNCComprador}&ENCF={factura.ENCF}&FechaEmision={factura.FechaEmision}&MontoTotal={factura.MontoTotal}&FechaFirma={fechaFirmaFormateada}&CodigoSeguridad={codigoSeguridad}";
@@ -393,7 +406,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 //rightCell1.Add(new Paragraph("Código QR:").SetTextAlignment(TextAlignment.RIGHT));
                 rightCell1.Add(qrCodeImage);
                 rightCell1.Add(new Paragraph($"Código de Seguridad: {codigoSeguridad}").SetFontSize(9).SetTextAlignment(TextAlignment.RIGHT).SetMarginTop(5));
-                rightCell1.Add(new Paragraph($"FechaHoraFirma: {factura.FechaHoraFirma}").SetFontSize(9).SetTextAlignment(TextAlignment.RIGHT));
+                rightCell1.Add(new Paragraph($"FechaHoraFirma: {soloFecha}").SetFontSize(9).SetTextAlignment(TextAlignment.RIGHT));
 
                 // Agregar celdas a la tabla
                 finalTable.AddCell(leftCell1);
@@ -541,7 +554,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Comprador = new CompradorModel1
                         {
                             RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RazonSocialComprador = "CONSEJO NACIONAL DE SEGURIDAD SOCIAL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -689,6 +702,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     {
                         var detalle = new ItemFactura
                         {
+
                             FacturaId = registro.Id, // Asignamos el ID de la factura recién creada
                             NumeroLinea = item.NumeroLinea,
                             IndicadorFacturacion = item.IndicadorFacturacion,
@@ -696,6 +710,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                             IndicadorBienoServicio = item.IndicadorBienoServicio,
                             CantidadItem = Convert.ToDecimal(item.CantidadItem ?? "0"),
                             UnidadMedida = item.UnidadMedida,
+
                             PrecioUnitarioItem = Convert.ToDecimal(item.PrecioUnitarioItem ?? "0"),
                             MontoItem = Convert.ToDecimal(item.MontoItem ?? "0")
                         };
@@ -772,7 +787,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Comprador = new CompradorModel2
                         {
                             RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RazonSocialComprador = "CONSEJO NACIONAL DE SEGURIDAD SOCIAL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -1051,7 +1066,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Comprador = new CompradorModel3
                         {
                             RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RazonSocialComprador = "CONSEJO NACIONAL DE SEGURIDAD SOCIAL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -1334,7 +1349,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Comprador = new CompradorModel4
                         {
                             RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RazonSocialComprador = "CONSEJO NACIONAL DE SEGURIDAD SOCIAL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -1640,7 +1655,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Comprador = new CompradorModel5
                         {
                             RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RazonSocialComprador = "CONSEJO NACIONAL DE SEGURIDAD SOCIAL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -1964,7 +1979,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Comprador = new CompradorModel6
                         {
                             RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RazonSocialComprador = "CONSEJO NACIONAL DE SEGURIDAD SOCIAL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -2202,7 +2217,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Comprador = new CompradorModel7
                         {
                             RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RazonSocialComprador = "CONSEJO NACIONAL DE SEGURIDAD SOCIAL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -2542,7 +2557,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Comprador = new CompradorModel8
                         {
                             RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RazonSocialComprador = "CONSEJO NACIONAL DE SEGURIDAD SOCIAL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -2823,7 +2838,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Comprador = new CompradorModel9
                         {
                             RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RazonSocialComprador = "CONSEJO NACIONAL DE SEGURIDAD SOCIAL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -3597,7 +3612,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Comprador = new CompradorModel12
                         {
                             RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RazonSocialComprador = "CONSEJO NACIONAL DE SEGURIDAD SOCIAL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
