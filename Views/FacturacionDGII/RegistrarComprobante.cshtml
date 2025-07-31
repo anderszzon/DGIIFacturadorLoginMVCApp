@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Registrar Comprobante";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // si usas layout
+}
+
+<h2>Registrar Comprobante</h2>
+
+<form id="comprobanteForm" method="get">
+    <label for="comprobante">Seleccione un comprobante:</label>
+    <select id="comprobante" name="comprobante">
+        <option value="">-- Seleccione --</option>
+        <option value="E450000000001">Comprobante E450000000001</option>
+        <option value="E460000000001">Comprobante E460000000001</option>
+        <option value="E47">Comprobante E47</option>
+
+        <!-- Puedes llenar esto dinámicamente desde el backend si lo necesitas -->
+
+    </select>
+
+    <button type="button" onclick="redirigir()">Ir a Comprobante</button>
+</form>
+
+<script>
+    function redirigir() {
+        const comprobante = document.getElementById("comprobante").value;
+        if (comprobante) {
+            // Redirige a la vista correspondiente
+            window.location.href = "/FacturacionDGII/registrarfactura" + comprobante;
+        } else {
+            alert("Seleccione un comprobante.");
+        }
+    }
+</script>

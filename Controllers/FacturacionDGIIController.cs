@@ -32,6 +32,22 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             _context = context;
         }
 
+
+        public ActionResult RegistrarComprobante()
+        {
+            return View(); // Vista inicial con el selector
+        }
+
+        //// Acción genérica para mostrar la vista según el número del comprobante
+        //public ActionResult RegistrarFactura(string id)
+        //{
+        //    if (string.IsNullOrEmpty(id))
+        //        return RedirectToAction("RegistrarComprobante");
+
+        //    string viewName = $"registrarfactura{id}";
+        //    return View(viewName);
+        //}
+
         [HttpGet]
         public IActionResult verFactura()
         {
@@ -4431,7 +4447,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult registrarfacturaE470000000001()
+        public IActionResult comprobanteE47()
         {
             var model = new FacturaDGIIModel15
             {
@@ -4532,7 +4548,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
 
         [HttpPost]
-        public IActionResult registrarfacturaE470000000001(FacturaDGIIModel15 model)
+        public IActionResult comprobanteE47(FacturaDGIIModel15 model)
         {
             string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
             string passCert = "LD271167";
