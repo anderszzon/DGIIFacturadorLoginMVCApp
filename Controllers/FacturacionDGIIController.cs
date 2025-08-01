@@ -531,7 +531,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
 
         [HttpGet]
-        public IActionResult registrarfacturaE310000000001()
+        public IActionResult comprobanteE31A()
         {
             var model = new FacturaDGIIModel1
             {
@@ -615,7 +615,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult registrarfacturaE310000000001(FacturaDGIIModel1 model)
+        public IActionResult comprobanteE31A(FacturaDGIIModel1 model)
         {
             string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
             string passCert = "LD271167";
@@ -764,7 +764,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult registrarfacturaE310000000002()
+        public IActionResult comprobanteE31B()
         {
             var model = new FacturaDGIIModel2
             {
@@ -891,7 +891,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult registrarfacturaE310000000002(FacturaDGIIModel2 model)
+        public IActionResult comprobanteE31B(FacturaDGIIModel2 model)
         {
             string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
             string passCert = "LD271167";
@@ -1043,7 +1043,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult registrarfacturaE310000000003()
+        public IActionResult comprobanteE31C()
         {
             var model = new FacturaDGIIModel3
             {
@@ -1173,7 +1173,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult registrarfacturaE310000000003(FacturaDGIIModel3 model)
+        public IActionResult comprobanteE31C(FacturaDGIIModel3 model)
         {
             string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
             string passCert = "LD271167";
@@ -1326,7 +1326,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
 
         [HttpGet]
-        public IActionResult registrarfacturaE310000000004()
+        public IActionResult comprobanteE31D()
         {
             var model = new FacturaDGIIModel4
             {
@@ -1466,7 +1466,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
 
         [HttpPost]
-        public IActionResult registrarfacturaE310000000004(FacturaDGIIModel4 model)
+        public IActionResult comprobanteE31D(FacturaDGIIModel4 model)
         {
             string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
             string passCert = "LD271167";
@@ -1621,7 +1621,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
 
         [HttpGet]
-        public IActionResult registrarfacturaE310000000005()
+        public IActionResult comprobanteE31E()
         {
             var model = new FacturaDGIIModel5
             {
@@ -1769,7 +1769,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
 
         [HttpPost]
-        public IActionResult registrarfacturaE310000000005(FacturaDGIIModel5 model)
+        public IActionResult comprobanteE31E(FacturaDGIIModel5 model)
         {
             string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
             string passCert = "LD271167";
@@ -1958,7 +1958,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult registrarfacturaE320000000001()
+        public IActionResult comprobanteE32A()
         {
             var model = new FacturaDGIIModel6
             {
@@ -2043,7 +2043,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult registrarfacturaE320000000001(FacturaDGIIModel6 model)
+        public IActionResult comprobanteE32A(FacturaDGIIModel6 model)
         {
             string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
             string passCert = "LD271167";
@@ -2196,7 +2196,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult registrarfacturaE320000000002()
+        public IActionResult comprobanteE32B()
         {
             var model = new FacturaDGIIModel7
             {
@@ -2355,7 +2355,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
 
         [HttpPost]
-        public IActionResult registrarfacturaE320000000002(FacturaDGIIModel7 model)
+        public IActionResult comprobanteE32B(FacturaDGIIModel7 model)
         {
             string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
             string passCert = "LD271167";
@@ -2525,7 +2525,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult registrarfacturaE330000000001()
+        public IActionResult comprobanteE33()
         {
             var model = new FacturaDGIIModel8
             {
@@ -2627,7 +2627,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
 
         [HttpPost]
-        public IActionResult registrarfacturaE330000000001(FacturaDGIIModel8 model)
+        public IActionResult comprobanteE33(FacturaDGIIModel8 model)
         {
             string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
             string passCert = "LD271167";
@@ -2816,7 +2816,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult registrarfacturaE340000000001()
+        public IActionResult comprobanteE34()
         {
             var model = new FacturaDGIIModel9
             {
@@ -2911,7 +2911,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult registrarfacturaE340000000001(FacturaDGIIModel9 model)
+        public IActionResult comprobanteE34(FacturaDGIIModel9 model)
         {
             string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
             string passCert = "LD271167";
@@ -3100,7 +3100,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult registrarfacturaE410000000001()
+        public IActionResult comprobanteE41()
         {
             var model = new FacturaDGIIModel10
             {
@@ -3192,7 +3192,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
 
         [HttpPost]
-        public IActionResult registrarfacturaE410000000001(FacturaDGIIModel10 model)
+        public IActionResult comprobanteE41(FacturaDGIIModel10 model)
         {
             string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
             string passCert = "LD271167";
@@ -3381,7 +3381,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult registrarfacturaE430000000001()
+        public IActionResult comprobanteE43()
         {
             var model = new FacturaDGIIModel11
             {
@@ -3442,7 +3442,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
 
         [HttpPost]
-        public IActionResult registrarfacturaE430000000001(FacturaDGIIModel11 model)
+        public IActionResult comprobanteE43(FacturaDGIIModel11 model)
         {
             string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
             string passCert = "LD271167";
@@ -3577,7 +3577,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult registrarfacturaE440000000001()
+        public IActionResult comprobanteE44()
         {
             var model = new FacturaDGIIModel12
             {
@@ -3684,7 +3684,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
 
         [HttpPost]
-        public IActionResult registrarfacturaE440000000001(FacturaDGIIModel12 model)
+        public IActionResult comprobanteE44(FacturaDGIIModel12 model)
         {
             string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
             string passCert = "LD271167";
@@ -3874,7 +3874,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
 
         [HttpGet]
-        public IActionResult registrarfacturaE450000000001()
+        public IActionResult comprobanteE45()
         {
             var model = new FacturaDGIIModel13
             {
@@ -3965,7 +3965,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
 
         [HttpPost]
-        public IActionResult registrarfacturaE450000000001(FacturaDGIIModel13 model)
+        public IActionResult comprobanteE45(FacturaDGIIModel13 model)
         {
             string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
             string passCert = "LD271167";
@@ -4154,7 +4154,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult registrarfacturaE460000000001()
+        public IActionResult comprobanteE46()
         {
             var model = new FacturaDGIIModel14
             {
@@ -4294,7 +4294,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult registrarfacturaE460000000001(FacturaDGIIModel14 model)
+        public IActionResult comprobanteE46(FacturaDGIIModel14 model)
         {
             string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
             string passCert = "LD271167";

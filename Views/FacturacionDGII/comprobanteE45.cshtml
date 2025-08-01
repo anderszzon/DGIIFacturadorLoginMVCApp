@@ -1,6 +1,6 @@
-﻿@model FacturaDGIIModel1
+﻿@model FacturaDGIIModel13
 
-<form asp-action="registrarfacturaE310000000001" method="post" id="facturaForm">
+<form asp-action="comprobanteE45" method="post" id="facturaForm">
     <!-- Sección de datos generales -->
     <div class="card mb-4">
         <div class="card-header bg-primary text-white">
@@ -22,7 +22,7 @@
         <div class="card-body row">
             <div class="form-group col-md-3">
                 <label asp-for="ECF.Encabezado.IdDoc.TipoeCF"></label>
-                <input asp-for="ECF.Encabezado.IdDoc.TipoeCF" class="form-control" value="31" readonly />
+                <input asp-for="ECF.Encabezado.IdDoc.TipoeCF" class="form-control" value="45" readonly />
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="ECF.Encabezado.IdDoc.eNCF"></label>
@@ -33,33 +33,16 @@
                 <input asp-for="ECF.Encabezado.IdDoc.FechaVencimientoSecuencia" class="form-control" />
             </div>
             <div class="form-group col-md-3">
-                <label asp-for="ECF.Encabezado.IdDoc.IndicadorEnvioDiferido"></label>
-                <select asp-for="ECF.Encabezado.IdDoc.IndicadorEnvioDiferido" class="form-control">
-                    <option value="0">No</option>
-                    <option value="1">Sí</option>
-                </select>
-            </div>
-            <div class="form-group col-md-3">
                 <label asp-for="ECF.Encabezado.IdDoc.IndicadorMontoGravado"></label>
-                <select asp-for="ECF.Encabezado.IdDoc.IndicadorMontoGravado" class="form-control">
-                    <option value="0">No</option>
-                    <option value="1">Sí</option>
-                </select>
+                <input asp-for="ECF.Encabezado.IdDoc.IndicadorMontoGravado" class="form-control" />
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="ECF.Encabezado.IdDoc.TipoIngresos"></label>
-                <select asp-for="ECF.Encabezado.IdDoc.TipoIngresos" class="form-control">
-                    <option value="01">Venta de bienes</option>
-                    <option value="02">Servicios</option>
-                    <option value="03">Mixto</option>
-                </select>
+                <input asp-for="ECF.Encabezado.IdDoc.TipoIngresos" class="form-control" />
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="ECF.Encabezado.IdDoc.TipoPago"></label>
-                <select asp-for="ECF.Encabezado.IdDoc.TipoPago" class="form-control">
-                    <option value="1">Contado</option>
-                    <option value="2">Crédito</option>
-                </select>
+                <input asp-for="ECF.Encabezado.IdDoc.TipoPago" class="form-control" />
             </div>
         </div>
     </div>
@@ -178,6 +161,60 @@
         </div>
     </div>
 
+    <!-- Sección de datos del InformacionesAdicionales -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h3>Informaciones Adicionales</h3>
+        </div>
+        <div class="card-body row">
+            <div class="form-group col-md-4">
+                <label asp-for="ECF.Encabezado.InformacionesAdicionales.NumeroContenedor"></label>
+                <input asp-for="ECF.Encabezado.InformacionesAdicionales.NumeroContenedor" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="ECF.Encabezado.InformacionesAdicionales.NumeroReferencia"></label>
+                <input asp-for="ECF.Encabezado.InformacionesAdicionales.NumeroReferencia" class="form-control" />
+            </div>
+        </div>
+    </div>
+
+        <!-- Sección de totales (calculados automáticamente) -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h3>Totales</h3>
+        </div>
+        <div class="card-body row">
+            <div class="form-group col-md-3">
+                <label>MontoGravadoTotal</label>
+                <input asp-for="ECF.Encabezado.Totales.MontoGravadoTotal" id="totalGeneral" class="form-control" />
+            </div>
+            <div class="form-group col-md-3">
+                <label>MontoGravadoI1</label>
+                <input asp-for="ECF.Encabezado.Totales.MontoGravadoI1" id="totalGeneral" class="form-control" />
+            </div>
+            <div class="form-group col-md-3">
+                <label>ITBIS1</label>
+                <input asp-for="ECF.Encabezado.Totales.ITBIS1" id="totalGeneral" class="form-control" />
+            </div>
+            <div class="form-group col-md-3">
+                <label>TotalITBIS</label>
+                <input asp-for="ECF.Encabezado.Totales.TotalITBIS" id="totalGeneral" class="form-control" />
+            </div>
+            <div class="form-group col-md-3">
+                <label>TotalITBIS1</label>
+                <input asp-for="ECF.Encabezado.Totales.TotalITBIS1" id="totalGeneral" class="form-control" />
+            </div>
+            <div class="form-group col-md-3">
+                <label>MontoTotal</label>
+                <input asp-for="ECF.Encabezado.Totales.MontoTotal" id="totalGeneral" class="form-control" />
+            </div>
+            <div class="form-group col-md-3">
+                <label>Valor Pagar</label>
+                <input asp-for="ECF.Encabezado.Totales.ValorPagar" id="totalGeneral" class="form-control" />
+            </div>
+        </div>
+    </div>
+
     <!-- Sección de ítems (dinámica) -->
     <div class="card mb-4">
         <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
@@ -194,74 +231,41 @@
                     </div>
                     <div class="card-body row">
                         <input type="hidden" asp-for="ECF.DetallesItems.Item[i].NumeroLinea" value="@(i + 1)" />
+                        <div class="form-group col-md-1">
+                            <label>Ind. Fact.</label>
+                            <input asp-for="ECF.DetallesItems.Item[i].IndicadorFacturacion" class="form-control" />
+                        </div>
                         <div class="form-group col-md-3">
                             <label>Nombre del Item</label>
                             <input asp-for="ECF.DetallesItems.Item[i].NombreItem" class="form-control item-name" />
                         </div>
                         <div class="form-group col-md-2">
-                            <label>Tipo</label>
-                            <select asp-for="ECF.DetallesItems.Item[i].IndicadorBienoServicio" class="form-control">
-                                <option value="1">Bien</option>
-                                <option value="2">Servicio</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-1">
-                            <label>Ind. Fact.</label>
-                            <input asp-for="ECF.DetallesItems.Item[i].IndicadorFacturacion" class="form-control" value="1" />
+                            <label>Indicador Bien ó Servicio</label>
+                            <input asp-for="ECF.DetallesItems.Item[i].IndicadorBienoServicio" class="form-control item-name" />
                         </div>
                         <div class="form-group col-md-2">
-                            <label>Cantidad</label>
+                            <label>Descripcion Item</label>
+                            <input asp-for="ECF.DetallesItems.Item[i].DescripcionItem" class="form-control item-name" />
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label>Cantidad Item</label>
                             <input asp-for="ECF.DetallesItems.Item[i].CantidadItem" type="number" step="0.01" class="form-control item-quantity" />
                         </div>
                         <div class="form-group col-md-2">
-                            <label>Unidad</label>
-                            <select asp-for="ECF.DetallesItems.Item[i].UnidadMedida" class="form-control">
-                                <option value="31">Unidad</option>
-                                <option value="47">Litros</option>
-                                <!-- Más opciones según catálogo -->
-                            </select>
+                            <label>Unidad Medida</label>
+                            <input asp-for="ECF.DetallesItems.Item[i].UnidadMedida" type="number" step="0.01" class="form-control item-quantity" />
                         </div>
                         <div class="form-group col-md-2">
-                            <label>Precio Unitario</label>
+                            <label>Precio Unitario Item</label>
                             <input asp-for="ECF.DetallesItems.Item[i].PrecioUnitarioItem" type="number" step="0.01" class="form-control item-price" />
                         </div>
                         <div class="form-group col-md-2">
-                            <label>Total</label>
-                            <input asp-for="ECF.DetallesItems.Item[i].MontoItem" type="number" step="0.01" class="form-control item-total" readonly />
+                            <label>Monto Item</label>
+                            <input asp-for="ECF.DetallesItems.Item[i].MontoItem" type="number" step="0.01" class="form-control item-total" />
                         </div>
                     </div>
                 </div>
             }
-        </div>
-    </div>
-
-    <!-- Sección de totales (calculados automáticamente) -->
-    <div class="card mb-4">
-        <div class="card-header bg-primary text-white">
-            <h3>Totales</h3>
-        </div>
-        <div class="card-body row">
-            <div class="form-group col-md-3">
-                <label>Subtotal</label>
-                <input id="subtotal" class="form-control" readonly />
-                <input type="hidden" asp-for="ECF.Encabezado.Totales.MontoGravadoTotal" id="montoGravadoTotal" />
-                <input type="hidden" asp-for="ECF.Encabezado.Totales.MontoGravadoI1" id="montoGravadoI1" />
-            </div>
-            <div class="form-group col-md-3">
-                <label>ITBIS (18%)</label>
-                <input id="itbis" class="form-control" readonly />
-                <input type="hidden" asp-for="ECF.Encabezado.Totales.ITBIS1" value="18" />
-                <input type="hidden" asp-for="ECF.Encabezado.Totales.TotalITBIS" id="totalITBIS" />
-                <input type="hidden" asp-for="ECF.Encabezado.Totales.TotalITBIS1" id="totalITBIS1" />
-            </div>
-            <div class="form-group col-md-3">
-                <label>Descuentos</label>
-                <input id="descuentos" class="form-control" value="0.00" />
-            </div>
-            <div class="form-group col-md-3">
-                <label>Total General</label>
-                <input asp-for="ECF.Encabezado.Totales.MontoTotal" id="totalGeneral" class="form-control" readonly />
-            </div>
         </div>
     </div>
 
@@ -373,28 +377,28 @@
                 });
             }
             
-            // Calcular totales
-            function calculateTotals() {
-                let subtotal = 0;
-                $('.item-total').each(function() {
-                    subtotal += parseFloat($(this).val()) || 0;
-                });
+            // // Calcular totales
+            // function calculateTotals() {
+            //     let subtotal = 0;
+            //     $('.item-total').each(function() {
+            //         subtotal += parseFloat($(this).val()) || 0;
+            //     });
                 
-                const itbisRate = 0.18; // 18%
-                const itbis = subtotal * itbisRate;
-                const descuentos = parseFloat($('#descuentos').val()) || 0;
-                const total = subtotal + itbis - descuentos;
+            //     const itbisRate = 0.18; // 18%
+            //     const itbis = subtotal * itbisRate;
+            //     const descuentos = parseFloat($('#descuentos').val()) || 0;
+            //     const total = subtotal + itbis - descuentos;
                 
-                $('#subtotal').val(subtotal.toFixed(2));
-                $('#itbis').val(itbis.toFixed(2));
-                $('#totalGeneral').val(total.toFixed(2));
+            //     $('#subtotal').val(subtotal.toFixed(2));
+            //     $('#itbis').val(itbis.toFixed(2));
+            //     $('#totalGeneral').val(total.toFixed(2));
                 
-                // Actualizar campos ocultos del modelo
-                $('#montoGravadoTotal').val(subtotal.toFixed(2));
-                $('#montoGravadoI1').val(subtotal.toFixed(2));
-                $('#totalITBIS').val(itbis.toFixed(2));
-                $('#totalITBIS1').val(itbis.toFixed(2));
-            }
+            //     // Actualizar campos ocultos del modelo
+            //     $('#montoGravadoTotal').val(subtotal.toFixed(2));
+            //     $('#montoGravadoI1').val(subtotal.toFixed(2));
+            //     $('#totalITBIS').val(itbis.toFixed(2));
+            //     $('#totalITBIS1').val(itbis.toFixed(2));
+            // }
             
             // Inicializar manejadores de eventos
             attachEventHandlers();

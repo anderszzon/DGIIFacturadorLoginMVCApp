@@ -1,6 +1,6 @@
-﻿@model FacturaDGIIModel5
+﻿@model FacturaDGIIModel4
 
-<form asp-action="registrarfacturaE310000000005" method="post" id="facturaForm">
+<form asp-action="comprobanteE31D" method="post" id="facturaForm">
     <!-- Sección de datos generales -->
     <div class="card mb-4">
         <div class="card-header bg-primary text-white">
@@ -47,27 +47,6 @@
             <div class="form-group col-md-3">
                 <label asp-for="ECF.Encabezado.IdDoc.TipoPago"></label>
                 <input asp-for="ECF.Encabezado.IdDoc.TipoPago" class="form-control" />
-            </div>
-            <!-- Sección de formas de pago -->
-            <div class="card mb-4">
-                <div class="card-header bg-primary text-white">
-                    <h3>Formas de Pago</h3>
-                </div>
-                <div class="card-body" id="formasPagoContainer">
-                    @for (int i = 0; i < Model.ECF.Encabezado.IdDoc.TablaFormasPago.FormaDePago.Count; i++)
-                    {
-                        <div class="form-group row mb-2">
-                            <div class="col-md-3">
-                                <label>Forma de Pago</label>
-                                <input asp-for="ECF.Encabezado.IdDoc.TablaFormasPago.FormaDePago[i].FormaPago" class="form-control" />
-                            </div>
-                            <div class="col-md-3">
-                                <label>Monto de Pago</label>
-                                <input asp-for="ECF.Encabezado.IdDoc.TablaFormasPago.FormaDePago[i].MontoPago" class="form-control" />
-                            </div>
-                        </div>
-                    }
-                </div>
             </div>
         </div>
     </div>
@@ -186,6 +165,23 @@
         </div>
     </div>
 
+        <!-- Sección de datos del InformacionesAdicionales -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h3>Informaciones Adicionales</h3>
+        </div>
+        <div class="card-body row">
+            <div class="form-group col-md-4">
+                <label asp-for="ECF.Encabezado.InformacionesAdicionales.NumeroContenedor"></label>
+                <input asp-for="ECF.Encabezado.InformacionesAdicionales.NumeroContenedor" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="ECF.Encabezado.InformacionesAdicionales.NumeroReferencia"></label>
+                <input asp-for="ECF.Encabezado.InformacionesAdicionales.NumeroReferencia" class="form-control" />
+            </div>
+        </div>
+    </div>
+
         <!-- Sección de totales (calculados automáticamente) -->
     <div class="card mb-4">
         <div class="card-header bg-primary text-white">
@@ -201,8 +197,16 @@
                 <input asp-for="ECF.Encabezado.Totales.MontoGravadoI1" id="montoGravadoI1" />
             </div>
             <div class="form-group col-md-3">
+                <label>MontoGravadoI2</label>
+                <input asp-for="ECF.Encabezado.Totales.MontoGravadoI2" id="montoGravadoI2" />
+            </div>
+            <div class="form-group col-md-3">
                 <label>ITBIS1</label>
                 <input asp-for="ECF.Encabezado.Totales.ITBIS1" id="ITBIS1" />
+            </div>
+            <div class="form-group col-md-3">
+                <label>ITBIS2</label>
+                <input asp-for="ECF.Encabezado.Totales.ITBIS2" id="ITBIS2" />
             </div>
             <div class="form-group col-md-3">
                 <label>TotalITBIS</label>
@@ -211,6 +215,10 @@
             <div class="form-group col-md-3">
                 <label>TotalITBIS1</label>
                 <input asp-for="ECF.Encabezado.Totales.TotalITBIS1" id="totalITBIS1" />
+            </div>
+            <div class="form-group col-md-3">
+                <label>TotalITBIS2</label>
+                <input asp-for="ECF.Encabezado.Totales.TotalITBIS2" id="totalITBIS2" />
             </div>
             <div class="form-group col-md-3">
                 <label>MontoTotal</label>
@@ -260,47 +268,52 @@
                             <input asp-for="ECF.DetallesItems.Item[i].PrecioUnitarioItem" type="number" step="0.01" class="form-control item-price" />
                         </div>
                         <div class="form-group col-md-2">
-                            <label>Descuento Monto</label>
-                            <input asp-for="ECF.DetallesItems.Item[i].DescuentoMonto" type="number" step="0.01" class="form-control item-price" />
-                        </div>
-                        @*                      
-                        <div class="form-group col-md-3">
-                            <label>Tipo SubDescuento</label>
-                            <input asp-for="ECF.DetallesItems.Item[i].TablaSubDescuento.SubDescuento[0].TipoSubDescuento" class="form-control" />
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label>Monto SubDescuento</label>
-                            <input asp-for="ECF.DetallesItems.Item[i].TablaSubDescuento.SubDescuento[0].MontoSubDescuento" type="number" step="0.01" class="form-control" />
-                        </div> 
-                        *@
-                        <!-- TablaSubDescuento -->
-                        @for (int j = 0; j < Model.ECF.DetallesItems.Item[i].TablaSubDescuento.SubDescuento.Count; j++)
-                        {
-                            <div class="form-group col-md-3">
-                                <label>Tipo SubDescuento @(j + 1)</label>
-                                <input asp-for="ECF.DetallesItems.Item[i].TablaSubDescuento.SubDescuento[j].TipoSubDescuento" class="form-control" />
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label>Monto SubDescuento @(j + 1)</label>
-                                <input asp-for="ECF.DetallesItems.Item[i].TablaSubDescuento.SubDescuento[j].MontoSubDescuento" type="number" step="0.01" class="form-control" />
-                            </div>
-                        }
-                        <div class="form-group col-md-2">
-                            <label>RecargoMonto</label>
-                            <input asp-for="ECF.DetallesItems.Item[i].RecargoMonto" type="number" step="0.01" class="form-control item-total" />
-                        </div>
-                        <!-- TablaSubRecargo -->
-                        <div class="form-group col-md-3">
-                            <label>Tipo SubRecargo</label>
-                            <input asp-for="ECF.DetallesItems.Item[i].TablaSubRecargo.SubRecargo[0].TipoSubRecargo" class="form-control" />
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label>Monto SubRecargo</label>
-                            <input asp-for="ECF.DetallesItems.Item[i].TablaSubRecargo.SubRecargo[0].MontoSubRecargo" type="number" step="0.01" class="form-control" />
-                        </div>
-                        <div class="form-group col-md-2">
                             <label>Monto Item</label>
                             <input asp-for="ECF.DetallesItems.Item[i].MontoItem" type="number" step="0.01" class="form-control item-total" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Sección de ítems (dinámica) -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h3>Descuentos O Recargos</h3>
+            <button type="button" id="addItemBtn" class="btn btn-success">Agregar Descuento O Recargo</button>
+        </div>
+        <div class="card-body" id="itemsContainer">
+            @for (int i = 0; i < Model.ECF.DescuentosORecargos.DescuentoORecargo.Count; i++)
+            {
+                <div class="item-row card mb-3">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5>Item @(i + 1)</h5>
+                        <button type="button" class="btn btn-danger btn-sm remove-item">Eliminar</button>
+                    </div>
+                    <div class="card-body row">
+
+                        <input type="hidden" asp-for="ECF.DescuentosORecargos.DescuentoORecargo[i].NumeroLinea" value="@(i + 1)" />
+
+                        <div class="form-group col-md-1">
+                            <label>Tipo Ajuste</label>
+                            <input asp-for="ECF.DescuentosORecargos.DescuentoORecargo[i].TipoAjuste" class="form-control" />
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Nombre del Item</label>
+                            <input asp-for="ECF.DescuentosORecargos.DescuentoORecargo[i].DescripcionDescuentooRecargo" class="form-control" />
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label>Indicador Bien ó Servicio</label>
+                            <input asp-for="ECF.DescuentosORecargos.DescuentoORecargo[i].TipoValor" class="form-control" />
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label>Cantidad Item</label>
+                            <input asp-for="ECF.DescuentosORecargos.DescuentoORecargo[i].MontoDescuentooRecargo" class="form-control" />
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label>Unidad Medida</label>
+                            <input asp-for="ECF.DescuentosORecargos.DescuentoORecargo[i].IndicadorFacturacionDescuentooRecargo" class="form-control" />
                         </div>
                     </div>
                 </div>

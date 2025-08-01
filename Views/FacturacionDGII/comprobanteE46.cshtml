@@ -1,6 +1,6 @@
-﻿@model FacturaDGIIModel9
+﻿@model FacturaDGIIModel14
 
-<form asp-action="registrarfacturaE340000000001" method="post" id="facturaForm">
+<form asp-action="comprobanteE46" method="post" id="facturaForm">
     <!-- Sección de datos generales -->
     <div class="card mb-4">
         <div class="card-header bg-primary text-white">
@@ -22,49 +22,53 @@
         <div class="card-body row">
             <div class="form-group col-md-3">
                 <label asp-for="ECF.Encabezado.IdDoc.TipoeCF"></label>
-                <input asp-for="ECF.Encabezado.IdDoc.TipoeCF" class="form-control" value="34" readonly />
+                <input asp-for="ECF.Encabezado.IdDoc.TipoeCF" class="form-control" value="46" readonly />
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="ECF.Encabezado.IdDoc.eNCF"></label>
                 <input asp-for="ECF.Encabezado.IdDoc.eNCF" class="form-control" />
             </div>
             <div class="form-group col-md-3">
-                <label asp-for="ECF.Encabezado.IdDoc.IndicadorNotaCredito"></label>
-                <select asp-for="ECF.Encabezado.IdDoc.IndicadorNotaCredito" class="form-control">
-                    <option value="">Seleccione una opción</option>
-                    <option value="0">Si la fecha de emisión del e-CF afectado es ≤ 30 días calendario</option>
-                    <option value="1">Si la fecha de emisión del e-CF afectado es > 30 días calendario</option>
-                </select>
-            </div>
-            <div class="form-group col-md-3">
-                <label asp-for="ECF.Encabezado.IdDoc.IndicadorMontoGravado"></label>
-                <select asp-for="ECF.Encabezado.IdDoc.IndicadorMontoGravado" class="form-control">
-                    <option value="">Seleccione una opción</option>
-                    <option value="0">Detalle de Bienes o Servicios no tienen ITBIS incluido</option>
-                    <option value="1">Detalle de Bienes o Servicios se encuentran con ITBIS incluido</option>
-                </select>
+                <label asp-for="ECF.Encabezado.IdDoc.FechaVencimientoSecuencia"></label>
+                <input asp-for="ECF.Encabezado.IdDoc.FechaVencimientoSecuencia" class="form-control" />
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="ECF.Encabezado.IdDoc.TipoIngresos"></label>
-                <select asp-for="ECF.Encabezado.IdDoc.TipoIngresos" class="form-control">
-                    <option value="">Seleccione una opción</option>
-                    <option value="01">Ingresos por operaciones (No financieros)</option>
-                    <option value="02">Ingresos Financieros</option>
-                    <option value="03">Ingresos Extraordinarios</option>
-                    <option value="04">Ingresos por Arrendamientos</option>
-                    <option value="05">Ingresos por Venta de Activo Depreciable</option>
-                    <option value="06">Otros Ingresos</option>
-                </select>
+                <input asp-for="ECF.Encabezado.IdDoc.TipoIngresos" class="form-control" />
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="ECF.Encabezado.IdDoc.FechaLimitePago"></label>
+                <input asp-for="ECF.Encabezado.IdDoc.FechaLimitePago" class="form-control" />
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="ECF.Encabezado.IdDoc.TerminoPago"></label>
+                <input asp-for="ECF.Encabezado.IdDoc.TerminoPago" class="form-control" />
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="ECF.Encabezado.IdDoc.TipoPago"></label>
-                <select asp-for="ECF.Encabezado.IdDoc.TipoPago" class="form-control">
-                    <option value="">Seleccione una opción</option>
-                    <option value="1">Contado</option>
-                    <option value="2">Crédito</option>
-                    <option value="3">Gratuito</option>
-                </select>
-        </div>
+                <input asp-for="ECF.Encabezado.IdDoc.TipoPago" class="form-control" />
+            </div>
+            <!-- Sección de formas de pago -->
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h3>Formas de Pago</h3>
+                </div>
+                <div class="card-body" id="formasPagoContainer">
+                    @for (int i = 0; i < Model.ECF.Encabezado.IdDoc.TablaFormasPago.FormaDePago.Count; i++)
+                    {
+                        <div class="form-group row mb-2">
+                            <div class="col-md-3">
+                                <label>Forma de Pago</label>
+                                <input asp-for="ECF.Encabezado.IdDoc.TablaFormasPago.FormaDePago[i].FormaPago" class="form-control" />
+                            </div>
+                            <div class="col-md-3">
+                                <label>Monto de Pago</label>
+                                <input asp-for="ECF.Encabezado.IdDoc.TablaFormasPago.FormaDePago[i].MontoPago" class="form-control" />
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
         </div>
     </div>
 
@@ -168,6 +172,18 @@
                 <input asp-for="ECF.Encabezado.Comprador.FechaEntrega" class="form-control" />
             </div>
             <div class="form-group col-md-3">
+                <label asp-for="ECF.Encabezado.Comprador.ContactoEntrega"></label>
+                <input asp-for="ECF.Encabezado.Comprador.ContactoEntrega" class="form-control" />
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="ECF.Encabezado.Comprador.DireccionEntrega"></label>
+                <input asp-for="ECF.Encabezado.Comprador.DireccionEntrega" class="form-control" />
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="ECF.Encabezado.Comprador.TelefonoAdicional"></label>
+                <input asp-for="ECF.Encabezado.Comprador.TelefonoAdicional" class="form-control" />
+            </div>
+            <div class="form-group col-md-3">
                 <label asp-for="ECF.Encabezado.Comprador.FechaOrdenCompra"></label>
                 <input asp-for="ECF.Encabezado.Comprador.FechaOrdenCompra" class="form-control" />
             </div>
@@ -182,12 +198,21 @@
         </div>
     </div>
 
+
     <!-- Sección de datos del InformacionesAdicionales -->
     <div class="card mb-4">
         <div class="card-header bg-primary text-white">
             <h3>Informaciones Adicionales</h3>
         </div>
         <div class="card-body row">
+            <div class="form-group col-md-4">
+                <label asp-for="ECF.Encabezado.InformacionesAdicionales.FechaEmbarque"></label>
+                <input asp-for="ECF.Encabezado.InformacionesAdicionales.FechaEmbarque" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="ECF.Encabezado.InformacionesAdicionales.NumeroEmbarque"></label>
+                <input asp-for="ECF.Encabezado.InformacionesAdicionales.NumeroEmbarque" class="form-control" />
+            </div>
             <div class="form-group col-md-4">
                 <label asp-for="ECF.Encabezado.InformacionesAdicionales.NumeroContenedor"></label>
                 <input asp-for="ECF.Encabezado.InformacionesAdicionales.NumeroContenedor" class="form-control" />
@@ -196,8 +221,107 @@
                 <label asp-for="ECF.Encabezado.InformacionesAdicionales.NumeroReferencia"></label>
                 <input asp-for="ECF.Encabezado.InformacionesAdicionales.NumeroReferencia" class="form-control" />
             </div>
+            <div class="form-group col-md-4">
+                <label asp-for="ECF.Encabezado.InformacionesAdicionales.NombrePuertoEmbarque"></label>
+                <input asp-for="ECF.Encabezado.InformacionesAdicionales.NombrePuertoEmbarque" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="ECF.Encabezado.InformacionesAdicionales.CondicionesEntrega"></label>
+                <input asp-for="ECF.Encabezado.InformacionesAdicionales.CondicionesEntrega" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="ECF.Encabezado.InformacionesAdicionales.TotalFob"></label>
+                <input asp-for="ECF.Encabezado.InformacionesAdicionales.TotalFob" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="ECF.Encabezado.InformacionesAdicionales.Seguro"></label>
+                <input asp-for="ECF.Encabezado.InformacionesAdicionales.Seguro" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="ECF.Encabezado.InformacionesAdicionales.Flete"></label>
+                <input asp-for="ECF.Encabezado.InformacionesAdicionales.Flete" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="ECF.Encabezado.InformacionesAdicionales.TotalCif"></label>
+                <input asp-for="ECF.Encabezado.InformacionesAdicionales.TotalCif" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="ECF.Encabezado.InformacionesAdicionales.RegimenAduanero"></label>
+                <input asp-for="ECF.Encabezado.InformacionesAdicionales.RegimenAduanero" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="ECF.Encabezado.InformacionesAdicionales.NombrePuertoSalida"></label>
+                <input asp-for="ECF.Encabezado.InformacionesAdicionales.NombrePuertoSalida" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="ECF.Encabezado.InformacionesAdicionales.NombrePuertoDesembarque"></label>
+                <input asp-for="ECF.Encabezado.InformacionesAdicionales.NombrePuertoDesembarque" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="ECF.Encabezado.InformacionesAdicionales.PesoBruto"></label>
+                <input asp-for="ECF.Encabezado.InformacionesAdicionales.PesoBruto" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="ECF.Encabezado.InformacionesAdicionales.PesoNeto"></label>
+                <input asp-for="ECF.Encabezado.InformacionesAdicionales.PesoNeto" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="ECF.Encabezado.InformacionesAdicionales.UnidadPesoBruto"></label>
+                <input asp-for="ECF.Encabezado.InformacionesAdicionales.UnidadPesoBruto" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="ECF.Encabezado.InformacionesAdicionales.UnidadPesoNeto"></label>
+                <input asp-for="ECF.Encabezado.InformacionesAdicionales.UnidadPesoNeto" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="ECF.Encabezado.InformacionesAdicionales.CantidadBulto"></label>
+                <input asp-for="ECF.Encabezado.InformacionesAdicionales.CantidadBulto" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="ECF.Encabezado.InformacionesAdicionales.UnidadBulto"></label>
+                <input asp-for="ECF.Encabezado.InformacionesAdicionales.UnidadBulto" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="ECF.Encabezado.InformacionesAdicionales.VolumenBulto"></label>
+                <input asp-for="ECF.Encabezado.InformacionesAdicionales.VolumenBulto" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="ECF.Encabezado.InformacionesAdicionales.UnidadVolumen"></label>
+                <input asp-for="ECF.Encabezado.InformacionesAdicionales.UnidadVolumen" class="form-control" />
+            </div>
         </div>
     </div>
+
+
+    <!-- Sección de datos del Transporte -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h3>Transporte</h3>
+        </div>
+        <div class="card-body row">
+            <div class="form-group col-md-4">
+                <label asp-for="ECF.Encabezado.Transporte.ViaTransporte"></label>
+                <input asp-for="ECF.Encabezado.Transporte.ViaTransporte" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="ECF.Encabezado.Transporte.PaisOrigen"></label>
+                <input asp-for="ECF.Encabezado.Transporte.PaisOrigen" class="form-control" />
+            </div>
+                        <div class="form-group col-md-4">
+                <label asp-for="ECF.Encabezado.Transporte.DireccionDestino"></label>
+                <input asp-for="ECF.Encabezado.Transporte.DireccionDestino" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="ECF.Encabezado.Transporte.PaisDestino"></label>
+                <input asp-for="ECF.Encabezado.Transporte.PaisDestino" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="ECF.Encabezado.Transporte.NumeroAlbaran"></label>
+                <input asp-for="ECF.Encabezado.Transporte.NumeroAlbaran" class="form-control" />
+            </div>
+        </div>
+    </div>
+
 
         <!-- Sección de totales (calculados automáticamente) -->
     <div class="card mb-4">
@@ -209,21 +333,21 @@
                 <label>MontoGravadoTotal</label>
                 <input asp-for="ECF.Encabezado.Totales.MontoGravadoTotal" id="totalGeneral" class="form-control" />
             </div>
-                        <div class="form-group col-md-3">
-                <label>MontoGravadoI1</label>
-                <input asp-for="ECF.Encabezado.Totales.MontoGravadoI1" id="totalGeneral" class="form-control" />
+            <div class="form-group col-md-3">
+                <label>MontoGravadoI3</label>
+                <input asp-for="ECF.Encabezado.Totales.MontoGravadoI3" id="totalGeneral" class="form-control" />
             </div>
             <div class="form-group col-md-3">
-                <label>ITBIS1</label>
-                <input asp-for="ECF.Encabezado.Totales.ITBIS1" id="totalGeneral" class="form-control" />
+                <label>ITBIS3</label>
+                <input asp-for="ECF.Encabezado.Totales.ITBIS3" id="totalGeneral" class="form-control" />
             </div>
             <div class="form-group col-md-3">
                 <label>TotalITBIS</label>
                 <input asp-for="ECF.Encabezado.Totales.TotalITBIS" id="totalGeneral" class="form-control" />
             </div>
             <div class="form-group col-md-3">
-                <label>TotalITBIS1</label>
-                <input asp-for="ECF.Encabezado.Totales.TotalITBIS1" id="totalGeneral" class="form-control" />
+                <label>TotalITBIS3</label>
+                <input asp-for="ECF.Encabezado.Totales.TotalITBIS3" id="totalGeneral" class="form-control" />
             </div>
             <div class="form-group col-md-3">
                 <label>MontoTotal</label>
@@ -248,6 +372,14 @@
                     </div>
                     <div class="card-body row">
                         <input type="hidden" asp-for="ECF.DetallesItems.Item[i].NumeroLinea" value="@(i + 1)" />
+                        <div class="form-group col-md-3">
+                            <label>Tipo Código</label>
+                            <input asp-for="ECF.DetallesItems.Item[i].TablaCodigosItem.CodigosItem[0].TipoCodigo" class="form-control" />
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Código del Ítem</label>
+                            <input asp-for="ECF.DetallesItems.Item[i].TablaCodigosItem.CodigosItem[0].CodigoItem" class="form-control" />
+                        </div>
                         <div class="form-group col-md-1">
                             <label>Ind. Fact.</label>
                             <input asp-for="ECF.DetallesItems.Item[i].IndicadorFacturacion" class="form-control" />
@@ -282,37 +414,6 @@
         </div>
     </div>
 
-    <!-- Sección de datos del InformacionReferencia -->
-    <div class="card mb-4">
-        <div class="card-header bg-primary text-white">
-            <h3>Informaciones Referencia</h3>
-        </div>
-        <div class="card-body row">
-            <div class="form-group col-md-4">
-                <label asp-for="ECF.InformacionReferencia.NCFModificado"></label>
-                <input asp-for="ECF.InformacionReferencia.NCFModificado" class="form-control" />
-            </div>
-            <div class="form-group col-md-4">
-                <label asp-for="ECF.InformacionReferencia.FechaNCFModificado"></label>
-                <input asp-for="ECF.InformacionReferencia.FechaNCFModificado" class="form-control" />
-            </div>
-            <div class="form-group col-md-4">
-                <label asp-for="ECF.InformacionReferencia.CodigoModificacion"></label>
-                 <select asp-for="ECF.InformacionReferencia.CodigoModificacion" class="form-control">
-                    <option value="">Seleccione una opción</option>
-                    <option value="1">Anula el NCF modificado</option>
-                    <option value="2">Corrige Texto del Comprobante Fiscal modificado</option>
-                    <option value="3">Corrige montos del NCF modificado</option>
-                    <option value="4">Reemplazo NCF emitido en contingencia</option>
-                    <option value="5">Referencia Factura Consumo Electrónica.81</option>
-                </select> 
-            </div>
-            <div class="form-group col-md-4">
-                <label asp-for="ECF.InformacionReferencia.RazonModificacion"></label>
-                <input asp-for="ECF.InformacionReferencia.RazonModificacion" class="form-control" />
-            </div>
-        </div>
-    </div>
 
     <!-- Sección de fecha y hora de firma -->
     <div class="card mb-4">
