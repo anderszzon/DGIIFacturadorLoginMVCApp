@@ -5,15 +5,25 @@
 
 @if (Model?.CodigoRespuesta == "1")
 {
-    <a class="btn btn-success" href="@Url.Action("GenerarPDF", "FacturacionDGII", new { id = Model.FacturaId, codigoSeguridad = Model.CodigoSeguridad })" target="_blank">
-        Ver PDF
-    </a>
 
     <div class="container mt-4">
         <div class="alert alert-success" role="alert">
             <strong></strong> La factura ha sido procesada.
-@*             <strong>Mensaje:</strong> "La factura ha sido procesada."*@
+        </div>
     </div>
+
+    <a class="btn btn-success" href="@Url.Action("GenerarPDF", "FacturacionDGII", new { id = Model.FacturaId, codigoSeguridad = Model.CodigoSeguridad })" target="_blank">
+        PDF (DOP)
+    </a>
+
+
+    <a class="btn btn-success" href="@Url.Action("GenerarPDFinUSD", "FacturacionDGII", new { id = Model.FacturaId, codigoSeguridad = Model.CodigoSeguridad })" target="_blank">
+        PDF (USD)
+    </a>
+
+    <div class="form-group">
+        <label for="tasaCambio">Tasa de Cambio</label>
+        <input type="number" step="0.0001" class="form-control" id="tasaCambio" placeholder="Ej: 57.25" />
     </div>
 
     <div class="container mt-4">

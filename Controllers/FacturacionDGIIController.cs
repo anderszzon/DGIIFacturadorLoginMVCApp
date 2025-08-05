@@ -121,6 +121,32 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
         }
 
+        [HttpGet]
+        public IActionResult GenerarPDFinUSD(int id, string codigoSeguridad)
+        {
+            // Obtener la factura desde la base de datos
+            var factura = _context.FacturasDGII
+                    .Include(f => f.Items)
+                    .FirstOrDefault(f => f.Id == id);
+
+            if (factura == null)
+                return NotFound();
+
+            byte[] pdfBytes = CrearFacturaPDFInMemory(factura, codigoSeguridad);
+
+            //return File(pdfBytes, "application/pdf", $"Factura_{factura.ENCF}.pdf");
+            //return File(pdfBytes, "application/pdf");
+            //return Content("mensaje");
+            //return File(pdfBytes, "application/pdf", $"Factura_{factura.ENCF}.pdf");
+
+            //return View("verfacturaPDF");
+            return File(pdfBytes, "application/pdf", $"Factura_{factura.ENCF}.pdf");
+
+            //return View("verfacturaPDF", $"Factura_{factura.ENCF}.pdf");
+            //return RedirectToAction("VerFacturaPDF", new { id = id });
+
+        }
+
         private byte[] CrearFacturaPDFInMemory(FacturasDGII factura, string codigoSeguridad)
         {
             using (var ms = new MemoryStream())
