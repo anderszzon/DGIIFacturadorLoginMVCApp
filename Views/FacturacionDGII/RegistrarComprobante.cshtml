@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Registrar Comprobante";
-    Layout = "~/Views/Shared/_Layout.cshtml"; // si usas layout
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Registrar Comprobante</h2>
@@ -8,12 +8,25 @@
 <form id="comprobanteForm" method="get">
     <label for="comprobante">Seleccione un comprobante:</label>
     <select id="comprobante" name="comprobante">
+
         <option value="">-- Seleccione --</option>
-        <option value="E450000000001">Comprobante E450000000001</option>
-        <option value="E460000000001">Comprobante E460000000001</option>
+        <option value="E31A">Comprobante E31A</option>
+        <option value="E31B">Comprobante E31B</option>
+        <option value="E31C">Comprobante E31C</option>
+        <option value="E31D">Comprobante E31D</option>
+        <option value="E31E">Comprobante E31E</option>
+        <option value="E32A">Comprobante E32A</option>
+        <option value="E32B">Comprobante E32B</option>
+        <option value="E33">Comprobante E33</option>
+        <option value="E34">Comprobante E34</option>
+        <option value="E41">Comprobante E41</option>
+        <option value="E43">Comprobante E43</option>
+        <option value="E44">Comprobante E44</option>
+        <option value="E45">Comprobante E45</option>
+        <option value="E46">Comprobante E46</option>
         <option value="E47">Comprobante E47</option>
 
-        <!-- Puedes llenar esto dinámicamente desde el backend si lo necesitas -->
+        <!-- Puedes llenar esto dinámicamente -->
 
     </select>
 
@@ -24,8 +37,8 @@
     function redirigir() {
         const comprobante = document.getElementById("comprobante").value;
         if (comprobante) {
-            // Redirige a la vista correspondiente
-            window.location.href = "/FacturacionDGII/registrarfactura" + comprobante;
+            // Cambiar aquí la ruta
+            window.location.href = "/FacturacionDGII/comprobante" + comprobante;
         } else {
             alert("Seleccione un comprobante.");
         }
