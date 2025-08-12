@@ -448,7 +448,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 //rightCell1.Add(new Paragraph("Código QR:").SetTextAlignment(TextAlignment.RIGHT));
                 rightCell1.Add(qrCodeImage);
                 rightCell1.Add(new Paragraph($"Código de Seguridad: {codigoSeguridad}").SetFontSize(9).SetTextAlignment(TextAlignment.RIGHT).SetMarginTop(5));
-                rightCell1.Add(new Paragraph($"FechaHoraFirma: {fechaFirma}").SetFontSize(9).SetTextAlignment(TextAlignment.RIGHT));
+                rightCell1.Add(new Paragraph($"FechaHoraFirma: {factura.FechaHoraFirma}").SetFontSize(9).SetTextAlignment(TextAlignment.RIGHT));
 
                 // Agregar celdas a la tabla
                 finalTable.AddCell(leftCell1);
