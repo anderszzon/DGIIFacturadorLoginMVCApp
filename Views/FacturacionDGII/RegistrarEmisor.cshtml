@@ -1,0 +1,100 @@
+﻿@model EmisorInfo
+
+@{
+    ViewData["Title"] = "Registrar Emisor";
+}
+
+<h2>Registrar Nuevo Emisor</h2>
+
+<form asp-action="RegistrarEmisor" method="post" class="form-horizontal">
+    <h3>Datos del Emisor</h3>
+
+    <div class="form-group">
+        <label asp-for="RNCEmisor" class="control-label"></label>
+        <input asp-for="RNCEmisor" class="form-control" />
+        <span asp-validation-for="RNCEmisor" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="RazonSocialEmisor" class="control-label"></label>
+        <input asp-for="RazonSocialEmisor" class="form-control" />
+        <span asp-validation-for="RazonSocialEmisor" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NombreComercial" class="control-label"></label>
+        <input asp-for="NombreComercial" class="form-control" />
+        <span asp-validation-for="NombreComercial" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DireccionEmisor" class="control-label"></label>
+        <input asp-for="DireccionEmisor" class="form-control" />
+        <span asp-validation-for="DireccionEmisor" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Municipio" class="control-label"></label>
+        <input asp-for="Municipio" class="form-control" />
+        <span asp-validation-for="Municipio" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Provincia" class="control-label"></label>
+        <input asp-for="Provincia" class="form-control" />
+        <span asp-validation-for="Provincia" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CorreoEmisor" class="control-label"></label>
+        <input asp-for="CorreoEmisor" type="email" class="form-control" />
+        <span asp-validation-for="CorreoEmisor" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="WebSite" class="control-label"></label>
+        <input asp-for="WebSite" type="url" class="form-control" />
+        <span asp-validation-for="WebSite" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CodigoVendedor" class="control-label"></label>
+        <input asp-for="CodigoVendedor" class="form-control" />
+        <span asp-validation-for="CodigoVendedor" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NumeroFacturaInterna" class="control-label"></label>
+        <input asp-for="NumeroFacturaInterna" class="form-control" />
+        <span asp-validation-for="NumeroFacturaInterna" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NumeroPedidoInterno" class="control-label"></label>
+        <input asp-for="NumeroPedidoInterno" class="form-control" />
+        <span asp-validation-for="NumeroPedidoInterno" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ZonaVenta" class="control-label"></label>
+        <input asp-for="ZonaVenta" class="form-control" />
+        <span asp-validation-for="ZonaVenta" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="FechaEmision" class="control-label"></label>
+        <input asp-for="FechaEmision" type="date" class="form-control" />
+        <span asp-validation-for="FechaEmision" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Registrar Emisor</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

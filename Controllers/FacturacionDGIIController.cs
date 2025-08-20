@@ -4726,5 +4726,41 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
         }
 
+
+        public IActionResult RegistrarEmisor()
+        {
+            return View();
+        }
+
+        // POST: Recibir los datos del formulario
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RegistrarEmisor(EmisorInfo emisorInfo)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // ✅ Aquí el modelo ya está lleno con los datos del formulario
+                    Console.WriteLine($"RNC: {emisorInfo.RNCEmisor}");
+                    Console.WriteLine($"Razón Social: {emisorInfo.RazonSocialEmisor}");
+
+                    // Guardar en la base de datos
+                    _context.EmisorInfo.Add(emisorInfo);
+                    await _context.SaveChangesAsync();
+
+                    TempData["SuccessMessage"] = "Emisor registrado exitosamente!";
+                    return RedirectToAction("Index", "Home");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", $"Error al guardar: {ex.Message}");
+                }
+            }
+
+            // Si hay errores, mostrar el formulario again con los datos ingresados
+            return View(emisorInfo);
+        }
+
     }
 }

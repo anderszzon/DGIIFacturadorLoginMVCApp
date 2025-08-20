@@ -14,6 +14,8 @@ namespace DGIIFacturadorLoginMVCApp.Data
 
         public DbSet<FacturasDGII> FacturasDGII { get; set; }
         public DbSet<ItemFactura> ItemsFactura { get; set; }
+        public DbSet<EmisorInfo> EmisorInfo { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
