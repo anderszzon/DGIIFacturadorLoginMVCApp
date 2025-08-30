@@ -1,0 +1,19 @@
+﻿@model CertCheckResult
+
+<h2>Resultado de verificación del certificado</h2>
+
+@if (Model.Existe)
+{
+    <div style="color: green;">
+        <p><strong>@Model.Mensaje</strong></p>
+        <p>Subject: @Model.Subject</p>
+        <p>Thumbprint: @Model.Thumbprint</p>
+    </div>
+}
+else
+{
+    <div style="color: red;">
+        <p><strong>@Model.Mensaje</strong></p>
+        <p>Thumbprint buscado: @Model.Thumbprint</p>
+    </div>
+}

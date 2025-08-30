@@ -5,7 +5,7 @@ VisualStudioVersion = 17.14.36203.30
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DGIIFacturadorLoginMVCApp", "DGIIFacturadorLoginMVCApp.csproj", "{F7D350B4-DE37-4150-BE20-0CA129E3265D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConexionDGIINETFramework", "..\FacturacionElectronicaDGII\ConexionDGIINETFramework.csproj", "{BC099EB5-29CF-473E-909B-F9B84743E13B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConexionDGIINETFramework", "..\FacturacionElectronicaDGII-repo\ConexionDGIINETFramework.csproj", "{BC099EB5-29CF-473E-909B-F9B84743E13B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

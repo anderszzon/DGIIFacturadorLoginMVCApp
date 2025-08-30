@@ -38,16 +38,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             return View(); // Vista inicial con el selector
         }
 
-        //// Acción genérica para mostrar la vista según el número del comprobante
-        //public ActionResult RegistrarFactura(string id)
-        //{
-        //    if (string.IsNullOrEmpty(id))
-        //        return RedirectToAction("RegistrarComprobante");
-
-        //    string viewName = $"registrarfactura{id}";
-        //    return View(viewName);
-        //}
-
         [HttpGet]
         public IActionResult verFactura()
         {
@@ -4730,6 +4720,39 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         public IActionResult RegistrarEmisor()
         {
             return View();
+        }
+
+
+        public IActionResult ProbarCertificado()
+        {
+            string thumbprint = "2BF6F9D3FF06FB3A4B5813885FF252BCB055AB6F"; // thumbprint real
+            var resultado = FacturacionElectronicaDGII.GetCertificateFromStoreWINDOWS2(thumbprint);
+
+            // Mapear manualmente a tu modelo
+            var model = new CertCheckResult
+            {
+                Existe = resultado.Existe,
+                Mensaje = resultado.Mensaje,
+                Subject = resultado.Subject,
+                Thumbprint = resultado.Thumbprint
+            };
+
+            return View(model); // <-- ahora sí pasa el modelo correcto
+        }
+
+        public IActionResult ListarCertificados()
+        {
+            var listaDGII = FacturacionElectronicaDGII.ListAllCertificates();
+
+            var listaMVC = listaDGII.Select(c => new CertCheckResult
+            {
+                Existe = c.Existe,
+                Mensaje = c.Mensaje,
+                Subject = c.Subject,
+                Thumbprint = c.Thumbprint
+            }).ToList();
+
+            return View(listaMVC);
         }
 
         // POST: Recibir los datos del formulario

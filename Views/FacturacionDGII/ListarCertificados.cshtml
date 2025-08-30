@@ -1,0 +1,23 @@
+﻿@model List<CertCheckResult>
+
+<h2>Certificados en LocalMachine/My</h2>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Subject</th>
+            <th>Thumbprint</th>
+            <th>Mensaje</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cert in Model)
+        {
+            <tr>
+                <td>@cert.Subject</td>
+                <td>@cert.Thumbprint</td>
+                <td>@cert.Mensaje</td>
+            </tr>
+        }
+    </tbody>
+</table>
