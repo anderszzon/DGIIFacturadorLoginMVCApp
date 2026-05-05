@@ -631,6 +631,44 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         }
 
         [HttpPost]
+        public IActionResult comprobanteE31ADEBUG(FacturaDGIIModel1 model)
+        {
+            string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
+            string passCert = "LD271167";
+            string jsonInvoiceFO = JsonConvert.SerializeObject(model);
+
+            string urlValidarSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/ValidarSemilla";
+            string urlRecepcionFactura = "https://ecf.dgii.gov.do/certecf/recepcion/api/FacturasElectronicas";
+            string urlConsultaFactura = "https://ecf.dgii.gov.do/certecf/consultaresultado/api/Consultas/Estado";
+
+            try
+            {
+                // 1. Ejecución de la DLL
+                string invoice = FacturacionElectronicaDGII.EnviarTokenSincrona(urlSemilla, passCert, jsonInvoiceFO);
+                string response = FacturacionElectronicaDGII.EnviarFacturaElectronicaSincrona(urlValidarSemilla, urlRecepcionFactura, urlConsultaFactura);
+
+                // 2. Pasamos todo a la vista sin procesar para ver qué contienen
+                var debugResponse = new FacturaDGIIResponseModel
+                {
+                    Token = "DEBUG INVOICE: " + invoice,
+                    Mensaje = "DEBUG RESPONSE: " + response
+                };
+
+                // Si quieres ver si el JSON es válido o es un error de texto
+                ViewBag.MensajeError = $"Invoice: {invoice} | Response: {response}";
+
+                return View("verFactura", debugResponse);
+            }
+            catch (Exception ex)
+            {
+                // Si la DLL explota por falta de archivos o permisos en Azure
+                ViewBag.MensajeError = "ERROR CRÍTICO: " + ex.Message + " | Inner: " + ex.InnerException?.Message;
+                return View("verFactura", new FacturaDGIIResponseModel());
+            }
+        }
+
+
+        [HttpPost]
         public IActionResult comprobanteE31A(FacturaDGIIModel1 model)
         {
             string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
