@@ -561,7 +561,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         {
                             TipoeCF = "",
                             eNCF = "E310000000001",
-                            FechaVencimientoSecuencia = "31-12-2025",
+                            FechaVencimientoSecuencia = "31-12-2028",
                             IndicadorEnvioDiferido = "1",
                             IndicadorMontoGravado = "0",
                             TipoIngresos = "01",
@@ -586,7 +586,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Comprador = new CompradorModel1
                         {
                             RNCComprador = "131880681",
-                            RazonSocialComprador = "CONSEJO NACIONAL DE SEGURIDAD SOCIAL",
+                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -832,7 +832,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         {
                             TipoeCF = "",
                             eNCF = "E310000000002",
-                            FechaVencimientoSecuencia = "31-12-2025",
+                            FechaVencimientoSecuencia = "31-12-2028",
                             IndicadorEnvioDiferido = "1",
                             IndicadorMontoGravado = "0",
                             TipoIngresos = "01",
@@ -1111,7 +1111,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         {
                             TipoeCF = "",
                             eNCF = "E310000000003",
-                            FechaVencimientoSecuencia = "31-12-2025",
+                            FechaVencimientoSecuencia = "31-12-2028",
                             IndicadorEnvioDiferido = "1",
                             IndicadorMontoGravado = "0",
                             TipoIngresos = "01",
@@ -1394,7 +1394,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         {
                             TipoeCF = "",
                             eNCF = "E310000000004",
-                            FechaVencimientoSecuencia = "31-12-2025",
+                            FechaVencimientoSecuencia = "31-12-2028",
                             IndicadorEnvioDiferido = "1",
                             IndicadorMontoGravado = "1",
                             TipoIngresos = "01",
@@ -1689,7 +1689,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         {
                             TipoeCF = "",
                             eNCF = "E310000000005",
-                            FechaVencimientoSecuencia = "31-12-2025",
+                            FechaVencimientoSecuencia = "31-12-2028",
                             IndicadorEnvioDiferido = "1",
                             IndicadorMontoGravado = "0",
                             TipoIngresos = "01",
@@ -1725,7 +1725,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Comprador = new CompradorModel5
                         {
                             RNCComprador = "131880681",
-                            RazonSocialComprador = "CONSEJO NACIONAL DE SEGURIDAD SOCIAL",
+                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -2049,7 +2049,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Comprador = new CompradorModel6
                         {
                             RNCComprador = "131880681",
-                            RazonSocialComprador = "CONSEJO NACIONAL DE SEGURIDAD SOCIAL",
+                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -2287,7 +2287,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Comprador = new CompradorModel7
                         {
                             RNCComprador = "131880681",
-                            RazonSocialComprador = "CONSEJO NACIONAL DE SEGURIDAD SOCIAL",
+                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -2593,7 +2593,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         {
                             TipoeCF = "",
                             eNCF = "E330000000001",
-                            FechaVencimientoSecuencia = "31-12-2025",
+                            FechaVencimientoSecuencia = "31-12-2028",
                             TipoIngresos = "01",
                             TipoPago = "1",
                             TablaFormasPago = new TablaFormasPago8
@@ -2627,7 +2627,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Comprador = new CompradorModel8
                         {
                             RNCComprador = "131880681",
-                            RazonSocialComprador = "CONSEJO NACIONAL DE SEGURIDAD SOCIAL",
+                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -2908,7 +2908,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Comprador = new CompradorModel9
                         {
                             RNCComprador = "131880681",
-                            RazonSocialComprador = "CONSEJO NACIONAL DE SEGURIDAD SOCIAL",
+                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -3168,7 +3168,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         {
                             TipoeCF = "",
                             eNCF = "E410000000001",
-                            FechaVencimientoSecuencia = "31-12-2025",
+                            FechaVencimientoSecuencia = "31-12-2028",
                             IndicadorMontoGravado = "0",
                             TipoPago = "1",
                             TablaFormasPago = new TablaFormasPago10
@@ -3195,7 +3195,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Comprador = new CompradorModel10
                         {
                             RNCComprador = "533445861",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 11",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
                             MunicipioComprador = "010100",
@@ -3449,7 +3449,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         {
                             TipoeCF = "",
                             eNCF = "E430000000001",
-                            FechaVencimientoSecuencia = "31-12-2025"
+                            FechaVencimientoSecuencia = "31-12-2028"
                         },
                         Emisor = new EmisorModel11
                         {
@@ -3645,7 +3645,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         {
                             TipoeCF = "",
                             eNCF = "E440000000002",
-                            FechaVencimientoSecuencia = "31-12-2025",
+                            FechaVencimientoSecuencia = "31-12-2028",
                             TipoIngresos = "01",
                             TipoPago = "1",
                             TipoCuentaPago = "CT",
@@ -3682,7 +3682,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Comprador = new CompradorModel12
                         {
                             RNCComprador = "131880681",
-                            RazonSocialComprador = "CONSEJO NACIONAL DE SEGURIDAD SOCIAL",
+                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -3942,7 +3942,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         {
                             TipoeCF = "",
                             eNCF = "E450000000001",
-                            FechaVencimientoSecuencia = "31-12-2025",
+                            FechaVencimientoSecuencia = "31-12-2028",
                             IndicadorMontoGravado = "0",
                             TipoIngresos = "01",
                             TipoPago = "1"
@@ -3966,7 +3966,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Comprador = new CompradorModel13
                         {
                             RNCComprador = "131880657",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 04",
+                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -4222,7 +4222,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         {
                             TipoeCF = "",
                             eNCF = "E460000000001",
-                            FechaVencimientoSecuencia = "31-12-2025",
+                            FechaVencimientoSecuencia = "31-12-2028",
                             TipoIngresos = "01",
                             TipoPago = "2",
                             FechaLimitePago = "06-05-2020",
@@ -4515,7 +4515,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         {
                             TipoeCF = "",
                             eNCF = "E470000000001",
-                            FechaVencimientoSecuencia = "31-12-2025",
+                            FechaVencimientoSecuencia = "31-12-2028",
                             NumeroCuentaPago = "BB00058745214789635111111111",
                             BancoPago = "BB0111111111111111111111111111111111111111111111111111111111111111111111111"
                         },
