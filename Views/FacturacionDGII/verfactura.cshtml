@@ -13,12 +13,12 @@
     </div>
 
     <a class="btn btn-success" href="@Url.Action("GenerarPDF", "FacturacionDGII", new { id = Model.FacturaId, codigoSeguridad = Model.CodigoSeguridad })" target="_blank">
-        PDF (DOP)
+        PDF EN EL NAVEGADOR
     </a>
 
 
-    <a class="btn btn-success" href="@Url.Action("GenerarPDFinUSD", "FacturacionDGII", new { id = Model.FacturaId, codigoSeguridad = Model.CodigoSeguridad })" target="_blank">
-        PDF (USD)
+    <a class="btn btn-success" href="@Url.Action("GenerarPDFDownloads", "FacturacionDGII", new { id = Model.FacturaId, codigoSeguridad = Model.CodigoSeguridad })" target="_blank">
+        PDF EN DESCARGAS
     </a>
 
     <div class="form-group">

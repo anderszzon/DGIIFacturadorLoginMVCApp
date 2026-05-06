@@ -104,7 +104,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             //return File(pdfBytes, "application/pdf", $"Factura_{factura.ENCF}.pdf");
 
             //return View("verfacturaPDF");
-            return File(pdfBytes, "application/pdf", $"Factura_{factura.ENCF}.pdf");
+            //return File(pdfBytes, "application/pdf", $"Factura_{factura.ENCF}.pdf");
+            return File(pdfBytes, "application/pdf");
 
             //return View("verfacturaPDF", $"Factura_{factura.ENCF}.pdf");
             //return RedirectToAction("VerFacturaPDF", new { id = id });
@@ -112,7 +113,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult GenerarPDFinUSD(int id, string codigoSeguridad)
+        public IActionResult GenerarPDFDownloads(int id, string codigoSeguridad)
         {
             // Obtener la factura desde la base de datos
             var factura = _context.FacturasDGII
@@ -148,8 +149,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 PdfFont boldFont = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
                 PdfFont boldFont2 = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
 
-                string logoPath = "C:\\Users\\andersonmgordilloh\\source\\repos\\FacturacionElectronicaDGII\\ArchivosDGII\\logo.jpeg";
-
+                //string logoPath = "C:\\Users\\andersonmgordilloh\\source\\repos\\FacturacionElectronicaDGII\\ArchivosDGII\\logo.jpeg";
+                string logoPath = "";
 
                 //ImageData imageData = ImageDataFactory.Create(logoPath);
                 //Image logo = new Image(imageData);
@@ -167,16 +168,16 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 headerTable.SetFont(boldFont);
 
                 // Cargar el logo
-                ImageData imageData = ImageDataFactory.Create(logoPath);
-                Image logo = new Image(imageData);
-                logo.ScaleToFit(150, 150); // Más pequeño para ajustarse bien dentro de la tabla
-                logo.SetMarginBottom(5);
-                logo.SetHorizontalAlignment(HorizontalAlignment.LEFT);
+                //ImageData imageData = ImageDataFactory.Create(logoPath);
+                //Image logo = new Image(imageData);
+                //logo.ScaleToFit(150, 150); // Más pequeño para ajustarse bien dentro de la tabla
+                //logo.SetMarginBottom(5);
+                //logo.SetHorizontalAlignment(HorizontalAlignment.LEFT);
 
                 // Celda izquierda - Emisor
                 Cell leftCell = new Cell().SetBorder(Border.NO_BORDER).SetTextAlignment(TextAlignment.LEFT).SetFont(boldFont);
 
-                leftCell.Add(logo);
+                //leftCell.Add(logo);
 
                 leftCell.Add(new Paragraph("Mora Tapia Peralta & Asociado, SRL").SetFontSize(9));
                 leftCell.Add(new Paragraph($"RNC: {factura.RNCEmisor}").SetFontSize(9));
@@ -793,7 +794,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 if (respuesta.CodigoRespuesta == "1")
                 {
-                    //return RedirectToAction("GenerarPDF", new { id = registro.Id, codigoSeguridad = respuesta.CodigoSeguridad });
                     return View("verFactura", respuesta);
 
                 }
@@ -1072,7 +1072,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 if (respuesta.CodigoRespuesta == "1")
                 {
-                    //return RedirectToAction("GenerarPDF", new { id = registro.Id, codigoSeguridad = respuesta.CodigoSeguridad });
                     return View("verFactura", respuesta);
 
                 }
@@ -1354,7 +1353,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 if (respuesta.CodigoRespuesta == "1")
                 {
-                    //return RedirectToAction("GenerarPDF", new { id = registro.Id, codigoSeguridad = respuesta.CodigoSeguridad });
                     return View("verFactura", respuesta);
 
                 }
@@ -1648,7 +1646,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 if (respuesta.CodigoRespuesta == "1")
                 {
-                    //return RedirectToAction("GenerarPDF", new { id = registro.Id, codigoSeguridad = respuesta.CodigoSeguridad });
                     return View("verFactura", respuesta);
 
                 }
@@ -1987,7 +1984,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 if (respuesta.CodigoRespuesta == "1")
                 {
-                    //return RedirectToAction("GenerarPDF", new { id = registro.Id, codigoSeguridad = respuesta.CodigoSeguridad });
                     return View("verFactura", respuesta);
 
                 }
@@ -2225,7 +2221,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 if (respuesta.CodigoRespuesta == "1")
                 {
-                    //return RedirectToAction("GenerarPDF", new { id = registro.Id, codigoSeguridad = respuesta.CodigoSeguridad });
                     return View("verFactura", respuesta);
 
                 }
@@ -2554,7 +2549,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 if (respuesta.CodigoRespuesta == "1")
                 {
-                    //return RedirectToAction("GenerarPDF", new { id = registro.Id, codigoSeguridad = respuesta.CodigoSeguridad });
                     return View("verFactura", respuesta);
 
                 }
@@ -2845,7 +2839,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 if (respuesta.CodigoRespuesta == "1")
                 {
-                    //return RedirectToAction("GenerarPDF", new { id = registro.Id, codigoSeguridad = respuesta.CodigoSeguridad });
                     return View("verFactura", respuesta);
 
                 }
@@ -3129,7 +3122,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 if (respuesta.CodigoRespuesta == "1")
                 {
-                    //return RedirectToAction("GenerarPDF", new { id = registro.Id, codigoSeguridad = respuesta.CodigoSeguridad });
                     return View("verFactura", respuesta);
 
                 }
@@ -3410,7 +3402,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 if (respuesta.CodigoRespuesta == "1")
                 {
-                    //return RedirectToAction("GenerarPDF", new { id = registro.Id, codigoSeguridad = respuesta.CodigoSeguridad });
                     return View("verFactura", respuesta);
 
                 }
@@ -3606,7 +3597,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 if (respuesta.CodigoRespuesta == "1")
                 {
-                    //return RedirectToAction("GenerarPDF", new { id = registro.Id, codigoSeguridad = respuesta.CodigoSeguridad });
                     return View("verFactura", respuesta);
 
                 }
@@ -3902,7 +3892,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 if (respuesta.CodigoRespuesta == "1")
                 {
-                    //return RedirectToAction("GenerarPDF", new { id = registro.Id, codigoSeguridad = respuesta.CodigoSeguridad });
                     return View("verFactura", respuesta);
 
                 }
@@ -4183,7 +4172,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 if (respuesta.CodigoRespuesta == "1")
                 {
-                    //return RedirectToAction("GenerarPDF", new { id = registro.Id, codigoSeguridad = respuesta.CodigoSeguridad });
                     return View("verFactura", respuesta);
 
                 }
@@ -4476,7 +4464,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 if (respuesta.CodigoRespuesta == "1")
                 {
-                    //return RedirectToAction("GenerarPDF", new { id = registro.Id, codigoSeguridad = respuesta.CodigoSeguridad });
                     return View("verFactura", respuesta);
 
                 }
@@ -4730,7 +4717,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 if (respuesta.CodigoRespuesta == "1")
                 {
-                    //return RedirectToAction("GenerarPDF", new { id = registro.Id, codigoSeguridad = respuesta.CodigoSeguridad });
                     return View("verFactura", respuesta);
 
                 }
