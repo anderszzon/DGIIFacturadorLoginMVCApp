@@ -25,11 +25,13 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
     {
 
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _env;
 
         // Inyectar el contexto vía constructor
-        public FacturacionDGIIController(ApplicationDbContext context)
+        public FacturacionDGIIController(ApplicationDbContext context, IWebHostEnvironment env)
         {
             _context = context;
+            _env = env; 
         }
 
 
@@ -96,7 +98,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             if (factura == null)
                 return NotFound();
 
-            byte[] pdfBytes = CrearFacturaPDFInMemory(factura, codigoSeguridad);
+            byte[] pdfBytes = CrearFacturaPDFInMemory(factura, codigoSeguridad, _env.WebRootPath);
 
             //return File(pdfBytes, "application/pdf", $"Factura_{factura.ENCF}.pdf");
             //return File(pdfBytes, "application/pdf");
@@ -123,7 +125,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             if (factura == null)
                 return NotFound();
 
-            byte[] pdfBytes = CrearFacturaPDFInMemory(factura, codigoSeguridad);
+            byte[] pdfBytes = CrearFacturaPDFInMemory(factura, codigoSeguridad, _env.WebRootPath);
 
             //return File(pdfBytes, "application/pdf", $"Factura_{factura.ENCF}.pdf");
             //return File(pdfBytes, "application/pdf");
@@ -138,8 +140,9 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
         }
 
-        private byte[] CrearFacturaPDFInMemory(FacturasDGII factura, string codigoSeguridad)
+        private byte[] CrearFacturaPDFInMemory(FacturasDGII factura, string codigoSeguridad, string webRootPath)
         {
+
             using (var ms = new MemoryStream())
             {
                 PdfWriter writer = new PdfWriter(ms); // ← usar memoria, NO disco
@@ -150,7 +153,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 PdfFont boldFont2 = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
 
                 //string logoPath = "C:\\Users\\andersonmgordilloh\\source\\repos\\FacturacionElectronicaDGII\\ArchivosDGII\\logo.jpeg";
-                string logoPath = "";
+                string logoPath = Path.Combine(webRootPath, "images", "logo.jpeg");
 
                 //ImageData imageData = ImageDataFactory.Create(logoPath);
                 //Image logo = new Image(imageData);
@@ -168,16 +171,16 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 headerTable.SetFont(boldFont);
 
                 // Cargar el logo
-                //ImageData imageData = ImageDataFactory.Create(logoPath);
-                //Image logo = new Image(imageData);
-                //logo.ScaleToFit(150, 150); // Más pequeño para ajustarse bien dentro de la tabla
-                //logo.SetMarginBottom(5);
-                //logo.SetHorizontalAlignment(HorizontalAlignment.LEFT);
+                ImageData imageData = ImageDataFactory.Create(logoPath);
+                Image logo = new Image(imageData);
+                logo.ScaleToFit(150, 150); // Más pequeño para ajustarse bien dentro de la tabla
+                logo.SetMarginBottom(5);
+                logo.SetHorizontalAlignment(HorizontalAlignment.LEFT);
 
                 // Celda izquierda - Emisor
                 Cell leftCell = new Cell().SetBorder(Border.NO_BORDER).SetTextAlignment(TextAlignment.LEFT).SetFont(boldFont);
 
-                //leftCell.Add(logo);
+                leftCell.Add(logo);
 
                 leftCell.Add(new Paragraph("Mora Tapia Peralta & Asociado, SRL").SetFontSize(9));
                 leftCell.Add(new Paragraph($"RNC: {factura.RNCEmisor}").SetFontSize(9));
