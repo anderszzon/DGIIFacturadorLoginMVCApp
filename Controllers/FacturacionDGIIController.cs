@@ -27,7 +27,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _env;
 
-        // Inyectar el contexto vía constructor
         public FacturacionDGIIController(ApplicationDbContext context, IWebHostEnvironment env)
         {
             _context = context;
@@ -37,13 +36,12 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
         public ActionResult RegistrarComprobante()
         {
-            return View(); // Vista inicial con el selector
+            return View();
         }
 
         [HttpGet]
         public IActionResult verFactura()
         {
-            // Datos necesarios
             string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
             string passCert = "LD271167";
             string jsonInvoiceFO = "{ \"facturaDesdeF&O\": \"datos\" }";
@@ -54,11 +52,9 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
             try
             {
-                // Llamada al método de la DLL
                 string invoice = FacturacionElectronicaDGII.EnviarTokenSincrona(urlSemilla, passCert, jsonInvoiceFO);
                 string response = FacturacionElectronicaDGII.EnviarFacturaElectronicaSincrona(urlValidarSemilla, urlRecepcionFactura, urlConsultaFactura);
 
-                // Parsear el JSON 'invoice'
                 JObject jsonObject = JObject.Parse(invoice);
                 JObject jsonObjectResponse = JObject.Parse(response);
 
@@ -77,8 +73,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 };
 
                 return View(model);
-                //return View("NombreDeLaVista", model);
-
             }
             catch (Exception ex)
             {
@@ -90,7 +84,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpGet]
         public IActionResult GenerarPDF(int id, string codigoSeguridad)
         {
-            // Obtener la factura desde la base de datos
             var factura = _context.FacturasDGII
                     .Include(f => f.Items)
                     .FirstOrDefault(f => f.Id == id);
@@ -100,24 +93,12 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
             byte[] pdfBytes = CrearFacturaPDFInMemory(factura, codigoSeguridad, _env.WebRootPath);
 
-            //return File(pdfBytes, "application/pdf", $"Factura_{factura.ENCF}.pdf");
-            //return File(pdfBytes, "application/pdf");
-            //return Content("mensaje");
-            //return File(pdfBytes, "application/pdf", $"Factura_{factura.ENCF}.pdf");
-
-            //return View("verfacturaPDF");
-            //return File(pdfBytes, "application/pdf", $"Factura_{factura.ENCF}.pdf");
             return File(pdfBytes, "application/pdf");
-
-            //return View("verfacturaPDF", $"Factura_{factura.ENCF}.pdf");
-            //return RedirectToAction("VerFacturaPDF", new { id = id });
-
         }
 
         [HttpGet]
         public IActionResult GenerarPDFDownloads(int id, string codigoSeguridad)
         {
-            // Obtener la factura desde la base de datos
             var factura = _context.FacturasDGII
                     .Include(f => f.Items)
                     .FirstOrDefault(f => f.Id == id);
@@ -127,17 +108,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
             byte[] pdfBytes = CrearFacturaPDFInMemory(factura, codigoSeguridad, _env.WebRootPath);
 
-            //return File(pdfBytes, "application/pdf", $"Factura_{factura.ENCF}.pdf");
-            //return File(pdfBytes, "application/pdf");
-            //return Content("mensaje");
-            //return File(pdfBytes, "application/pdf", $"Factura_{factura.ENCF}.pdf");
-
-            //return View("verfacturaPDF");
             return File(pdfBytes, "application/pdf", $"Factura_{factura.ENCF}.pdf");
-
-            //return View("verfacturaPDF", $"Factura_{factura.ENCF}.pdf");
-            //return RedirectToAction("VerFacturaPDF", new { id = id });
-
         }
 
         private byte[] CrearFacturaPDFInMemory(FacturasDGII factura, string codigoSeguridad, string webRootPath)
@@ -152,32 +123,21 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 PdfFont boldFont = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
                 PdfFont boldFont2 = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
 
-                //string logoPath = "C:\\Users\\andersonmgordilloh\\source\\repos\\FacturacionElectronicaDGII\\ArchivosDGII\\logo.jpeg";
                 string logoPath = Path.Combine(webRootPath, "images", "logo.jpeg");
-
-                //ImageData imageData = ImageDataFactory.Create(logoPath);
-                //Image logo = new Image(imageData);
-                //logo.ScaleToFit(150, 150); // Más pequeño
-                //logo.SetMarginBottom(5);
-                //logo.SetHorizontalAlignment(HorizontalAlignment.LEFT);
-                //doc.Add(logo);
 
                 doc.Add(new Paragraph(" "));
 
-                // Crear la tabla con dos columnas más estrechas y espacio en el medio
-                Table headerTable = new Table(UnitValue.CreatePercentArray(new float[] { 48, 30, 48 })); // columna izquierda, espaciado, columna derecha
+                Table headerTable = new Table(UnitValue.CreatePercentArray(new float[] { 48, 30, 48 }));
                 headerTable.SetWidth(UnitValue.CreatePercentValue(100));
                 headerTable.SetMarginBottom(10);
                 headerTable.SetFont(boldFont);
 
-                // Cargar el logo
                 ImageData imageData = ImageDataFactory.Create(logoPath);
                 Image logo = new Image(imageData);
-                logo.ScaleToFit(150, 150); // Más pequeño para ajustarse bien dentro de la tabla
+                logo.ScaleToFit(150, 150);
                 logo.SetMarginBottom(5);
                 logo.SetHorizontalAlignment(HorizontalAlignment.LEFT);
 
-                // Celda izquierda - Emisor
                 Cell leftCell = new Cell().SetBorder(Border.NO_BORDER).SetTextAlignment(TextAlignment.LEFT).SetFont(boldFont);
 
                 leftCell.Add(logo);
@@ -188,18 +148,15 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 leftCell.Add(new Paragraph("Teléfono: (829)-435-9277").SetFontSize(9));
                 leftCell.Add(new Paragraph("Email: mtp@mtpasociados.com").SetFontSize(9));
 
-                // Celda vacía como separador
                 Cell spacerCell = new Cell().SetBorder(Border.NO_BORDER);
 
-                // Celda derecha - Factura
                 Cell rightCell = new Cell().SetBorder(Border.NO_BORDER).SetTextAlignment(TextAlignment.LEFT).SetFont(boldFont);
 
                 rightCell.Add(
                     new Paragraph("Página 1 de 1")
                         .SetFontSize(9)
-                        //.SetHorizontalAlignment(HorizontalAlignment.RIGHT)
                         .SetTextAlignment(TextAlignment.RIGHT)
-                        .SetMarginBottom(10) // Espacio de 10 puntos debajo del texto
+                        .SetMarginBottom(10)
                 );
 
 
@@ -208,71 +165,39 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 rightCell.Add(new Paragraph($"Fecha Vencimiento: {factura.FechaVencimientoSecuencia}").SetFontSize(9));
                 rightCell.Add(new Paragraph($"Fecha: {factura.FechaEmision}").SetFontSize(9));
                 rightCell.Add(new Paragraph($"Número Factura: {factura.NumeroFacturaInterna}").SetFontSize(9));
-                //rightCell.Add(new Paragraph($"Orden de venta: {factura.NumeroOrdenCompra}").SetFontSize(9));
-                //rightCell.Add(new Paragraph("Condición de pago: x ").SetFontSize(9));
-                //rightCell.Add(new Paragraph("Moneda: x ").SetFontSize(9));
 
-                // Agregar las celdas a la tabla
                 headerTable.AddCell(leftCell);
-                headerTable.AddCell(spacerCell); // espacio entre columnas
+                headerTable.AddCell(spacerCell);
                 headerTable.AddCell(rightCell);
 
-                // Agregar la tabla al documento
                 doc.Add(headerTable);
 
-
-
-
-
-
-
-
-
-
-
-
-                //doc.Add(new Paragraph(" "));
-
                 Table clienteTable = new Table(1);
-                clienteTable.SetWidth(UnitValue.CreatePercentValue(40)); // Tamaño compacto
-                clienteTable.SetHorizontalAlignment(HorizontalAlignment.LEFT); // Alineación izquierda
+                clienteTable.SetWidth(UnitValue.CreatePercentValue(40)); 
+                clienteTable.SetHorizontalAlignment(HorizontalAlignment.LEFT); 
                 clienteTable.SetMarginBottom(10);
                 clienteTable.SetBorder(new SolidBorder(0.5f));
 
-                // Celda del encabezado
                 clienteTable.AddHeaderCell(new Cell()
                     .Add(new Paragraph("Cliente")
                     .SetFontSize(8)
                     .SetFont(boldFont)
                     .SetTextAlignment(TextAlignment.CENTER))
-                    //.SetBackgroundColor(ColorConstants.LIGHT_GRAY)
                     .SetPadding(5)
                 );
 
-                // Celdas de contenido
                 clienteTable.AddCell(new Cell().Add(new Paragraph($"RNC: {factura.RNCComprador}").SetFontSize(8)).SetBorder(Border.NO_BORDER).SetPadding(2));
                 clienteTable.AddCell(new Cell().Add(new Paragraph($"CLIENTE: {factura.RazonSocialComprador}").SetFontSize(8)).SetBorder(Border.NO_BORDER).SetPadding(2));
                 clienteTable.AddCell(new Cell().Add(new Paragraph($"DIRECCIÓN: {factura.DireccionComprador}").SetFontSize(8)).SetBorder(Border.NO_BORDER).SetPadding(2));
-                //clienteTable.AddCell(new Cell().Add(new Paragraph($"Contacto: {factura.ContactoComprador}").SetFontSize(8)).SetBorder(Border.NO_BORDER).SetPadding(2));
-                //clienteTable.AddCell(new Cell().Add(new Paragraph($"Correo: {factura.CorreoComprador}").SetFontSize(8)).SetBorder(Border.NO_BORDER).SetPadding(2));
 
                 doc.Add(clienteTable);
 
-
-
-
-
-
-
-
-                // 1. Tabla principal (conserva bordes)
                 Table table = new Table(UnitValue.CreatePercentArray(new float[] { 10, 30, 20, 20, 20 }))
                     .UseAllAvailableWidth()
                     .SetFontSize(9)
                     .SetFont(boldFont)
                     .SetTextAlignment(TextAlignment.RIGHT);
 
-                // 2. Configurar encabezados (sin bordes visibles)
                 for (int i = 0; i < 5; i++)
                 {
                     string titulo = i == 0 ? "ITEM" :
@@ -286,8 +211,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     table.AddHeaderCell(headerCell);
                 }
 
-
-                // 3. Agregar filas de datos (sin bordes visibles)
                 foreach (var linea in factura.Items)
                 {
                     for (int i = 0; i < 5; i++)
@@ -307,33 +230,25 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     }
                 }
 
-
-
-                // 1. Celda de totales (ocupa todas las columnas pero alineada a la derecha)
                 Cell totalesCell = new Cell(1, 5)
-                    //.SetBorder(Border.NO_BORDER) // Sin borde exhttps://localhost:7088/FacturacionDGII/registrarfacturaE310000000002terior (se manejará en la tabla interna)
                     .SetBorderBottom(Border.NO_BORDER)
-                    .SetBorderLeft(Border.NO_BORDER)    // ← Esta línea es clave
+                    .SetBorderLeft(Border.NO_BORDER)  
                     .SetBorderRight(Border.NO_BORDER)
-                    .SetPadding(0) // Eliminar espacio interno
-                    .SetMargin(0)  // Eliminar margen
-                    .SetTextAlignment(TextAlignment.RIGHT); // Alinear contenido a la derecha
+                    .SetPadding(0) 
+                    .SetMargin(0) 
+                    .SetTextAlignment(TextAlignment.RIGHT);
 
-                // 2. Tabla interna para etiquetas y valores (ancho ajustado + bordes)
-                Table innerTable = new Table(UnitValue.CreatePercentArray(new float[] { 10, 10 })) // Columnas más estrechas
-                    .SetWidth(UnitValue.CreatePercentValue(40)) // Ocupa solo el 50% del espacio (ajustable)
-                    .SetHorizontalAlignment(HorizontalAlignment.RIGHT) // Alinear tabla a la derecha
-                    //.SetBorder(new SolidBorder(1))
-                    .SetBorderBottom(Border.NO_BORDER); // Bordes completos
+                Table innerTable = new Table(UnitValue.CreatePercentArray(new float[] { 10, 10 })) 
+                    .SetWidth(UnitValue.CreatePercentValue(40)) 
+                    .SetHorizontalAlignment(HorizontalAlignment.RIGHT) 
+                    .SetBorderBottom(Border.NO_BORDER);
 
-                // 3. Agregar filas con bordes:
-                // - Subtotal
                 innerTable.AddCell(
                     new Cell()
                         .Add(new Paragraph("Subtotal:").SetFontSize(9))
                         .SetBorder(new SolidBorder(0.5f))
                         .SetTextAlignment(TextAlignment.LEFT)
-                        .SetFont(boldFont2) // Negrita para el título   
+                        .SetFont(boldFont2) 
 
                 );
                 innerTable.AddCell(
@@ -349,7 +264,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         .Add(new Paragraph("ITBIS:").SetFontSize(9))
                         .SetBorder(new SolidBorder(0.5f))
                         .SetTextAlignment(TextAlignment.LEFT)
-                        .SetFont(boldFont2) // Negrita para el título   
+                        .SetFont(boldFont2) 
 
                 );
                 innerTable.AddCell(
@@ -365,7 +280,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         .Add(new Paragraph("Total:").SetFontSize(9))
                         .SetBorder(new SolidBorder(0.5f))
                         .SetTextAlignment(TextAlignment.LEFT)
-                        .SetFont(boldFont2) // Negrita para el título   
+                        .SetFont(boldFont2)  
                 );
                 innerTable.AddCell(
                     new Cell()
@@ -374,44 +289,24 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         .SetTextAlignment(TextAlignment.RIGHT)
                 );
 
-                // 4. Integrar en la tabla principal
                 totalesCell.Add(innerTable);
                 table.AddCell(totalesCell);
 
-                // Agregar al documento
                 doc.Add(table);
-
-
-
-
-
-
-
-
-
-
-
 
                 doc.Add(new Paragraph(" "));
 
-
-
-
-                // Crear una tabla con 2 columnas: firma (izquierda) y QR/info (derecha)
                 Table finalTable = new Table(UnitValue.CreatePercentArray(new float[] { 50, 50 }))
                     .UseAllAvailableWidth()
                     .SetMarginTop(20);
 
-                // ---------- COLUMNA IZQUIERDA: Firma ----------
                 Cell leftCell1 = new Cell().SetBorder(Border.NO_BORDER).SetTextAlignment(TextAlignment.LEFT);
 
-                // Línea para firmar
                 Paragraph lineaFirma = new Paragraph("_____________________________________")
                     .SetTextAlignment(TextAlignment.LEFT)
                     .SetFontSize(9)
                     .SetMarginBottom(0);
 
-                // Texto "Autorizado por"
                 Paragraph autorizadoPor = new Paragraph("Autorizado por")
                     .SetFontSize(9)
                     .SetTextAlignment(TextAlignment.LEFT)
@@ -421,10 +316,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 leftCell1.Add(lineaFirma);
                 leftCell1.Add(autorizadoPor);
 
-                // ---------- COLUMNA DERECHA: QR y detalles ----------
                 Cell rightCell1 = new Cell().SetBorder(Border.NO_BORDER).SetTextAlignment(TextAlignment.RIGHT);
 
-                // Crear código QR
                 DateTime fechaFirma = DateTime.ParseExact(factura.FechaHoraFirma, "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture);
 
                 string soloFecha = fechaFirma.ToString("dd-MM-yyyy");
@@ -438,108 +331,18 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 qrCodeImage.ScaleToFit(100, 100);
                 qrCodeImage.SetHorizontalAlignment(HorizontalAlignment.RIGHT);
 
-                // Agregar contenido
-                //rightCell1.Add(new Paragraph("Código QR:").SetTextAlignment(TextAlignment.RIGHT));
                 rightCell1.Add(qrCodeImage);
                 rightCell1.Add(new Paragraph($"Código de Seguridad: {codigoSeguridad}").SetFontSize(9).SetTextAlignment(TextAlignment.RIGHT).SetMarginTop(5));
                 rightCell1.Add(new Paragraph($"FechaHoraFirma: {factura.FechaHoraFirma}").SetFontSize(9).SetTextAlignment(TextAlignment.RIGHT));
 
-                // Agregar celdas a la tabla
                 finalTable.AddCell(leftCell1);
                 finalTable.AddCell(rightCell1);
 
-                // Agregar al documento
                 doc.Add(finalTable);
 
                 doc.Close();
-                return ms.ToArray(); // ← ahora retorna el PDF generado en memoria
+                return ms.ToArray(); 
             }
-        }
-
-
-
-        private byte[] CrearFacturaPDFenLocal(FacturasDGII factura)
-        {
-            using (var ms = new MemoryStream())
-            {
-                String dest = "C:\\Users\\andersonmgordilloh\\source\\repos\\FacturacionElectronicaDGII\\ArchivosDGII\\sample.pdf";
-
-                PdfWriter writer = new PdfWriter(dest);
-                PdfDocument pdf = new PdfDocument(writer);
-                Document doc = new Document(pdf);
-
-                doc.Add(new Paragraph("FACTURA").SetFontSize(18));
-
-                doc.Add(new Paragraph($"Tipo eCF: {factura.TipoeCF}"));
-                doc.Add(new Paragraph($"eNCF: {factura.ENCF}"));
-                doc.Add(new Paragraph($"FechaVencimientoSecuencia: {factura.FechaVencimientoSecuencia}"));
-                doc.Add(new Paragraph($"IndicadorEnvioDiferido: {factura.IndicadorEnvioDiferido}"));
-                doc.Add(new Paragraph($"IndicadorMontoGravado: {factura.IndicadorMontoGravado}"));
-
-                doc.Add(new Paragraph(" "));
-
-                // Tabla de productos
-                Table table = new Table(4);
-                table.AddHeaderCell("Producto");
-                table.AddHeaderCell("Cantidad");
-                table.AddHeaderCell("Precio Unitario");
-                table.AddHeaderCell("Total");
-
-                //foreach (var item in factura.Detalles)
-                //{
-                //    table.AddCell(item.Producto);
-                //    table.AddCell(item.Cantidad.ToString());
-                //    table.AddCell($"${item.PrecioUnitario:F2}");
-                //    table.AddCell($"${(item.Cantidad * item.PrecioUnitario):F2}");
-                //}
-
-                doc.Add(table);
-                doc.Add(new Paragraph(" "));
-                //doc.Add(new Paragraph($"TOTAL: ${factura.Total:F2}").SetBold());
-
-                // Generar el código QR
-                // 1. Crear la URL que quieres codificar en el QR
-                string url = $"https://ecf.dgii.gov.do/certecf/ConsultaTimbre?RncEmisor=130322791&RncComprador=131880681&ENCF=E310000000029&FechaEmision=01-04-2020&MontoTotal=7080.00&FechaFirma=01-03-2025%2005:07:00&CodigoSeguridad=p1NsBj"; // Ajusta esta URL
-
-                // 2. Crear el objeto BarcodeQRCode
-                BarcodeQRCode qrCode = new BarcodeQRCode(url);
-
-                // 3. Convertir el QR code a una imagen de iText
-                Image qrCodeImage = new Image(qrCode.CreateFormXObject(pdf));
-
-                // 4. Ajustar el tamaño del QR (opcional)
-                qrCodeImage.ScaleToFit(100, 100);
-
-                // 5. Añadir el QR al documento
-                doc.Add(new Paragraph("Código QR:"));
-                doc.Add(qrCodeImage);
-
-                doc.Close();
-                return ms.ToArray();
-            }
-        }
-
-        [HttpGet]
-        public IActionResult VerFacturaPDFenLocal(int id)
-        {
-            // Obtener la factura desde la base de datos
-            var factura = _context.FacturasDGII
-                //.Include(f => f.)
-                .FirstOrDefault(f => f.Id == 33);
-                //.FirstOrDefault(f => f.Id == id);
-
-            if (factura == null)
-                return NotFound();
-
-            string rutaPDF = $"C:\\Users\\andersonmgordilloh\\source\\repos\\FacturacionElectronicaDGII\\ArchivosDGII\\sample.pdf";
-
-            if (System.IO.File.Exists(rutaPDF))
-            {
-                byte[] pdfBytes = System.IO.File.ReadAllBytes(rutaPDF);
-                ViewBag.PdfData = $"data:application/pdf;base64,{Convert.ToBase64String(pdfBytes)}";
-            }
-
-            return View("verfacturaPDF");
         }
 
         [HttpGet]
@@ -635,44 +438,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult comprobanteE31ADEBUG(FacturaDGIIModel1 model)
-        {
-            string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
-            string passCert = "LD271167";
-            string jsonInvoiceFO = JsonConvert.SerializeObject(model);
-
-            string urlValidarSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/ValidarSemilla";
-            string urlRecepcionFactura = "https://ecf.dgii.gov.do/certecf/recepcion/api/FacturasElectronicas";
-            string urlConsultaFactura = "https://ecf.dgii.gov.do/certecf/consultaresultado/api/Consultas/Estado";
-
-            try
-            {
-                // 1. Ejecución de la DLL
-                string invoice = FacturacionElectronicaDGII.EnviarTokenSincrona(urlSemilla, passCert, jsonInvoiceFO);
-                string response = FacturacionElectronicaDGII.EnviarFacturaElectronicaSincrona(urlValidarSemilla, urlRecepcionFactura, urlConsultaFactura);
-
-                // 2. Pasamos todo a la vista sin procesar para ver qué contienen
-                var debugResponse = new FacturaDGIIResponseModel
-                {
-                    Token = "DEBUG INVOICE: " + invoice,
-                    Mensaje = "DEBUG RESPONSE: " + response
-                };
-
-                // Si quieres ver si el JSON es válido o es un error de texto
-                ViewBag.MensajeError = $"Invoice: {invoice} | Response: {response}";
-
-                return View("verFactura", debugResponse);
-            }
-            catch (Exception ex)
-            {
-                // Si la DLL explota por falta de archivos o permisos en Azure
-                ViewBag.MensajeError = "ERROR CRÍTICO: " + ex.Message + " | Inner: " + ex.InnerException?.Message;
-                return View("verFactura", new FacturaDGIIResponseModel());
-            }
-        }
-
-
-        [HttpPost]
         public IActionResult comprobanteE31A(FacturaDGIIModel1 model)
         {
             string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
@@ -685,11 +450,9 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
             try
             {
-                // Llamada al método de la DLL's
                 string invoice = FacturacionElectronicaDGII.EnviarTokenSincrona(urlSemilla, passCert, jsonInvoiceFO);
                 string response = FacturacionElectronicaDGII.EnviarFacturaElectronicaSincrona(urlValidarSemilla, urlRecepcionFactura, urlConsultaFactura);
 
-                // Parsear el JSON 'invoice'
                 JObject jsonObject = JObject.Parse(invoice);
                 JObject jsonObjectResponse = JObject.Parse(response);
 
@@ -714,7 +477,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 var registro = new FacturasDGII
                 {
-                    // IdDoc
                     TipoeCF = model?.ECF?.Encabezado?.IdDoc?.TipoeCF,
                     ENCF = model?.ECF?.Encabezado?.IdDoc?.eNCF,
                     FechaVencimientoSecuencia = model?.ECF?.Encabezado?.IdDoc?.FechaVencimientoSecuencia,
@@ -723,7 +485,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     IndicadorMontoGravado = model?.ECF?.Encabezado?.IdDoc?.IndicadorMontoGravado,
                     TipoIngresos = model?.ECF?.Encabezado?.IdDoc?.TipoIngresos,
 
-                    // Emisor
                     RNCEmisor = model?.ECF?.Encabezado?.Emisor?.RNCEmisor,
                     RazonSocialEmisor = model?.ECF?.Encabezado?.Emisor?.RazonSocialEmisor,
                     NombreComercial = model?.ECF?.Encabezado?.Emisor?.NombreComercial,
@@ -738,7 +499,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     ZonaVenta = model?.ECF?.Encabezado?.Emisor?.ZonaVenta,
                     FechaEmision = model?.ECF?.Encabezado?.Emisor?.FechaEmision,
 
-                    // Comprador
                     RNCComprador = model?.ECF?.Encabezado?.Comprador?.RNCComprador,
                     RazonSocialComprador = model?.ECF?.Encabezado?.Comprador?.RazonSocialComprador,
                     ContactoComprador = model?.ECF?.Encabezado?.Comprador?.ContactoComprador,
@@ -751,7 +511,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     NumeroOrdenCompra = model?.ECF?.Encabezado?.Comprador?.NumeroOrdenCompra,
                     CodigoInternoComprador = model?.ECF?.Encabezado?.Comprador?.CodigoInternoComprador,
 
-                    // Totales
                     MontoGravadoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
                     MontoGravadoI1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoI1 ?? "0"),
                     ITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.ITBIS1 ?? "0"),
@@ -759,7 +518,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
-                    // Fechas
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -777,14 +535,13 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         var detalle = new ItemFactura
                         {
 
-                            FacturaId = registro.Id, // Asignamos el ID de la factura recién creada
+                            FacturaId = registro.Id,
                             NumeroLinea = item.NumeroLinea,
                             IndicadorFacturacion = item.IndicadorFacturacion,
                             NombreItem = item.NombreItem,
                             IndicadorBienoServicio = item.IndicadorBienoServicio,
                             CantidadItem = Convert.ToDecimal(item.CantidadItem ?? "0"),
                             UnidadMedida = item.UnidadMedida,
-
                             PrecioUnitarioItem = Convert.ToDecimal(item.PrecioUnitarioItem ?? "0"),
                             MontoItem = Convert.ToDecimal(item.MontoItem ?? "0")
                         };
@@ -952,9 +709,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         {
             string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
             string passCert = "LD271167";
-
-            //string jsonInvoiceFO = JsonConvert.SerializeObject(model);
-
             string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
@@ -967,11 +721,9 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
             try
             {
-                // Llamada al método de la DLL
                 string invoice = FacturacionElectronicaDGII.EnviarTokenSincrona(urlSemilla, passCert, jsonInvoiceFO);
                 string response = FacturacionElectronicaDGII.EnviarFacturaElectronicaSincrona(urlValidarSemilla, urlRecepcionFactura, urlConsultaFactura);
 
-                // Parsear el JSON 'invoice'
                 JObject jsonObject = JObject.Parse(invoice);
                 JObject jsonObjectResponse = JObject.Parse(response);
 
@@ -996,7 +748,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 var registro = new FacturasDGII
                 {
-                    // IdDoc
                     TipoeCF = model?.ECF?.Encabezado?.IdDoc?.TipoeCF,
                     ENCF = model?.ECF?.Encabezado?.IdDoc?.eNCF,
                     FechaVencimientoSecuencia = model?.ECF?.Encabezado?.IdDoc?.FechaVencimientoSecuencia,
@@ -1005,7 +756,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     IndicadorMontoGravado = model?.ECF?.Encabezado?.IdDoc?.IndicadorMontoGravado,
                     TipoIngresos = model?.ECF?.Encabezado?.IdDoc?.TipoIngresos,
 
-                    // Emisor
                     RNCEmisor = model?.ECF?.Encabezado?.Emisor?.RNCEmisor,
                     RazonSocialEmisor = model?.ECF?.Encabezado?.Emisor?.RazonSocialEmisor,
                     NombreComercial = model?.ECF?.Encabezado?.Emisor?.NombreComercial,
@@ -1020,7 +770,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     ZonaVenta = model?.ECF?.Encabezado?.Emisor?.ZonaVenta,
                     FechaEmision = model?.ECF?.Encabezado?.Emisor?.FechaEmision,
 
-                    // Comprador
                     RNCComprador = model?.ECF?.Encabezado?.Comprador?.RNCComprador,
                     RazonSocialComprador = model?.ECF?.Encabezado?.Comprador?.RazonSocialComprador,
                     ContactoComprador = model?.ECF?.Encabezado?.Comprador?.ContactoComprador,
@@ -1033,7 +782,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     NumeroOrdenCompra = model?.ECF?.Encabezado?.Comprador?.NumeroOrdenCompra,
                     CodigoInternoComprador = model?.ECF?.Encabezado?.Comprador?.CodigoInternoComprador,
 
-                    // Totales
                     MontoGravadoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
                     MontoGravadoI1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoI1 ?? "0"),
                     ITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.ITBIS1 ?? "0"),
@@ -1041,7 +789,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
-                    // Fechas
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -1057,7 +804,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     {
                         var detalle = new ItemFactura
                         {
-                            FacturaId = registro.Id, // Asignamos el ID de la factura recién creada
+                            FacturaId = registro.Id,
                             NumeroLinea = item.NumeroLinea,
                             IndicadorFacturacion = item.IndicadorFacturacion,
                             NombreItem = item.NombreItem,
@@ -1225,7 +972,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 }
             };
 
-            return View(model); // Asegúrate de tener una vista correspondiente
+            return View(model);
         }
 
         [HttpPost]
@@ -1233,9 +980,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         {
             string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
             string passCert = "LD271167";
-
-            //string jsonInvoiceFO = JsonConvert.SerializeObject(model);
-
             string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
@@ -1248,11 +992,9 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
             try
             {
-                // Llamada al método de la DLL
                 string invoice = FacturacionElectronicaDGII.EnviarTokenSincrona(urlSemilla, passCert, jsonInvoiceFO);
                 string response = FacturacionElectronicaDGII.EnviarFacturaElectronicaSincrona(urlValidarSemilla, urlRecepcionFactura, urlConsultaFactura);
 
-                // Parsear el JSON 'invoice'
                 JObject jsonObject = JObject.Parse(invoice);
                 JObject jsonObjectResponse = JObject.Parse(response);
 
@@ -1277,7 +1019,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 var registro = new FacturasDGII
                 {
-                    // IdDoc
                     TipoeCF = model?.ECF?.Encabezado?.IdDoc?.TipoeCF,
                     ENCF = model?.ECF?.Encabezado?.IdDoc?.eNCF,
                     FechaVencimientoSecuencia = model?.ECF?.Encabezado?.IdDoc?.FechaVencimientoSecuencia,
@@ -1286,7 +1027,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     IndicadorMontoGravado = model?.ECF?.Encabezado?.IdDoc?.IndicadorMontoGravado,
                     TipoIngresos = model?.ECF?.Encabezado?.IdDoc?.TipoIngresos,
 
-                    // Emisor
                     RNCEmisor = model?.ECF?.Encabezado?.Emisor?.RNCEmisor,
                     RazonSocialEmisor = model?.ECF?.Encabezado?.Emisor?.RazonSocialEmisor,
                     NombreComercial = model?.ECF?.Encabezado?.Emisor?.NombreComercial,
@@ -1301,7 +1041,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     ZonaVenta = model?.ECF?.Encabezado?.Emisor?.ZonaVenta,
                     FechaEmision = model?.ECF?.Encabezado?.Emisor?.FechaEmision,
 
-                    // Comprador
                     RNCComprador = model?.ECF?.Encabezado?.Comprador?.RNCComprador,
                     RazonSocialComprador = model?.ECF?.Encabezado?.Comprador?.RazonSocialComprador,
                     ContactoComprador = model?.ECF?.Encabezado?.Comprador?.ContactoComprador,
@@ -1314,7 +1053,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     NumeroOrdenCompra = model?.ECF?.Encabezado?.Comprador?.NumeroOrdenCompra,
                     CodigoInternoComprador = model?.ECF?.Encabezado?.Comprador?.CodigoInternoComprador,
 
-                    // Totales
                     MontoGravadoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
                     MontoGravadoI1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoI1 ?? "0"),
                     ITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.ITBIS1 ?? "0"),
@@ -1322,7 +1060,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
-                    // Fechas
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -1338,7 +1075,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     {
                         var detalle = new ItemFactura
                         {
-                            FacturaId = registro.Id, // Asignamos el ID de la factura recién creada
+                            FacturaId = registro.Id,
                             NumeroLinea = item.NumeroLinea,
                             IndicadorFacturacion = item.IndicadorFacturacion,
                             NombreItem = item.NombreItem,
@@ -1515,7 +1252,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 }
             };
 
-            return View(model); // Asegúrate de tener una vista para mostrarlo correctamente
+            return View(model);
         }
 
 
@@ -1525,9 +1262,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         {
             string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
             string passCert = "LD271167";
-
-            //string jsonInvoiceFO = JsonConvert.SerializeObject(model);
-
             string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
@@ -1540,11 +1274,9 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
             try
             {
-                // Llamada al método de la DLL
                 string invoice = FacturacionElectronicaDGII.EnviarTokenSincrona(urlSemilla, passCert, jsonInvoiceFO);
                 string response = FacturacionElectronicaDGII.EnviarFacturaElectronicaSincrona(urlValidarSemilla, urlRecepcionFactura, urlConsultaFactura);
 
-                // Parsear el JSON 'invoice'
                 JObject jsonObject = JObject.Parse(invoice);
                 JObject jsonObjectResponse = JObject.Parse(response);
 
@@ -1569,7 +1301,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 var registro = new FacturasDGII
                 {
-                    // IdDoc
                     TipoeCF = model?.ECF?.Encabezado?.IdDoc?.TipoeCF,
                     ENCF = model?.ECF?.Encabezado?.IdDoc?.eNCF,
                     FechaVencimientoSecuencia = model?.ECF?.Encabezado?.IdDoc?.FechaVencimientoSecuencia,
@@ -1578,7 +1309,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     IndicadorMontoGravado = model?.ECF?.Encabezado?.IdDoc?.IndicadorMontoGravado,
                     TipoIngresos = model?.ECF?.Encabezado?.IdDoc?.TipoIngresos,
 
-                    // Emisor
                     RNCEmisor = model?.ECF?.Encabezado?.Emisor?.RNCEmisor,
                     RazonSocialEmisor = model?.ECF?.Encabezado?.Emisor?.RazonSocialEmisor,
                     NombreComercial = model?.ECF?.Encabezado?.Emisor?.NombreComercial,
@@ -1593,7 +1323,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     ZonaVenta = model?.ECF?.Encabezado?.Emisor?.ZonaVenta,
                     FechaEmision = model?.ECF?.Encabezado?.Emisor?.FechaEmision,
 
-                    // Comprador
                     RNCComprador = model?.ECF?.Encabezado?.Comprador?.RNCComprador,
                     RazonSocialComprador = model?.ECF?.Encabezado?.Comprador?.RazonSocialComprador,
                     ContactoComprador = model?.ECF?.Encabezado?.Comprador?.ContactoComprador,
@@ -1606,7 +1335,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     NumeroOrdenCompra = model?.ECF?.Encabezado?.Comprador?.NumeroOrdenCompra,
                     CodigoInternoComprador = model?.ECF?.Encabezado?.Comprador?.CodigoInternoComprador,
 
-                    // Totales
                     MontoGravadoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
                     MontoGravadoI1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoI1 ?? "0"),
                     ITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.ITBIS1 ?? "0"),
@@ -1614,7 +1342,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
-                    // Fechas
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -1631,7 +1358,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     {
                         var detalle = new ItemFactura
                         {
-                            FacturaId = registro.Id, // Asignamos el ID de la factura recién creada
+                            FacturaId = registro.Id,
                             NumeroLinea = item.NumeroLinea,
                             IndicadorFacturacion = item.IndicadorFacturacion,
                             NombreItem = item.NombreItem,
@@ -1828,19 +1555,14 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
             string passCert = "LD271167";
 
-            //string jsonInvoiceFO = JsonConvert.SerializeObject(model);
-
             foreach (var item in model.ECF.DetallesItems.Item)
             {
-                // Si TablaCodigosItem no es null
                 if (item.TablaSubDescuento?.SubDescuento != null)
                 {
-                    // Filtrar objetos vacíos
                     item.TablaSubDescuento.SubDescuento = item.TablaSubDescuento.SubDescuento
                         .Where(ci => ci != null && !string.IsNullOrWhiteSpace(ci.TipoSubDescuento) && !string.IsNullOrWhiteSpace(ci.MontoSubDescuento))
                         .ToList();
 
-                    // Si después de filtrar está vacío, eliminar la tabla entera
                     if (!item.TablaSubDescuento.SubDescuento.Any())
                     {
                         item.TablaSubDescuento = null;
@@ -1850,15 +1572,12 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
             foreach (var item in model.ECF.DetallesItems.Item)
             {
-                // Si TablaCodigosItem no es null
                 if (item.TablaSubRecargo?.SubRecargo != null)
                 {
-                    // Filtrar objetos vacíos
                     item.TablaSubRecargo.SubRecargo = item.TablaSubRecargo.SubRecargo
                         .Where(ci => ci != null && !string.IsNullOrWhiteSpace(ci.TipoSubRecargo) && !string.IsNullOrWhiteSpace(ci.MontoSubRecargo))
                         .ToList();
 
-                    // Si después de filtrar está vacío, eliminar la tabla entera
                     if (!item.TablaSubRecargo.SubRecargo.Any())
                     {
                         item.TablaSubRecargo = null;
@@ -1878,11 +1597,9 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
             try
             {
-                // Llamada al método de la DLL
                 string invoice = FacturacionElectronicaDGII.EnviarTokenSincrona(urlSemilla, passCert, jsonInvoiceFO);
                 string response = FacturacionElectronicaDGII.EnviarFacturaElectronicaSincrona(urlValidarSemilla, urlRecepcionFactura, urlConsultaFactura);
 
-                // Parsear el JSON 'invoice'
                 JObject jsonObject = JObject.Parse(invoice);
                 JObject jsonObjectResponse = JObject.Parse(response);
 
@@ -1907,7 +1624,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 var registro = new FacturasDGII
                 {
-                    // IdDoc
                     TipoeCF = model?.ECF?.Encabezado?.IdDoc?.TipoeCF,
                     ENCF = model?.ECF?.Encabezado?.IdDoc?.eNCF,
                     FechaVencimientoSecuencia = model?.ECF?.Encabezado?.IdDoc?.FechaVencimientoSecuencia,
@@ -1916,7 +1632,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     IndicadorMontoGravado = model?.ECF?.Encabezado?.IdDoc?.IndicadorMontoGravado,
                     TipoIngresos = model?.ECF?.Encabezado?.IdDoc?.TipoIngresos,
 
-                    // Emisor
                     RNCEmisor = model?.ECF?.Encabezado?.Emisor?.RNCEmisor,
                     RazonSocialEmisor = model?.ECF?.Encabezado?.Emisor?.RazonSocialEmisor,
                     NombreComercial = model?.ECF?.Encabezado?.Emisor?.NombreComercial,
@@ -1931,7 +1646,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     ZonaVenta = model?.ECF?.Encabezado?.Emisor?.ZonaVenta,
                     FechaEmision = model?.ECF?.Encabezado?.Emisor?.FechaEmision,
 
-                    // Comprador
                     RNCComprador = model?.ECF?.Encabezado?.Comprador?.RNCComprador,
                     RazonSocialComprador = model?.ECF?.Encabezado?.Comprador?.RazonSocialComprador,
                     ContactoComprador = model?.ECF?.Encabezado?.Comprador?.ContactoComprador,
@@ -1944,7 +1658,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     NumeroOrdenCompra = model?.ECF?.Encabezado?.Comprador?.NumeroOrdenCompra,
                     CodigoInternoComprador = model?.ECF?.Encabezado?.Comprador?.CodigoInternoComprador,
 
-                    // Totales
                     MontoGravadoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
                     MontoGravadoI1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoI1 ?? "0"),
                     ITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.ITBIS1 ?? "0"),
@@ -1952,7 +1665,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
-                    // Fechas
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -1969,7 +1681,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     {
                         var detalle = new ItemFactura
                         {
-                            FacturaId = registro.Id, // Asignamos el ID de la factura recién creada
+                            FacturaId = registro.Id,
                             NumeroLinea = item.NumeroLinea,
                             IndicadorFacturacion = item.IndicadorFacturacion,
                             NombreItem = item.NombreItem,
@@ -2027,7 +1739,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                             eNCF = "E320000000001",
                             TipoIngresos = "01",
                             TipoPago = "1"
-                            // Se omiten los campos que no aparecen en el JSON: FechaVencimientoSecuencia, IndicadorEnvioDiferido, IndicadorMontoGravado
                         },
                         Emisor = new EmisorModel6
                         {
@@ -2068,7 +1779,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         {
                             MontoExento = "300000.00",
                             MontoTotal = "300000.00"
-                            // No se incluyen campos como ITBIS ni impuestos adicionales porque no están en el JSON
                         }
                     },
                     DetallesItems = new DetallesItemsModel6
@@ -2085,14 +1795,13 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         UnidadMedida = "47",
                         PrecioUnitarioItem = "40.00",
                         MontoItem = "300000.00"
-                        // No se incluye TablaImpuestoAdicional porque no está en el JSON
                     }
                 }
                     }
                 }
             };
 
-            return View(model); // Asegúrate que la vista correspondiente maneje correctamente FacturaDGIIModel6
+            return View(model);
         }
 
         [HttpPost]
@@ -2100,9 +1809,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         {
             string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
             string passCert = "LD271167";
-
-            //string jsonInvoiceFO = JsonConvert.SerializeObject(model);
-
             string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
@@ -2115,11 +1821,9 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
             try
             {
-                // Llamada al método de la DLL
                 string invoice = FacturacionElectronicaDGII.EnviarTokenSincrona(urlSemilla, passCert, jsonInvoiceFO);
                 string response = FacturacionElectronicaDGII.EnviarFacturaElectronicaSincrona(urlValidarSemilla, urlRecepcionFactura, urlConsultaFactura);
 
-                // Parsear el JSON 'invoice'
                 JObject jsonObject = JObject.Parse(invoice);
                 JObject jsonObjectResponse = JObject.Parse(response);
 
@@ -2144,16 +1848,13 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 var registro = new FacturasDGII
                 {
-                    // IdDoc
                     TipoeCF = model?.ECF?.Encabezado?.IdDoc?.TipoeCF,
                     ENCF = model?.ECF?.Encabezado?.IdDoc?.eNCF,
-                    //FechaVencimientoSecuencia = model?.ECF?.Encabezado?.IdDoc?.FechaVencimientoSecuencia,
                     TipoPago = model?.ECF?.Encabezado?.IdDoc?.TipoPago,
                     IndicadorEnvioDiferido = model?.ECF?.Encabezado?.IdDoc?.IndicadorEnvioDiferido,
                     IndicadorMontoGravado = model?.ECF?.Encabezado?.IdDoc?.IndicadorMontoGravado,
                     TipoIngresos = model?.ECF?.Encabezado?.IdDoc?.TipoIngresos,
 
-                    // Emisor
                     RNCEmisor = model?.ECF?.Encabezado?.Emisor?.RNCEmisor,
                     RazonSocialEmisor = model?.ECF?.Encabezado?.Emisor?.RazonSocialEmisor,
                     NombreComercial = model?.ECF?.Encabezado?.Emisor?.NombreComercial,
@@ -2168,7 +1869,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     ZonaVenta = model?.ECF?.Encabezado?.Emisor?.ZonaVenta,
                     FechaEmision = model?.ECF?.Encabezado?.Emisor?.FechaEmision,
 
-                    // Comprador
                     RNCComprador = model?.ECF?.Encabezado?.Comprador?.RNCComprador,
                     RazonSocialComprador = model?.ECF?.Encabezado?.Comprador?.RazonSocialComprador,
                     ContactoComprador = model?.ECF?.Encabezado?.Comprador?.ContactoComprador,
@@ -2181,7 +1881,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     NumeroOrdenCompra = model?.ECF?.Encabezado?.Comprador?.NumeroOrdenCompra,
                     CodigoInternoComprador = model?.ECF?.Encabezado?.Comprador?.CodigoInternoComprador,
 
-                    // Totales
                     MontoGravadoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
                     MontoGravadoI1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoI1 ?? "0"),
                     ITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.ITBIS1 ?? "0"),
@@ -2189,7 +1888,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
-                    // Fechas
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -2206,7 +1904,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     {
                         var detalle = new ItemFactura
                         {
-                            FacturaId = registro.Id, // Asignamos el ID de la factura recién creada
+                            FacturaId = registro.Id,
                             NumeroLinea = item.NumeroLinea,
                             IndicadorFacturacion = item.IndicadorFacturacion,
                             NombreItem = item.NombreItem,
@@ -2349,8 +2047,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         MontoItem = "5525.00"
                     },
-                    // Agrega aquí los demás ítems (2 al 15) replicando la misma estructura
-                    // Puedes usar un bucle si los datos son repetitivos o lo deseas hacer dinámico
                 }
                     }
                 }
@@ -2383,7 +2079,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     MontoItem = (i <= 4) ? "5525.00" : (i <= 9) ? "25035.00" : "16550.00"
                 };
 
-                // Solo agregar TablaCodigosItem si i <= 5
                 if (i <= 4)
                 {
                     item.TablaCodigosItem = new TablaCodigosItem7
@@ -2412,19 +2107,14 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
             string passCert = "LD271167";
 
-            //string jsonInvoiceFO = JsonConvert.SerializeObject(model);
-
             foreach (var item in model.ECF.DetallesItems.Item)
             {
-                // Si TablaCodigosItem no es null
                 if (item.TablaCodigosItem?.CodigosItem != null)
                 {
-                    // Filtrar objetos vacíos
                     item.TablaCodigosItem.CodigosItem = item.TablaCodigosItem.CodigosItem
                         .Where(ci => ci != null && !string.IsNullOrWhiteSpace(ci.TipoCodigo) && !string.IsNullOrWhiteSpace(ci.CodigoItem))
                         .ToList();
 
-                    // Si después de filtrar está vacío, eliminar la tabla entera
                     if (!item.TablaCodigosItem.CodigosItem.Any())
                     {
                         item.TablaCodigosItem = null;
@@ -2444,11 +2134,9 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
             try
             {
-                // Llamada al método de la DLL
                 string invoice = FacturacionElectronicaDGII.EnviarTokenSincrona(urlSemilla, passCert, jsonInvoiceFO);
                 string response = FacturacionElectronicaDGII.EnviarFacturaElectronicaSincrona(urlValidarSemilla, urlRecepcionFactura, urlConsultaFactura);
 
-                // Parsear el JSON 'invoice'
                 JObject jsonObject = JObject.Parse(invoice);
                 JObject jsonObjectResponse = JObject.Parse(response);
 
@@ -2472,16 +2160,13 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 var registro = new FacturasDGII
                 {
-                    // IdDoc
                     TipoeCF = model?.ECF?.Encabezado?.IdDoc?.TipoeCF,
                     ENCF = model?.ECF?.Encabezado?.IdDoc?.eNCF,
-                    //FechaVencimientoSecuencia = model?.ECF?.Encabezado?.IdDoc?.FechaVencimientoSecuencia,
                     TipoPago = model?.ECF?.Encabezado?.IdDoc?.TipoPago,
                     IndicadorEnvioDiferido = model?.ECF?.Encabezado?.IdDoc?.IndicadorEnvioDiferido,
                     IndicadorMontoGravado = model?.ECF?.Encabezado?.IdDoc?.IndicadorMontoGravado,
                     TipoIngresos = model?.ECF?.Encabezado?.IdDoc?.TipoIngresos,
 
-                    // Emisor
                     RNCEmisor = model?.ECF?.Encabezado?.Emisor?.RNCEmisor,
                     RazonSocialEmisor = model?.ECF?.Encabezado?.Emisor?.RazonSocialEmisor,
                     NombreComercial = model?.ECF?.Encabezado?.Emisor?.NombreComercial,
@@ -2496,7 +2181,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     ZonaVenta = model?.ECF?.Encabezado?.Emisor?.ZonaVenta,
                     FechaEmision = model?.ECF?.Encabezado?.Emisor?.FechaEmision,
 
-                    // Comprador
                     RNCComprador = model?.ECF?.Encabezado?.Comprador?.RNCComprador,
                     RazonSocialComprador = model?.ECF?.Encabezado?.Comprador?.RazonSocialComprador,
                     ContactoComprador = model?.ECF?.Encabezado?.Comprador?.ContactoComprador,
@@ -2509,7 +2193,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     NumeroOrdenCompra = model?.ECF?.Encabezado?.Comprador?.NumeroOrdenCompra,
                     CodigoInternoComprador = model?.ECF?.Encabezado?.Comprador?.CodigoInternoComprador,
 
-                    // Totales
                     MontoGravadoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
                     MontoGravadoI1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoI1 ?? "0"),
                     ITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.ITBIS1 ?? "0"),
@@ -2517,7 +2200,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
-                    // Fechas
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -2534,7 +2216,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     {
                         var detalle = new ItemFactura
                         {
-                            FacturaId = registro.Id, // Asignamos el ID de la factura recién creada
+                            FacturaId = registro.Id,
                             NumeroLinea = item.NumeroLinea,
                             IndicadorFacturacion = item.IndicadorFacturacion,
                             NombreItem = item.NombreItem,
@@ -2683,19 +2365,14 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
             string passCert = "LD271167";
 
-            //string jsonInvoiceFO = JsonConvert.SerializeObject(model);
-
             foreach (var item in model.ECF.DetallesItems.Item)
             {
-                // Si TablaCodigosItem no es null
                 if (item.TablaSubDescuento?.SubDescuento != null)
                 {
-                    // Filtrar objetos vacíos
                     item.TablaSubDescuento.SubDescuento = item.TablaSubDescuento.SubDescuento
                         .Where(ci => ci != null && !string.IsNullOrWhiteSpace(ci.TipoSubDescuento) && !string.IsNullOrWhiteSpace(ci.MontoSubDescuento))
                         .ToList();
 
-                    // Si después de filtrar está vacío, eliminar la tabla entera
                     if (!item.TablaSubDescuento.SubDescuento.Any())
                     {
                         item.TablaSubDescuento = null;
@@ -2705,15 +2382,12 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
             foreach (var item in model.ECF.DetallesItems.Item)
             {
-                // Si TablaCodigosItem no es null
                 if (item.TablaSubRecargo?.SubRecargo != null)
                 {
-                    // Filtrar objetos vacíos
                     item.TablaSubRecargo.SubRecargo = item.TablaSubRecargo.SubRecargo
                         .Where(ci => ci != null && !string.IsNullOrWhiteSpace(ci.TipoSubRecargo) && !string.IsNullOrWhiteSpace(ci.MontoSubRecargo))
                         .ToList();
 
-                    // Si después de filtrar está vacío, eliminar la tabla entera
                     if (!item.TablaSubRecargo.SubRecargo.Any())
                     {
                         item.TablaSubRecargo = null;
@@ -2733,11 +2407,9 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
             try
             {
-                // Llamada al método de la DLL
                 string invoice = FacturacionElectronicaDGII.EnviarTokenSincrona(urlSemilla, passCert, jsonInvoiceFO);
                 string response = FacturacionElectronicaDGII.EnviarFacturaElectronicaSincrona(urlValidarSemilla, urlRecepcionFactura, urlConsultaFactura);
 
-                // Parsear el JSON 'invoice'
                 JObject jsonObject = JObject.Parse(invoice);
                 JObject jsonObjectResponse = JObject.Parse(response);
 
@@ -2762,7 +2434,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 var registro = new FacturasDGII
                 {
-                    // IdDoc
                     TipoeCF = model?.ECF?.Encabezado?.IdDoc?.TipoeCF,
                     ENCF = model?.ECF?.Encabezado?.IdDoc?.eNCF,
                     FechaVencimientoSecuencia = model?.ECF?.Encabezado?.IdDoc?.FechaVencimientoSecuencia,
@@ -2771,7 +2442,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     IndicadorMontoGravado = model?.ECF?.Encabezado?.IdDoc?.IndicadorMontoGravado,
                     TipoIngresos = model?.ECF?.Encabezado?.IdDoc?.TipoIngresos,
 
-                    // Emisor
                     RNCEmisor = model?.ECF?.Encabezado?.Emisor?.RNCEmisor,
                     RazonSocialEmisor = model?.ECF?.Encabezado?.Emisor?.RazonSocialEmisor,
                     NombreComercial = model?.ECF?.Encabezado?.Emisor?.NombreComercial,
@@ -2786,7 +2456,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     ZonaVenta = model?.ECF?.Encabezado?.Emisor?.ZonaVenta,
                     FechaEmision = model?.ECF?.Encabezado?.Emisor?.FechaEmision,
 
-                    // Comprador
                     RNCComprador = model?.ECF?.Encabezado?.Comprador?.RNCComprador,
                     RazonSocialComprador = model?.ECF?.Encabezado?.Comprador?.RazonSocialComprador,
                     ContactoComprador = model?.ECF?.Encabezado?.Comprador?.ContactoComprador,
@@ -2799,7 +2468,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     NumeroOrdenCompra = model?.ECF?.Encabezado?.Comprador?.NumeroOrdenCompra,
                     CodigoInternoComprador = model?.ECF?.Encabezado?.Comprador?.CodigoInternoComprador,
 
-                    // Totales
                     MontoGravadoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
                     MontoGravadoI1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoI1 ?? "0"),
                     ITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.ITBIS1 ?? "0"),
@@ -2807,7 +2475,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
-                    // Fechas
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -2824,7 +2491,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     {
                         var detalle = new ItemFactura
                         {
-                            FacturaId = registro.Id, // Asignamos el ID de la factura recién creada
+                            FacturaId = registro.Id,
                             NumeroLinea = item.NumeroLinea,
                             IndicadorFacturacion = item.IndicadorFacturacion,
                             NombreItem = item.NombreItem,
@@ -2966,19 +2633,14 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
             string passCert = "LD271167";
 
-            //string jsonInvoiceFO = JsonConvert.SerializeObject(model);
-
             foreach (var item in model.ECF.DetallesItems.Item)
             {
-                // Si TablaCodigosItem no es null
                 if (item.TablaSubDescuento?.SubDescuento != null)
                 {
-                    // Filtrar objetos vacíos
                     item.TablaSubDescuento.SubDescuento = item.TablaSubDescuento.SubDescuento
                         .Where(ci => ci != null && !string.IsNullOrWhiteSpace(ci.TipoSubDescuento) && !string.IsNullOrWhiteSpace(ci.MontoSubDescuento))
                         .ToList();
 
-                    // Si después de filtrar está vacío, eliminar la tabla entera
                     if (!item.TablaSubDescuento.SubDescuento.Any())
                     {
                         item.TablaSubDescuento = null;
@@ -2988,15 +2650,12 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
             foreach (var item in model.ECF.DetallesItems.Item)
             {
-                // Si TablaCodigosItem no es null
                 if (item.TablaSubRecargo?.SubRecargo != null)
                 {
-                    // Filtrar objetos vacíos
                     item.TablaSubRecargo.SubRecargo = item.TablaSubRecargo.SubRecargo
                         .Where(ci => ci != null && !string.IsNullOrWhiteSpace(ci.TipoSubRecargo) && !string.IsNullOrWhiteSpace(ci.MontoSubRecargo))
                         .ToList();
 
-                    // Si después de filtrar está vacío, eliminar la tabla entera
                     if (!item.TablaSubRecargo.SubRecargo.Any())
                     {
                         item.TablaSubRecargo = null;
@@ -3016,11 +2675,9 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
             try
             {
-                // Llamada al método de la DLL
                 string invoice = FacturacionElectronicaDGII.EnviarTokenSincrona(urlSemilla, passCert, jsonInvoiceFO);
                 string response = FacturacionElectronicaDGII.EnviarFacturaElectronicaSincrona(urlValidarSemilla, urlRecepcionFactura, urlConsultaFactura);
 
-                // Parsear el JSON 'invoice'
                 JObject jsonObject = JObject.Parse(invoice);
                 JObject jsonObjectResponse = JObject.Parse(response);
 
@@ -3045,7 +2702,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 var registro = new FacturasDGII
                 {
-                    // IdDoc
                     TipoeCF = model?.ECF?.Encabezado?.IdDoc?.TipoeCF,
                     ENCF = model?.ECF?.Encabezado?.IdDoc?.eNCF,
                     FechaVencimientoSecuencia = model?.ECF?.Encabezado?.IdDoc?.FechaVencimientoSecuencia,
@@ -3054,7 +2710,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     IndicadorMontoGravado = model?.ECF?.Encabezado?.IdDoc?.IndicadorMontoGravado,
                     TipoIngresos = model?.ECF?.Encabezado?.IdDoc?.TipoIngresos,
 
-                    // Emisor
                     RNCEmisor = model?.ECF?.Encabezado?.Emisor?.RNCEmisor,
                     RazonSocialEmisor = model?.ECF?.Encabezado?.Emisor?.RazonSocialEmisor,
                     NombreComercial = model?.ECF?.Encabezado?.Emisor?.NombreComercial,
@@ -3069,7 +2724,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     ZonaVenta = model?.ECF?.Encabezado?.Emisor?.ZonaVenta,
                     FechaEmision = model?.ECF?.Encabezado?.Emisor?.FechaEmision,
 
-                    // Comprador
                     RNCComprador = model?.ECF?.Encabezado?.Comprador?.RNCComprador,
                     RazonSocialComprador = model?.ECF?.Encabezado?.Comprador?.RazonSocialComprador,
                     ContactoComprador = model?.ECF?.Encabezado?.Comprador?.ContactoComprador,
@@ -3082,7 +2736,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     NumeroOrdenCompra = model?.ECF?.Encabezado?.Comprador?.NumeroOrdenCompra,
                     CodigoInternoComprador = model?.ECF?.Encabezado?.Comprador?.CodigoInternoComprador,
 
-                    // Totales
                     MontoGravadoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
                     MontoGravadoI1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoI1 ?? "0"),
                     ITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.ITBIS1 ?? "0"),
@@ -3090,7 +2743,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
-                    // Fechas
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -3107,7 +2759,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     {
                         var detalle = new ItemFactura
                         {
-                            FacturaId = registro.Id, // Asignamos el ID de la factura recién creada
+                            FacturaId = registro.Id,
                             NumeroLinea = item.NumeroLinea,
                             IndicadorFacturacion = item.IndicadorFacturacion,
                             NombreItem = item.NombreItem,
@@ -3246,19 +2898,14 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
             string passCert = "LD271167";
 
-            //string jsonInvoiceFO = JsonConvert.SerializeObject(model);
-
             foreach (var item in model.ECF.DetallesItems.Item)
             {
-                // Si TablaCodigosItem no es null
                 if (item.TablaSubDescuento?.SubDescuento != null)
                 {
-                    // Filtrar objetos vacíos
                     item.TablaSubDescuento.SubDescuento = item.TablaSubDescuento.SubDescuento
                         .Where(ci => ci != null && !string.IsNullOrWhiteSpace(ci.TipoSubDescuento) && !string.IsNullOrWhiteSpace(ci.MontoSubDescuento))
                         .ToList();
 
-                    // Si después de filtrar está vacío, eliminar la tabla entera
                     if (!item.TablaSubDescuento.SubDescuento.Any())
                     {
                         item.TablaSubDescuento = null;
@@ -3268,15 +2915,12 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
             foreach (var item in model.ECF.DetallesItems.Item)
             {
-                // Si TablaCodigosItem no es null
                 if (item.TablaSubRecargo?.SubRecargo != null)
                 {
-                    // Filtrar objetos vacíos
                     item.TablaSubRecargo.SubRecargo = item.TablaSubRecargo.SubRecargo
                         .Where(ci => ci != null && !string.IsNullOrWhiteSpace(ci.TipoSubRecargo) && !string.IsNullOrWhiteSpace(ci.MontoSubRecargo))
                         .ToList();
 
-                    // Si después de filtrar está vacío, eliminar la tabla entera
                     if (!item.TablaSubRecargo.SubRecargo.Any())
                     {
                         item.TablaSubRecargo = null;
@@ -3296,11 +2940,9 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
             try
             {
-                // Llamada al método de la DLL
                 string invoice = FacturacionElectronicaDGII.EnviarTokenSincrona(urlSemilla, passCert, jsonInvoiceFO);
                 string response = FacturacionElectronicaDGII.EnviarFacturaElectronicaSincrona(urlValidarSemilla, urlRecepcionFactura, urlConsultaFactura);
 
-                // Parsear el JSON 'invoice'
                 JObject jsonObject = JObject.Parse(invoice);
                 JObject jsonObjectResponse = JObject.Parse(response);
 
@@ -3325,7 +2967,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 var registro = new FacturasDGII
                 {
-                    // IdDoc
                     TipoeCF = model?.ECF?.Encabezado?.IdDoc?.TipoeCF,
                     ENCF = model?.ECF?.Encabezado?.IdDoc?.eNCF,
                     FechaVencimientoSecuencia = model?.ECF?.Encabezado?.IdDoc?.FechaVencimientoSecuencia,
@@ -3334,7 +2975,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     IndicadorMontoGravado = model?.ECF?.Encabezado?.IdDoc?.IndicadorMontoGravado,
                     TipoIngresos = model?.ECF?.Encabezado?.IdDoc?.TipoIngresos,
 
-                    // Emisor
                     RNCEmisor = model?.ECF?.Encabezado?.Emisor?.RNCEmisor,
                     RazonSocialEmisor = model?.ECF?.Encabezado?.Emisor?.RazonSocialEmisor,
                     NombreComercial = model?.ECF?.Encabezado?.Emisor?.NombreComercial,
@@ -3349,7 +2989,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     ZonaVenta = model?.ECF?.Encabezado?.Emisor?.ZonaVenta,
                     FechaEmision = model?.ECF?.Encabezado?.Emisor?.FechaEmision,
 
-                    // Comprador
                     RNCComprador = model?.ECF?.Encabezado?.Comprador?.RNCComprador,
                     RazonSocialComprador = model?.ECF?.Encabezado?.Comprador?.RazonSocialComprador,
                     ContactoComprador = model?.ECF?.Encabezado?.Comprador?.ContactoComprador,
@@ -3362,7 +3001,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     NumeroOrdenCompra = model?.ECF?.Encabezado?.Comprador?.NumeroOrdenCompra,
                     CodigoInternoComprador = model?.ECF?.Encabezado?.Comprador?.CodigoInternoComprador,
 
-                    // Totales
                     MontoGravadoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
                     MontoGravadoI1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoI1 ?? "0"),
                     ITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.ITBIS1 ?? "0"),
@@ -3370,7 +3008,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
-                    // Fechas
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -3387,7 +3024,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     {
                         var detalle = new ItemFactura
                         {
-                            FacturaId = registro.Id, // Asignamos el ID de la factura recién creada
+                            FacturaId = registro.Id,
                             NumeroLinea = item.NumeroLinea,
                             IndicadorFacturacion = item.IndicadorFacturacion,
                             NombreItem = item.NombreItem,
@@ -3506,11 +3143,9 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
             try
             {
-                // Llamada al método de la DLL's
                 string invoice = FacturacionElectronicaDGII.EnviarTokenSincrona(urlSemilla, passCert, jsonInvoiceFO);
                 string response = FacturacionElectronicaDGII.EnviarFacturaElectronicaSincrona(urlValidarSemilla, urlRecepcionFactura, urlConsultaFactura);
 
-                // Parsear el JSON 'invoice'
                 JObject jsonObject = JObject.Parse(invoice);
                 JObject jsonObjectResponse = JObject.Parse(response);
 
@@ -3535,7 +3170,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 var registro = new FacturasDGII
                 {
-                    // IdDoc
                     TipoeCF = model?.ECF?.Encabezado?.IdDoc?.TipoeCF,
                     ENCF = model?.ECF?.Encabezado?.IdDoc?.eNCF,
                     FechaVencimientoSecuencia = model?.ECF?.Encabezado?.IdDoc?.FechaVencimientoSecuencia,
@@ -3544,7 +3178,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     IndicadorMontoGravado = model?.ECF?.Encabezado?.IdDoc?.IndicadorMontoGravado,
                     TipoIngresos = model?.ECF?.Encabezado?.IdDoc?.TipoIngresos,
 
-                    // Emisor
                     RNCEmisor = model?.ECF?.Encabezado?.Emisor?.RNCEmisor,
                     RazonSocialEmisor = model?.ECF?.Encabezado?.Emisor?.RazonSocialEmisor,
                     NombreComercial = model?.ECF?.Encabezado?.Emisor?.NombreComercial,
@@ -3559,12 +3192,10 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     ZonaVenta = model?.ECF?.Encabezado?.Emisor?.ZonaVenta,
                     FechaEmision = model?.ECF?.Encabezado?.Emisor?.FechaEmision,
 
-                    // Totales
                     MontoGravadoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
                     TotalITBIS = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
-                    // Fechas
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -3581,7 +3212,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     {
                         var detalle = new ItemFactura
                         {
-                            FacturaId = registro.Id, // Asignamos el ID de la factura recién creada
+                            FacturaId = registro.Id,
                             NumeroLinea = item.NumeroLinea,
                             IndicadorFacturacion = item.IndicadorFacturacion,
                             NombreItem = item.NombreItem,
@@ -3736,19 +3367,14 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
             string passCert = "LD271167";
 
-            //string jsonInvoiceFO = JsonConvert.SerializeObject(model);
-
             foreach (var item in model.ECF.DetallesItems.Item)
             {
-                // Si TablaCodigosItem no es null
                 if (item.TablaSubDescuento?.SubDescuento != null)
                 {
-                    // Filtrar objetos vacíos
                     item.TablaSubDescuento.SubDescuento = item.TablaSubDescuento.SubDescuento
                         .Where(ci => ci != null && !string.IsNullOrWhiteSpace(ci.TipoSubDescuento) && !string.IsNullOrWhiteSpace(ci.MontoSubDescuento))
                         .ToList();
 
-                    // Si después de filtrar está vacío, eliminar la tabla entera
                     if (!item.TablaSubDescuento.SubDescuento.Any())
                     {
                         item.TablaSubDescuento = null;
@@ -3758,15 +3384,12 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
             foreach (var item in model.ECF.DetallesItems.Item)
             {
-                // Si TablaCodigosItem no es null
                 if (item.TablaSubRecargo?.SubRecargo != null)
                 {
-                    // Filtrar objetos vacíos
                     item.TablaSubRecargo.SubRecargo = item.TablaSubRecargo.SubRecargo
                         .Where(ci => ci != null && !string.IsNullOrWhiteSpace(ci.TipoSubRecargo) && !string.IsNullOrWhiteSpace(ci.MontoSubRecargo))
                         .ToList();
 
-                    // Si después de filtrar está vacío, eliminar la tabla entera
                     if (!item.TablaSubRecargo.SubRecargo.Any())
                     {
                         item.TablaSubRecargo = null;
@@ -3786,11 +3409,9 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
             try
             {
-                // Llamada al método de la DLL
                 string invoice = FacturacionElectronicaDGII.EnviarTokenSincrona(urlSemilla, passCert, jsonInvoiceFO);
                 string response = FacturacionElectronicaDGII.EnviarFacturaElectronicaSincrona(urlValidarSemilla, urlRecepcionFactura, urlConsultaFactura);
 
-                // Parsear el JSON 'invoice'
                 JObject jsonObject = JObject.Parse(invoice);
                 JObject jsonObjectResponse = JObject.Parse(response);
 
@@ -3815,7 +3436,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 var registro = new FacturasDGII
                 {
-                    // IdDoc
                     TipoeCF = model?.ECF?.Encabezado?.IdDoc?.TipoeCF,
                     ENCF = model?.ECF?.Encabezado?.IdDoc?.eNCF,
                     FechaVencimientoSecuencia = model?.ECF?.Encabezado?.IdDoc?.FechaVencimientoSecuencia,
@@ -3824,7 +3444,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     IndicadorMontoGravado = model?.ECF?.Encabezado?.IdDoc?.IndicadorMontoGravado,
                     TipoIngresos = model?.ECF?.Encabezado?.IdDoc?.TipoIngresos,
 
-                    // Emisor
                     RNCEmisor = model?.ECF?.Encabezado?.Emisor?.RNCEmisor,
                     RazonSocialEmisor = model?.ECF?.Encabezado?.Emisor?.RazonSocialEmisor,
                     NombreComercial = model?.ECF?.Encabezado?.Emisor?.NombreComercial,
@@ -3839,7 +3458,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     ZonaVenta = model?.ECF?.Encabezado?.Emisor?.ZonaVenta,
                     FechaEmision = model?.ECF?.Encabezado?.Emisor?.FechaEmision,
 
-                    // Comprador
                     RNCComprador = model?.ECF?.Encabezado?.Comprador?.RNCComprador,
                     RazonSocialComprador = model?.ECF?.Encabezado?.Comprador?.RazonSocialComprador,
                     ContactoComprador = model?.ECF?.Encabezado?.Comprador?.ContactoComprador,
@@ -3852,7 +3470,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     NumeroOrdenCompra = model?.ECF?.Encabezado?.Comprador?.NumeroOrdenCompra,
                     CodigoInternoComprador = model?.ECF?.Encabezado?.Comprador?.CodigoInternoComprador,
 
-                    // Totales
                     MontoGravadoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
                     MontoGravadoI1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoI1 ?? "0"),
                     ITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.ITBIS1 ?? "0"),
@@ -3860,7 +3477,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
-                    // Fechas
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -3877,7 +3493,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     {
                         var detalle = new ItemFactura
                         {
-                            FacturaId = registro.Id, // Asignamos el ID de la factura recién creada
+                            FacturaId = registro.Id,
                             NumeroLinea = item.NumeroLinea,
                             IndicadorFacturacion = item.IndicadorFacturacion,
                             NombreItem = item.NombreItem,
@@ -4016,19 +3632,14 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
             string passCert = "LD271167";
 
-            //string jsonInvoiceFO = JsonConvert.SerializeObject(model);
-
             foreach (var item in model.ECF.DetallesItems.Item)
             {
-                // Si TablaCodigosItem no es null
                 if (item.TablaSubDescuento?.SubDescuento != null)
                 {
-                    // Filtrar objetos vacíos
                     item.TablaSubDescuento.SubDescuento = item.TablaSubDescuento.SubDescuento
                         .Where(ci => ci != null && !string.IsNullOrWhiteSpace(ci.TipoSubDescuento) && !string.IsNullOrWhiteSpace(ci.MontoSubDescuento))
                         .ToList();
 
-                    // Si después de filtrar está vacío, eliminar la tabla entera
                     if (!item.TablaSubDescuento.SubDescuento.Any())
                     {
                         item.TablaSubDescuento = null;
@@ -4038,15 +3649,12 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
             foreach (var item in model.ECF.DetallesItems.Item)
             {
-                // Si TablaCodigosItem no es null
                 if (item.TablaSubRecargo?.SubRecargo != null)
                 {
-                    // Filtrar objetos vacíos
                     item.TablaSubRecargo.SubRecargo = item.TablaSubRecargo.SubRecargo
                         .Where(ci => ci != null && !string.IsNullOrWhiteSpace(ci.TipoSubRecargo) && !string.IsNullOrWhiteSpace(ci.MontoSubRecargo))
                         .ToList();
 
-                    // Si después de filtrar está vacío, eliminar la tabla entera
                     if (!item.TablaSubRecargo.SubRecargo.Any())
                     {
                         item.TablaSubRecargo = null;
@@ -4066,11 +3674,9 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
             try
             {
-                // Llamada al método de la DLL
                 string invoice = FacturacionElectronicaDGII.EnviarTokenSincrona(urlSemilla, passCert, jsonInvoiceFO);
                 string response = FacturacionElectronicaDGII.EnviarFacturaElectronicaSincrona(urlValidarSemilla, urlRecepcionFactura, urlConsultaFactura);
 
-                // Parsear el JSON 'invoice'
                 JObject jsonObject = JObject.Parse(invoice);
                 JObject jsonObjectResponse = JObject.Parse(response);
 
@@ -4095,7 +3701,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 var registro = new FacturasDGII
                 {
-                    // IdDoc
                     TipoeCF = model?.ECF?.Encabezado?.IdDoc?.TipoeCF,
                     ENCF = model?.ECF?.Encabezado?.IdDoc?.eNCF,
                     FechaVencimientoSecuencia = model?.ECF?.Encabezado?.IdDoc?.FechaVencimientoSecuencia,
@@ -4104,7 +3709,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     IndicadorMontoGravado = model?.ECF?.Encabezado?.IdDoc?.IndicadorMontoGravado,
                     TipoIngresos = model?.ECF?.Encabezado?.IdDoc?.TipoIngresos,
 
-                    // Emisor
                     RNCEmisor = model?.ECF?.Encabezado?.Emisor?.RNCEmisor,
                     RazonSocialEmisor = model?.ECF?.Encabezado?.Emisor?.RazonSocialEmisor,
                     NombreComercial = model?.ECF?.Encabezado?.Emisor?.NombreComercial,
@@ -4119,7 +3723,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     ZonaVenta = model?.ECF?.Encabezado?.Emisor?.ZonaVenta,
                     FechaEmision = model?.ECF?.Encabezado?.Emisor?.FechaEmision,
 
-                    // Comprador
                     RNCComprador = model?.ECF?.Encabezado?.Comprador?.RNCComprador,
                     RazonSocialComprador = model?.ECF?.Encabezado?.Comprador?.RazonSocialComprador,
                     ContactoComprador = model?.ECF?.Encabezado?.Comprador?.ContactoComprador,
@@ -4132,7 +3735,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     NumeroOrdenCompra = model?.ECF?.Encabezado?.Comprador?.NumeroOrdenCompra,
                     CodigoInternoComprador = model?.ECF?.Encabezado?.Comprador?.CodigoInternoComprador,
 
-                    // Totales
                     MontoGravadoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
                     MontoGravadoI1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoI1 ?? "0"),
                     ITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.ITBIS1 ?? "0"),
@@ -4140,7 +3742,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
-                    // Fechas
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -4157,7 +3758,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     {
                         var detalle = new ItemFactura
                         {
-                            FacturaId = registro.Id, // Asignamos el ID de la factura recién creada
+                            FacturaId = registro.Id,
                             NumeroLinea = item.NumeroLinea,
                             IndicadorFacturacion = item.IndicadorFacturacion,
                             NombreItem = item.NombreItem,
@@ -4343,9 +3944,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         {
             string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
             string passCert = "LD271167";
-
-            //string jsonInvoiceFO = JsonConvert.SerializeObject(model);
-
             string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
@@ -4358,11 +3956,9 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
             try
             {
-                // Llamada al método de la DLL
                 string invoice = FacturacionElectronicaDGII.EnviarTokenSincrona(urlSemilla, passCert, jsonInvoiceFO);
                 string response = FacturacionElectronicaDGII.EnviarFacturaElectronicaSincrona(urlValidarSemilla, urlRecepcionFactura, urlConsultaFactura);
 
-                // Parsear el JSON 'invoice'
                 JObject jsonObject = JObject.Parse(invoice);
                 JObject jsonObjectResponse = JObject.Parse(response);
 
@@ -4387,7 +3983,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 var registro = new FacturasDGII
                 {
-                    // IdDoc
                     TipoeCF = model?.ECF?.Encabezado?.IdDoc?.TipoeCF,
                     ENCF = model?.ECF?.Encabezado?.IdDoc?.eNCF,
                     FechaVencimientoSecuencia = model?.ECF?.Encabezado?.IdDoc?.FechaVencimientoSecuencia,
@@ -4396,7 +3991,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     IndicadorMontoGravado = model?.ECF?.Encabezado?.IdDoc?.IndicadorMontoGravado,
                     TipoIngresos = model?.ECF?.Encabezado?.IdDoc?.TipoIngresos,
 
-                    // Emisor
                     RNCEmisor = model?.ECF?.Encabezado?.Emisor?.RNCEmisor,
                     RazonSocialEmisor = model?.ECF?.Encabezado?.Emisor?.RazonSocialEmisor,
                     NombreComercial = model?.ECF?.Encabezado?.Emisor?.NombreComercial,
@@ -4411,7 +4005,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     ZonaVenta = model?.ECF?.Encabezado?.Emisor?.ZonaVenta,
                     FechaEmision = model?.ECF?.Encabezado?.Emisor?.FechaEmision,
 
-                    // Comprador
                     RNCComprador = model?.ECF?.Encabezado?.Comprador?.RNCComprador,
                     RazonSocialComprador = model?.ECF?.Encabezado?.Comprador?.RazonSocialComprador,
                     ContactoComprador = model?.ECF?.Encabezado?.Comprador?.ContactoComprador,
@@ -4424,7 +4017,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     NumeroOrdenCompra = model?.ECF?.Encabezado?.Comprador?.NumeroOrdenCompra,
                     CodigoInternoComprador = model?.ECF?.Encabezado?.Comprador?.CodigoInternoComprador,
 
-                    // Totales
                     MontoGravadoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
                     MontoGravadoI1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoI1 ?? "0"),
                     ITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.ITBIS1 ?? "0"),
@@ -4432,7 +4024,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
-                    // Fechas
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -4449,7 +4040,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     {
                         var detalle = new ItemFactura
                         {
-                            FacturaId = registro.Id, // Asignamos el ID de la factura recién creada
+                            FacturaId = registro.Id,
                             NumeroLinea = item.NumeroLinea,
                             IndicadorFacturacion = item.IndicadorFacturacion,
                             NombreItem = item.NombreItem,
@@ -4596,9 +4187,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         {
             string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
             string passCert = "LD271167";
-
-            //string jsonInvoiceFO = JsonConvert.SerializeObject(model);
-
             string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
@@ -4611,11 +4199,9 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
             try
             {
-                // Llamada al método de la DLL
                 string invoice = FacturacionElectronicaDGII.EnviarTokenSincrona(urlSemilla, passCert, jsonInvoiceFO);
                 string response = FacturacionElectronicaDGII.EnviarFacturaElectronicaSincrona(urlValidarSemilla, urlRecepcionFactura, urlConsultaFactura);
 
-                // Parsear el JSON 'invoice'
                 JObject jsonObject = JObject.Parse(invoice);
                 JObject jsonObjectResponse = JObject.Parse(response);
 
@@ -4640,7 +4226,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 var registro = new FacturasDGII
                 {
-                    // IdDoc
                     TipoeCF = model?.ECF?.Encabezado?.IdDoc?.TipoeCF,
                     ENCF = model?.ECF?.Encabezado?.IdDoc?.eNCF,
                     FechaVencimientoSecuencia = model?.ECF?.Encabezado?.IdDoc?.FechaVencimientoSecuencia,
@@ -4649,7 +4234,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     IndicadorMontoGravado = model?.ECF?.Encabezado?.IdDoc?.IndicadorMontoGravado,
                     TipoIngresos = model?.ECF?.Encabezado?.IdDoc?.TipoIngresos,
 
-                    // Emisor
                     RNCEmisor = model?.ECF?.Encabezado?.Emisor?.RNCEmisor,
                     RazonSocialEmisor = model?.ECF?.Encabezado?.Emisor?.RazonSocialEmisor,
                     NombreComercial = model?.ECF?.Encabezado?.Emisor?.NombreComercial,
@@ -4664,7 +4248,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     ZonaVenta = model?.ECF?.Encabezado?.Emisor?.ZonaVenta,
                     FechaEmision = model?.ECF?.Encabezado?.Emisor?.FechaEmision,
 
-                    // Comprador
                     RNCComprador = model?.ECF?.Encabezado?.Comprador?.RNCComprador,
                     RazonSocialComprador = model?.ECF?.Encabezado?.Comprador?.RazonSocialComprador,
                     ContactoComprador = model?.ECF?.Encabezado?.Comprador?.ContactoComprador,
@@ -4677,7 +4260,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     NumeroOrdenCompra = model?.ECF?.Encabezado?.Comprador?.NumeroOrdenCompra,
                     CodigoInternoComprador = model?.ECF?.Encabezado?.Comprador?.CodigoInternoComprador,
 
-                    // Totales
                     MontoGravadoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
                     MontoGravadoI1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoI1 ?? "0"),
                     ITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.ITBIS1 ?? "0"),
@@ -4685,7 +4267,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
-                    // Fechas
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -4702,7 +4283,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     {
                         var detalle = new ItemFactura
                         {
-                            FacturaId = registro.Id, // Asignamos el ID de la factura recién creada
+                            FacturaId = registro.Id,
                             NumeroLinea = item.NumeroLinea,
                             IndicadorFacturacion = item.IndicadorFacturacion,
                             NombreItem = item.NombreItem,
@@ -4752,10 +4333,9 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
         public IActionResult ProbarCertificado()
         {
-            string thumbprint = "5F5017E1810EBEAF9DAE0AD482C252F4AC19CA91"; // thumbprint real
+            string thumbprint = "5F5017E1810EBEAF9DAE0AD482C252F4AC19CA91";
             var resultado = FacturacionElectronicaDGII.GetCertificateFromStoreWINDOWS2(thumbprint);
 
-            // Mapear manualmente a tu modelo
             var model = new CertCheckResult
             {
                 Existe = resultado.Existe,
@@ -4764,7 +4344,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 Thumbprint = resultado.Thumbprint
             };
 
-            return View(model); // <-- ahora sí pasa el modelo correcto
+            return View(model);
         }
 
         public IActionResult ListarCertificados()
@@ -4782,7 +4362,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             return View(listaMVC);
         }
 
-        // POST: Recibir los datos del formulario
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RegistrarEmisor(EmisorInfo emisorInfo)
@@ -4791,11 +4370,9 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             {
                 try
                 {
-                    // ✅ Aquí el modelo ya está lleno con los datos del formulario
                     Console.WriteLine($"RNC: {emisorInfo.RNCEmisor}");
                     Console.WriteLine($"Razón Social: {emisorInfo.RazonSocialEmisor}");
 
-                    // Guardar en la base de datos
                     _context.EmisorInfo.Add(emisorInfo);
                     await _context.SaveChangesAsync();
 
@@ -4808,7 +4385,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 }
             }
 
-            // Si hay errores, mostrar el formulario again con los datos ingresados
             return View(emisorInfo);
         }
 
