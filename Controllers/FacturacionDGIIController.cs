@@ -4334,7 +4334,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         public IActionResult ProbarCertificado()
         {
             string thumbprint = "5F5017E1810EBEAF9DAE0AD482C252F4AC19CA91";
-            var resultado = FacturacionElectronicaDGII.GetCertificateFromStoreWINDOWS2(thumbprint);
+            var resultado = FacturacionElectronicaDGII.FindCertificateFromWINDOWS(thumbprint);
 
             var model = new CertCheckResult
             {
