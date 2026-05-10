@@ -27,6 +27,12 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _env;
 
+        private const string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
+        private const string passCert = "LD271167";
+        private const string urlValidarSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/ValidarSemilla";
+        private const string urlRecepcionFactura = "https://ecf.dgii.gov.do/certecf/recepcion/api/FacturasElectronicas";
+        private const string urlConsultaFactura = "https://ecf.dgii.gov.do/certecf/consultaresultado/api/Consultas/Estado";
+
         public FacturacionDGIIController(ApplicationDbContext context, IWebHostEnvironment env)
         {
             _context = context;
@@ -42,14 +48,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpGet]
         public IActionResult verFactura()
         {
-            string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
-            string passCert = "LD271167";
             string jsonInvoiceFO = "{ \"facturaDesdeF&O\": \"datos\" }";
-
-            string urlValidarSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/ValidarSemilla";
-            string urlRecepcionFactura = "https://ecf.dgii.gov.do/certecf/recepcion/api/FacturasElectronicas";
-            string urlConsultaFactura = "https://ecf.dgii.gov.do/certecf/consultaresultado/api/Consultas/Estado";
-
             try
             {
                 string invoice = FacturacionElectronicaDGII.EnviarTokenSincrona(urlSemilla, passCert, jsonInvoiceFO);
@@ -116,7 +115,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
             using (var ms = new MemoryStream())
             {
-                PdfWriter writer = new PdfWriter(ms); // ← usar memoria, NO disco
+                PdfWriter writer = new PdfWriter(ms);
                 PdfDocument pdf = new PdfDocument(writer);
                 Document doc = new Document(pdf);
 
@@ -258,7 +257,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         .SetTextAlignment(TextAlignment.RIGHT)
                 );
 
-                // - ITBIS
                 innerTable.AddCell(
                     new Cell()
                         .Add(new Paragraph("ITBIS:").SetFontSize(9))
@@ -274,7 +272,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         .SetTextAlignment(TextAlignment.RIGHT)
                 );
 
-                // - Total RD
                 innerTable.AddCell(
                     new Cell()
                         .Add(new Paragraph("Total:").SetFontSize(9))
@@ -440,14 +437,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE31A(FacturaDGIIModel1 model)
         {
-            string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
-            string passCert = "LD271167";
             string jsonInvoiceFO = JsonConvert.SerializeObject(model);
-
-            string urlValidarSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/ValidarSemilla";
-            string urlRecepcionFactura = "https://ecf.dgii.gov.do/certecf/recepcion/api/FacturasElectronicas";
-            string urlConsultaFactura = "https://ecf.dgii.gov.do/certecf/consultaresultado/api/Consultas/Estado";
-
             try
             {
                 string invoice = FacturacionElectronicaDGII.EnviarTokenSincrona(urlSemilla, passCert, jsonInvoiceFO);
@@ -707,17 +697,10 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE31B(FacturaDGIIModel2 model)
         {
-            string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
-            string passCert = "LD271167";
             string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
             });
-
-
-            string urlValidarSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/ValidarSemilla";
-            string urlRecepcionFactura = "https://ecf.dgii.gov.do/certecf/recepcion/api/FacturasElectronicas";
-            string urlConsultaFactura = "https://ecf.dgii.gov.do/certecf/consultaresultado/api/Consultas/Estado";
 
             try
             {
@@ -978,17 +961,10 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE31C(FacturaDGIIModel3 model)
         {
-            string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
-            string passCert = "LD271167";
             string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
             });
-
-
-            string urlValidarSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/ValidarSemilla";
-            string urlRecepcionFactura = "https://ecf.dgii.gov.do/certecf/recepcion/api/FacturasElectronicas";
-            string urlConsultaFactura = "https://ecf.dgii.gov.do/certecf/consultaresultado/api/Consultas/Estado";
 
             try
             {
@@ -1260,17 +1236,10 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE31D(FacturaDGIIModel4 model)
         {
-            string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
-            string passCert = "LD271167";
             string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
             });
-
-
-            string urlValidarSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/ValidarSemilla";
-            string urlRecepcionFactura = "https://ecf.dgii.gov.do/certecf/recepcion/api/FacturasElectronicas";
-            string urlConsultaFactura = "https://ecf.dgii.gov.do/certecf/consultaresultado/api/Consultas/Estado";
 
             try
             {
@@ -1552,9 +1521,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE31E(FacturaDGIIModel5 model)
         {
-            string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
-            string passCert = "LD271167";
-
             foreach (var item in model.ECF.DetallesItems.Item)
             {
                 if (item.TablaSubDescuento?.SubDescuento != null)
@@ -1589,11 +1555,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             {
                 NullValueHandling = NullValueHandling.Ignore
             });
-
-
-            string urlValidarSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/ValidarSemilla";
-            string urlRecepcionFactura = "https://ecf.dgii.gov.do/certecf/recepcion/api/FacturasElectronicas";
-            string urlConsultaFactura = "https://ecf.dgii.gov.do/certecf/consultaresultado/api/Consultas/Estado";
 
             try
             {
@@ -1807,17 +1768,10 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE32A(FacturaDGIIModel6 model)
         {
-            string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
-            string passCert = "LD271167";
             string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
             });
-
-
-            string urlValidarSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/ValidarSemilla";
-            string urlRecepcionFactura = "https://ecf.dgii.gov.do/certecf/recepcion/api/FacturasElectronicas";
-            string urlConsultaFactura = "https://ecf.dgii.gov.do/certecf/consultaresultado/api/Consultas/Estado";
 
             try
             {
@@ -2104,9 +2058,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE32B(FacturaDGIIModel7 model)
         {
-            string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
-            string passCert = "LD271167";
-
             foreach (var item in model.ECF.DetallesItems.Item)
             {
                 if (item.TablaCodigosItem?.CodigosItem != null)
@@ -2126,11 +2077,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             {
                 NullValueHandling = NullValueHandling.Ignore
             });
-
-
-            string urlValidarSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/ValidarSemilla";
-            string urlRecepcionFactura = "https://ecf.dgii.gov.do/certecf/recepcion/api/FacturasElectronicas";
-            string urlConsultaFactura = "https://ecf.dgii.gov.do/certecf/consultaresultado/api/Consultas/Estado";
 
             try
             {
@@ -2357,13 +2303,9 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             return View(model);
         }
 
-
-
         [HttpPost]
         public IActionResult comprobanteE33(FacturaDGIIModel8 model)
         {
-            string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
-            string passCert = "LD271167";
 
             foreach (var item in model.ECF.DetallesItems.Item)
             {
@@ -2399,11 +2341,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             {
                 NullValueHandling = NullValueHandling.Ignore
             });
-
-
-            string urlValidarSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/ValidarSemilla";
-            string urlRecepcionFactura = "https://ecf.dgii.gov.do/certecf/recepcion/api/FacturasElectronicas";
-            string urlConsultaFactura = "https://ecf.dgii.gov.do/certecf/consultaresultado/api/Consultas/Estado";
 
             try
             {
@@ -2478,7 +2415,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
-
 
                 _context.FacturasDGII.Add(registro);
                 _context.SaveChanges();
@@ -2630,8 +2566,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE34(FacturaDGIIModel9 model)
         {
-            string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
-            string passCert = "LD271167";
 
             foreach (var item in model.ECF.DetallesItems.Item)
             {
@@ -2667,11 +2601,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             {
                 NullValueHandling = NullValueHandling.Ignore
             });
-
-
-            string urlValidarSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/ValidarSemilla";
-            string urlRecepcionFactura = "https://ecf.dgii.gov.do/certecf/recepcion/api/FacturasElectronicas";
-            string urlConsultaFactura = "https://ecf.dgii.gov.do/certecf/consultaresultado/api/Consultas/Estado";
 
             try
             {
@@ -2895,8 +2824,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE41(FacturaDGIIModel10 model)
         {
-            string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
-            string passCert = "LD271167";
 
             foreach (var item in model.ECF.DetallesItems.Item)
             {
@@ -2932,11 +2859,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             {
                 NullValueHandling = NullValueHandling.Ignore
             });
-
-
-            string urlValidarSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/ValidarSemilla";
-            string urlRecepcionFactura = "https://ecf.dgii.gov.do/certecf/recepcion/api/FacturasElectronicas";
-            string urlConsultaFactura = "https://ecf.dgii.gov.do/certecf/consultaresultado/api/Consultas/Estado";
 
             try
             {
@@ -3129,17 +3051,11 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE43(FacturaDGIIModel11 model)
         {
-            string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
-            string passCert = "LD271167";
 
             string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
             });
-
-            string urlValidarSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/ValidarSemilla";
-            string urlRecepcionFactura = "https://ecf.dgii.gov.do/certecf/recepcion/api/FacturasElectronicas";
-            string urlConsultaFactura = "https://ecf.dgii.gov.do/certecf/consultaresultado/api/Consultas/Estado";
 
             try
             {
@@ -3364,8 +3280,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE44(FacturaDGIIModel12 model)
         {
-            string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
-            string passCert = "LD271167";
 
             foreach (var item in model.ECF.DetallesItems.Item)
             {
@@ -3401,11 +3315,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             {
                 NullValueHandling = NullValueHandling.Ignore
             });
-
-
-            string urlValidarSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/ValidarSemilla";
-            string urlRecepcionFactura = "https://ecf.dgii.gov.do/certecf/recepcion/api/FacturasElectronicas";
-            string urlConsultaFactura = "https://ecf.dgii.gov.do/certecf/consultaresultado/api/Consultas/Estado";
 
             try
             {
@@ -3629,8 +3538,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE45(FacturaDGIIModel13 model)
         {
-            string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
-            string passCert = "LD271167";
 
             foreach (var item in model.ECF.DetallesItems.Item)
             {
@@ -3666,11 +3573,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             {
                 NullValueHandling = NullValueHandling.Ignore
             });
-
-
-            string urlValidarSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/ValidarSemilla";
-            string urlRecepcionFactura = "https://ecf.dgii.gov.do/certecf/recepcion/api/FacturasElectronicas";
-            string urlConsultaFactura = "https://ecf.dgii.gov.do/certecf/consultaresultado/api/Consultas/Estado";
 
             try
             {
@@ -3942,17 +3844,11 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE46(FacturaDGIIModel14 model)
         {
-            string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
-            string passCert = "LD271167";
+
             string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
             });
-
-
-            string urlValidarSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/ValidarSemilla";
-            string urlRecepcionFactura = "https://ecf.dgii.gov.do/certecf/recepcion/api/FacturasElectronicas";
-            string urlConsultaFactura = "https://ecf.dgii.gov.do/certecf/consultaresultado/api/Consultas/Estado";
 
             try
             {
@@ -4185,17 +4081,11 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE47(FacturaDGIIModel15 model)
         {
-            string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
-            string passCert = "LD271167";
+
             string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
             });
-
-
-            string urlValidarSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/ValidarSemilla";
-            string urlRecepcionFactura = "https://ecf.dgii.gov.do/certecf/recepcion/api/FacturasElectronicas";
-            string urlConsultaFactura = "https://ecf.dgii.gov.do/certecf/consultaresultado/api/Consultas/Estado";
 
             try
             {
@@ -4323,13 +4213,10 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             }
 
         }
-
-
         public IActionResult RegistrarEmisor()
         {
             return View();
         }
-
 
         public IActionResult ProbarCertificado()
         {
