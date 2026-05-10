@@ -46,41 +46,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult verFactura()
-        {
-            string jsonInvoiceFO = "{ \"facturaDesdeF&O\": \"datos\" }";
-            try
-            {
-                string invoice = FacturacionElectronicaDGII.EnviarTokenSincrona(urlSemilla, passCert, jsonInvoiceFO);
-                string response = FacturacionElectronicaDGII.EnviarFacturaElectronicaSincrona(urlValidarSemilla, urlRecepcionFactura, urlConsultaFactura);
-
-                JObject jsonObject = JObject.Parse(invoice);
-                JObject jsonObjectResponse = JObject.Parse(response);
-
-                var model = new FacturaDGIIResponseModel
-                {
-                    JsonInvoice = jsonObject.GetValue("json")?.ToString(),
-                    ENCF = jsonObject.GetValue("encf")?.ToString(),
-                    XmlSemilla = jsonObject.GetValue("xmlsemilla")?.ToString(),
-                    XmlSemillaFirmada = jsonObject.GetValue("xmlsemillafirmada")?.ToString(),
-                    Token = jsonObject.GetValue("token")?.ToString(),
-                    XmlFactura = jsonObject.GetValue("xmlfactura")?.ToString(),
-                    XmlFacturaFirmada = jsonObject.GetValue("xmlfacturafirmada")?.ToString(),
-                    CodigoSeguridad = jsonObject.GetValue("codigoseguridad")?.ToString(),
-                    CodigoRespuesta = jsonObjectResponse.GetValue("codigo")?.ToString(),
-                    EstadoRespuesta = jsonObjectResponse.GetValue("estado")?.ToString()
-                };
-
-                return View(model);
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Error = ex.Message;
-                return View(null);
-            }
-        }
-
-        [HttpGet]
         public IActionResult GenerarPDF(int id, string codigoSeguridad)
         {
             var factura = _context.FacturasDGII
@@ -343,14 +308,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult VerFacturaPDF(int id)
-        {
-            ViewBag.IdFactura = id;
-            return View();
-        }
-
-
-        [HttpGet]
         public IActionResult comprobanteE31A()
         {
             var model = new FacturaDGIIModel1
@@ -539,13 +496,11 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         _context.ItemsFactura.Add(detalle);
                     }
                 }
-
                 _context.SaveChanges();
 
                 if (respuesta.CodigoRespuesta == "1")
                 {
                     return View("verFactura", respuesta);
-
                 }
                 else
                 {
@@ -1353,7 +1308,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     ViewBag.MensajeError = respuesta.Mensaje;
                     return View("verFactura", respuesta);
                 }
-
 
             }
             catch (DbUpdateException ex)
@@ -3142,7 +3096,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         _context.ItemsFactura.Add(detalle);
                     }
                 }
-
                 _context.SaveChanges();
 
                 if (respuesta.CodigoRespuesta == "1")
