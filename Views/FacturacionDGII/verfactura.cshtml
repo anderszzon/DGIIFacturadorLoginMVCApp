@@ -1,11 +1,7 @@
-﻿ @model FacturaDGIIResponseModel
-
-@* @if (Model != null)
- *@
+﻿@model FacturaDGIIResponseModel
 
 @if (Model?.CodigoRespuesta == "1")
 {
-
     <div class="container mt-4">
         <div class="alert alert-success" role="alert">
             <strong></strong> La factura ha sido procesada.
@@ -16,15 +12,9 @@
         PDF EN EL NAVEGADOR
     </a>
 
-
     <a class="btn btn-success" href="@Url.Action("GenerarPDFDownloads", "FacturacionDGII", new { id = Model.FacturaId, codigoSeguridad = Model.CodigoSeguridad })" target="_blank">
         PDF EN DESCARGAS
     </a>
-
-@*     <div class="form-group">
-        <label for="tasaCambio">Tasa de Cambio</label>
-        <input type="number" step="0.0001" class="form-control" id="tasaCambio" placeholder="Ej: 57.25" />
-    </div> *@
 
     <div class="container mt-4">
         <div class="card">
@@ -84,25 +74,13 @@
         </div>
     </div>
 }
-@* else *@
 else if (!string.IsNullOrEmpty(Model?.Mensaje))
 {
-    @*     
-    <div class="container mt-4">
-        <div class="alert alert-danger" role="alert">
-            <strong>Error:</strong> Ocurrió un error al procesar la factura: @ViewBag.Error
-        </div>
-    </div> 
-    *@
-
     <div class="container mt-4">
         <div class="alert alert-danger" role="alert">
             <strong>Error:</strong> @Model?.Mensaje 
-@*             <strong>Error:</strong> @Model?.Mensaje ?? "Ocurrió un error al procesar la factura."
- *@
         </div>
     </div>
-
 }
 
                               
