@@ -324,7 +324,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                             FechaVencimientoSecuencia = "31-12-2028",
                             IndicadorEnvioDiferido = "1",
                             IndicadorMontoGravado = "0",
-                            //TipoIngresos = "01",
+                            TipoIngresos = "01",
                             TipoPago = "1"
                         },
                         Emisor = new EmisorModel1

@@ -9,24 +9,24 @@
     <label for="comprobante">Seleccione un comprobante:</label>
     <select id="comprobante" name="comprobante">
 
-        <option value="">-- Seleccione --</option>
-        <option value="E31A">Comprobante E31A</option>
-        <option value="E31B">Comprobante E31B</option>
-        <option value="E31C">Comprobante E31C</option>
-        <option value="E31D">Comprobante E31D</option>
-        <option value="E31E">Comprobante E31E</option>
-        <option value="E32A">Comprobante E32A</option>
-        <option value="E32B">Comprobante E32B</option>
-        <option value="E33">Comprobante E33</option>
-        <option value="E34">Comprobante E34</option>
-        <option value="E41">Comprobante E41</option>
-        <option value="E43">Comprobante E43</option>
-        <option value="E44">Comprobante E44</option>
-        <option value="E45">Comprobante E45</option>
-        <option value="E46">Comprobante E46</option>
-        <option value="E47">Comprobante E47</option>
+        <option value="">Seleccione</option>
 
-        <!-- Puedes llenar esto dinámicamente -->
+        <option value="E31A">E310000000001 OK</option>
+        <option value="E43">E430000000001 OK</option>
+        <option value="E46">E460000000001 OK</option>
+
+        <option value="E31B">E31B</option>
+        <option value="E31C">E31C</option>
+        <option value="E31D">E31D</option>
+        <option value="E31E">E31E</option>
+        <option value="E32A">E32A</option>
+        <option value="E32B">E32B</option>
+        <option value="E33">E33</option>
+        <option value="E34">E34</option>
+        <option value="E41">E41</option>
+        <option value="E44">E44</option>
+        <option value="E45">E45</option>
+        <option value="E47">E47</option>
 
     </select>
 
@@ -37,7 +37,6 @@
     function redirigir() {
         const comprobante = document.getElementById("comprobante").value;
         if (comprobante) {
-            // Cambiar aquí la ruta
             window.location.href = "/FacturacionDGII/comprobante" + comprobante;
         } else {
             alert("Seleccione un comprobante.");
