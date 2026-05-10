@@ -1,4 +1,5 @@
-﻿@model FacturaDGIIModel1
+﻿@using DGIIFacturadorLoginMVCApp.Helpers
+@model FacturaDGIIModel1
 
 <form asp-action="comprobanteE31A" method="post" id="facturaForm">
     <!-- Sección de datos generales -->
@@ -48,10 +49,9 @@
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="ECF.Encabezado.IdDoc.TipoIngresos"></label>
-                <select asp-for="ECF.Encabezado.IdDoc.TipoIngresos" class="form-control">
-                    <option value="01">Venta de bienes</option>
-                    <option value="02">Servicios</option>
-                    <option value="03">Mixto</option>
+                <select asp-for="ECF.Encabezado.IdDoc.TipoIngresos"
+                        asp-items="EnumHelper.ObtenerTipoIngresos()"
+                        class="form-control">
                 </select>
             </div>
             <div class="form-group col-md-3">
