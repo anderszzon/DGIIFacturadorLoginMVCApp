@@ -36,7 +36,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         public FacturacionDGIIController(ApplicationDbContext context, IWebHostEnvironment env)
         {
             _context = context;
-            _env = env; 
+            _env = env;
         }
 
         public ActionResult RegistrarComprobante()
@@ -136,8 +136,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 doc.Add(headerTable);
 
                 Table clienteTable = new Table(1);
-                clienteTable.SetWidth(UnitValue.CreatePercentValue(40)); 
-                clienteTable.SetHorizontalAlignment(HorizontalAlignment.LEFT); 
+                clienteTable.SetWidth(UnitValue.CreatePercentValue(40));
+                clienteTable.SetHorizontalAlignment(HorizontalAlignment.LEFT);
                 clienteTable.SetMarginBottom(10);
                 clienteTable.SetBorder(new SolidBorder(0.5f));
 
@@ -195,15 +195,15 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 Cell totalesCell = new Cell(1, 5)
                     .SetBorderBottom(Border.NO_BORDER)
-                    .SetBorderLeft(Border.NO_BORDER)  
+                    .SetBorderLeft(Border.NO_BORDER)
                     .SetBorderRight(Border.NO_BORDER)
-                    .SetPadding(0) 
-                    .SetMargin(0) 
+                    .SetPadding(0)
+                    .SetMargin(0)
                     .SetTextAlignment(TextAlignment.RIGHT);
 
-                Table innerTable = new Table(UnitValue.CreatePercentArray(new float[] { 10, 10 })) 
-                    .SetWidth(UnitValue.CreatePercentValue(40)) 
-                    .SetHorizontalAlignment(HorizontalAlignment.RIGHT) 
+                Table innerTable = new Table(UnitValue.CreatePercentArray(new float[] { 10, 10 }))
+                    .SetWidth(UnitValue.CreatePercentValue(40))
+                    .SetHorizontalAlignment(HorizontalAlignment.RIGHT)
                     .SetBorderBottom(Border.NO_BORDER);
 
                 innerTable.AddCell(
@@ -211,7 +211,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         .Add(new Paragraph("Subtotal:").SetFontSize(9))
                         .SetBorder(new SolidBorder(0.5f))
                         .SetTextAlignment(TextAlignment.LEFT)
-                        .SetFont(boldFont2) 
+                        .SetFont(boldFont2)
 
                 );
                 innerTable.AddCell(
@@ -226,7 +226,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         .Add(new Paragraph("ITBIS:").SetFontSize(9))
                         .SetBorder(new SolidBorder(0.5f))
                         .SetTextAlignment(TextAlignment.LEFT)
-                        .SetFont(boldFont2) 
+                        .SetFont(boldFont2)
 
                 );
                 innerTable.AddCell(
@@ -241,7 +241,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         .Add(new Paragraph("Total:").SetFontSize(9))
                         .SetBorder(new SolidBorder(0.5f))
                         .SetTextAlignment(TextAlignment.LEFT)
-                        .SetFont(boldFont2)  
+                        .SetFont(boldFont2)
                 );
                 innerTable.AddCell(
                     new Cell()
@@ -271,7 +271,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 Paragraph autorizadoPor = new Paragraph("Autorizado por")
                     .SetFontSize(9)
                     .SetTextAlignment(TextAlignment.LEFT)
-                    .SetFont(boldFont)  
+                    .SetFont(boldFont)
                     .SetMarginTop(2);
 
                 leftCell1.Add(lineaFirma);
@@ -302,7 +302,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 doc.Add(finalTable);
 
                 doc.Close();
-                return ms.ToArray(); 
+                return ms.ToArray();
             }
         }
 
@@ -504,7 +504,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 else
                 {
                     ViewBag.MensajeError = respuesta.Mensaje;
-                    return View("verFactura", respuesta); 
+                    return View("verFactura", respuesta);
                 }
 
             }
@@ -535,7 +535,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         IdDoc = new VersionIdDocModel2
                         {
                             TipoeCF = "",
-                            eNCF = "E310000000002",
+                            eNCF = "E310000000011",
                             FechaVencimientoSecuencia = "31-12-2028",
                             IndicadorEnvioDiferido = "1",
                             IndicadorMontoGravado = "0",
@@ -561,7 +561,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Comprador = new CompradorModel2
                         {
                             RNCComprador = "131880681",
-                            RazonSocialComprador = "CONSEJO NACIONAL DE SEGURIDAD SOCIAL",
+                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -574,73 +574,126 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Totales = new TotalesModel2
                         {
-                            MontoGravadoTotal = "3230.00",
-                            MontoGravadoI1 = "3230.00",
+                            MontoGravadoTotal = "81015.00",
+                            MontoGravadoI1 = "81015.00",
                             ITBIS1 = "18",
-                            TotalITBIS = "713.04",
-                            TotalITBIS1 = "713.04",
-                            MontoImpuestoAdicional = "731.32",
-
-                            ImpuestosAdicionales = new ImpuestosAdicionalesModel2
-                            {
-                                ImpuestoAdicional = new List<ImpuestoAdicionalTotalesModel2>
-                                {
-                                    new ImpuestoAdicionalTotalesModel2
-                                    {
-                                        TipoImpuesto = "006",
-                                        TasaImpuestoAdicional = "633.85",
-                                        MontoImpuestoSelectivoConsumoEspecifico = "540.04"
-                                    },
-                                    new ImpuestoAdicionalTotalesModel2
-                                    {
-                                        TipoImpuesto = "023",
-                                        TasaImpuestoAdicional = "10",
-                                        MontoImpuestoSelectivoConsumoAdvalorem = "191.28"
-                                    }
-                                }
-                            },
-                            MontoTotal = "4674.35"
+                            TotalITBIS = "14582.70",
+                            TotalITBIS1 = "14582.70",
+                            MontoPeriodo = "95597.70",
+                            ValorPagar = "95597.70",
+                            MontoTotal = "95597.70",
                         }
                     },
                     DetallesItems = new DetallesItemsModel2
                     {
                         Item = new List<ItemModel2>
-                {
-                    new ItemModel2
                     {
-                        NumeroLinea = "1",
-                        IndicadorFacturacion = "1",
-                        NombreItem = "PTE. CJ 24/12OZ",
-                        IndicadorBienoServicio = "1",
-                        CantidadItem = "2.00",
-                        UnidadMedida = "6",
-                        CantidadReferencia = "24",
-                        UnidadReferencia = "5",
-                        TablaSubcantidad = new TablaSubcantidadModel2
+                        new ItemModel2
                         {
-                            SubcantidadItem = new List<SubcantidadItemModel2>
+                            NumeroLinea = "1",
+                            TablaCodigosItem = new TablaCodigosItem7
                             {
-                                new SubcantidadItemModel2
+                                CodigosItem = new List<CodigosItem7>
                                 {
-                                    Subcantidad = "0.355",
-                                    CodigoSubcantidad = "24"
+                                    new CodigosItem7
+                                    {
+                                        TipoCodigo = "Interno",
+                                        CodigoItem = "1561"
+                                    }
                                 }
-                            }
+                            },
+                            IndicadorFacturacion = "1",
+                            NombreItem = "ZAPATOS",
+                            IndicadorBienoServicio = "1",
+                            CantidadItem = "23.00",
+                            UnidadMedida = "43",
+                            PrecioUnitarioItem = "35.0000",
+                            MontoItem = "805.00"
                         },
-                        GradosAlcohol = "5.00",
-                        PrecioUnitarioReferencia = "65.00",
-                        PrecioUnitarioItem = "1615.00",
-                        TablaImpuestoAdicional = new TablaImpuestoAdicionalModel2
+                        new ItemModel2
                         {
-                            ImpuestoAdicional = new List<ImpuestoAdicionalItemModel2>
+                            NumeroLinea = "2",
+                            TablaCodigosItem = new TablaCodigosItem7
                             {
-                                new ImpuestoAdicionalItemModel2 { TipoImpuesto = "006" },
-                                new ImpuestoAdicionalItemModel2 { TipoImpuesto = "023" }
-                            }
+                                CodigosItem = new List<CodigosItem7>
+                                {
+                                    new CodigosItem7
+                                    {
+                                        TipoCodigo = "Interno",
+                                        CodigoItem = "1561"
+                                    }
+                                }
+                            },
+                            IndicadorFacturacion = "1",
+                            NombreItem = "GALLETAS",
+                            IndicadorBienoServicio = "1",
+                            CantidadItem = "547.00",
+                            UnidadMedida = "6",
+                            PrecioUnitarioItem = "145.0000",
+                            MontoItem = "79315.00"
                         },
-                        MontoItem = "3230.00"
-                    }
-                }
+                        new ItemModel2
+                        {
+                            NumeroLinea = "3",
+                            TablaCodigosItem = new TablaCodigosItem7
+                            {
+                                CodigosItem = new List<CodigosItem7>
+                                {
+                                    new CodigosItem7
+                                    {
+                                        TipoCodigo = "Interno",
+                                        CodigoItem = "1561"
+                                    }
+                                }
+                            },
+                            IndicadorFacturacion = "1",
+                            NombreItem = "CAF¿",
+                            IndicadorBienoServicio = "1",
+                            CantidadItem = "14.00",
+                            UnidadMedida = "31",
+                            PrecioUnitarioItem = "55.0000",
+                            MontoItem = "770.00"
+                        },
+                        new ItemModel2
+                        {
+                            NumeroLinea = "4",
+                            TablaCodigosItem = new TablaCodigosItem7
+                            {
+                                CodigosItem = new List<CodigosItem7>
+                                {
+                                    new CodigosItem7
+                                    {
+                                        TipoCodigo = "Interno",
+                                        CodigoItem = "1561"
+                                    }
+                                }
+                            },
+                            IndicadorFacturacion = "1",
+                            NombreItem = "LECHE",
+                            IndicadorBienoServicio = "1",
+                            CantidadItem = "25.00",
+                            UnidadMedida = "24",
+                            PrecioUnitarioItem = "65.0000",
+                            MontoItem = "1625.00"
+                            //// FechaElaboracion
+                            //// FechaVencimiento
+                        }
+                      }
+                    },
+                    DescuentosORecargos = new DescuentosORecargosModel2
+                    {
+                        DescuentoORecargo = new List<DescuentosORecargo2>
+                        {
+                            new DescuentosORecargo2
+                            {
+                                NumeroLinea = "1",
+                                TipoAjuste = "D",
+                                DescripcionDescuentooRecargo = "Pronto pago",
+                                TipoValor = "$",
+                                MontoDescuentooRecargo = "1500.00",
+                                IndicadorFacturacionDescuentooRecargo = "1"
+                            }
+                        }
                     }
                 }
             };

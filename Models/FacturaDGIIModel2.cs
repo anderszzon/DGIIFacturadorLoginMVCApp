@@ -11,7 +11,23 @@ namespace DGIIFacturadorLoginMVCApp.Models
     {
         public EncabezadoModel2 Encabezado { get; set; } = new EncabezadoModel2();
         public DetallesItemsModel2 DetallesItems { get; set; } = new DetallesItemsModel2();
+        public DescuentosORecargosModel2 DescuentosORecargos { get; set; } = new DescuentosORecargosModel2();
         public string FechaHoraFirma { get; set; }
+    }
+
+    public class DescuentosORecargosModel2
+    {
+        public List<DescuentosORecargo2> DescuentoORecargo { get; set; }
+    }
+
+    public class DescuentosORecargo2
+    {
+        public string NumeroLinea { get; set; }
+        public string TipoAjuste { get; set; }
+        public string DescripcionDescuentooRecargo { get; set; }
+        public string TipoValor { get; set; }
+        public string MontoDescuentooRecargo { get; set; }
+        public string IndicadorFacturacionDescuentooRecargo { get; set; }
     }
 
     public class EncabezadoModel2
@@ -33,6 +49,17 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public string IndicadorMontoGravado { get; set; }
         public string TipoIngresos { get; set; }
         public string TipoPago { get; set; }
+    }
+
+    public class TablaFormasPago2
+    {
+        public List<FormaDePago2> FormaDePago { get; set; }
+    }
+
+    public class FormaDePago2
+    {
+        public string FormaPago { get; set; }
+        public string MontoPago { get; set; }
     }
 
     public class EmisorModel2
@@ -74,16 +101,18 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public string ITBIS1 { get; set; }
         public string TotalITBIS { get; set; }
         public string TotalITBIS1 { get; set; }
-        public string MontoImpuestoAdicional { get; set; }
-        public ImpuestosAdicionalesModel2 ImpuestosAdicionales { get; set; }
+        //public string MontoImpuestoAdicional { get; set; }
+        //public ImpuestosAdicionalesModel2 ImpuestosAdicionales { get; set; }
         public string MontoTotal { get; set; }
+        public string MontoPeriodo { get; set; }
+        public string ValorPagar { get; set; }
 
     }
 
-    public class ImpuestosAdicionalesModel2
-    {
-        public List<ImpuestoAdicionalTotalesModel2> ImpuestoAdicional { get; set; }
-    }
+    //public class ImpuestosAdicionalesModel2
+    //{
+    //    public List<ImpuestoAdicionalTotalesModel2> ImpuestoAdicional { get; set; }
+    //}
 
     public class ImpuestoAdicionalTotalesModel2
     {
@@ -105,18 +134,14 @@ namespace DGIIFacturadorLoginMVCApp.Models
     public class ItemModel2
     {
         public string NumeroLinea { get; set; }
+        public TablaCodigosItem7 TablaCodigosItem { get; set; }
+
         public string IndicadorFacturacion { get; set; }
         public string NombreItem { get; set; }
         public string IndicadorBienoServicio { get; set; }
         public string CantidadItem { get; set; }
         public string UnidadMedida { get; set; }
-        public string CantidadReferencia { get; set; }
-        public string UnidadReferencia { get; set; }
-        public TablaSubcantidadModel2 TablaSubcantidad { get; set; }
-        public string GradosAlcohol { get; set; }
-        public string PrecioUnitarioReferencia { get; set; }
         public string PrecioUnitarioItem { get; set; }
-        public TablaImpuestoAdicionalModel2 TablaImpuestoAdicional { get; set; }
         public string MontoItem { get; set; }
 
 
