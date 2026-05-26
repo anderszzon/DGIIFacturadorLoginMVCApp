@@ -63,16 +63,16 @@ namespace DGIIFacturadorLoginMVCApp.Models
     {
         public string RNCEmisor { get; set; }
         public string RazonSocialEmisor { get; set; }
-        public string NombreComercial { get; set; }
+        //public string NombreComercial { get; set; }
         public string DireccionEmisor { get; set; }
         public string Municipio { get; set; }
         public string Provincia { get; set; }
-        public string CorreoEmisor { get; set; }
-        public string WebSite { get; set; }
-        public string CodigoVendedor { get; set; }
-        public string NumeroFacturaInterna { get; set; }
-        public string NumeroPedidoInterno { get; set; }
-        public string ZonaVenta { get; set; }
+        //public string CorreoEmisor { get; set; }
+        //public string WebSite { get; set; }
+        //public string CodigoVendedor { get; set; }
+        //public string NumeroFacturaInterna { get; set; }
+        //public string NumeroPedidoInterno { get; set; }
+        //public string ZonaVenta { get; set; }
         public string FechaEmision { get; set; }
     }
 
@@ -80,15 +80,15 @@ namespace DGIIFacturadorLoginMVCApp.Models
     {
         public string RNCComprador { get; set; }
         public string RazonSocialComprador { get; set; }
-        public string ContactoComprador { get; set; }
+        //public string ContactoComprador { get; set; }
         public string CorreoComprador { get; set; }
         public string DireccionComprador { get; set; }
         public string MunicipioComprador { get; set; }
         public string ProvinciaComprador { get; set; }
-        public string FechaEntrega { get; set; }
-        public string FechaOrdenCompra { get; set; }
-        public string NumeroOrdenCompra { get; set; }
-        public string CodigoInternoComprador { get; set; }
+        //public string FechaEntrega { get; set; }
+        //public string FechaOrdenCompra { get; set; }
+        //public string NumeroOrdenCompra { get; set; }
+        //public string CodigoInternoComprador { get; set; }
     }
 
     public class InformacionesAdicionales10

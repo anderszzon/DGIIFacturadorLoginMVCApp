@@ -1690,6 +1690,325 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         }
 
         [HttpGet]
+        public IActionResult comprobanteE32()
+        {
+            var model = new FacturaDGIIModelE32
+            {
+                ECF = new ECFModelE32
+                {
+                    FechaHoraFirma = "01-03-2025 05:07:00",
+                    Encabezado = new EncabezadoModelE32
+                    {
+                        Version = "",
+                        IdDoc = new VersionIdDocModelE32
+                        {
+                            TipoeCF = "",
+                            eNCF = "E320000000006",
+                            TipoIngresos = "01",
+                            TipoPago = "1",
+                            IndicadorEnvioDiferido = "1",
+                            IndicadorMontoGravado = "0",
+                        },
+                        Emisor = new EmisorModelE32
+                        {
+                            RNCEmisor = "130322791",
+                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
+                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
+                            Municipio = "010100",
+                            Provincia = "010000",
+                            CorreoEmisor = "DOCUMENTOSELECTRONICOSDE0612345678969789+9000000000000000000000000000001@123.COM",
+                            WebSite = "www.facturaelectronica.com",
+                            CodigoVendedor = "AA0000000100000000010000000002000000000300000000050000000006",
+                            NumeroFacturaInterna = "123456789016",
+                            NumeroPedidoInterno = "123456789016",
+                            ZonaVenta = "NORTE",
+                            FechaEmision = "01-04-2020"
+                        },
+                        Comprador = new CompradorModelE32
+                        {
+                            RNCComprador = "131880681",
+                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            ContactoComprador = "MARCOS LATIPLOL",
+                            CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
+                            DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
+                            MunicipioComprador = "010100",
+                            ProvinciaComprador = "010000",
+                            FechaEntrega = "10-10-2020",
+                            FechaOrdenCompra = "10-11-2018",
+                            NumeroOrdenCompra = "4500352238",
+                            CodigoInternoComprador = "10633440"
+                        },
+                        //InformacionesAdicionales = new InformacionesAdicionalesE32
+                        //{
+                        //    NumeroContenedor = "8019289",
+                        //    NumeroReferencia = "1447"
+                        //},
+                        Totales = new TotalesModelE32
+                        {
+                            MontoGravadoTotal = "350765.00",
+                            MontoGravadoI1 = "269805.00",
+                            MontoGravadoI2 = "80190.00",
+                            MontoGravadoI3 = "770.00",
+                            MontoExento = "1625.00",
+                            ITBIS1 = "18",
+                            ITBIS2 = "16",
+                            ITBIS3 = "0",
+                            TotalITBIS = "61395.30",
+                            TotalITBIS1 = "48564.90",
+                            TotalITBIS2 = "12830.40",
+                            TotalITBIS3 = "0.00",
+                            MontoTotal = "413785.30",
+                            MontoPeriodo = "413785.30",
+                            ValorPagar = "413785.30",
+                        }
+                    },
+                    DetallesItems = new DetallesItemsModelE32
+                    {
+                        Item = new List<ItemModelE32>
+                {
+                    new ItemModelE32
+                    {
+                        NumeroLinea = "1",
+                        IndicadorFacturacion = "1",
+                        NombreItem = "LAPICES",
+                        IndicadorBienoServicio = "1",
+                        CantidadItem = "23.00",
+                        UnidadMedida = "43",
+                        PrecioUnitarioItem = "35.0000",
+                        MontoItem = "805.00"
+                    },
+                    new ItemModelE32
+                    {
+                        NumeroLinea = "2",
+                        IndicadorFacturacion = "2",
+                        NombreItem = "GALLETAS",
+                        IndicadorBienoServicio = "1",
+                        CantidadItem = "547.00",
+                        UnidadMedida = "6",
+                        PrecioUnitarioItem = "145.0000",
+                        MontoItem = "79315.00"
+                    },
+                    new ItemModelE32
+                    {
+                        NumeroLinea = "3",
+                        IndicadorFacturacion = "3",
+                        NombreItem = "PAN",
+                        IndicadorBienoServicio = "1",
+                        CantidadItem = "14.00",
+                        UnidadMedida = "31",
+                        PrecioUnitarioItem = "55.0000",
+                        MontoItem = "770.00"
+                    },
+                    new ItemModelE32
+                    {
+                        NumeroLinea = "4",
+                        IndicadorFacturacion = "4",
+                        NombreItem = "LECHE",
+                        IndicadorBienoServicio = "1",
+                        CantidadItem = "25.00",
+                        UnidadMedida = "47",
+                        PrecioUnitarioItem = "65.0000",
+                        MontoItem = "1625.00"
+                    },
+                    new ItemModelE32
+                    {
+                        NumeroLinea = "5",
+                        IndicadorFacturacion = "2",
+                        NombreItem = "SALSA",
+                        IndicadorBienoServicio = "1",
+                        CantidadItem = "35.00",
+                        UnidadMedida = "47",
+                        PrecioUnitarioItem = "25.0000",
+                        MontoItem = "875.00"
+                    },
+                    new ItemModelE32
+                    {
+                        NumeroLinea = "6",
+                        IndicadorFacturacion = "1",
+                        NombreItem = "TV LG 57",
+                        IndicadorBienoServicio = "1",
+                        CantidadItem = "2.00",
+                        UnidadMedida = "43",
+                        PrecioUnitarioItem = "57000.0000",
+                        MontoItem = "114000.00"
+                    },
+                    new ItemModelE32
+                    {
+                        NumeroLinea = "7",
+                        IndicadorFacturacion = "1",
+                        NombreItem = "LAVADORA-SECADORA  WESTINGHOUSE",
+                        IndicadorBienoServicio = "1",
+                        CantidadItem = "1.00",
+                        UnidadMedida = "43",
+                        PrecioUnitarioItem = "75000.0000",
+                        MontoItem = "75000.00"
+                    },
+                    new ItemModelE32
+                    {
+                        NumeroLinea = "8",
+                        IndicadorFacturacion = "1",
+                        NombreItem = "ESTUFA MABE",
+                        IndicadorBienoServicio = "1",
+                        CantidadItem = "1.00",
+                        UnidadMedida = "43",
+                        PrecioUnitarioItem = "45000.0000",
+                        MontoItem = "45000.00"
+                    },
+                    new ItemModelE32
+                    {
+                        NumeroLinea = "9",
+                        IndicadorFacturacion = "1",
+                        NombreItem = "LAPICES",
+                        IndicadorBienoServicio = "1",
+                        CantidadItem = "1.00",
+                        UnidadMedida = "43",
+                        PrecioUnitarioItem = "35000.0000",
+                        MontoItem = "35000.00"
+                    }
+                }
+                    }
+                }
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult comprobanteE32(FacturaDGIIModelE32 model)
+        {
+            string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
+
+            try
+            {
+                string invoice = FacturacionElectronicaDGII.EnviarTokenSincrona(urlSemilla, passCert, jsonInvoiceFO);
+                string response = FacturacionElectronicaDGII.EnviarFacturaElectronicaSincrona(urlValidarSemilla, urlRecepcionFactura, urlConsultaFactura);
+
+                JObject jsonObject = JObject.Parse(invoice);
+                JObject jsonObjectResponse = JObject.Parse(response);
+
+                string mensajeValor = jsonObjectResponse["mensajes"]?[0]?["valor"]?.ToString();
+
+
+                var respuesta = new FacturaDGIIResponseModel
+                {
+                    JsonInvoice = jsonObject.GetValue("json")?.ToString(),
+                    ENCF = jsonObject.GetValue("encf")?.ToString(),
+                    XmlSemilla = jsonObject.GetValue("xmlsemilla")?.ToString(),
+                    XmlSemillaFirmada = jsonObject.GetValue("xmlsemillafirmada")?.ToString(),
+                    Token = jsonObject.GetValue("token")?.ToString(),
+                    XmlFactura = jsonObject.GetValue("xmlfactura")?.ToString(),
+                    XmlFacturaFirmada = jsonObject.GetValue("xmlfacturafirmada")?.ToString(),
+                    CodigoSeguridad = jsonObject.GetValue("codigoseguridad")?.ToString(),
+                    CodigoRespuesta = jsonObjectResponse.GetValue("codigo")?.ToString(),
+                    EstadoRespuesta = jsonObjectResponse.GetValue("estado")?.ToString(),
+                    Mensaje = mensajeValor
+
+                };
+
+                var registro = new FacturasDGII
+                {
+                    TipoeCF = model?.ECF?.Encabezado?.IdDoc?.TipoeCF,
+                    ENCF = model?.ECF?.Encabezado?.IdDoc?.eNCF,
+                    TipoPago = model?.ECF?.Encabezado?.IdDoc?.TipoPago,
+                    IndicadorEnvioDiferido = model?.ECF?.Encabezado?.IdDoc?.IndicadorEnvioDiferido,
+                    IndicadorMontoGravado = model?.ECF?.Encabezado?.IdDoc?.IndicadorMontoGravado,
+                    TipoIngresos = model?.ECF?.Encabezado?.IdDoc?.TipoIngresos,
+
+                    RNCEmisor = model?.ECF?.Encabezado?.Emisor?.RNCEmisor,
+                    RazonSocialEmisor = model?.ECF?.Encabezado?.Emisor?.RazonSocialEmisor,
+                    NombreComercial = model?.ECF?.Encabezado?.Emisor?.NombreComercial,
+                    DireccionEmisor = model?.ECF?.Encabezado?.Emisor?.DireccionEmisor,
+                    Municipio = model?.ECF?.Encabezado?.Emisor?.Municipio,
+                    Provincia = model?.ECF?.Encabezado?.Emisor?.Provincia,
+                    CorreoEmisor = model?.ECF?.Encabezado?.Emisor?.CorreoEmisor,
+                    WebSite = model?.ECF?.Encabezado?.Emisor?.WebSite,
+                    CodigoVendedor = model?.ECF?.Encabezado?.Emisor?.CodigoVendedor,
+                    NumeroFacturaInterna = model?.ECF?.Encabezado?.Emisor?.NumeroFacturaInterna,
+                    NumeroPedidoInterno = model?.ECF?.Encabezado?.Emisor?.NumeroPedidoInterno,
+                    ZonaVenta = model?.ECF?.Encabezado?.Emisor?.ZonaVenta,
+                    FechaEmision = model?.ECF?.Encabezado?.Emisor?.FechaEmision,
+
+                    RNCComprador = model?.ECF?.Encabezado?.Comprador?.RNCComprador,
+                    RazonSocialComprador = model?.ECF?.Encabezado?.Comprador?.RazonSocialComprador,
+                    ContactoComprador = model?.ECF?.Encabezado?.Comprador?.ContactoComprador,
+                    CorreoComprador = model?.ECF?.Encabezado?.Comprador?.CorreoComprador,
+                    DireccionComprador = model?.ECF?.Encabezado?.Comprador?.DireccionComprador,
+                    MunicipioComprador = model?.ECF?.Encabezado?.Comprador?.MunicipioComprador,
+                    ProvinciaComprador = model?.ECF?.Encabezado?.Comprador?.ProvinciaComprador,
+                    FechaEntrega = model?.ECF?.Encabezado?.Comprador?.FechaEntrega,
+                    FechaOrdenCompra = model?.ECF?.Encabezado?.Comprador?.FechaOrdenCompra,
+                    NumeroOrdenCompra = model?.ECF?.Encabezado?.Comprador?.NumeroOrdenCompra,
+                    CodigoInternoComprador = model?.ECF?.Encabezado?.Comprador?.CodigoInternoComprador,
+
+                    MontoGravadoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
+                    MontoGravadoI1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoI1 ?? "0"),
+                    ITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.ITBIS1 ?? "0"),
+                    TotalITBIS = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS ?? "0"),
+                    TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
+                    MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
+
+                    FechaHoraFirma = model?.ECF?.FechaHoraFirma,
+                    FechaRegistro = DateTime.Now
+                };
+
+
+                _context.FacturasDGII.Add(registro);
+                _context.SaveChanges();
+
+                respuesta.FacturaId = registro.Id;
+
+                if (model?.ECF?.DetallesItems?.Item != null)
+                {
+                    foreach (var item in model.ECF.DetallesItems.Item)
+                    {
+                        var detalle = new ItemFactura
+                        {
+                            FacturaId = registro.Id,
+                            NumeroLinea = item.NumeroLinea,
+                            IndicadorFacturacion = item.IndicadorFacturacion,
+                            NombreItem = item.NombreItem,
+                            IndicadorBienoServicio = item.IndicadorBienoServicio,
+                            CantidadItem = Convert.ToDecimal(item.CantidadItem ?? "0"),
+                            UnidadMedida = item.UnidadMedida,
+                            PrecioUnitarioItem = Convert.ToDecimal(item.PrecioUnitarioItem ?? "0"),
+                            MontoItem = Convert.ToDecimal(item.MontoItem ?? "0")
+                        };
+
+                        _context.ItemsFactura.Add(detalle);
+                    }
+                }
+                _context.SaveChanges();
+
+                if (respuesta.CodigoRespuesta == "1")
+                {
+                    return View("verFactura", respuesta);
+
+                }
+                else
+                {
+                    ViewBag.MensajeError = respuesta.Mensaje;
+                    return View("verFactura", respuesta);
+                }
+
+            }
+            catch (DbUpdateException ex)
+            {
+                string error = ex.Message;
+
+                if (ex.InnerException != null)
+                    error += " | Inner Exception: " + ex.InnerException.Message;
+
+                ViewBag.Error = error;
+                return View(null);
+            }
+
+        }
+
+        [HttpGet]
         public IActionResult comprobanteE32A()
         {
             var model = new FacturaDGIIModel6
@@ -2776,8 +3095,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Comprador = new CompradorModel10
                         {
-                            RNCComprador = "533445861",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 11",
+                            RNCComprador = "131880681",
+                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 02",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
                             MunicipioComprador = "010100",
@@ -2905,29 +3224,29 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                     RNCEmisor = model?.ECF?.Encabezado?.Emisor?.RNCEmisor,
                     RazonSocialEmisor = model?.ECF?.Encabezado?.Emisor?.RazonSocialEmisor,
-                    NombreComercial = model?.ECF?.Encabezado?.Emisor?.NombreComercial,
+                    //NombreComercial = model?.ECF?.Encabezado?.Emisor?.NombreComercial,
                     DireccionEmisor = model?.ECF?.Encabezado?.Emisor?.DireccionEmisor,
                     Municipio = model?.ECF?.Encabezado?.Emisor?.Municipio,
                     Provincia = model?.ECF?.Encabezado?.Emisor?.Provincia,
-                    CorreoEmisor = model?.ECF?.Encabezado?.Emisor?.CorreoEmisor,
-                    WebSite = model?.ECF?.Encabezado?.Emisor?.WebSite,
-                    CodigoVendedor = model?.ECF?.Encabezado?.Emisor?.CodigoVendedor,
-                    NumeroFacturaInterna = model?.ECF?.Encabezado?.Emisor?.NumeroFacturaInterna,
-                    NumeroPedidoInterno = model?.ECF?.Encabezado?.Emisor?.NumeroPedidoInterno,
-                    ZonaVenta = model?.ECF?.Encabezado?.Emisor?.ZonaVenta,
+                    //CorreoEmisor = model?.ECF?.Encabezado?.Emisor?.CorreoEmisor,
+                    //WebSite = model?.ECF?.Encabezado?.Emisor?.WebSite,
+                    //CodigoVendedor = model?.ECF?.Encabezado?.Emisor?.CodigoVendedor,
+                    //NumeroFacturaInterna = model?.ECF?.Encabezado?.Emisor?.NumeroFacturaInterna,
+                    //NumeroPedidoInterno = model?.ECF?.Encabezado?.Emisor?.NumeroPedidoInterno,
+                    //ZonaVenta = model?.ECF?.Encabezado?.Emisor?.ZonaVenta,
                     FechaEmision = model?.ECF?.Encabezado?.Emisor?.FechaEmision,
 
                     RNCComprador = model?.ECF?.Encabezado?.Comprador?.RNCComprador,
                     RazonSocialComprador = model?.ECF?.Encabezado?.Comprador?.RazonSocialComprador,
-                    ContactoComprador = model?.ECF?.Encabezado?.Comprador?.ContactoComprador,
+                    //ContactoComprador = model?.ECF?.Encabezado?.Comprador?.ContactoComprador,
                     CorreoComprador = model?.ECF?.Encabezado?.Comprador?.CorreoComprador,
                     DireccionComprador = model?.ECF?.Encabezado?.Comprador?.DireccionComprador,
                     MunicipioComprador = model?.ECF?.Encabezado?.Comprador?.MunicipioComprador,
                     ProvinciaComprador = model?.ECF?.Encabezado?.Comprador?.ProvinciaComprador,
-                    FechaEntrega = model?.ECF?.Encabezado?.Comprador?.FechaEntrega,
-                    FechaOrdenCompra = model?.ECF?.Encabezado?.Comprador?.FechaOrdenCompra,
-                    NumeroOrdenCompra = model?.ECF?.Encabezado?.Comprador?.NumeroOrdenCompra,
-                    CodigoInternoComprador = model?.ECF?.Encabezado?.Comprador?.CodigoInternoComprador,
+                    //FechaEntrega = model?.ECF?.Encabezado?.Comprador?.FechaEntrega,
+                    //FechaOrdenCompra = model?.ECF?.Encabezado?.Comprador?.FechaOrdenCompra,
+                    //NumeroOrdenCompra = model?.ECF?.Encabezado?.Comprador?.NumeroOrdenCompra,
+                    //CodigoInternoComprador = model?.ECF?.Encabezado?.Comprador?.CodigoInternoComprador,
 
                     MontoGravadoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
                     MontoGravadoI1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoI1 ?? "0"),
