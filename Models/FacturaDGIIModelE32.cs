@@ -29,7 +29,7 @@ namespace DGIIFacturadorLoginMVCApp.Models
     {
         public string TipoeCF { get; set; }
         public string eNCF { get; set; }
-        public string FechaVencimientoSecuencia { get; set; }
+        //public string FechaVencimientoSecuencia { get; set; }
         public string IndicadorEnvioDiferido { get; set; }
         public string IndicadorMontoGravado { get; set; }
         public string TipoIngresos { get; set; }
@@ -79,6 +79,8 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public string MontoGravadoI1 { get; set; }
         public string MontoGravadoI2 { get; set; }
         public string MontoGravadoI3 { get; set; }
+        public string MontoExento { get; set; }
+
         public string ITBIS1 { get; set; }
         public string ITBIS2 { get; set; }
         public string ITBIS3 { get; set; }
@@ -88,9 +90,8 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public string TotalITBIS2 { get; set; }
         public string TotalITBIS3 { get; set; }
 
-        public string MontoImpuestoAdicional { get; set; }
-        public ImpuestosAdicionalesModelE32 ImpuestosAdicionales { get; set; }
-        public string MontoExento { get; set; }
+        //public string MontoImpuestoAdicional { get; set; }
+        //public ImpuestosAdicionalesModelE32 ImpuestosAdicionales { get; set; }
         public string MontoTotal { get; set; }
         public string MontoPeriodo { get; set; }
         public string ValorPagar { get; set; }
