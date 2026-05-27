@@ -113,6 +113,8 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public string MontoExento { get; set; }
         public string MontoTotal { get; set; }
 
+        public string MontoNoFacturable { get; set; }
+
     }
 
     public class ImpuestosAdicionalesModel9
