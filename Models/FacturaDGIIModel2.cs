@@ -155,8 +155,24 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public string CantidadItem { get; set; }
         public string UnidadMedida { get; set; }
         public string PrecioUnitarioItem { get; set; }
+
+        public string DescuentoMonto { get; set; }
+        public TablaSubDescuento2 TablaSubDescuento { get; set; }
+
         public string MontoItem { get; set; }
 
+
+    }
+
+    public class TablaSubDescuento2
+    {
+        public List<SubDescuento2> SubDescuento { get; set; }
+    }
+
+    public class SubDescuento2
+    {
+        public string TipoSubDescuento { get; set; }
+        public string MontoSubDescuento { get; set; }
 
     }
 
