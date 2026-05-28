@@ -31,6 +31,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         private const string passCert = "LD271167";
         private const string urlValidarSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/ValidarSemilla";
         private const string urlRecepcionFactura = "https://ecf.dgii.gov.do/certecf/recepcion/api/FacturasElectronicas";
+        private const string urlRecepcionResumenFactura = "https://ecf.dgii.gov.do/certecf/recepcionfc/api/recepcion/ecf";
         private const string urlConsultaFactura = "https://ecf.dgii.gov.do/certecf/consultaresultado/api/Consultas/Estado";
 
         public FacturacionDGIIController(ApplicationDbContext context, IWebHostEnvironment env)
@@ -2381,107 +2382,107 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     DetallesItems = new DetallesItemsModelE32
                     {
                         Item = new List<ItemModelE32>
-                {
-                    new ItemModelE32
-                    {
-                        NumeroLinea = "1",
-                        IndicadorFacturacion = "1",
-                        NombreItem = "LAPICES",
-                        IndicadorBienoServicio = "1",
-                        CantidadItem = "23.00",
-                        UnidadMedida = "43",
-                        PrecioUnitarioItem = "35.0000",
-                        MontoItem = "805.00"
-                    },
-                    new ItemModelE32
-                    {
-                        NumeroLinea = "2",
-                        IndicadorFacturacion = "2",
-                        NombreItem = "GALLETAS",
-                        IndicadorBienoServicio = "1",
-                        CantidadItem = "547.00",
-                        UnidadMedida = "6",
-                        PrecioUnitarioItem = "145.0000",
-                        MontoItem = "79315.00"
-                    },
-                    new ItemModelE32
-                    {
-                        NumeroLinea = "3",
-                        IndicadorFacturacion = "3",
-                        NombreItem = "PAN",
-                        IndicadorBienoServicio = "1",
-                        CantidadItem = "14.00",
-                        UnidadMedida = "31",
-                        PrecioUnitarioItem = "55.0000",
-                        MontoItem = "770.00"
-                    },
-                    new ItemModelE32
-                    {
-                        NumeroLinea = "4",
-                        IndicadorFacturacion = "4",
-                        NombreItem = "LECHE",
-                        IndicadorBienoServicio = "1",
-                        CantidadItem = "25.00",
-                        UnidadMedida = "47",
-                        PrecioUnitarioItem = "65.0000",
-                        MontoItem = "1625.00"
-                    },
-                    new ItemModelE32
-                    {
-                        NumeroLinea = "5",
-                        IndicadorFacturacion = "2",
-                        NombreItem = "SALSA",
-                        IndicadorBienoServicio = "1",
-                        CantidadItem = "35.00",
-                        UnidadMedida = "47",
-                        PrecioUnitarioItem = "25.0000",
-                        MontoItem = "875.00"
-                    },
-                    new ItemModelE32
-                    {
-                        NumeroLinea = "6",
-                        IndicadorFacturacion = "1",
-                        NombreItem = "TV LG 57",
-                        IndicadorBienoServicio = "1",
-                        CantidadItem = "2.00",
-                        UnidadMedida = "43",
-                        PrecioUnitarioItem = "57000.0000",
-                        MontoItem = "114000.00"
-                    },
-                    new ItemModelE32
-                    {
-                        NumeroLinea = "7",
-                        IndicadorFacturacion = "1",
-                        NombreItem = "LAVADORA-SECADORA  WESTINGHOUSE",
-                        IndicadorBienoServicio = "1",
-                        CantidadItem = "1.00",
-                        UnidadMedida = "43",
-                        PrecioUnitarioItem = "75000.0000",
-                        MontoItem = "75000.00"
-                    },
-                    new ItemModelE32
-                    {
-                        NumeroLinea = "8",
-                        IndicadorFacturacion = "1",
-                        NombreItem = "ESTUFA MABE",
-                        IndicadorBienoServicio = "1",
-                        CantidadItem = "1.00",
-                        UnidadMedida = "43",
-                        PrecioUnitarioItem = "45000.0000",
-                        MontoItem = "45000.00"
-                    },
-                    new ItemModelE32
-                    {
-                        NumeroLinea = "9",
-                        IndicadorFacturacion = "1",
-                        NombreItem = "LAPICES",
-                        IndicadorBienoServicio = "1",
-                        CantidadItem = "1.00",
-                        UnidadMedida = "43",
-                        PrecioUnitarioItem = "35000.0000",
-                        MontoItem = "35000.00"
-                    }
-                }
+                        {
+                            new ItemModelE32
+                            {
+                                NumeroLinea = "1",
+                                IndicadorFacturacion = "1",
+                                NombreItem = "LAPICES",
+                                IndicadorBienoServicio = "1",
+                                CantidadItem = "23.00",
+                                UnidadMedida = "43",
+                                PrecioUnitarioItem = "35.0000",
+                                MontoItem = "805.00"
+                            },
+                            new ItemModelE32
+                            {
+                                NumeroLinea = "2",
+                                IndicadorFacturacion = "2",
+                                NombreItem = "GALLETAS",
+                                IndicadorBienoServicio = "1",
+                                CantidadItem = "547.00",
+                                UnidadMedida = "6",
+                                PrecioUnitarioItem = "145.0000",
+                                MontoItem = "79315.00"
+                            },
+                            new ItemModelE32
+                            {
+                                NumeroLinea = "3",
+                                IndicadorFacturacion = "3",
+                                NombreItem = "PAN",
+                                IndicadorBienoServicio = "1",
+                                CantidadItem = "14.00",
+                                UnidadMedida = "31",
+                                PrecioUnitarioItem = "55.0000",
+                                MontoItem = "770.00"
+                            },
+                            new ItemModelE32
+                            {
+                                NumeroLinea = "4",
+                                IndicadorFacturacion = "4",
+                                NombreItem = "LECHE",
+                                IndicadorBienoServicio = "1",
+                                CantidadItem = "25.00",
+                                UnidadMedida = "47",
+                                PrecioUnitarioItem = "65.0000",
+                                MontoItem = "1625.00"
+                            },
+                            new ItemModelE32
+                            {
+                                NumeroLinea = "5",
+                                IndicadorFacturacion = "2",
+                                NombreItem = "SALSA",
+                                IndicadorBienoServicio = "1",
+                                CantidadItem = "35.00",
+                                UnidadMedida = "47",
+                                PrecioUnitarioItem = "25.0000",
+                                MontoItem = "875.00"
+                            },
+                            new ItemModelE32
+                            {
+                                NumeroLinea = "6",
+                                IndicadorFacturacion = "1",
+                                NombreItem = "TV LG 57",
+                                IndicadorBienoServicio = "1",
+                                CantidadItem = "2.00",
+                                UnidadMedida = "43",
+                                PrecioUnitarioItem = "57000.0000",
+                                MontoItem = "114000.00"
+                            },
+                            new ItemModelE32
+                            {
+                                NumeroLinea = "7",
+                                IndicadorFacturacion = "1",
+                                NombreItem = "LAVADORA-SECADORA  WESTINGHOUSE",
+                                IndicadorBienoServicio = "1",
+                                CantidadItem = "1.00",
+                                UnidadMedida = "43",
+                                PrecioUnitarioItem = "75000.0000",
+                                MontoItem = "75000.00"
+                            },
+                            new ItemModelE32
+                            {
+                                NumeroLinea = "8",
+                                IndicadorFacturacion = "1",
+                                NombreItem = "ESTUFA MABE",
+                                IndicadorBienoServicio = "1",
+                                CantidadItem = "1.00",
+                                UnidadMedida = "43",
+                                PrecioUnitarioItem = "45000.0000",
+                                MontoItem = "45000.00"
+                            },
+                            new ItemModelE32
+                            {
+                                NumeroLinea = "9",
+                                IndicadorFacturacion = "1",
+                                NombreItem = "LAPICES",
+                                IndicadorBienoServicio = "1",
+                                CantidadItem = "1.00",
+                                UnidadMedida = "43",
+                                PrecioUnitarioItem = "35000.0000",
+                                MontoItem = "35000.00"
+                            }
+                        }
                     }
                 }
             };
@@ -2570,7 +2571,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     FechaRegistro = DateTime.Now
                 };
 
-
                 _context.FacturasDGII.Add(registro);
                 _context.SaveChanges();
 
@@ -2601,7 +2601,245 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 if (respuesta.CodigoRespuesta == "1")
                 {
                     return View("verFactura", respuesta);
+                }
+                else
+                {
+                    ViewBag.MensajeError = respuesta.Mensaje;
+                    return View("verFactura", respuesta);
+                }
 
+            }
+            catch (DbUpdateException ex)
+            {
+                string error = ex.Message;
+
+                if (ex.InnerException != null)
+                    error += " | Inner Exception: " + ex.InnerException.Message;
+
+                ViewBag.Error = error;
+                return View(null);
+            }
+
+        }
+
+
+        [HttpGet]
+        public IActionResult comprobanteE320000000011()
+        {
+            var model = new FacturaDGIIModelE32RFCE
+            {
+                RFCE = new ECFModelE32RFCE
+                {
+                    //FechaHoraFirma = "01-03-2025 05:07:00",
+                    Encabezado = new EncabezadoModelE32RFCE
+                    {
+                        Version = "",
+                        IdDoc = new VersionIdDocModelE32RFCE
+                        {
+                            TipoeCF = "",
+                            eNCF = "E320000000011",
+                            TipoIngresos = "01",
+                            TipoPago = "1",
+                            //IndicadorMontoGravado = "0",
+                        },
+                        Emisor = new EmisorModelE32RFCE
+                        {
+                            RNCEmisor = "130322791",
+                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
+                            //NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            //DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
+                            //Municipio = "010100",
+                            //Provincia = "010000",
+                            //CorreoEmisor = "DOCUMENTOSELECTRONICOSDE0612345678969789+9000000000000000000000000000001@123.COM",
+                            //WebSite = "www.facturaelectronica.com",
+                            //CodigoVendedor = "AA0000000100000000010000000002000000000300000000050000000006",
+                            //NumeroFacturaInterna = "123456789016",
+                            //NumeroPedidoInterno = "123456789016",
+                            //ZonaVenta = "NORTE",
+                            FechaEmision = "01-04-2020"
+                        },
+                        Comprador = new CompradorModelE32RFCE
+                        {
+                            RNCComprador = "131880681",
+                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            //ContactoComprador = "MARCOS LATIPLOL",
+                            //CorreoComprador = "DOCUMENTOSELECTRONICOSDE0612345678969789@123.COM",
+                            //DireccionComprador = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
+                            //MunicipioComprador = "170203",
+                            //ProvinciaComprador = "170000",
+                            //FechaEntrega = "10-10-2020",
+                            //FechaOrdenCompra = "10-11-2018",
+                            //NumeroOrdenCompra = "4500352238",
+                            //CodigoInternoComprador = "10633440"
+                        },
+                        //InformacionesAdicionales = new InformacionesAdicionalesE32
+                        //{
+                        //    NumeroContenedor = "8019289",
+                        //    NumeroReferencia = "1447"
+                        //},
+                        Totales = new TotalesModelE32RFCE
+                        {
+                            MontoGravadoTotal = "34000.00",
+                            MontoGravadoI1 = "34000.00",
+                            //MontoGravadoI2 = "80190.00",
+                            //MontoGravadoI3 = "770.00",
+                            //MontoExento = "1625.00",
+                            //ITBIS1 = "18",
+                            //ITBIS2 = "16",
+                            //ITBIS3 = "0",
+                            TotalITBIS = "6120.00",
+                            TotalITBIS1 = "6120.00",
+                            //TotalITBIS2 = "12830.40",
+                            //TotalITBIS3 = "0.00",
+                            MontoTotal = "40120.00",
+                            //ValorPagar = "413785.30",
+                        }
+                    }
+                    //DetallesItems = new DetallesItemsModelE32RFCE
+                    //{
+                    //    Item = new List<ItemModelE32RFCE>
+                    //    {
+                    //        new ItemModelE32RFCE
+                    //        {
+                    //            NumeroLinea = "1",
+                    //            IndicadorFacturacion = "1",
+                    //            NombreItem = "Cargador",
+                    //            IndicadorBienoServicio = "1",
+                    //            CantidadItem = "1",
+                    //            UnidadMedida = "55",
+                    //            PrecioUnitarioItem = "5000.00",
+                    //            MontoItem = "5000.00"
+                    //        },
+                    //        new ItemModelE32RFCE
+                    //        {
+                    //            NumeroLinea = "2",
+                    //            IndicadorFacturacion = "1",
+                    //            NombreItem = "FREEZER",
+                    //            IndicadorBienoServicio = "1",
+                    //            CantidadItem = "1",
+                    //            UnidadMedida = "23",
+                    //            PrecioUnitarioItem = "29000.00",
+                    //            MontoItem = "29000.00"
+                    //        }
+                    //    }
+                    //}
+                }
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult comprobanteE320000000011(FacturaDGIIModelE32RFCE model)
+        {
+            string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
+
+            try
+            {
+                string invoice = FacturacionElectronicaDGII.EnviarTokenSincrona(urlSemilla, passCert, jsonInvoiceFO);
+                string response = FacturacionElectronicaDGII.EnviarFacturaElectronicaSincrona(urlValidarSemilla, urlRecepcionResumenFactura, urlConsultaFactura);
+
+                JObject jsonObject = JObject.Parse(invoice);
+                JObject jsonObjectResponse = JObject.Parse(response);
+
+                string mensajeValor = jsonObjectResponse["mensajes"]?[0]?["valor"]?.ToString();
+
+
+                var respuesta = new FacturaDGIIResponseModel
+                {
+                    JsonInvoice = jsonObject.GetValue("json")?.ToString(),
+                    ENCF = jsonObject.GetValue("encf")?.ToString(),
+                    XmlSemilla = jsonObject.GetValue("xmlsemilla")?.ToString(),
+                    XmlSemillaFirmada = jsonObject.GetValue("xmlsemillafirmada")?.ToString(),
+                    Token = jsonObject.GetValue("token")?.ToString(),
+                    XmlFactura = jsonObject.GetValue("xmlfactura")?.ToString(),
+                    XmlFacturaFirmada = jsonObject.GetValue("xmlfacturafirmada")?.ToString(),
+                    CodigoSeguridad = jsonObject.GetValue("codigoseguridad")?.ToString(),
+                    CodigoRespuesta = jsonObjectResponse.GetValue("codigo")?.ToString(),
+                    EstadoRespuesta = jsonObjectResponse.GetValue("estado")?.ToString(),
+                    Mensaje = mensajeValor
+
+                };
+
+                var registro = new FacturasDGII
+                {
+                    TipoeCF = model?.RFCE?.Encabezado?.IdDoc?.TipoeCF,
+                    ENCF = model?.RFCE?.Encabezado?.IdDoc?.eNCF,
+                    TipoPago = model?.RFCE?.Encabezado?.IdDoc?.TipoPago,
+                    IndicadorEnvioDiferido = model?.RFCE?.Encabezado?.IdDoc?.IndicadorEnvioDiferido,
+                    //IndicadorMontoGravado = model?.RFCE?.Encabezado?.IdDoc?.IndicadorMontoGravado,
+                    TipoIngresos = model?.RFCE?.Encabezado?.IdDoc?.TipoIngresos,
+
+                    RNCEmisor = model?.RFCE?.Encabezado?.Emisor?.RNCEmisor,
+                    RazonSocialEmisor = model?.RFCE?.Encabezado?.Emisor?.RazonSocialEmisor,
+                    NombreComercial = model?.RFCE?.Encabezado?.Emisor?.NombreComercial,
+                    DireccionEmisor = model?.RFCE?.Encabezado?.Emisor?.DireccionEmisor,
+                    Municipio = model?.RFCE?.Encabezado?.Emisor?.Municipio,
+                    Provincia = model?.RFCE?.Encabezado?.Emisor?.Provincia,
+                    CorreoEmisor = model?.RFCE?.Encabezado?.Emisor?.CorreoEmisor,
+                    WebSite = model?.RFCE?.Encabezado?.Emisor?.WebSite,
+                    CodigoVendedor = model?.RFCE?.Encabezado?.Emisor?.CodigoVendedor,
+                    NumeroFacturaInterna = model?.RFCE?.Encabezado?.Emisor?.NumeroFacturaInterna,
+                    NumeroPedidoInterno = model?.RFCE?.Encabezado?.Emisor?.NumeroPedidoInterno,
+                    ZonaVenta = model?.RFCE?.Encabezado?.Emisor?.ZonaVenta,
+                    FechaEmision = model?.RFCE?.Encabezado?.Emisor?.FechaEmision,
+
+                    RNCComprador = model?.RFCE?.Encabezado?.Comprador?.RNCComprador,
+                    RazonSocialComprador = model?.RFCE?.Encabezado?.Comprador?.RazonSocialComprador,
+                    ContactoComprador = model?.RFCE?.Encabezado?.Comprador?.ContactoComprador,
+                    CorreoComprador = model?.RFCE?.Encabezado?.Comprador?.CorreoComprador,
+                    DireccionComprador = model?.RFCE?.Encabezado?.Comprador?.DireccionComprador,
+                    MunicipioComprador = model?.RFCE?.Encabezado?.Comprador?.MunicipioComprador,
+                    ProvinciaComprador = model?.RFCE?.Encabezado?.Comprador?.ProvinciaComprador,
+                    FechaEntrega = model?.RFCE?.Encabezado?.Comprador?.FechaEntrega,
+                    FechaOrdenCompra = model?.RFCE?.Encabezado?.Comprador?.FechaOrdenCompra,
+                    NumeroOrdenCompra = model?.RFCE?.Encabezado?.Comprador?.NumeroOrdenCompra,
+                    CodigoInternoComprador = model?.RFCE?.Encabezado?.Comprador?.CodigoInternoComprador,
+
+                    MontoGravadoTotal = Convert.ToDecimal(model?.RFCE?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
+                    MontoGravadoI1 = Convert.ToDecimal(model?.RFCE?.Encabezado?.Totales?.MontoGravadoI1 ?? "0"),
+                    ITBIS1 = Convert.ToDecimal(model?.RFCE?.Encabezado?.Totales?.ITBIS1 ?? "0"),
+                    TotalITBIS = Convert.ToDecimal(model?.RFCE?.Encabezado?.Totales?.TotalITBIS ?? "0"),
+                    TotalITBIS1 = Convert.ToDecimal(model?.RFCE?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
+                    MontoTotal = Convert.ToDecimal(model?.RFCE?.Encabezado?.Totales?.MontoTotal ?? "0"),
+
+                    //FechaHoraFirma = model?.RFCE?.FechaHoraFirma,
+                    FechaRegistro = DateTime.Now
+                };
+
+                _context.FacturasDGII.Add(registro);
+                _context.SaveChanges();
+
+                respuesta.FacturaId = registro.Id;
+
+                //if (model?.RFCE?.DetallesItems?.Item != null)
+                //{
+                //    foreach (var item in model.RFCE.DetallesItems.Item)
+                //    {
+                //        var detalle = new ItemFactura
+                //        {
+                //            FacturaId = registro.Id,
+                //            NumeroLinea = item.NumeroLinea,
+                //            IndicadorFacturacion = item.IndicadorFacturacion,
+                //            NombreItem = item.NombreItem,
+                //            IndicadorBienoServicio = item.IndicadorBienoServicio,
+                //            CantidadItem = Convert.ToDecimal(item.CantidadItem ?? "0"),
+                //            UnidadMedida = item.UnidadMedida,
+                //            PrecioUnitarioItem = Convert.ToDecimal(item.PrecioUnitarioItem ?? "0"),
+                //            MontoItem = Convert.ToDecimal(item.MontoItem ?? "0")
+                //        };
+
+                //        _context.ItemsFactura.Add(detalle);
+                //    }
+                //}
+                _context.SaveChanges();
+
+                if (respuesta.CodigoRespuesta == "1")
+                {
+                    return View("verFactura", respuesta);
                 }
                 else
                 {
