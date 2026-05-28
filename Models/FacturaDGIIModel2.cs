@@ -2,7 +2,8 @@
 
 namespace DGIIFacturadorLoginMVCApp.Models
 {
-    public class FacturaDGIIModel2
+    public class 
+        FacturaDGIIModel2
     {
         public ECFModel2 ECF { get; set; } = new ECFModel2();
     }
@@ -11,7 +12,13 @@ namespace DGIIFacturadorLoginMVCApp.Models
     {
         public EncabezadoModel2 Encabezado { get; set; } = new EncabezadoModel2();
         public DetallesItemsModel2 DetallesItems { get; set; } = new DetallesItemsModel2();
-        public DescuentosORecargosModel2 DescuentosORecargos { get; set; } = new DescuentosORecargosModel2();
+        //public DescuentosORecargosModel2 DescuentosORecargos { get; set; } = new DescuentosORecargosModel2();
+
+        // 1. Añadimos el atributo para ignorar si es nulo
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        // 2. Quitamos el '= new DescuentosORecargosModel2()' para que por defecto sea null
+        public DescuentosORecargosModel2? DescuentosORecargos { get; set; }
+
         public string FechaHoraFirma { get; set; }
     }
 
@@ -98,9 +105,15 @@ namespace DGIIFacturadorLoginMVCApp.Models
     {
         public string MontoGravadoTotal { get; set; }
         public string MontoGravadoI1 { get; set; }
+
+        public string MontoGravadoI2 { get; set; }
+        public string MontoExento { get; set; }
         public string ITBIS1 { get; set; }
+        public string ITBIS2 { get; set; }
         public string TotalITBIS { get; set; }
         public string TotalITBIS1 { get; set; }
+        public string TotalITBIS2 { get; set; }
+
         //public string MontoImpuestoAdicional { get; set; }
         //public ImpuestosAdicionalesModel2 ImpuestosAdicionales { get; set; }
         public string MontoTotal { get; set; }
