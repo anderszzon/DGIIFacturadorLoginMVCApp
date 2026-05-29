@@ -23,6 +23,7 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public CompradorModelE32RFCE Comprador { get; set; } = new CompradorModelE32RFCE();
         //public InformacionesAdicionalesE32 InformacionesAdicionales { get; set; } = new InformacionesAdicionalesE32();
         public TotalesModelE32RFCE Totales { get; set; } = new TotalesModelE32RFCE();
+        public string CodigoSeguridadeCF { get; set; } = "AAAAAA";
     }
 
     public class VersionIdDocModelE32RFCE
