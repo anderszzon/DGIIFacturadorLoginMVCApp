@@ -66,6 +66,8 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public string FechaOrdenCompra { get; set; }
         public string NumeroOrdenCompra { get; set; }
         public string CodigoInternoComprador { get; set; }
+        public string TelefonoAdicional { get; set; }
+
     }
 
     public class InformacionesAdicionalesE32

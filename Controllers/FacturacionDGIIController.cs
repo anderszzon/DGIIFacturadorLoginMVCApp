@@ -2646,7 +2646,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                             RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS PRUEBA FACTURA DE CONSUMO MENOR 250MIL",
                             NombreComercial = "DOCUMENTOS ELECTRONICOS",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
-                            CorreoEmisor = "DOCUMENTOSELECTRONICOSDE0612345678969789+9000000000000000000000000000001@123.COM",
+                            CorreoEmisor = "DOCUMENTOSELECTRONICOS@123.COM",
                             FechaEmision = "01-04-2020"
                         },
                         Comprador = new CompradorModelE32
@@ -2657,11 +2657,13 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                             DireccionComprador = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             MunicipioComprador = "170203",
                             ProvinciaComprador = "170000",
+                            TelefonoAdicional = "809-472-7676\r\n"
                         },
                         Totales = new TotalesModelE32
                         {
                             MontoGravadoTotal = "34000.00",
                             MontoGravadoI1 = "34000.00",
+                            ITBIS1 = "18",
                             TotalITBIS = "6120.00",
                             TotalITBIS1 = "6120.00",
                             MontoTotal = "40120.00",
