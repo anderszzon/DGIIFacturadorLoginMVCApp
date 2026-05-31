@@ -15,5 +15,7 @@
         public string Mensaje { get; set; }
         public int FacturaId { get; set; } // FK para FacturasDGII
 
+        public string root { get; set; }
+
     }
 }
