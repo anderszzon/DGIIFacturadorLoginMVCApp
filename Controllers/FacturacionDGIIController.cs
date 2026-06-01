@@ -2355,11 +2355,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                             NumeroOrdenCompra = "4500352238",
                             CodigoInternoComprador = "10633440"
                         },
-                        //InformacionesAdicionales = new InformacionesAdicionalesE32
-                        //{
-                        //    NumeroContenedor = "8019289",
-                        //    NumeroReferencia = "1447"
-                        //},
                         Totales = new TotalesModelE32
                         {
                             MontoGravadoTotal = "350765.00",
@@ -2657,7 +2652,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                             DireccionComprador = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             MunicipioComprador = "170203",
                             ProvinciaComprador = "170000",
-                            TelefonoAdicional = "809-472-7676\r\n"
+                            TelefonoAdicional = "809-472-7676"
                         },
                         Totales = new TotalesModelE32
                         {
@@ -2917,9 +2912,138 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
         }
 
+
+        [HttpGet]
+        public IActionResult comprobanteE320000000013ECF()
+        {
+            var model = new FacturaDGIIModelE32
+            {
+                ECF = new ECFModelE32
+                {
+                    FechaHoraFirma = "01-03-2025 05:07:00",
+                    Encabezado = new EncabezadoModelE32
+                    {
+                        Version = "",
+                        IdDoc = new VersionIdDocModelE32
+                        {
+                            TipoeCF = "",
+                            eNCF = "E320000000013",
+                            TipoIngresos = "01",
+                            TipoPago = "1",
+                        },
+                        Emisor = new EmisorModelE32
+                        {
+                            RNCEmisor = "130322791",
+                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS PRUEBA FACTURA DE CONSUMO MENOR 250MIL",
+                            NombreComercial = "DOCUMENTOS ELECTRONICOS",
+                            DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
+                            CorreoEmisor = "DOCUMENTOSELECTRONICOS@123.COM",
+                            FechaEmision = "01-04-2020"
+                        },
+                        Comprador = new CompradorModelE32
+                        {
+                            RNCComprador = "131880681",
+                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            CorreoComprador = "DOCUMENTOSELECTRONICOSDE0612345678969789@123.COM",
+                            DireccionComprador = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
+                            MunicipioComprador = "170203",
+                            ProvinciaComprador = "170000",
+                            TelefonoAdicional = "809-472-7676"
+                        },
+                        Totales = new TotalesModelE32
+                        {
+                            MontoGravadoTotal = "95000.00",
+                            MontoGravadoI1 = "95000.00",
+                            ITBIS1 = "18",
+                            TotalITBIS = "17100.00",
+                            TotalITBIS1 = "17100.00",
+                            MontoTotal = "112100.00",
+                        }
+                    },
+                    DetallesItems = new DetallesItemsModelE32
+                    {
+                        Item = new List<ItemModelE32>
+                        {
+                            new ItemModelE32
+                            {
+                                NumeroLinea = "1",
+                                IndicadorFacturacion = "1",
+                                NombreItem = "Nevera",
+                                IndicadorBienoServicio = "1",
+                                CantidadItem = "1",
+                                UnidadMedida = "55",
+                                PrecioUnitarioItem = "95000.00",
+                                MontoItem = "95000.00"
+                            }
+                        }
+                    }
+                }
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult comprobanteE320000000013ECF(FacturaDGIIModelE32 model)
+        {
+            string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
+
+            try
+            {
+                string invoice = FacturacionElectronicaDGII.EnviarTokenSincrona(urlSemilla, passCert, jsonInvoiceFO);
+
+                JObject jsonObject = JObject.Parse(invoice);
+
+                var respuesta = new FacturaDGIIResponseModel
+                {
+                    JsonInvoice = jsonObject.GetValue("json")?.ToString(),
+                    ENCF = jsonObject.GetValue("encf")?.ToString(),
+                    XmlSemilla = jsonObject.GetValue("xmlsemilla")?.ToString(),
+                    XmlSemillaFirmada = jsonObject.GetValue("xmlsemillafirmada")?.ToString(),
+                    Token = jsonObject.GetValue("token")?.ToString(),
+                    XmlFactura = jsonObject.GetValue("xmlfactura")?.ToString(),
+                    XmlFacturaFirmada = jsonObject.GetValue("xmlfacturafirmada")?.ToString(),
+                    CodigoSeguridad = jsonObject.GetValue("codigoseguridad")?.ToString(),
+                    root = jsonObject.GetValue("root")?.ToString()
+                };
+
+                // Guardar en Session
+                HttpContext.Session.SetString("CodigoSeguridad", respuesta.CodigoSeguridad ?? string.Empty);
+
+                if (respuesta.root == "ECF")
+                {
+                    respuesta.CodigoRespuesta = "1";
+
+                    return View("verFactura", respuesta);
+                }
+                else
+                {
+                    ViewBag.MensajeError = respuesta.Mensaje;
+                    return View("verFactura", respuesta);
+                }
+
+            }
+            catch (DbUpdateException ex)
+            {
+                string error = ex.Message;
+
+                if (ex.InnerException != null)
+                    error += " | Inner Exception: " + ex.InnerException.Message;
+
+                ViewBag.Error = error;
+                return View(null);
+            }
+
+        }
+
         [HttpGet]
         public IActionResult comprobanteE320000000013()
         {
+            string codigoSeguridad = HttpContext.Session.GetString("CodigoSeguridad");
+
             var model = new FacturaDGIIModelE32RFCE
             {
                 RFCE = new ECFModelE32RFCE
@@ -2952,7 +3076,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                             TotalITBIS = "17100.00",
                             TotalITBIS1 = "17100.00",
                             MontoTotal = "112100.00",
-                        }
+                        },
+                        CodigoSeguridadeCF = codigoSeguridad
                     }
                 }
             };
@@ -2963,8 +3088,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE320000000013(FacturaDGIIModelE32RFCE model)
         {
-            string codigoSeguridad = HttpContext.Session.GetString("CodigoSeguridad");
-
             string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
@@ -3074,9 +3197,150 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
         }
 
+
+        [HttpGet]
+        public IActionResult comprobanteE320000000014ECF()
+        {
+            var model = new FacturaDGIIModelE32
+            {
+                ECF = new ECFModelE32
+                {
+                    FechaHoraFirma = "01-03-2025 05:07:00",
+                    Encabezado = new EncabezadoModelE32
+                    {
+                        Version = "",
+                        IdDoc = new VersionIdDocModelE32
+                        {
+                            TipoeCF = "",
+                            eNCF = "E320000000014",
+                            TipoIngresos = "01",
+                            TipoPago = "1",
+                        },
+                        Emisor = new EmisorModelE32
+                        {
+                            RNCEmisor = "130322791",
+                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS PRUEBA FACTURA DE CONSUMO MENOR 250MIL",
+                            NombreComercial = "DOCUMENTOS ELECTRONICOS",
+                            DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
+                            CorreoEmisor = "DOCUMENTOSELECTRONICOS@123.COM",
+                            FechaEmision = "01-04-2020"
+                        },
+                        Comprador = new CompradorModelE32
+                        {
+                            RNCComprador = "131880681",
+                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            CorreoComprador = "DOCUMENTOSELECTRONICOSDE0612345678969789@123.COM",
+                            DireccionComprador = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
+                            MunicipioComprador = "170203",
+                            ProvinciaComprador = "170000",
+                            TelefonoAdicional = "809-472-7676"
+                        },
+                        Totales = new TotalesModelE32
+                        {
+                            MontoGravadoTotal = "10100.00",
+                            MontoGravadoI1 = "10100.00",
+                            ITBIS1 = "18",
+                            TotalITBIS = "1818.00",
+                            TotalITBIS1 = "1818.00",
+                            MontoTotal = "11918.00",
+                        }
+                    },
+                    DetallesItems = new DetallesItemsModelE32
+                    {
+                        Item = new List<ItemModelE32>
+                        {
+                            new ItemModelE32
+                            {
+                                NumeroLinea = "1",
+                                IndicadorFacturacion = "1",
+                                NombreItem = "Articulos de belleza",
+                                IndicadorBienoServicio = "1",
+                                CantidadItem = "1",
+                                UnidadMedida = "55",
+                                PrecioUnitarioItem = "10000.00",
+                                MontoItem = "10000.00"
+                            },
+                                                        new ItemModelE32
+                            {
+                                NumeroLinea = "2",
+                                IndicadorFacturacion = "1",
+                                NombreItem = "Queso",
+                                IndicadorBienoServicio = "1",
+                                CantidadItem = "1",
+                                UnidadMedida = "23",
+                                PrecioUnitarioItem = "100.00",
+                                MontoItem = "100.00"
+                            }
+                        }
+                    }
+                }
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult comprobanteE320000000014ECF(FacturaDGIIModelE32 model)
+        {
+            string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
+
+            try
+            {
+                string invoice = FacturacionElectronicaDGII.EnviarTokenSincrona(urlSemilla, passCert, jsonInvoiceFO);
+
+                JObject jsonObject = JObject.Parse(invoice);
+
+                var respuesta = new FacturaDGIIResponseModel
+                {
+                    JsonInvoice = jsonObject.GetValue("json")?.ToString(),
+                    ENCF = jsonObject.GetValue("encf")?.ToString(),
+                    XmlSemilla = jsonObject.GetValue("xmlsemilla")?.ToString(),
+                    XmlSemillaFirmada = jsonObject.GetValue("xmlsemillafirmada")?.ToString(),
+                    Token = jsonObject.GetValue("token")?.ToString(),
+                    XmlFactura = jsonObject.GetValue("xmlfactura")?.ToString(),
+                    XmlFacturaFirmada = jsonObject.GetValue("xmlfacturafirmada")?.ToString(),
+                    CodigoSeguridad = jsonObject.GetValue("codigoseguridad")?.ToString(),
+                    root = jsonObject.GetValue("root")?.ToString()
+                };
+
+                // Guardar en Session
+                HttpContext.Session.SetString("CodigoSeguridad", respuesta.CodigoSeguridad ?? string.Empty);
+
+                if (respuesta.root == "ECF")
+                {
+                    respuesta.CodigoRespuesta = "1";
+
+                    return View("verFactura", respuesta);
+                }
+                else
+                {
+                    ViewBag.MensajeError = respuesta.Mensaje;
+                    return View("verFactura", respuesta);
+                }
+
+            }
+            catch (DbUpdateException ex)
+            {
+                string error = ex.Message;
+
+                if (ex.InnerException != null)
+                    error += " | Inner Exception: " + ex.InnerException.Message;
+
+                ViewBag.Error = error;
+                return View(null);
+            }
+
+        }
+
+
         [HttpGet]
         public IActionResult comprobanteE320000000014()
         {
+            string codigoSeguridad = HttpContext.Session.GetString("CodigoSeguridad");
+
             var model = new FacturaDGIIModelE32RFCE
             {
                 RFCE = new ECFModelE32RFCE
@@ -3109,7 +3373,9 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                             TotalITBIS = "1818.00",
                             TotalITBIS1 = "1818.00",
                             MontoTotal = "11918.00",
-                        }
+                        },
+                        CodigoSeguridadeCF = codigoSeguridad
+
                     }
                 }
             };
@@ -3120,8 +3386,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE320000000014(FacturaDGIIModelE32RFCE model)
         {
-            string codigoSeguridad = HttpContext.Session.GetString("CodigoSeguridad");
-
             string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
@@ -3231,9 +3495,150 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
         }
 
+
+        [HttpGet]
+        public IActionResult comprobanteE320000000015ECF()
+        {
+            var model = new FacturaDGIIModelE32
+            {
+                ECF = new ECFModelE32
+                {
+                    FechaHoraFirma = "01-03-2025 05:07:00",
+                    Encabezado = new EncabezadoModelE32
+                    {
+                        Version = "",
+                        IdDoc = new VersionIdDocModelE32
+                        {
+                            TipoeCF = "",
+                            eNCF = "E320000000015",
+                            TipoIngresos = "01",
+                            TipoPago = "1",
+                        },
+                        Emisor = new EmisorModelE32
+                        {
+                            RNCEmisor = "130322791",
+                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS PRUEBA FACTURA DE CONSUMO MENOR 250MIL",
+                            NombreComercial = "DOCUMENTOS ELECTRONICOS",
+                            DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
+                            CorreoEmisor = "DOCUMENTOSELECTRONICOS@123.COM",
+                            FechaEmision = "01-04-2020"
+                        },
+                        Comprador = new CompradorModelE32
+                        {
+                            RNCComprador = "131880681",
+                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            CorreoComprador = "DOCUMENTOSELECTRONICOSDE0612345678969789@123.COM",
+                            DireccionComprador = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
+                            MunicipioComprador = "170203",
+                            ProvinciaComprador = "170000",
+                            TelefonoAdicional = "809-472-7676"
+                        },
+                        Totales = new TotalesModelE32
+                        {
+                            MontoGravadoTotal = "55000.00",
+                            MontoGravadoI1 = "55000.00",
+                            ITBIS1 = "18",
+                            TotalITBIS = "9900.00",
+                            TotalITBIS1 = "9900.00",
+                            MontoTotal = "64900.00",
+                        }
+                    },
+                    DetallesItems = new DetallesItemsModelE32
+                    {
+                        Item = new List<ItemModelE32>
+                        {
+                            new ItemModelE32
+                            {
+                                NumeroLinea = "1",
+                                IndicadorFacturacion = "1",
+                                NombreItem = "Celular",
+                                IndicadorBienoServicio = "1",
+                                CantidadItem = "1",
+                                UnidadMedida = "55",
+                                PrecioUnitarioItem = "50000.00",
+                                MontoItem = "50000.00"
+                            },
+                            new ItemModelE32
+                            {
+                                NumeroLinea = "2",
+                                IndicadorFacturacion = "1",
+                                NombreItem = "Cargador",
+                                IndicadorBienoServicio = "1",
+                                CantidadItem = "1",
+                                UnidadMedida = "23",
+                                PrecioUnitarioItem = "5000.00",
+                                MontoItem = "5000.00"
+                            }
+                        }
+                    }
+                }
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult comprobanteE320000000015ECF(FacturaDGIIModelE32 model)
+        {
+            string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
+
+            try
+            {
+                string invoice = FacturacionElectronicaDGII.EnviarTokenSincrona(urlSemilla, passCert, jsonInvoiceFO);
+
+                JObject jsonObject = JObject.Parse(invoice);
+
+                var respuesta = new FacturaDGIIResponseModel
+                {
+                    JsonInvoice = jsonObject.GetValue("json")?.ToString(),
+                    ENCF = jsonObject.GetValue("encf")?.ToString(),
+                    XmlSemilla = jsonObject.GetValue("xmlsemilla")?.ToString(),
+                    XmlSemillaFirmada = jsonObject.GetValue("xmlsemillafirmada")?.ToString(),
+                    Token = jsonObject.GetValue("token")?.ToString(),
+                    XmlFactura = jsonObject.GetValue("xmlfactura")?.ToString(),
+                    XmlFacturaFirmada = jsonObject.GetValue("xmlfacturafirmada")?.ToString(),
+                    CodigoSeguridad = jsonObject.GetValue("codigoseguridad")?.ToString(),
+                    root = jsonObject.GetValue("root")?.ToString()
+                };
+
+                // Guardar en Session
+                HttpContext.Session.SetString("CodigoSeguridad", respuesta.CodigoSeguridad ?? string.Empty);
+
+                if (respuesta.root == "ECF")
+                {
+                    respuesta.CodigoRespuesta = "1";
+
+                    return View("verFactura", respuesta);
+                }
+                else
+                {
+                    ViewBag.MensajeError = respuesta.Mensaje;
+                    return View("verFactura", respuesta);
+                }
+
+            }
+            catch (DbUpdateException ex)
+            {
+                string error = ex.Message;
+
+                if (ex.InnerException != null)
+                    error += " | Inner Exception: " + ex.InnerException.Message;
+
+                ViewBag.Error = error;
+                return View(null);
+            }
+
+        }
+
+
         [HttpGet]
         public IActionResult comprobanteE320000000015()
         {
+            string codigoSeguridad = HttpContext.Session.GetString("CodigoSeguridad");
+
             var model = new FacturaDGIIModelE32RFCE
             {
                 RFCE = new ECFModelE32RFCE
@@ -3266,7 +3671,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                             TotalITBIS = "9900.00",
                             TotalITBIS1 = "9900.00",
                             MontoTotal = "64900.00",
-                        }
+                        },
+                        CodigoSeguridadeCF = codigoSeguridad
                     }
                 }
             };
@@ -3277,8 +3683,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE320000000015(FacturaDGIIModelE32RFCE model)
         {
-            string codigoSeguridad = HttpContext.Session.GetString("CodigoSeguridad");
-
             string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
