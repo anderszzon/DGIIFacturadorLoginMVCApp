@@ -5629,6 +5629,392 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
         }
 
+
+        [HttpGet]
+        public IActionResult comprobanteE410000000008()
+        {
+            var model = new FacturaDGIIModel10
+            {
+                ECF = new ECFModel10
+                {
+                    FechaHoraFirma = "01-03-2025 05:07:00",
+                    Encabezado = new EncabezadoModel10
+                    {
+                        Version = "",
+                        IdDoc = new VersionIdDocModel10
+                        {
+                            TipoeCF = "",
+                            eNCF = "E410000000008",
+                            FechaVencimientoSecuencia = "31-12-2028",
+                            IndicadorMontoGravado = "0",
+                            TipoPago = "1",
+                            TablaFormasPago = new TablaFormasPago10
+                            {
+                                FormaDePago = new List<FormaDePago10>
+                                {
+                                    new FormaDePago10
+                                    {
+                                        FormaPago = "1",
+                                        MontoPago = "17565.78"
+                                    }
+                                }
+                            }
+                        },
+                        Emisor = new EmisorModel10
+                        {
+                            RNCEmisor = "130322791",
+                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
+                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
+                            Municipio = "010100",
+                            Provincia = "010000",
+                            CorreoEmisor = "DOCUMENTOSELECTRONICOSDE0612345678969789+9000000000000000000000000000001@123.COM",
+                            FechaEmision = "01-04-2020"
+                        },
+                        Comprador = new CompradorModel10
+                        {
+                            RNCComprador = "533445861",
+                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 11",
+                        },
+                        Totales = new TotalesModel10
+                        {
+                            MontoGravadoTotal = "14886.25",
+                            MontoGravadoI1 = "14886.25",
+                            ITBIS1 = "18",
+                            TotalITBIS = "2679.53",
+                            TotalITBIS1 = "2679.53",
+                            MontoTotal = "17565.78",
+                            TotalITBISRetenido = "2634.53",
+                            TotalISRRetencion = "1488.63"
+                        }
+                    },
+                    DetallesItems = new DetallesItemsModel10
+                    {
+                        Item = new List<ItemModel10>
+                        {
+                            new ItemModel10
+                            {
+                                NumeroLinea = "1",
+                                IndicadorFacturacion = "1",
+                                Retencion = new Retencion10
+                                {
+                                    IndicadorAgenteRetencionoPercepcion = "1",
+                                    MontoITBISRetenido = "961.20",
+                                    MontoISRRetenido = "539.00"
+                                },
+                                NombreItem = "Servicio Profesional Legislativo",
+                                IndicadorBienoServicio = "2",
+                                CantidadItem = "15.00",
+                                UnidadMedida = "23",
+                                PrecioUnitarioItem = "385.0000",
+                                DescuentoMonto = "385.00",
+                                TablaSubDescuento = new TablaSubDescuento10
+                                {
+                                    SubDescuento = new List<SubDescuento10>
+                                    {
+                                        new SubDescuento10
+                                        {
+                                            TipoSubDescuento = "$",
+                                            MontoSubDescuento = "385.00"
+                                        }
+                                    }
+                                },
+                                MontoItem = "5390.00"
+                            },
+                            new ItemModel10
+                            {
+                                NumeroLinea = "2",
+                                IndicadorFacturacion = "1",
+                                Retencion = new Retencion10
+                                {
+                                    IndicadorAgenteRetencionoPercepcion = "1",
+                                    MontoITBISRetenido = "436.50",
+                                    MontoISRRetenido = "247.50"
+                                },
+                                NombreItem = "Asesoria Legal",
+                                IndicadorBienoServicio = "2",
+                                CantidadItem = "5.00",
+                                UnidadMedida = "43",
+                                PrecioUnitarioItem = "550.0000",
+                                DescuentoMonto = "275.00",
+                                TablaSubDescuento = new TablaSubDescuento10
+                                {
+                                    SubDescuento = new List<SubDescuento10>
+                                    {
+                                        new SubDescuento10
+                                        {
+                                            TipoSubDescuento = "%",
+                                            SubDescuentoPorcentaje = "10.00",
+                                            MontoSubDescuento = "275.00"
+                                        }
+                                    }
+                                },
+                                MontoItem = "2475.00"
+                            },
+                            new ItemModel10
+                            {
+                                NumeroLinea = "3",
+                                IndicadorFacturacion = "1",
+                                Retencion = new Retencion10
+                                {
+                                    IndicadorAgenteRetencionoPercepcion = "1",
+                                    MontoITBISRetenido = "369.00",
+                                    MontoISRRetenido = "210.00"
+                                },
+                                NombreItem = "Gestiones Legales",
+                                IndicadorBienoServicio = "2",
+                                CantidadItem = "9.00",
+                                UnidadMedida = "13",
+                                PrecioUnitarioItem = "250.0000",
+                                DescuentoMonto = "150.00",
+                                TablaSubDescuento = new TablaSubDescuento10
+                                {
+                                    SubDescuento = new List<SubDescuento10>
+                                    {
+                                        new SubDescuento10
+                                        {
+                                            TipoSubDescuento = "$",
+                                            MontoSubDescuento = "150.00"
+                                        }
+                                    }
+                                },
+                                MontoItem = "2100.00"
+                            },
+                            new ItemModel10
+                            {
+                                NumeroLinea = "4",
+                                IndicadorFacturacion = "1",
+                                Retencion = new Retencion10
+                                {
+                                    IndicadorAgenteRetencionoPercepcion = "1",
+                                    MontoITBISRetenido = "720.90",
+                                    MontoISRRetenido = "405.50"
+                                },
+                                NombreItem = "Legalizacion de documentos",
+                                IndicadorBienoServicio = "2",
+                                CantidadItem = "23.00",
+                                UnidadMedida = "15",
+                                PrecioUnitarioItem = "185.0000",
+                                DescuentoMonto = "200.00",
+                                TablaSubDescuento = new TablaSubDescuento10
+                                {
+                                    SubDescuento = new List<SubDescuento10>
+                                    {
+                                        new SubDescuento10
+                                        {
+                                            TipoSubDescuento = "$",
+                                            MontoSubDescuento = "200.00"
+                                        }
+                                    }
+                                },
+                                MontoItem = "4055.00"
+                            },
+                            new ItemModel10
+                            {
+                                NumeroLinea = "5",
+                                IndicadorFacturacion = "1",
+                                Retencion = new Retencion10
+                                {
+                                    IndicadorAgenteRetencionoPercepcion = "1",
+                                    MontoITBISRetenido = "146.93",
+                                    MontoISRRetenido = "86.63"
+                                },
+                                NombreItem = "Servicios ambulatorio",
+                                IndicadorBienoServicio = "2",
+                                CantidadItem = "7.00",
+                                UnidadMedida = "23",
+                                PrecioUnitarioItem = "125.0000",
+                                DescuentoMonto = "8.75",
+                                TablaSubDescuento = new TablaSubDescuento10
+                                {
+                                    SubDescuento = new List<SubDescuento10>
+                                    {
+                                        new SubDescuento10
+                                        {
+                                            TipoSubDescuento = "%",
+                                            SubDescuentoPorcentaje = "1.00",
+                                            MontoSubDescuento = "8.75"
+                                        }
+                                    }
+                                },
+                                MontoItem = "866.25"
+                            }
+                        }
+                    }
+                }
+            };
+
+            return View(model);
+        }
+
+
+        [HttpPost]
+        public IActionResult comprobanteE410000000008(FacturaDGIIModel10 model)
+        {
+
+            foreach (var item in model.ECF.DetallesItems.Item)
+            {
+                if (item.TablaSubDescuento?.SubDescuento != null)
+                {
+                    item.TablaSubDescuento.SubDescuento = item.TablaSubDescuento.SubDescuento
+                        .Where(ci => ci != null && !string.IsNullOrWhiteSpace(ci.TipoSubDescuento) && !string.IsNullOrWhiteSpace(ci.MontoSubDescuento))
+                        .ToList();
+
+                    if (!item.TablaSubDescuento.SubDescuento.Any())
+                    {
+                        item.TablaSubDescuento = null;
+                    }
+                }
+            }
+
+            foreach (var item in model.ECF.DetallesItems.Item)
+            {
+                if (item.TablaSubRecargo?.SubRecargo != null)
+                {
+                    item.TablaSubRecargo.SubRecargo = item.TablaSubRecargo.SubRecargo
+                        .Where(ci => ci != null && !string.IsNullOrWhiteSpace(ci.TipoSubRecargo) && !string.IsNullOrWhiteSpace(ci.MontoSubRecargo))
+                        .ToList();
+
+                    if (!item.TablaSubRecargo.SubRecargo.Any())
+                    {
+                        item.TablaSubRecargo = null;
+                    }
+                }
+            }
+
+            string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
+
+            try
+            {
+                string invoice = FacturacionElectronicaDGII.EnviarTokenSincrona(urlSemilla, passCert, jsonInvoiceFO);
+                string response = FacturacionElectronicaDGII.EnviarFacturaElectronicaSincrona(urlValidarSemilla, urlRecepcionFactura, urlConsultaFactura);
+
+                JObject jsonObject = JObject.Parse(invoice);
+                JObject jsonObjectResponse = JObject.Parse(response);
+
+                string mensajeValor = jsonObjectResponse["mensajes"]?[0]?["valor"]?.ToString();
+
+
+                var respuesta = new FacturaDGIIResponseModel
+                {
+                    JsonInvoice = jsonObject.GetValue("json")?.ToString(),
+                    ENCF = jsonObject.GetValue("encf")?.ToString(),
+                    XmlSemilla = jsonObject.GetValue("xmlsemilla")?.ToString(),
+                    XmlSemillaFirmada = jsonObject.GetValue("xmlsemillafirmada")?.ToString(),
+                    Token = jsonObject.GetValue("token")?.ToString(),
+                    XmlFactura = jsonObject.GetValue("xmlfactura")?.ToString(),
+                    XmlFacturaFirmada = jsonObject.GetValue("xmlfacturafirmada")?.ToString(),
+                    CodigoSeguridad = jsonObject.GetValue("codigoseguridad")?.ToString(),
+                    CodigoRespuesta = jsonObjectResponse.GetValue("codigo")?.ToString(),
+                    EstadoRespuesta = jsonObjectResponse.GetValue("estado")?.ToString(),
+                    Mensaje = mensajeValor
+
+                };
+
+                var registro = new FacturasDGII
+                {
+                    TipoeCF = model?.ECF?.Encabezado?.IdDoc?.TipoeCF,
+                    ENCF = model?.ECF?.Encabezado?.IdDoc?.eNCF,
+                    FechaVencimientoSecuencia = model?.ECF?.Encabezado?.IdDoc?.FechaVencimientoSecuencia,
+                    TipoPago = model?.ECF?.Encabezado?.IdDoc?.TipoPago,
+                    IndicadorEnvioDiferido = model?.ECF?.Encabezado?.IdDoc?.IndicadorEnvioDiferido,
+                    IndicadorMontoGravado = model?.ECF?.Encabezado?.IdDoc?.IndicadorMontoGravado,
+                    TipoIngresos = model?.ECF?.Encabezado?.IdDoc?.TipoIngresos,
+
+                    RNCEmisor = model?.ECF?.Encabezado?.Emisor?.RNCEmisor,
+                    RazonSocialEmisor = model?.ECF?.Encabezado?.Emisor?.RazonSocialEmisor,
+                    //NombreComercial = model?.ECF?.Encabezado?.Emisor?.NombreComercial,
+                    DireccionEmisor = model?.ECF?.Encabezado?.Emisor?.DireccionEmisor,
+                    Municipio = model?.ECF?.Encabezado?.Emisor?.Municipio,
+                    Provincia = model?.ECF?.Encabezado?.Emisor?.Provincia,
+                    //CorreoEmisor = model?.ECF?.Encabezado?.Emisor?.CorreoEmisor,
+                    //WebSite = model?.ECF?.Encabezado?.Emisor?.WebSite,
+                    //CodigoVendedor = model?.ECF?.Encabezado?.Emisor?.CodigoVendedor,
+                    //NumeroFacturaInterna = model?.ECF?.Encabezado?.Emisor?.NumeroFacturaInterna,
+                    //NumeroPedidoInterno = model?.ECF?.Encabezado?.Emisor?.NumeroPedidoInterno,
+                    //ZonaVenta = model?.ECF?.Encabezado?.Emisor?.ZonaVenta,
+                    FechaEmision = model?.ECF?.Encabezado?.Emisor?.FechaEmision,
+
+                    RNCComprador = model?.ECF?.Encabezado?.Comprador?.RNCComprador,
+                    RazonSocialComprador = model?.ECF?.Encabezado?.Comprador?.RazonSocialComprador,
+                    //ContactoComprador = model?.ECF?.Encabezado?.Comprador?.ContactoComprador,
+                    CorreoComprador = model?.ECF?.Encabezado?.Comprador?.CorreoComprador,
+                    DireccionComprador = model?.ECF?.Encabezado?.Comprador?.DireccionComprador,
+                    MunicipioComprador = model?.ECF?.Encabezado?.Comprador?.MunicipioComprador,
+                    ProvinciaComprador = model?.ECF?.Encabezado?.Comprador?.ProvinciaComprador,
+                    //FechaEntrega = model?.ECF?.Encabezado?.Comprador?.FechaEntrega,
+                    //FechaOrdenCompra = model?.ECF?.Encabezado?.Comprador?.FechaOrdenCompra,
+                    //NumeroOrdenCompra = model?.ECF?.Encabezado?.Comprador?.NumeroOrdenCompra,
+                    //CodigoInternoComprador = model?.ECF?.Encabezado?.Comprador?.CodigoInternoComprador,
+
+                    MontoGravadoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
+                    MontoGravadoI1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoI1 ?? "0"),
+                    ITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.ITBIS1 ?? "0"),
+                    TotalITBIS = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS ?? "0"),
+                    TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
+                    MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
+
+                    FechaHoraFirma = model?.ECF?.FechaHoraFirma,
+                    FechaRegistro = DateTime.Now
+                };
+
+
+                _context.FacturasDGII.Add(registro);
+                _context.SaveChanges();
+
+                respuesta.FacturaId = registro.Id;
+
+                if (model?.ECF?.DetallesItems?.Item != null)
+                {
+                    foreach (var item in model.ECF.DetallesItems.Item)
+                    {
+                        var detalle = new ItemFactura
+                        {
+                            FacturaId = registro.Id,
+                            NumeroLinea = item.NumeroLinea,
+                            IndicadorFacturacion = item.IndicadorFacturacion,
+                            NombreItem = item.NombreItem,
+                            IndicadorBienoServicio = item.IndicadorBienoServicio,
+                            CantidadItem = Convert.ToDecimal(item.CantidadItem ?? "0"),
+                            UnidadMedida = item.UnidadMedida,
+                            PrecioUnitarioItem = Convert.ToDecimal(item.PrecioUnitarioItem ?? "0"),
+                            MontoItem = Convert.ToDecimal(item.MontoItem ?? "0")
+                        };
+
+                        _context.ItemsFactura.Add(detalle);
+                    }
+                }
+                _context.SaveChanges();
+
+                if (respuesta.CodigoRespuesta == "1")
+                {
+                    return View("verFactura", respuesta);
+
+                }
+                else
+                {
+                    ViewBag.MensajeError = respuesta.Mensaje;
+                    return View("verFactura", respuesta);
+                }
+
+            }
+            catch (DbUpdateException ex)
+            {
+                string error = ex.Message;
+
+                if (ex.InnerException != null)
+                    error += " | Inner Exception: " + ex.InnerException.Message;
+
+                ViewBag.Error = error;
+                return View(null);
+            }
+
+        }
+
+
         [HttpGet]
         public IActionResult comprobanteE43()
         {
