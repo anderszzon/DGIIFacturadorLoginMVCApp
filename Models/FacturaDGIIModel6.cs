@@ -70,21 +70,40 @@ namespace DGIIFacturadorLoginMVCApp.Models
 
     public class InformacionesAdicionales6
     {
+        public string FechaEmbarque { get; set; }
+        public string NumeroEmbarque { get; set; }
         public string NumeroContenedor { get; set; }
         public string NumeroReferencia { get; set; }
+        public string PesoBruto { get; set; }
+        public string PesoNeto { get; set; }
+        public string UnidadPesoBruto { get; set; }
+        public string UnidadPesoNeto { get; set; }
+        public string CantidadBulto { get; set; }
+        public string UnidadBulto { get; set; }
+        public string VolumenBulto { get; set; }
+        public string UnidadVolumen { get; set; }
+
     }
     public class TotalesModel6
     {
         public string MontoGravadoTotal { get; set; }
         public string MontoGravadoI1 { get; set; }
+        public string MontoGravadoI2 { get; set; }
+        public string MontoGravadoI3 { get; set; }
+
         public string ITBIS1 { get; set; }
+        public string ITBIS2 { get; set; }
+        public string ITBIS3 { get; set; }
         public string TotalITBIS { get; set; }
         public string TotalITBIS1 { get; set; }
+        public string TotalITBIS2 { get; set; }
+        public string TotalITBIS3 { get; set; }
         public string MontoImpuestoAdicional { get; set; }
         public ImpuestosAdicionalesModel6 ImpuestosAdicionales { get; set; }
         public string MontoExento { get; set; }
         public string MontoTotal { get; set; }
-
+        public string MontoPeriodo { get; set; }
+        public string ValorPagar { get; set; }
     }
 
     public class ImpuestosAdicionalesModel6
