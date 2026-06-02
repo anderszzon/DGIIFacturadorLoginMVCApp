@@ -12,7 +12,8 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public EncabezadoModel12 Encabezado { get; set; } = new EncabezadoModel12();
         public DetallesItemsModel12 DetallesItems { get; set; } = new DetallesItemsModel12();
 
-        public DescuentosORecargosModel12 DescuentosORecargos { get; set; } = new DescuentosORecargosModel12();
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public DescuentosORecargosModel12 DescuentosORecargos { get; set; } 
 
         public string FechaHoraFirma { get; set; }
     }
@@ -113,6 +114,8 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public ImpuestosAdicionalesModel12 ImpuestosAdicionales { get; set; }
         public string MontoExento { get; set; }
         public string MontoTotal { get; set; }
+
+        public string MontoPeriodo { get; set; }
         public string ValorPagar { get; set; }
 
 
