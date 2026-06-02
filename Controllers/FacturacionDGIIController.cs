@@ -6204,6 +6204,286 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         }
 
         [HttpGet]
+        public IActionResult comprobanteE430000000012()
+        {
+            var model = new FacturaDGIIModel11
+            {
+                ECF = new ECFModel11
+                {
+                    FechaHoraFirma = "01-03-2025 05:07:00",
+                    Encabezado = new EncabezadoModel11
+                    {
+                        Version = "",
+                        IdDoc = new VersionIdDocModel11
+                        {
+                            TipoeCF = "",
+                            eNCF = "E430000000012",
+                            FechaVencimientoSecuencia = "31-12-2028",
+                            TipoPago = "1"
+                        },
+                        Emisor = new EmisorModel11
+                        {
+                            RNCEmisor = "130322791",
+                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
+                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
+                            Municipio = "010100",
+                            Provincia = "010000",
+                            CorreoEmisor = "DOCUMENTOSELECTRONICOSDE0612345678969789+9000000000000000000000000000001@123.COM",
+                            WebSite = "www.facturaelectronica.com",
+                            FechaEmision = "01-04-2020"
+                        },
+                        Totales = new TotalesModel11
+                        {
+                            MontoExento = "32300.00",
+                            MontoTotal = "32300.00"
+                        }
+                    },
+                    DetallesItems = new DetallesItemsModel11
+                    {
+                        Item = new List<ItemModel11>
+                        {
+                            new ItemModel11
+                            {
+                                NumeroLinea = "1",
+                                TablaCodigosItem = new TablaCodigosItem11
+                                {
+                                    CodigosItem = new List<CodigosItem11>
+                                    {
+                                        new CodigosItem11
+                                        {
+                                            TipoCodigo = "Interno",
+                                            CodigoItem = "1521"
+                                        }
+                                    }
+                                },
+                                IndicadorFacturacion = "4",
+                                NombreItem = "Gastos de Oficina",
+                                IndicadorBienoServicio = "2",
+                                CantidadItem = "1",
+                                UnidadMedida = "43",
+                                PrecioUnitarioItem = "10000.0000",
+                                MontoItem = "10000.00"
+                            },
+                            new ItemModel11
+                            {
+                                NumeroLinea = "2",
+                                TablaCodigosItem = new TablaCodigosItem11
+                                {
+                                    CodigosItem = new List<CodigosItem11>
+                                    {
+                                        new CodigosItem11
+                                        {
+                                            TipoCodigo = "Interno",
+                                            CodigoItem = "1522"
+                                        }
+                                    }
+                                },
+                                IndicadorFacturacion = "4",
+                                NombreItem = "Gastos de Transporte",
+                                IndicadorBienoServicio = "2",
+                                CantidadItem = "1",
+                                UnidadMedida = "43",
+                                PrecioUnitarioItem = "5000.0000",
+                                MontoItem = "5000.00"
+                            },
+                            new ItemModel11
+                            {
+                                NumeroLinea = "3",
+                                TablaCodigosItem = new TablaCodigosItem11
+                                {
+                                    CodigosItem = new List<CodigosItem11>
+                                    {
+                                        new CodigosItem11
+                                        {
+                                            TipoCodigo = "Interno",
+                                            CodigoItem = "1523"
+                                        }
+                                    }
+                                },
+                                IndicadorFacturacion = "4",
+                                NombreItem = "Mantenimiento",
+                                IndicadorBienoServicio = "2",
+                                CantidadItem = "1",
+                                UnidadMedida = "43",
+                                PrecioUnitarioItem = "3500.0000",
+                                MontoItem = "3500.00"
+                            },
+                            new ItemModel11
+                            {
+                                NumeroLinea = "4",
+                                TablaCodigosItem = new TablaCodigosItem11
+                                {
+                                    CodigosItem = new List<CodigosItem11>
+                                    {
+                                        new CodigosItem11
+                                        {
+                                            TipoCodigo = "Interno",
+                                            CodigoItem = "1524"
+                                        }
+                                    }
+                                },
+                                IndicadorFacturacion = "4",
+                                NombreItem = "Gastos varios",
+                                IndicadorBienoServicio = "2",
+                                CantidadItem = "2",
+                                UnidadMedida = "43",
+                                PrecioUnitarioItem = "6500.0000",
+                                MontoItem = "13000.00"
+                            },
+                            new ItemModel11
+                            {
+                                NumeroLinea = "5",
+                                TablaCodigosItem = new TablaCodigosItem11
+                                {
+                                    CodigosItem = new List<CodigosItem11>
+                                    {
+                                        new CodigosItem11
+                                        {
+                                            TipoCodigo = "Interno",
+                                            CodigoItem = "1526"
+                                        }
+                                    }
+                                },
+                                IndicadorFacturacion = "4",
+                                NombreItem = "Gastos menor cuanta",
+                                IndicadorBienoServicio = "2",
+                                CantidadItem = "1",
+                                UnidadMedida = "43",
+                                PrecioUnitarioItem = "800.0000",
+                                MontoItem = "800.00"
+                            }
+                        }
+                    }
+                }
+            };
+
+            return View(model);
+        }
+
+
+        [HttpPost]
+        public IActionResult comprobanteE430000000012(FacturaDGIIModel11 model)
+        {
+
+            string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
+
+            try
+            {
+                string invoice = FacturacionElectronicaDGII.EnviarTokenSincrona(urlSemilla, passCert, jsonInvoiceFO);
+                string response = FacturacionElectronicaDGII.EnviarFacturaElectronicaSincrona(urlValidarSemilla, urlRecepcionFactura, urlConsultaFactura);
+
+                JObject jsonObject = JObject.Parse(invoice);
+                JObject jsonObjectResponse = JObject.Parse(response);
+
+                string mensajeValor = jsonObjectResponse["mensajes"]?[0]?["valor"]?.ToString();
+
+
+                var respuesta = new FacturaDGIIResponseModel
+                {
+                    JsonInvoice = jsonObject.GetValue("json")?.ToString(),
+                    ENCF = jsonObject.GetValue("encf")?.ToString(),
+                    XmlSemilla = jsonObject.GetValue("xmlsemilla")?.ToString(),
+                    XmlSemillaFirmada = jsonObject.GetValue("xmlsemillafirmada")?.ToString(),
+                    Token = jsonObject.GetValue("token")?.ToString(),
+                    XmlFactura = jsonObject.GetValue("xmlfactura")?.ToString(),
+                    XmlFacturaFirmada = jsonObject.GetValue("xmlfacturafirmada")?.ToString(),
+                    CodigoSeguridad = jsonObject.GetValue("codigoseguridad")?.ToString(),
+                    CodigoRespuesta = jsonObjectResponse.GetValue("codigo")?.ToString(),
+                    EstadoRespuesta = jsonObjectResponse.GetValue("estado")?.ToString(),
+                    Mensaje = mensajeValor
+
+                };
+
+                var registro = new FacturasDGII
+                {
+                    TipoeCF = model?.ECF?.Encabezado?.IdDoc?.TipoeCF,
+                    ENCF = model?.ECF?.Encabezado?.IdDoc?.eNCF,
+                    FechaVencimientoSecuencia = model?.ECF?.Encabezado?.IdDoc?.FechaVencimientoSecuencia,
+                    TipoPago = model?.ECF?.Encabezado?.IdDoc?.TipoPago,
+                    IndicadorEnvioDiferido = model?.ECF?.Encabezado?.IdDoc?.IndicadorEnvioDiferido,
+                    IndicadorMontoGravado = model?.ECF?.Encabezado?.IdDoc?.IndicadorMontoGravado,
+                    TipoIngresos = model?.ECF?.Encabezado?.IdDoc?.TipoIngresos,
+
+                    RNCEmisor = model?.ECF?.Encabezado?.Emisor?.RNCEmisor,
+                    RazonSocialEmisor = model?.ECF?.Encabezado?.Emisor?.RazonSocialEmisor,
+                    NombreComercial = model?.ECF?.Encabezado?.Emisor?.NombreComercial,
+                    DireccionEmisor = model?.ECF?.Encabezado?.Emisor?.DireccionEmisor,
+                    Municipio = model?.ECF?.Encabezado?.Emisor?.Municipio,
+                    Provincia = model?.ECF?.Encabezado?.Emisor?.Provincia,
+                    CorreoEmisor = model?.ECF?.Encabezado?.Emisor?.CorreoEmisor,
+                    WebSite = model?.ECF?.Encabezado?.Emisor?.WebSite,
+                    CodigoVendedor = model?.ECF?.Encabezado?.Emisor?.CodigoVendedor,
+                    NumeroFacturaInterna = model?.ECF?.Encabezado?.Emisor?.NumeroFacturaInterna,
+                    NumeroPedidoInterno = model?.ECF?.Encabezado?.Emisor?.NumeroPedidoInterno,
+                    ZonaVenta = model?.ECF?.Encabezado?.Emisor?.ZonaVenta,
+                    FechaEmision = model?.ECF?.Encabezado?.Emisor?.FechaEmision,
+
+                    MontoGravadoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
+                    TotalITBIS = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS ?? "0"),
+                    MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
+
+                    FechaHoraFirma = model?.ECF?.FechaHoraFirma,
+                    FechaRegistro = DateTime.Now
+                };
+
+
+                _context.FacturasDGII.Add(registro);
+                _context.SaveChanges();
+
+                respuesta.FacturaId = registro.Id;
+
+                if (model?.ECF?.DetallesItems?.Item != null)
+                {
+                    foreach (var item in model.ECF.DetallesItems.Item)
+                    {
+                        var detalle = new ItemFactura
+                        {
+                            FacturaId = registro.Id,
+                            NumeroLinea = item.NumeroLinea,
+                            IndicadorFacturacion = item.IndicadorFacturacion,
+                            NombreItem = item.NombreItem,
+                            IndicadorBienoServicio = item.IndicadorBienoServicio,
+                            CantidadItem = Convert.ToDecimal(item.CantidadItem ?? "0"),
+                            UnidadMedida = item.UnidadMedida,
+                            PrecioUnitarioItem = Convert.ToDecimal(item.PrecioUnitarioItem ?? "0"),
+                            MontoItem = Convert.ToDecimal(item.MontoItem ?? "0")
+                        };
+
+                        _context.ItemsFactura.Add(detalle);
+                    }
+                }
+                _context.SaveChanges();
+
+                if (respuesta.CodigoRespuesta == "1")
+                {
+                    return View("verFactura", respuesta);
+
+                }
+                else
+                {
+                    ViewBag.MensajeError = respuesta.Mensaje;
+                    return View("verFactura", respuesta);
+                }
+
+            }
+            catch (DbUpdateException ex)
+            {
+                string error = ex.Message;
+
+                if (ex.InnerException != null)
+                    error += " | Inner Exception: " + ex.InnerException.Message;
+
+                ViewBag.Error = error;
+                return View(null);
+            }
+
+        }
+
+        [HttpGet]
         public IActionResult comprobanteE44()
         {
             var model = new FacturaDGIIModel12

@@ -85,6 +85,7 @@
     public class ItemModel11
     {
         public string NumeroLinea { get; set; }
+        public TablaCodigosItem11 TablaCodigosItem { get; set; }
         public string IndicadorFacturacion { get; set; }
         public string NombreItem { get; set; }
         public string IndicadorBienoServicio { get; set; }
@@ -92,6 +93,17 @@
         public string UnidadMedida { get; set; }
         public string PrecioUnitarioItem { get; set; }
         public string MontoItem { get; set; }
+
+    }
+    public class TablaCodigosItem11
+    {
+        public List<CodigosItem11> CodigosItem { get; set; }
+    }
+
+    public class CodigosItem11
+    {
+        public string TipoCodigo { get; set; }
+        public string CodigoItem { get; set; }
 
     }
 
