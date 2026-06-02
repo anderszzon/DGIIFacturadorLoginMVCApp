@@ -1,7 +1,9 @@
 ﻿using ConexionDGII;
 using DGIIFacturadorLoginMVCApp.Data;
 using DGIIFacturadorLoginMVCApp.Data.Migrations;
+using DGIIFacturadorLoginMVCApp.Enums;
 using DGIIFacturadorLoginMVCApp.Models;
+using DGIIFacturadorLoginMVCApp.Extensions;
 using iText.Barcodes;
 using iText.IO.Font.Constants;
 using iText.IO.Image;
@@ -123,8 +125,12 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         .SetMarginBottom(10)
                 );
 
+                if (Enum.TryParse(factura.TipoeCF, out TipoECFEnum tipoEnum))
+                {
+                    string nombreFactura = tipoEnum.GetDisplayName();
+                    rightCell.Add(new Paragraph(nombreFactura).SetFontSize(11).SetFont(boldFont2));
+                }
 
-                rightCell.Add(new Paragraph("Factura de Crédito Fiscal").SetFontSize(11).SetFont(boldFont2));
                 rightCell.Add(new Paragraph($"NCF: {factura.ENCF}").SetFontSize(9));
                 rightCell.Add(new Paragraph($"Fecha Vencimiento: {factura.FechaVencimientoSecuencia}").SetFontSize(9));
                 rightCell.Add(new Paragraph($"Fecha: {factura.FechaEmision}").SetFontSize(9));
