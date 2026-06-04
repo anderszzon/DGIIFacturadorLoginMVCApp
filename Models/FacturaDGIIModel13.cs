@@ -32,8 +32,15 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public VersionIdDocModel13 IdDoc { get; set; } = new VersionIdDocModel13();
         public EmisorModel13 Emisor { get; set; } = new EmisorModel13();
         public CompradorModel13 Comprador { get; set; } = new CompradorModel13();
-        public InformacionesAdicionales13 InformacionesAdicionales { get; set; } = new InformacionesAdicionales13();
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+
+        public InformacionesAdicionales13 InformacionesAdicionales { get; set; }
         public TotalesModel13 Totales { get; set; } = new TotalesModel13();
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public OtraMoneda13 OtraMoneda { get; set; }
+
     }
 
     public class VersionIdDocModel13
@@ -147,6 +154,16 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public List<ItemModel13> Item { get; set; } = new List<ItemModel13>();
     }
 
+    public class OtraMoneda13
+    {
+        public string TipoMoneda { get; set; }
+        public string TipoCambio { get; set; }
+        public string MontoGravadoTotalOtraMoneda { get; set; }
+        public string MontoGravado1OtraMoneda { get; set; }
+        public string TotalITBISOtraMoneda { get; set; }
+        public string TotalITBIS1OtraMoneda { get; set; }
+        public string MontoTotalOtraMoneda { get; set; }
+    }
     public class ItemModel13
     {
         public string NumeroLinea { get; set; }
@@ -158,10 +175,14 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public string UnidadMedida { get; set; }
         public string CantidadReferencia { get; set; }
         public string UnidadReferencia { get; set; }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public TablaSubcantidadModel13 TablaSubcantidad { get; set; }
         public string GradosAlcohol { get; set; }
         public string PrecioUnitarioReferencia { get; set; }
         public string PrecioUnitarioItem { get; set; }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public TablaImpuestoAdicionalModel13 TablaImpuestoAdicional { get; set; }
 
         public OtraMonedaDetalle13 OtraMonedaDetalle { get; set; }
