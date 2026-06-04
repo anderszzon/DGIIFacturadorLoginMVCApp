@@ -30,11 +30,28 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public VersionIdDocModel14 IdDoc { get; set; } = new VersionIdDocModel14();
         public EmisorModel14 Emisor { get; set; } = new EmisorModel14();
         public CompradorModel14 Comprador { get; set; } = new CompradorModel14();
-        public InformacionesAdicionales14 InformacionesAdicionales { get; set; } = new InformacionesAdicionales14();
 
-        public Transporte14 Transporte { get; set; } = new Transporte14();
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public InformacionesAdicionales14 InformacionesAdicionales { get; set; }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public Transporte14 Transporte { get; set; }
 
         public TotalesModel14 Totales { get; set; } = new TotalesModel14();
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public OtraMoneda14 OtraMoneda { get; set; }
+    }
+    public class OtraMoneda14
+    {
+        public string TipoMoneda { get; set; }
+        public string TipoCambio { get; set; }
+        public string MontoGravadoTotalOtraMoneda { get; set; }
+        public string MontoGravado1OtraMoneda { get; set; }
+        public string MontoGravado3OtraMoneda { get; set; }
+        public string TotalITBISOtraMoneda { get; set; }
+        public string TotalITBIS1OtraMoneda { get; set; }
+        public string TotalITBIS3OtraMoneda { get; set; }
+        public string MontoTotalOtraMoneda { get; set; }
     }
 
     public class VersionIdDocModel14
@@ -160,6 +177,8 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public string MontoImpuestoAdicional { get; set; }
         public string MontoExento { get; set; }
         public string MontoTotal { get; set; }
+        public string MontoPeriodo { get; set; }
+        public string ValorPagar { get; set; }
 
     }
 
@@ -180,7 +199,16 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public string CantidadItem { get; set; }
         public string UnidadMedida { get; set; }
         public string PrecioUnitarioItem { get; set; }
+        public OtraMonedaDetalle14 OtraMonedaDetalle { get; set; }
+
         public string MontoItem { get; set; }
+
+    }
+
+    public class OtraMonedaDetalle14
+    {
+        public string PrecioOtraMoneda { get; set; }
+        public string MontoItemOtraMoneda { get; set; }
 
     }
 
