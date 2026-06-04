@@ -1520,20 +1520,20 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                             ImpuestosAdicionales = new ImpuestosAdicionalesModel3
                             {
                                 ImpuestoAdicional = new List<ImpuestoAdicionalTotalesModel3>
-                        {
-                            new ImpuestoAdicionalTotalesModel3
-                            {
-                                TipoImpuesto = "002",
-                                TasaImpuestoAdicional = "2",
-                                OtrosImpuestosAdicionales = "2369.28"
-                            },
-                            new ImpuestoAdicionalTotalesModel3
-                            {
-                                TipoImpuesto = "004",
-                                TasaImpuestoAdicional = "10",
-                                OtrosImpuestosAdicionales = "11846.42"
-                            }
-                        }
+                                {
+                                    new ImpuestoAdicionalTotalesModel3
+                                    {
+                                        TipoImpuesto = "002",
+                                        TasaImpuestoAdicional = "2",
+                                        OtrosImpuestosAdicionales = "2369.28"
+                                    },
+                                    new ImpuestoAdicionalTotalesModel3
+                                    {
+                                        TipoImpuesto = "004",
+                                        TasaImpuestoAdicional = "10",
+                                        OtrosImpuestosAdicionales = "11846.42"
+                                    }
+                                }
                             }
                         }
                     },
@@ -7052,6 +7052,499 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
         }
 
+        [HttpGet]
+        public IActionResult comprobanteE440000000010()
+        {
+            var model = new FacturaDGIIModel12
+            {
+                ECF = new ECFModel12
+                {
+                    FechaHoraFirma = "01-03-2025 05:07:00",
+                    Encabezado = new EncabezadoModel12
+                    {
+                        Version = "",
+                        IdDoc = new VersionIdDocModel12
+                        {
+                            TipoeCF = "",
+                            eNCF = "E440000000010",
+                            FechaVencimientoSecuencia = "31-12-2028",
+                            TipoIngresos = "01",
+                            TipoPago = "1",
+                            TablaFormasPago = new TablaFormasPago12
+                            {
+                                FormaDePago = new List<FormaDePago12>
+                                {
+                                    new FormaDePago12
+                                    {
+                                        FormaPago = "1",
+                                        MontoPago = "170150.00"
+                                    }
+                                }
+                            }
+                        },
+                        Emisor = new EmisorModel12
+                        {
+                            RNCEmisor = "130322791",
+                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
+                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
+                            Municipio = "010100",
+                            Provincia = "010000",
+                            CorreoEmisor = "DOCUMENTOSELECTRONICOSDE0612345678969789+9000000000000000000000000000001@123.COM",
+                            WebSite = "www.facturaelectronica.com",
+                            CodigoVendedor = "AA0000000100000000010000000002000000000300000000050000000006",
+                            NumeroFacturaInterna = "123456789016",
+                            NumeroPedidoInterno = "123456789016",
+                            ZonaVenta = "NORTE",
+                            FechaEmision = "01-04-2020"
+                        },
+                        Comprador = new CompradorModel12
+                        {
+                            RNCComprador = "131880681",
+                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            ContactoComprador = "MARCOS LATIPLOL",
+                            CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
+                            DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
+                            MunicipioComprador = "010100",
+                            ProvinciaComprador = "010000",
+                            FechaEntrega = "10-10-2020",
+                            FechaOrdenCompra = "10-11-2018",
+                            NumeroOrdenCompra = "4500352238",
+                            CodigoInternoComprador = "10633440"
+                        },
+                        Totales = new TotalesModel12
+                        {
+                            MontoExento = "170150.00",
+                            MontoTotal = "170150.00",
+                            MontoPeriodo = "170150.00",
+                            ValorPagar = "170150.00"
+                        }
+                    },
+                    DetallesItems = new DetallesItemsModel12
+                    {
+                        Item = new List<ItemModel12>
+                        {
+                            new ItemModel12
+                            {
+                                NumeroLinea = "1",
+                                IndicadorFacturacion = "4",
+                                NombreItem = "ZAPATOS",
+                                IndicadorBienoServicio = "1",
+                                CantidadItem = "40.00",
+                                UnidadMedida = "6",
+                                PrecioUnitarioItem = "350.0000",
+                                DescuentoMonto = "500.00",
+                                TablaSubDescuento = new TablaSubDescuento12
+                                {
+                                    SubDescuento = new List<SubDescuento12>
+                                    {
+                                        new SubDescuento12
+                                        {
+                                            TipoSubDescuento = "$",
+                                            MontoSubDescuento = "500.00"
+                                        }
+                                    }
+                                },
+                                MontoItem = "13500.00"
+                            },
+                            new ItemModel12
+                            {
+                                NumeroLinea = "2",
+                                IndicadorFacturacion = "4",
+                                NombreItem = "CARTERAS",
+                                IndicadorBienoServicio = "1",
+                                CantidadItem = "40.00",
+                                UnidadMedida = "6",
+                                PrecioUnitarioItem = "450.0000",
+                                DescuentoMonto = "500.00",
+                                TablaSubDescuento = new TablaSubDescuento12
+                                {
+                                    SubDescuento = new List<SubDescuento12>
+                                    {
+                                        new SubDescuento12
+                                        {
+                                            TipoSubDescuento = "$",
+                                            MontoSubDescuento = "500.00"
+                                        }
+                                    }
+                                },
+                                MontoItem = "17500.00"
+                            },
+                            new ItemModel12
+                            {
+                                NumeroLinea = "3",
+                                IndicadorFacturacion = "4",
+                                NombreItem = "BLUSAS",
+                                IndicadorBienoServicio = "1",
+                                CantidadItem = "50.00",
+                                UnidadMedida = "6",
+                                PrecioUnitarioItem = "550.0000",
+                                DescuentoMonto = "500.00",
+                                TablaSubDescuento = new TablaSubDescuento12
+                                {
+                                    SubDescuento = new List<SubDescuento12>
+                                    {
+                                        new SubDescuento12
+                                        {
+                                            TipoSubDescuento = "$",
+                                            MontoSubDescuento = "500.00"
+                                        }
+                                    }
+                                },
+                                MontoItem = "27000.00"
+                            },
+                            new ItemModel12
+                            {
+                                NumeroLinea = "4",
+                                IndicadorFacturacion = "4",
+                                NombreItem = "CALCETINES",
+                                IndicadorBienoServicio = "1",
+                                CantidadItem = "25.00",
+                                UnidadMedida = "6",
+                                PrecioUnitarioItem = "350.0000",
+                                DescuentoMonto = "500.00",
+                                TablaSubDescuento = new TablaSubDescuento12
+                                {
+                                    SubDescuento = new List<SubDescuento12>
+                                    {
+                                        new SubDescuento12
+                                        {
+                                            TipoSubDescuento = "$",
+                                            MontoSubDescuento = "500.00"
+                                        }
+                                    }
+                                },
+                                MontoItem = "8250.00"
+                            },
+                            new ItemModel12
+                            {
+                                NumeroLinea = "5",
+                                IndicadorFacturacion = "4",
+                                NombreItem = "TIRANTES",
+                                IndicadorBienoServicio = "1",
+                                CantidadItem = "35.00",
+                                UnidadMedida = "6",
+                                PrecioUnitarioItem = "250.0000",
+                                DescuentoMonto = "500.00",
+                                TablaSubDescuento = new TablaSubDescuento12
+                                {
+                                    SubDescuento = new List<SubDescuento12>
+                                    {
+                                        new SubDescuento12
+                                        {
+                                            TipoSubDescuento = "$",
+                                            MontoSubDescuento = "500.00"
+                                        }
+                                    }
+                                },
+                                MontoItem = "8250.00"
+                            },
+                            new ItemModel12
+                            {
+                                NumeroLinea = "6",
+                                IndicadorFacturacion = "4",
+                                NombreItem = "TENIS",
+                                IndicadorBienoServicio = "1",
+                                CantidadItem = "34.00",
+                                UnidadMedida = "6",
+                                PrecioUnitarioItem = "350.0000",
+                                DescuentoMonto = "500.00",
+                                TablaSubDescuento = new TablaSubDescuento12
+                                {
+                                    SubDescuento = new List<SubDescuento12>
+                                    {
+                                        new SubDescuento12
+                                        {
+                                            TipoSubDescuento = "$",
+                                            MontoSubDescuento = "500.00"
+                                        }
+                                    }
+                                },
+                                MontoItem = "11400.00"
+                            },
+                            new ItemModel12
+                            {
+                                NumeroLinea = "7",
+                                IndicadorFacturacion = "4",
+                                NombreItem = "CALIZOS",
+                                IndicadorBienoServicio = "1",
+                                CantidadItem = "50.00",
+                                UnidadMedida = "6",
+                                PrecioUnitarioItem = "400.0000",
+                                DescuentoMonto = "500.00",
+                                TablaSubDescuento = new TablaSubDescuento12
+                                {
+                                    SubDescuento = new List<SubDescuento12>
+                                    {
+                                        new SubDescuento12
+                                        {
+                                            TipoSubDescuento = "$",
+                                            MontoSubDescuento = "500.00"
+                                        }
+                                    }
+                                },
+                                MontoItem = "19500.00"
+                            },
+                            new ItemModel12
+                            {
+                                NumeroLinea = "8",
+                                IndicadorFacturacion = "4",
+                                NombreItem = "BOLZOS",
+                                IndicadorBienoServicio = "1",
+                                CantidadItem = "60.00",
+                                UnidadMedida = "6",
+                                PrecioUnitarioItem = "350.0000",
+                                DescuentoMonto = "500.00",
+                                TablaSubDescuento = new TablaSubDescuento12
+                                {
+                                    SubDescuento = new List<SubDescuento12>
+                                    {
+                                        new SubDescuento12
+                                        {
+                                            TipoSubDescuento = "$",
+                                            MontoSubDescuento = "500.00"
+                                        }
+                                    }
+                                },
+                                MontoItem = "20500.00"
+                            },
+                            new ItemModel12
+                            {
+                                NumeroLinea = "9",
+                                IndicadorFacturacion = "4",
+                                NombreItem = "MEDIAS",
+                                IndicadorBienoServicio = "1",
+                                CantidadItem = "45.00",
+                                UnidadMedida = "6",
+                                PrecioUnitarioItem = "450.0000",
+                                DescuentoMonto = "500.00",
+                                TablaSubDescuento = new TablaSubDescuento12
+                                {
+                                    SubDescuento = new List<SubDescuento12>
+                                    {
+                                        new SubDescuento12
+                                        {
+                                            TipoSubDescuento = "$",
+                                            MontoSubDescuento = "500.00"
+                                        }
+                                    }
+                                },
+                                MontoItem = "19750.00"
+                            },
+                            new ItemModel12
+                            {
+                                NumeroLinea = "10",
+                                IndicadorFacturacion = "4",
+                                NombreItem = "SUETER",
+                                IndicadorBienoServicio = "1",
+                                CantidadItem = "50.00",
+                                UnidadMedida = "6",
+                                PrecioUnitarioItem = "500.0000",
+                                DescuentoMonto = "500.00",
+                                TablaSubDescuento = new TablaSubDescuento12
+                                {
+                                    SubDescuento = new List<SubDescuento12>
+                                    {
+                                        new SubDescuento12
+                                        {
+                                            TipoSubDescuento = "$",
+                                            MontoSubDescuento = "500.00"
+                                        }
+                                    }
+                                },
+                                MontoItem = "24500.00"
+                            }
+                        }
+                    }
+                    //DescuentosORecargos = new DescuentosORecargosModel12
+                    //{
+                    //    DescuentoORecargo = new List<DescuentosORecargo12>
+                    //    {
+                    //        new DescuentosORecargo12
+                    //        {
+                    //            NumeroLinea = "1",
+                    //            TipoAjuste = "D",
+                    //            DescripcionDescuentooRecargo = "DESCUENTO ADMINISTRATIVO",
+                    //            TipoValor = "%",
+                    //            ValorDescuentooRecargo = "10.00",
+                    //            MontoDescuentooRecargo = "27588.00",
+                    //            IndicadorFacturacionDescuentooRecargo = "4"
+                    //        }
+                    //    }
+                    //}
+                }
+            };
+
+            return View(model);
+        }
+
+
+        [HttpPost]
+        public IActionResult comprobanteE440000000010(FacturaDGIIModel12 model)
+        {
+
+            //foreach (var item in model.ECF.DetallesItems.Item)
+            //{
+            //    if (item.TablaSubDescuento?.SubDescuento != null)
+            //    {
+            //        item.TablaSubDescuento.SubDescuento = item.TablaSubDescuento.SubDescuento
+            //            .Where(ci => ci != null && !string.IsNullOrWhiteSpace(ci.TipoSubDescuento) && !string.IsNullOrWhiteSpace(ci.MontoSubDescuento))
+            //            .ToList();
+
+            //        if (!item.TablaSubDescuento.SubDescuento.Any())
+            //        {
+            //            item.TablaSubDescuento = null;
+            //        }
+            //    }
+            //}
+
+            //foreach (var item in model.ECF.DetallesItems.Item)
+            //{
+            //    if (item.TablaSubRecargo?.SubRecargo != null)
+            //    {
+            //        item.TablaSubRecargo.SubRecargo = item.TablaSubRecargo.SubRecargo
+            //            .Where(ci => ci != null && !string.IsNullOrWhiteSpace(ci.TipoSubRecargo) && !string.IsNullOrWhiteSpace(ci.MontoSubRecargo))
+            //            .ToList();
+
+            //        if (!item.TablaSubRecargo.SubRecargo.Any())
+            //        {
+            //            item.TablaSubRecargo = null;
+            //        }
+            //    }
+            //}
+
+            string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
+
+            try
+            {
+                string invoice = FacturacionElectronicaDGII.EnviarTokenSincrona(urlSemilla, passCert, jsonInvoiceFO);
+                string response = FacturacionElectronicaDGII.EnviarFacturaElectronicaSincrona(urlValidarSemilla, urlRecepcionFactura, urlConsultaFactura);
+
+                JObject jsonObject = JObject.Parse(invoice);
+                JObject jsonObjectResponse = JObject.Parse(response);
+
+                string mensajeValor = jsonObjectResponse["mensajes"]?[0]?["valor"]?.ToString();
+
+
+                var respuesta = new FacturaDGIIResponseModel
+                {
+                    JsonInvoice = jsonObject.GetValue("json")?.ToString(),
+                    ENCF = jsonObject.GetValue("encf")?.ToString(),
+                    XmlSemilla = jsonObject.GetValue("xmlsemilla")?.ToString(),
+                    XmlSemillaFirmada = jsonObject.GetValue("xmlsemillafirmada")?.ToString(),
+                    Token = jsonObject.GetValue("token")?.ToString(),
+                    XmlFactura = jsonObject.GetValue("xmlfactura")?.ToString(),
+                    XmlFacturaFirmada = jsonObject.GetValue("xmlfacturafirmada")?.ToString(),
+                    CodigoSeguridad = jsonObject.GetValue("codigoseguridad")?.ToString(),
+                    CodigoRespuesta = jsonObjectResponse.GetValue("codigo")?.ToString(),
+                    EstadoRespuesta = jsonObjectResponse.GetValue("estado")?.ToString(),
+                    Mensaje = mensajeValor
+
+                };
+
+                var registro = new FacturasDGII
+                {
+                    TipoeCF = model?.ECF?.Encabezado?.IdDoc?.TipoeCF,
+                    ENCF = model?.ECF?.Encabezado?.IdDoc?.eNCF,
+                    FechaVencimientoSecuencia = model?.ECF?.Encabezado?.IdDoc?.FechaVencimientoSecuencia,
+                    TipoPago = model?.ECF?.Encabezado?.IdDoc?.TipoPago,
+                    IndicadorEnvioDiferido = model?.ECF?.Encabezado?.IdDoc?.IndicadorEnvioDiferido,
+                    IndicadorMontoGravado = model?.ECF?.Encabezado?.IdDoc?.IndicadorMontoGravado,
+                    TipoIngresos = model?.ECF?.Encabezado?.IdDoc?.TipoIngresos,
+
+                    RNCEmisor = model?.ECF?.Encabezado?.Emisor?.RNCEmisor,
+                    RazonSocialEmisor = model?.ECF?.Encabezado?.Emisor?.RazonSocialEmisor,
+                    NombreComercial = model?.ECF?.Encabezado?.Emisor?.NombreComercial,
+                    DireccionEmisor = model?.ECF?.Encabezado?.Emisor?.DireccionEmisor,
+                    Municipio = model?.ECF?.Encabezado?.Emisor?.Municipio,
+                    Provincia = model?.ECF?.Encabezado?.Emisor?.Provincia,
+                    CorreoEmisor = model?.ECF?.Encabezado?.Emisor?.CorreoEmisor,
+                    WebSite = model?.ECF?.Encabezado?.Emisor?.WebSite,
+                    CodigoVendedor = model?.ECF?.Encabezado?.Emisor?.CodigoVendedor,
+                    NumeroFacturaInterna = model?.ECF?.Encabezado?.Emisor?.NumeroFacturaInterna,
+                    NumeroPedidoInterno = model?.ECF?.Encabezado?.Emisor?.NumeroPedidoInterno,
+                    ZonaVenta = model?.ECF?.Encabezado?.Emisor?.ZonaVenta,
+                    FechaEmision = model?.ECF?.Encabezado?.Emisor?.FechaEmision,
+
+                    RNCComprador = model?.ECF?.Encabezado?.Comprador?.RNCComprador,
+                    RazonSocialComprador = model?.ECF?.Encabezado?.Comprador?.RazonSocialComprador,
+                    ContactoComprador = model?.ECF?.Encabezado?.Comprador?.ContactoComprador,
+                    CorreoComprador = model?.ECF?.Encabezado?.Comprador?.CorreoComprador,
+                    DireccionComprador = model?.ECF?.Encabezado?.Comprador?.DireccionComprador,
+                    MunicipioComprador = model?.ECF?.Encabezado?.Comprador?.MunicipioComprador,
+                    ProvinciaComprador = model?.ECF?.Encabezado?.Comprador?.ProvinciaComprador,
+                    FechaEntrega = model?.ECF?.Encabezado?.Comprador?.FechaEntrega,
+                    FechaOrdenCompra = model?.ECF?.Encabezado?.Comprador?.FechaOrdenCompra,
+                    NumeroOrdenCompra = model?.ECF?.Encabezado?.Comprador?.NumeroOrdenCompra,
+                    CodigoInternoComprador = model?.ECF?.Encabezado?.Comprador?.CodigoInternoComprador,
+
+                    MontoGravadoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
+                    MontoGravadoI1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoI1 ?? "0"),
+                    ITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.ITBIS1 ?? "0"),
+                    TotalITBIS = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS ?? "0"),
+                    TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
+                    MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
+
+                    FechaHoraFirma = model?.ECF?.FechaHoraFirma,
+                    FechaRegistro = DateTime.Now
+                };
+
+
+                _context.FacturasDGII.Add(registro);
+                _context.SaveChanges();
+
+                respuesta.FacturaId = registro.Id;
+
+                if (model?.ECF?.DetallesItems?.Item != null)
+                {
+                    foreach (var item in model.ECF.DetallesItems.Item)
+                    {
+                        var detalle = new ItemFactura
+                        {
+                            FacturaId = registro.Id,
+                            NumeroLinea = item.NumeroLinea,
+                            IndicadorFacturacion = item.IndicadorFacturacion,
+                            NombreItem = item.NombreItem,
+                            IndicadorBienoServicio = item.IndicadorBienoServicio,
+                            CantidadItem = Convert.ToDecimal(item.CantidadItem ?? "0"),
+                            UnidadMedida = item.UnidadMedida,
+                            PrecioUnitarioItem = Convert.ToDecimal(item.PrecioUnitarioItem ?? "0"),
+                            MontoItem = Convert.ToDecimal(item.MontoItem ?? "0")
+                        };
+
+                        _context.ItemsFactura.Add(detalle);
+                    }
+                }
+                _context.SaveChanges();
+
+                if (respuesta.CodigoRespuesta == "1")
+                {
+                    return View("verFactura", respuesta);
+
+                }
+                else
+                {
+                    ViewBag.MensajeError = respuesta.Mensaje;
+                    return View("verFactura", respuesta);
+                }
+
+            }
+            catch (DbUpdateException ex)
+            {
+                string error = ex.Message;
+
+                if (ex.InnerException != null)
+                    error += " | Inner Exception: " + ex.InnerException.Message;
+
+                ViewBag.Error = error;
+                return View(null);
+            }
+
+        }
+
 
         [HttpGet]
         public IActionResult comprobanteE45()
@@ -7177,6 +7670,398 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     }
                 }
             }
+
+            string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
+
+            try
+            {
+                string invoice = FacturacionElectronicaDGII.EnviarTokenSincrona(urlSemilla, passCert, jsonInvoiceFO);
+                string response = FacturacionElectronicaDGII.EnviarFacturaElectronicaSincrona(urlValidarSemilla, urlRecepcionFactura, urlConsultaFactura);
+
+                JObject jsonObject = JObject.Parse(invoice);
+                JObject jsonObjectResponse = JObject.Parse(response);
+
+                string mensajeValor = jsonObjectResponse["mensajes"]?[0]?["valor"]?.ToString();
+
+
+                var respuesta = new FacturaDGIIResponseModel
+                {
+                    JsonInvoice = jsonObject.GetValue("json")?.ToString(),
+                    ENCF = jsonObject.GetValue("encf")?.ToString(),
+                    XmlSemilla = jsonObject.GetValue("xmlsemilla")?.ToString(),
+                    XmlSemillaFirmada = jsonObject.GetValue("xmlsemillafirmada")?.ToString(),
+                    Token = jsonObject.GetValue("token")?.ToString(),
+                    XmlFactura = jsonObject.GetValue("xmlfactura")?.ToString(),
+                    XmlFacturaFirmada = jsonObject.GetValue("xmlfacturafirmada")?.ToString(),
+                    CodigoSeguridad = jsonObject.GetValue("codigoseguridad")?.ToString(),
+                    CodigoRespuesta = jsonObjectResponse.GetValue("codigo")?.ToString(),
+                    EstadoRespuesta = jsonObjectResponse.GetValue("estado")?.ToString(),
+                    Mensaje = mensajeValor
+
+                };
+
+                var registro = new FacturasDGII
+                {
+                    TipoeCF = model?.ECF?.Encabezado?.IdDoc?.TipoeCF,
+                    ENCF = model?.ECF?.Encabezado?.IdDoc?.eNCF,
+                    FechaVencimientoSecuencia = model?.ECF?.Encabezado?.IdDoc?.FechaVencimientoSecuencia,
+                    TipoPago = model?.ECF?.Encabezado?.IdDoc?.TipoPago,
+                    IndicadorEnvioDiferido = model?.ECF?.Encabezado?.IdDoc?.IndicadorEnvioDiferido,
+                    IndicadorMontoGravado = model?.ECF?.Encabezado?.IdDoc?.IndicadorMontoGravado,
+                    TipoIngresos = model?.ECF?.Encabezado?.IdDoc?.TipoIngresos,
+
+                    RNCEmisor = model?.ECF?.Encabezado?.Emisor?.RNCEmisor,
+                    RazonSocialEmisor = model?.ECF?.Encabezado?.Emisor?.RazonSocialEmisor,
+                    NombreComercial = model?.ECF?.Encabezado?.Emisor?.NombreComercial,
+                    DireccionEmisor = model?.ECF?.Encabezado?.Emisor?.DireccionEmisor,
+                    Municipio = model?.ECF?.Encabezado?.Emisor?.Municipio,
+                    Provincia = model?.ECF?.Encabezado?.Emisor?.Provincia,
+                    CorreoEmisor = model?.ECF?.Encabezado?.Emisor?.CorreoEmisor,
+                    WebSite = model?.ECF?.Encabezado?.Emisor?.WebSite,
+                    CodigoVendedor = model?.ECF?.Encabezado?.Emisor?.CodigoVendedor,
+                    NumeroFacturaInterna = model?.ECF?.Encabezado?.Emisor?.NumeroFacturaInterna,
+                    NumeroPedidoInterno = model?.ECF?.Encabezado?.Emisor?.NumeroPedidoInterno,
+                    ZonaVenta = model?.ECF?.Encabezado?.Emisor?.ZonaVenta,
+                    FechaEmision = model?.ECF?.Encabezado?.Emisor?.FechaEmision,
+
+                    RNCComprador = model?.ECF?.Encabezado?.Comprador?.RNCComprador,
+                    RazonSocialComprador = model?.ECF?.Encabezado?.Comprador?.RazonSocialComprador,
+                    ContactoComprador = model?.ECF?.Encabezado?.Comprador?.ContactoComprador,
+                    CorreoComprador = model?.ECF?.Encabezado?.Comprador?.CorreoComprador,
+                    DireccionComprador = model?.ECF?.Encabezado?.Comprador?.DireccionComprador,
+                    MunicipioComprador = model?.ECF?.Encabezado?.Comprador?.MunicipioComprador,
+                    ProvinciaComprador = model?.ECF?.Encabezado?.Comprador?.ProvinciaComprador,
+                    FechaEntrega = model?.ECF?.Encabezado?.Comprador?.FechaEntrega,
+                    FechaOrdenCompra = model?.ECF?.Encabezado?.Comprador?.FechaOrdenCompra,
+                    NumeroOrdenCompra = model?.ECF?.Encabezado?.Comprador?.NumeroOrdenCompra,
+                    CodigoInternoComprador = model?.ECF?.Encabezado?.Comprador?.CodigoInternoComprador,
+
+                    MontoGravadoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
+                    MontoGravadoI1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoI1 ?? "0"),
+                    ITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.ITBIS1 ?? "0"),
+                    TotalITBIS = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS ?? "0"),
+                    TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
+                    MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
+
+                    FechaHoraFirma = model?.ECF?.FechaHoraFirma,
+                    FechaRegistro = DateTime.Now
+                };
+
+
+                _context.FacturasDGII.Add(registro);
+                _context.SaveChanges();
+
+                respuesta.FacturaId = registro.Id;
+
+                if (model?.ECF?.DetallesItems?.Item != null)
+                {
+                    foreach (var item in model.ECF.DetallesItems.Item)
+                    {
+                        var detalle = new ItemFactura
+                        {
+                            FacturaId = registro.Id,
+                            NumeroLinea = item.NumeroLinea,
+                            IndicadorFacturacion = item.IndicadorFacturacion,
+                            NombreItem = item.NombreItem,
+                            IndicadorBienoServicio = item.IndicadorBienoServicio,
+                            CantidadItem = Convert.ToDecimal(item.CantidadItem ?? "0"),
+                            UnidadMedida = item.UnidadMedida,
+                            PrecioUnitarioItem = Convert.ToDecimal(item.PrecioUnitarioItem ?? "0"),
+                            MontoItem = Convert.ToDecimal(item.MontoItem ?? "0")
+                        };
+
+                        _context.ItemsFactura.Add(detalle);
+                    }
+                }
+                _context.SaveChanges();
+
+                if (respuesta.CodigoRespuesta == "1")
+                {
+                    return View("verFactura", respuesta);
+
+                }
+                else
+                {
+                    ViewBag.MensajeError = respuesta.Mensaje;
+                    return View("verFactura", respuesta);
+                }
+
+            }
+            catch (DbUpdateException ex)
+            {
+                string error = ex.Message;
+
+                if (ex.InnerException != null)
+                    error += " | Inner Exception: " + ex.InnerException.Message;
+
+                ViewBag.Error = error;
+                return View(null);
+            }
+
+        }
+
+        [HttpGet]
+        public IActionResult comprobanteE450000000007()
+        {
+            var model = new FacturaDGIIModel13
+            {
+                ECF = new ECFModel13
+                {
+                    FechaHoraFirma = "01-03-2025 05:07:00",
+                    Encabezado = new EncabezadoModel13
+                    {
+                        Version = "",
+                        IdDoc = new VersionIdDocModel13
+                        {
+                            TipoeCF = "",
+                            eNCF = "E450000000007",
+                            FechaVencimientoSecuencia = "31-12-2028",
+                            IndicadorMontoGravado = "0",
+                            TipoIngresos = "01",
+                            TipoPago = "1"
+                        },
+                        Emisor = new EmisorModel13
+                        {
+                            RNCEmisor = "130322791",
+                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
+                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
+                            Municipio = "010100",
+                            Provincia = "010000",
+                            CorreoEmisor = "DOCUMENTOSELECTRONICOSDE0612345678969789+9000000000000000000000000000001@123.COM",
+                            WebSite = "www.facturaelectronica.com",
+                            CodigoVendedor = "AA0000000100000000010000000002000000000300000000050000000006",
+                            NumeroFacturaInterna = "123456789016",
+                            NumeroPedidoInterno = "123456789016",
+                            ZonaVenta = "NORTE",
+                            FechaEmision = "01-04-2020"
+                        },
+                        Comprador = new CompradorModel13
+                        {
+                            RNCComprador = "131880681",
+                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            ContactoComprador = "MARCOS LATIPLOL",
+                            CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
+                            DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
+                            MunicipioComprador = "010100",
+                            ProvinciaComprador = "010000",
+                            FechaEntrega = "10-10-2020",
+                            FechaOrdenCompra = "10-11-2018",
+                            NumeroOrdenCompra = "4500352238",
+                            CodigoInternoComprador = "10633440"
+                        },
+                        InformacionesAdicionales = new InformacionesAdicionales13
+                        {
+                            FechaEmbarque = "08-06-2020",
+                            NumeroEmbarque = "1550523",
+                            NumeroContenedor = "1025536",
+                            NumeroReferencia = "121517",
+                            PesoBruto = "25.00",
+                            PesoNeto = "24.50",
+                            UnidadPesoBruto = "23",  
+                            UnidadPesoNeto = "23",
+                            CantidadBulto = "1.00",    
+                            UnidadBulto = "6",
+                            VolumenBulto = "1.00",
+                            UnidadVolumen = "6"
+                        },
+                        Totales = new TotalesModel13
+                        {
+                            MontoGravadoTotal = "180000.00",
+                            MontoGravadoI1 = "180000.00",
+                            ITBIS1 = "18",
+                            TotalITBIS = "49457.67",
+                            TotalITBIS1 = "49457.67",
+                            MontoImpuestoAdicional = "94764.83",
+                            ImpuestosAdicionales = new ImpuestosAdicionalesModel13
+                            {
+                                ImpuestoAdicional = new List<ImpuestoAdicionalTotalesModel13>
+                                {
+                                    new ImpuestoAdicionalTotalesModel13
+                                    {
+                                        TipoImpuesto = "006",
+                                        TasaImpuestoAdicional = "633.85",
+                                        MontoImpuestoSelectivoConsumoEspecifico = "54004.02"
+                                    },
+                                    new ImpuestoAdicionalTotalesModel13
+                                    {
+                                        TipoImpuesto = "023",
+                                        TasaImpuestoAdicional = "10",
+                                        MontoImpuestoSelectivoConsumoAdvalorem = "40760.81"
+                                    }
+                                }
+                            },
+                            MontoTotal = "324222.49",
+                            MontoPeriodo = "324222.49",
+                            ValorPagar = "324222.49"
+                        }
+                    },
+                    DetallesItems = new DetallesItemsModel13
+                    {
+                        Item = new List<ItemModel13>
+                        {
+                            new ItemModel13
+                            {
+                                NumeroLinea = "1",
+                                IndicadorFacturacion = "1",
+                                NombreItem = "PTE. CJ 24/12OZ",
+                                IndicadorBienoServicio = "1",
+                                CantidadItem = "20.00",
+                                UnidadMedida = "6",
+                                CantidadReferencia = "24",
+                                UnidadReferencia = "5",
+                                TablaSubcantidad = new TablaSubcantidadModel13
+                                {
+                                    SubcantidadItem = new List<SubcantidadItemModel13>
+                                    {
+                                        new SubcantidadItemModel13
+                                        {
+                                            Subcantidad = "0.355",
+                                            CodigoSubcantidad = "24",
+                                        }
+                                    }
+                                },
+                                PrecioUnitarioItem = "900.0000",
+                                MontoItem = "18000.00",
+                                TablaImpuestoAdicional = new TablaImpuestoAdicionalModel13
+                                {
+                                    ImpuestoAdicional = new List<ImpuestoAdicionalItemModel13>
+                                    {
+                                        new ImpuestoAdicionalItemModel13 { TipoImpuesto = "006" },
+                                        new ImpuestoAdicionalItemModel13 { TipoImpuesto = "023" }
+                                    }
+                                },
+                                OtraMonedaDetalle = new OtraMonedaDetalle13
+                                {
+                                    PrecioOtraMoneda = "16.27",
+                                    MontoItemOtraMoneda = "325.50"
+                                },
+                                GradosAlcohol = "5.00",
+                                PrecioUnitarioReferencia = "65.00",
+                            },
+                            new ItemModel13
+                            {
+                                NumeroLinea = "2",
+                                IndicadorFacturacion = "1",
+                                NombreItem = "PTE. CJ 48/12OZ",
+                                IndicadorBienoServicio = "1",
+                                CantidadItem = "40.00",
+                                UnidadMedida = "6",
+                                CantidadReferencia = "48",
+                                UnidadReferencia = "5",
+                                TablaSubcantidad = new TablaSubcantidadModel13
+                                {
+                                    SubcantidadItem = new List<SubcantidadItemModel13>
+                                    {
+                                        new SubcantidadItemModel13
+                                        {
+                                            Subcantidad = "0.355",
+                                            CodigoSubcantidad = "24",
+                                        }
+                                    }
+                                },
+                                PrecioUnitarioItem = "1800.0000",
+                                MontoItem = "72000.00",
+                                TablaImpuestoAdicional = new TablaImpuestoAdicionalModel13
+                                {
+                                    ImpuestoAdicional = new List<ImpuestoAdicionalItemModel13>
+                                    {
+                                        new ImpuestoAdicionalItemModel13 { TipoImpuesto = "006" },
+                                        new ImpuestoAdicionalItemModel13 { TipoImpuesto = "023" }
+                                    }
+                                },
+                                OtraMonedaDetalle = new OtraMonedaDetalle13
+                                {
+                                    PrecioOtraMoneda = "32.55",
+                                    MontoItemOtraMoneda = "1301.99"
+                                },
+                                GradosAlcohol = "5.00",
+                                PrecioUnitarioReferencia = "130.00"
+                            },
+                            new ItemModel13
+                            {
+                                NumeroLinea = "3",
+                                IndicadorFacturacion = "1",
+                                NombreItem = "PTE. CJ 48/12OZ",
+                                IndicadorBienoServicio = "1",
+                                CantidadItem = "50.00",
+                                UnidadMedida = "6",
+                                CantidadReferencia = "48",
+                                UnidadReferencia = "5",
+                                TablaSubcantidad = new TablaSubcantidadModel13
+                                {
+                                    SubcantidadItem = new List<SubcantidadItemModel13>
+                                    {
+                                        new SubcantidadItemModel13
+                                        {
+                                            Subcantidad = "0.355",
+                                            CodigoSubcantidad = "24",
+                                        }
+                                    }
+                                },
+                                PrecioUnitarioItem = "1800.0000",
+                                MontoItem = "90000.00",
+                                TablaImpuestoAdicional = new TablaImpuestoAdicionalModel13
+                                {
+                                    ImpuestoAdicional = new List<ImpuestoAdicionalItemModel13>
+                                    {
+                                        new ImpuestoAdicionalItemModel13 { TipoImpuesto = "006" },
+                                        new ImpuestoAdicionalItemModel13 { TipoImpuesto = "023" }
+                                    }
+                                },
+                                OtraMonedaDetalle = new OtraMonedaDetalle13
+                                {
+                                    PrecioOtraMoneda = "32.55",
+                                    MontoItemOtraMoneda = "1627.49"
+                                },
+                                GradosAlcohol = "5.00",
+                                PrecioUnitarioReferencia = "130.00"
+                            }
+                        }
+                    }
+                }
+            };
+
+            return View(model);
+        }
+
+
+        [HttpPost]
+        public IActionResult comprobanteE450000000007(FacturaDGIIModel13 model)
+        {
+
+            //foreach (var item in model.ECF.DetallesItems.Item)
+            //{
+            //    if (item.TablaSubDescuento?.SubDescuento != null)
+            //    {
+            //        item.TablaSubDescuento.SubDescuento = item.TablaSubDescuento.SubDescuento
+            //            .Where(ci => ci != null && !string.IsNullOrWhiteSpace(ci.TipoSubDescuento) && !string.IsNullOrWhiteSpace(ci.MontoSubDescuento))
+            //            .ToList();
+
+            //        if (!item.TablaSubDescuento.SubDescuento.Any())
+            //        {
+            //            item.TablaSubDescuento = null;
+            //        }
+            //    }
+            //}
+
+            //foreach (var item in model.ECF.DetallesItems.Item)
+            //{
+            //    if (item.TablaSubRecargo?.SubRecargo != null)
+            //    {
+            //        item.TablaSubRecargo.SubRecargo = item.TablaSubRecargo.SubRecargo
+            //            .Where(ci => ci != null && !string.IsNullOrWhiteSpace(ci.TipoSubRecargo) && !string.IsNullOrWhiteSpace(ci.MontoSubRecargo))
+            //            .ToList();
+
+            //        if (!item.TablaSubRecargo.SubRecargo.Any())
+            //        {
+            //            item.TablaSubRecargo = null;
+            //        }
+            //    }
+            //}
 
             string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
             {

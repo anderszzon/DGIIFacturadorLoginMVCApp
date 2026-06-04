@@ -95,8 +95,19 @@ namespace DGIIFacturadorLoginMVCApp.Models
 
     public class InformacionesAdicionales13
     {
+        public string FechaEmbarque { get; set; }
+        public string NumeroEmbarque { get; set; }
         public string NumeroContenedor { get; set; }
         public string NumeroReferencia { get; set; }
+        public string PesoBruto { get; set; }
+        public string PesoNeto { get; set; }
+        public string UnidadPesoBruto { get; set; }
+        public string UnidadPesoNeto { get; set; }
+        public string CantidadBulto { get; set; }
+        public string UnidadBulto { get; set; }
+        public string VolumenBulto { get; set; }
+        public string UnidadVolumen { get; set; }
+
     }
     public class TotalesModel13
     {
@@ -112,6 +123,7 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public ImpuestosAdicionalesModel13 ImpuestosAdicionales { get; set; }
         public string MontoExento { get; set; }
         public string MontoTotal { get; set; }
+        public string MontoPeriodo { get; set; }
         public string ValorPagar { get; set; }
 
     }
@@ -125,6 +137,8 @@ namespace DGIIFacturadorLoginMVCApp.Models
     {
         public string TipoImpuesto { get; set; }
         public string TasaImpuestoAdicional { get; set; }
+        public string MontoImpuestoSelectivoConsumoEspecifico { get; set; }
+        public string MontoImpuestoSelectivoConsumoAdvalorem { get; set; }
         public string OtrosImpuestosAdicionales { get; set; }
     }
 
@@ -142,13 +156,49 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public string DescripcionItem { get; set; }
         public string CantidadItem { get; set; }
         public string UnidadMedida { get; set; }
+        public string CantidadReferencia { get; set; }
+        public string UnidadReferencia { get; set; }
+        public TablaSubcantidadModel13 TablaSubcantidad { get; set; }
+        public string GradosAlcohol { get; set; }
+        public string PrecioUnitarioReferencia { get; set; }
         public string PrecioUnitarioItem { get; set; }
+        public TablaImpuestoAdicionalModel13 TablaImpuestoAdicional { get; set; }
+
+        public OtraMonedaDetalle13 OtraMonedaDetalle { get; set; }
+
+
         public string DescuentoMonto { get; set; }
         public TablaSubDescuento13 TablaSubDescuento { get; set; }
         public string RecargoMonto { get; set; }
         public TablaSubRecargo13 TablaSubRecargo { get; set; }
         public string MontoItem { get; set; }
 
+    }
+    public class OtraMonedaDetalle13
+    {
+        public string PrecioOtraMoneda { get; set; }
+        public string MontoItemOtraMoneda { get; set; }
+
+    }
+    public class TablaSubcantidadModel13
+    {
+        public List<SubcantidadItemModel13> SubcantidadItem { get; set; }
+    }
+
+    public class SubcantidadItemModel13
+    {
+        public string Subcantidad { get; set; }
+        public string CodigoSubcantidad { get; set; }
+    }
+
+    public class TablaImpuestoAdicionalModel13
+    {
+        public List<ImpuestoAdicionalItemModel13> ImpuestoAdicional { get; set; }
+    }
+
+    public class ImpuestoAdicionalItemModel13
+    {
+        public string TipoImpuesto { get; set; }
     }
 
     public class TablaSubDescuento13
