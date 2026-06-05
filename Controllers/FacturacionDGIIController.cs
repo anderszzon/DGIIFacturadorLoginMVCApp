@@ -403,7 +403,19 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE31A(FacturaDGIIModel1 model)
         {
-            string jsonInvoiceFO = JsonConvert.SerializeObject(model);
+            if (model?.ECF?.InformacionReferencia != null)
+            {
+                if (string.IsNullOrWhiteSpace(model.ECF.InformacionReferencia.NCFModificado))
+                {
+                    model.ECF.InformacionReferencia = null;
+                }
+            }
+
+            string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
+
             try
             {
                 string invoice = FacturacionElectronicaDGII.EnviarTokenSincrona(urlSemilla, passCert, jsonInvoiceFO);
@@ -473,6 +485,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     TotalITBIS = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS ?? "0"),
                     TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
+
+                    NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
 
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now

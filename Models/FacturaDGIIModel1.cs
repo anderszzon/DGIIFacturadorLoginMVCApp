@@ -1,4 +1,6 @@
-﻿namespace DGIIFacturadorLoginMVCApp.Models
+﻿using System.Text.Json.Serialization;
+
+namespace DGIIFacturadorLoginMVCApp.Models
 {
     public class FacturaDGIIModel1
     {
@@ -9,7 +11,18 @@
     {
         public EncabezadoModel1 Encabezado { get; set; } = new EncabezadoModel1();
         public DetallesItemsModel1 DetallesItems { get; set; } = new DetallesItemsModel1();
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public InformacionReferenciaModel1 InformacionReferencia { get; set; }
         public string FechaHoraFirma { get; set; }
+    }
+
+    public class InformacionReferenciaModel1
+    {
+        public string NCFModificado { get; set; }
+        public string FechaNCFModificado { get; set; }
+        public string CodigoModificacion { get; set; }
+
     }
 
     public class EncabezadoModel1
