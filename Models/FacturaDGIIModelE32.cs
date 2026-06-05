@@ -11,10 +11,19 @@ namespace DGIIFacturadorLoginMVCApp.Models
     {
         public EncabezadoModelE32 Encabezado { get; set; } = new EncabezadoModelE32();
         public DetallesItemsModelE32 DetallesItems { get; set; } = new DetallesItemsModelE32();
+        public InformacionReferenciaModelE32 InformacionReferencia { get; set; } = new InformacionReferenciaModelE32();
         public string FechaHoraFirma { get; set; }
     }
 
-    public class EncabezadoModelE32
+    public class InformacionReferenciaModelE32
+    {
+    public string NCFModificado { get; set; }
+    public string FechaNCFModificado { get; set; }
+    public string CodigoModificacion { get; set; }
+
+}
+
+public class EncabezadoModelE32
     {
         public string Version { get; set; }
 

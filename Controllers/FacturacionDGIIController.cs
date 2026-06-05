@@ -132,6 +132,9 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 }
 
                 rightCell.Add(new Paragraph($"NCF: {factura.ENCF}").SetFontSize(9));
+                rightCell.Add(new Paragraph($"NCF Modificado: {factura.NCFModificado}").SetFontSize(9));
+
+
                 rightCell.Add(new Paragraph($"Fecha Vencimiento: {factura.FechaVencimientoSecuencia}").SetFontSize(9));
                 rightCell.Add(new Paragraph($"Fecha: {factura.FechaEmision}").SetFontSize(9));
                 rightCell.Add(new Paragraph($"Número Factura: {factura.NumeroFacturaInterna}").SetFontSize(9));
@@ -2494,6 +2497,14 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE320000000006(FacturaDGIIModelE32 model)
         {
+            if (model?.ECF?.InformacionReferencia != null)
+            {
+                if (string.IsNullOrWhiteSpace(model.ECF.InformacionReferencia.NCFModificado))
+                {
+                    model.ECF.InformacionReferencia = null;
+                }
+            }
+
             string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
@@ -2567,6 +2578,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     TotalITBIS = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS ?? "0"),
                     TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
+
+                    NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
 
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
@@ -4797,6 +4810,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     TotalITBIS = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS ?? "0"),
                     TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
+                    
+                    NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado,
 
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now

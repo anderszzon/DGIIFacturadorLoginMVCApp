@@ -50,6 +50,7 @@
         public decimal TotalITBIS1 { get; set; }
         public decimal MontoTotal { get; set; }
 
+        public string NCFModificado { get; set; }
 
         public List<ItemFactura> Items { get; set; } = new List<ItemFactura>();
 
