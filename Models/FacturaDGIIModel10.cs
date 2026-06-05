@@ -12,7 +12,8 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public EncabezadoModel10 Encabezado { get; set; } = new EncabezadoModel10();
         public DetallesItemsModel10 DetallesItems { get; set; } = new DetallesItemsModel10();
 
-        //public InformacionReferencia10 InformacionReferencia { get; set; } = new InformacionReferencia10();
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public InformacionReferencia10 InformacionReferencia { get; set; }
         public string FechaHoraFirma { get; set; }
     }
 
