@@ -12,7 +12,8 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public EncabezadoModel15 Encabezado { get; set; } = new EncabezadoModel15();
         public DetallesItemsModel15 DetallesItems { get; set; } = new DetallesItemsModel15();
 
-        public Subtotales15 Subtotales { get; set; } = new Subtotales15();
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public Subtotales15 Subtotales { get; set; }
 
         public string FechaHoraFirma { get; set; }
     }
@@ -35,7 +36,8 @@ namespace DGIIFacturadorLoginMVCApp.Models
 
         public TotalesModel15 Totales { get; set; } = new TotalesModel15();
 
-        public OtraMoneda15 OtraMoneda { get; set; } = new OtraMoneda15();
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public OtraMoneda15 OtraMoneda { get; set; }
 
     }
 
@@ -50,6 +52,8 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public string IndicadorMontoGravado { get; set; }
         public string TipoIngresos { get; set; }
         public string TipoPago { get; set; }
+
+        //public TablaFormasPago15 TablaFormasPago { get; set; } = new TablaFormasPago15();
         public string FechaLimitePago { get; set; }
         public string TerminoPago { get; set; }
 
@@ -161,6 +165,9 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public string MontoImpuestoAdicional { get; set; }
         public string MontoExento { get; set; }
         public string MontoTotal { get; set; }
+        
+        public string MontoPeriodo { get; set; }
+        public string ValorPagar { get; set; }
         public string TotalISRRetencion { get; set; }
 
     }
