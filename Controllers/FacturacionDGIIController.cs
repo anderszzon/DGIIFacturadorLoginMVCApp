@@ -5087,6 +5087,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
+                    NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
+
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -5348,6 +5350,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     TotalITBIS = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS ?? "0"),
                     TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
+
+                    NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
 
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
