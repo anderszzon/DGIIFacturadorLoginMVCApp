@@ -803,6 +803,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
+                    NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
+
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -1148,6 +1150,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
+                    NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
+
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -1343,6 +1347,14 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE31B(FacturaDGIIModel2 model)
         {
+            if (model?.ECF?.InformacionReferencia != null)
+            {
+                if (string.IsNullOrWhiteSpace(model.ECF.InformacionReferencia.NCFModificado))
+                {
+                    model.ECF.InformacionReferencia = null;
+                }
+            }
+
             string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
@@ -1417,6 +1429,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     TotalITBIS = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS ?? "0"),
                     TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
+
+                    NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
 
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
@@ -2734,6 +2748,14 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE320000000011ECF(FacturaDGIIModelE32 model)
         {
+            if (model?.ECF?.InformacionReferencia != null)
+            {
+                if (string.IsNullOrWhiteSpace(model.ECF.InformacionReferencia.NCFModificado))
+                {
+                    model.ECF.InformacionReferencia = null;
+                }
+            }
+
             string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
@@ -3019,6 +3041,14 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE320000000013ECF(FacturaDGIIModelE32 model)
         {
+            if (model?.ECF?.InformacionReferencia != null)
+            {
+                if (string.IsNullOrWhiteSpace(model.ECF.InformacionReferencia.NCFModificado))
+                {
+                    model.ECF.InformacionReferencia = null;
+                }
+            }
+
             string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
@@ -3315,6 +3345,14 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE320000000014ECF(FacturaDGIIModelE32 model)
         {
+            if (model?.ECF?.InformacionReferencia != null)
+            {
+                if (string.IsNullOrWhiteSpace(model.ECF.InformacionReferencia.NCFModificado))
+                {
+                    model.ECF.InformacionReferencia = null;
+                }
+            }
+
             string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
@@ -3613,6 +3651,14 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE320000000015ECF(FacturaDGIIModelE32 model)
         {
+            if (model?.ECF?.InformacionReferencia != null)
+            {
+                if (string.IsNullOrWhiteSpace(model.ECF.InformacionReferencia.NCFModificado))
+                {
+                    model.ECF.InformacionReferencia = null;
+                }
+            }
+
             string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
@@ -3965,6 +4011,13 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE320000000005(FacturaDGIIModel6 model)
         {
+            if (model?.ECF?.InformacionReferencia != null)
+            {
+                if (string.IsNullOrWhiteSpace(model.ECF.InformacionReferencia.NCFModificado))
+                {
+                    model.ECF.InformacionReferencia = null;
+                }
+            }
             string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
@@ -4038,6 +4091,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     TotalITBIS = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS ?? "0"),
                     TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
+
+                    NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
 
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
@@ -5908,6 +5963,13 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE410000000008(FacturaDGIIModel10 model)
         {
+            if (model?.ECF?.InformacionReferencia != null)
+            {
+                if (string.IsNullOrWhiteSpace(model.ECF.InformacionReferencia.NCFModificado))
+                {
+                    model.ECF.InformacionReferencia = null;
+                }
+            }
 
             foreach (var item in model.ECF.DetallesItems.Item)
             {
@@ -6013,6 +6075,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     TotalITBIS = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS ?? "0"),
                     TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
+
+                    NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
 
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
@@ -6136,7 +6200,13 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE43(FacturaDGIIModel11 model)
         {
-
+            if (model?.ECF?.InformacionReferencia != null)
+            {
+                if (string.IsNullOrWhiteSpace(model.ECF.InformacionReferencia.NCFModificado))
+                {
+                    model.ECF.InformacionReferencia = null;
+                }
+            }
             string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
@@ -6196,6 +6266,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     MontoGravadoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
                     TotalITBIS = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
+
+                    NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
 
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
@@ -6416,6 +6488,13 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE430000000012(FacturaDGIIModel11 model)
         {
+            if (model?.ECF?.InformacionReferencia != null)
+            {
+                if (string.IsNullOrWhiteSpace(model.ECF.InformacionReferencia.NCFModificado))
+                {
+                    model.ECF.InformacionReferencia = null;
+                }
+            }
 
             string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
             {
@@ -6476,6 +6555,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     MontoGravadoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
                     TotalITBIS = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
+
+                    NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
 
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
@@ -6940,36 +7021,13 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE440000000008(FacturaDGIIModel12 model)
         {
-
-            //foreach (var item in model.ECF.DetallesItems.Item)
-            //{
-            //    if (item.TablaSubDescuento?.SubDescuento != null)
-            //    {
-            //        item.TablaSubDescuento.SubDescuento = item.TablaSubDescuento.SubDescuento
-            //            .Where(ci => ci != null && !string.IsNullOrWhiteSpace(ci.TipoSubDescuento) && !string.IsNullOrWhiteSpace(ci.MontoSubDescuento))
-            //            .ToList();
-
-            //        if (!item.TablaSubDescuento.SubDescuento.Any())
-            //        {
-            //            item.TablaSubDescuento = null;
-            //        }
-            //    }
-            //}
-
-            //foreach (var item in model.ECF.DetallesItems.Item)
-            //{
-            //    if (item.TablaSubRecargo?.SubRecargo != null)
-            //    {
-            //        item.TablaSubRecargo.SubRecargo = item.TablaSubRecargo.SubRecargo
-            //            .Where(ci => ci != null && !string.IsNullOrWhiteSpace(ci.TipoSubRecargo) && !string.IsNullOrWhiteSpace(ci.MontoSubRecargo))
-            //            .ToList();
-
-            //        if (!item.TablaSubRecargo.SubRecargo.Any())
-            //        {
-            //            item.TablaSubRecargo = null;
-            //        }
-            //    }
-            //}
+            if (model?.ECF?.InformacionReferencia != null)
+            {
+                if (string.IsNullOrWhiteSpace(model.ECF.InformacionReferencia.NCFModificado))
+                {
+                    model.ECF.InformacionReferencia = null;
+                }
+            }
 
             string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
             {
@@ -7045,6 +7103,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     TotalITBIS = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS ?? "0"),
                     TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
+
+                    NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
 
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
@@ -7433,36 +7493,13 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE440000000010(FacturaDGIIModel12 model)
         {
-
-            //foreach (var item in model.ECF.DetallesItems.Item)
-            //{
-            //    if (item.TablaSubDescuento?.SubDescuento != null)
-            //    {
-            //        item.TablaSubDescuento.SubDescuento = item.TablaSubDescuento.SubDescuento
-            //            .Where(ci => ci != null && !string.IsNullOrWhiteSpace(ci.TipoSubDescuento) && !string.IsNullOrWhiteSpace(ci.MontoSubDescuento))
-            //            .ToList();
-
-            //        if (!item.TablaSubDescuento.SubDescuento.Any())
-            //        {
-            //            item.TablaSubDescuento = null;
-            //        }
-            //    }
-            //}
-
-            //foreach (var item in model.ECF.DetallesItems.Item)
-            //{
-            //    if (item.TablaSubRecargo?.SubRecargo != null)
-            //    {
-            //        item.TablaSubRecargo.SubRecargo = item.TablaSubRecargo.SubRecargo
-            //            .Where(ci => ci != null && !string.IsNullOrWhiteSpace(ci.TipoSubRecargo) && !string.IsNullOrWhiteSpace(ci.MontoSubRecargo))
-            //            .ToList();
-
-            //        if (!item.TablaSubRecargo.SubRecargo.Any())
-            //        {
-            //            item.TablaSubRecargo = null;
-            //        }
-            //    }
-            //}
+            if (model?.ECF?.InformacionReferencia != null)
+            {
+                if (string.IsNullOrWhiteSpace(model.ECF.InformacionReferencia.NCFModificado))
+                {
+                    model.ECF.InformacionReferencia = null;
+                }
+            }
 
             string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
             {
@@ -7538,6 +7575,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     TotalITBIS = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS ?? "0"),
                     TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
+
+                    NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
 
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
@@ -8083,36 +8122,13 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE450000000007(FacturaDGIIModel13 model)
         {
-
-            //foreach (var item in model.ECF.DetallesItems.Item)
-            //{
-            //    if (item.TablaSubDescuento?.SubDescuento != null)
-            //    {
-            //        item.TablaSubDescuento.SubDescuento = item.TablaSubDescuento.SubDescuento
-            //            .Where(ci => ci != null && !string.IsNullOrWhiteSpace(ci.TipoSubDescuento) && !string.IsNullOrWhiteSpace(ci.MontoSubDescuento))
-            //            .ToList();
-
-            //        if (!item.TablaSubDescuento.SubDescuento.Any())
-            //        {
-            //            item.TablaSubDescuento = null;
-            //        }
-            //    }
-            //}
-
-            //foreach (var item in model.ECF.DetallesItems.Item)
-            //{
-            //    if (item.TablaSubRecargo?.SubRecargo != null)
-            //    {
-            //        item.TablaSubRecargo.SubRecargo = item.TablaSubRecargo.SubRecargo
-            //            .Where(ci => ci != null && !string.IsNullOrWhiteSpace(ci.TipoSubRecargo) && !string.IsNullOrWhiteSpace(ci.MontoSubRecargo))
-            //            .ToList();
-
-            //        if (!item.TablaSubRecargo.SubRecargo.Any())
-            //        {
-            //            item.TablaSubRecargo = null;
-            //        }
-            //    }
-            //}
+            if (model?.ECF?.InformacionReferencia != null)
+            {
+                if (string.IsNullOrWhiteSpace(model.ECF.InformacionReferencia.NCFModificado))
+                {
+                    model.ECF.InformacionReferencia = null;
+                }
+            }
 
             string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
             {
@@ -8188,6 +8204,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     TotalITBIS = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS ?? "0"),
                     TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
+
+                    NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
 
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
@@ -8494,6 +8512,13 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE450000000010(FacturaDGIIModel13 model)
         {
+            if (model?.ECF?.InformacionReferencia != null)
+            {
+                if (string.IsNullOrWhiteSpace(model.ECF.InformacionReferencia.NCFModificado))
+                {
+                    model.ECF.InformacionReferencia = null;
+                }
+            }
 
             if (model?.ECF?.DetallesItems?.Item != null)
             {
@@ -8552,36 +8577,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     }
                 }
             }
-
-            //foreach (var item in model.ECF.DetallesItems.Item)
-            //{
-            //    if (item.TablaSubDescuento?.SubDescuento != null)
-            //    {
-            //        item.TablaSubDescuento.SubDescuento = item.TablaSubDescuento.SubDescuento
-            //            .Where(ci => ci != null && !string.IsNullOrWhiteSpace(ci.TipoSubDescuento) && !string.IsNullOrWhiteSpace(ci.MontoSubDescuento))
-            //            .ToList();
-
-            //        if (!item.TablaSubDescuento.SubDescuento.Any())
-            //        {
-            //            item.TablaSubDescuento = null;
-            //        }
-            //    }
-            //}
-
-            //foreach (var item in model.ECF.DetallesItems.Item)
-            //{
-            //    if (item.TablaSubRecargo?.SubRecargo != null)
-            //    {
-            //        item.TablaSubRecargo.SubRecargo = item.TablaSubRecargo.SubRecargo
-            //            .Where(ci => ci != null && !string.IsNullOrWhiteSpace(ci.TipoSubRecargo) && !string.IsNullOrWhiteSpace(ci.MontoSubRecargo))
-            //            .ToList();
-
-            //        if (!item.TablaSubRecargo.SubRecargo.Any())
-            //        {
-            //            item.TablaSubRecargo = null;
-            //        }
-            //    }
-            //}
 
             string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
             {
@@ -8657,6 +8652,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     TotalITBIS = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS ?? "0"),
                     TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
+
+                    NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
 
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
@@ -8858,6 +8855,13 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE46(FacturaDGIIModel14 model)
         {
+            if (model?.ECF?.InformacionReferencia != null)
+            {
+                if (string.IsNullOrWhiteSpace(model.ECF.InformacionReferencia.NCFModificado))
+                {
+                    model.ECF.InformacionReferencia = null;
+                }
+            }
 
             string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
             {
@@ -8933,6 +8937,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     TotalITBIS = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS ?? "0"),
                     TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
+
+                    NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
 
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
@@ -9136,6 +9142,13 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE460000000007(FacturaDGIIModel14 model)
         {
+            if (model?.ECF?.InformacionReferencia != null)
+            {
+                if (string.IsNullOrWhiteSpace(model.ECF.InformacionReferencia.NCFModificado))
+                {
+                    model.ECF.InformacionReferencia = null;
+                }
+            }
 
             string jsonInvoiceFO = JsonConvert.SerializeObject(model, new JsonSerializerSettings
             {
@@ -9211,6 +9224,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     TotalITBIS = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS ?? "0"),
                     TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
+
+                    NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
 
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
@@ -9627,7 +9642,13 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE470000000010(FacturaDGIIModel15 model)
         {
-
+            if (model?.ECF?.InformacionReferencia != null)
+            {
+                if (string.IsNullOrWhiteSpace(model.ECF.InformacionReferencia.NCFModificado))
+                {
+                    model.ECF.InformacionReferencia = null;
+                }
+            }
             if (model?.ECF?.DetallesItems?.Item != null)
             {
                 foreach (var item in model.ECF.DetallesItems.Item)
@@ -9719,6 +9740,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     TotalITBIS = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS ?? "0"),
                     TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
+
+                    NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
 
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
@@ -9887,7 +9910,13 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         [HttpPost]
         public IActionResult comprobanteE470000000009(FacturaDGIIModel15 model)
         {
-
+            if (model?.ECF?.InformacionReferencia != null)
+            {
+                if (string.IsNullOrWhiteSpace(model.ECF.InformacionReferencia.NCFModificado))
+                {
+                    model.ECF.InformacionReferencia = null;
+                }
+            }
             if (model?.ECF?.DetallesItems?.Item != null)
             {
                 foreach (var item in model.ECF.DetallesItems.Item)
@@ -9979,6 +10008,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     TotalITBIS = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS ?? "0"),
                     TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
+
+                    NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
 
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now

@@ -13,16 +13,19 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public DetallesItemsModel12 DetallesItems { get; set; } = new DetallesItemsModel12();
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public InformacionReferenciaModel12 InformacionReferencia { get; set; }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public DescuentosORecargosModel12 DescuentosORecargos { get; set; } 
 
         public string FechaHoraFirma { get; set; }
     }
 
-    public class InformacionReferencia12
+    public class InformacionReferenciaModel12
     {
-            public string NCFModificado { get; set; }
-            public string FechaNCFModificado { get; set; }
-            public string CodigoModificacion { get; set; }
+        public string NCFModificado { get; set; }
+        public string FechaNCFModificado { get; set; }
+        public string CodigoModificacion { get; set; }
 
     }
 

@@ -14,12 +14,23 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public DetallesItemsModel2 DetallesItems { get; set; } = new DetallesItemsModel2();
         //public DescuentosORecargosModel2 DescuentosORecargos { get; set; } = new DescuentosORecargosModel2();
 
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public InformacionReferenciaModel2 InformacionReferencia { get; set; }
+
         // 1. Añadimos el atributo para ignorar si es nulo
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         // 2. Quitamos el '= new DescuentosORecargosModel2()' para que por defecto sea null
         public DescuentosORecargosModel2? DescuentosORecargos { get; set; }
 
         public string FechaHoraFirma { get; set; }
+    }
+
+    public class InformacionReferenciaModel2
+    {
+        public string NCFModificado { get; set; }
+        public string FechaNCFModificado { get; set; }
+        public string CodigoModificacion { get; set; }
+
     }
 
     public class DescuentosORecargosModel2
