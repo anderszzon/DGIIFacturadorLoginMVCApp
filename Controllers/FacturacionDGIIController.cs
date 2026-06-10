@@ -547,7 +547,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult comprobanteE310000000001ACECF()
+        public IActionResult comprobanteACECF()
         {
             var model = new FacturaDGIIModelACECF
             {
@@ -571,7 +571,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult comprobanteE310000000001ACECF(FacturaDGIIModelACECF model)
+        public IActionResult comprobanteACECF(FacturaDGIIModelACECF model)
         {
             string jsonFactura = JsonConvert.SerializeObject(model, new JsonSerializerSettings
             {
