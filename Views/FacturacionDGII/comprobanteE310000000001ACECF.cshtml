@@ -1,0 +1,50 @@
+﻿@model FacturaDGIIModelACECF
+
+<form asp-action="comprobanteE310000000001ACECF" method="post" id="facturaForm">
+    <!-- Sección de datos generales -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h3>Datos Generales</h3>
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <label asp-for="ACECF.DetalleAprobacionComercial.Version"></label>
+                <input asp-for="ACECF.DetalleAprobacionComercial.Version" class="form-control" value="1.0" readonly />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="ACECF.DetalleAprobacionComercial.RNCEmisor"></label>
+                <input asp-for="ACECF.DetalleAprobacionComercial.RNCEmisor" class="form-control" />
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="ACECF.DetalleAprobacionComercial.eNCF"></label>
+                <input asp-for="ACECF.DetalleAprobacionComercial.eNCF" class="form-control" />
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="ACECF.DetalleAprobacionComercial.FechaEmision"></label>
+                <input asp-for="ACECF.DetalleAprobacionComercial.FechaEmision" class="form-control" />
+            </div>
+            <div class="form-group col-md-3">
+                <label>MontoTotal</label>
+                <input asp-for="ACECF.DetalleAprobacionComercial.MontoTotal" id="totalGeneral" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="ACECF.DetalleAprobacionComercial.RNCComprador"></label>
+                <input asp-for="ACECF.DetalleAprobacionComercial.RNCComprador" class="form-control" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="ACECF.DetalleAprobacionComercial.Estado"></label>
+                <input asp-for="ACECF.DetalleAprobacionComercial.Estado" class="form-control" />
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="ACECF.DetalleAprobacionComercial.FechaHoraAprobacionComercial"></label>
+                <input asp-for="ACECF.DetalleAprobacionComercial.FechaHoraAprobacionComercial" class="form-control" />
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary btn-lg">Registrar Factura</button>
+    </div>
+</form>
+
+

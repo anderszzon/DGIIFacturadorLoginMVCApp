@@ -35,6 +35,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         private const string urlRecepcionFactura = "https://ecf.dgii.gov.do/certecf/recepcion/api/FacturasElectronicas";
         private const string urlRecepcionResumenFactura = "https://ecf.dgii.gov.do/certecf/recepcionfc/api/recepcion/ecf";
         private const string urlConsultaFactura = "https://ecf.dgii.gov.do/certecf/consultaresultado/api/Consultas/Estado";
+        private const string urlRecepcionFacturaAprobacionComercial = "https://ecf.dgii.gov.do/certecf/AprobacionComercial/api/AprobacionComercial";
 
         public FacturacionDGIIController(ApplicationDbContext context, IWebHostEnvironment env)
         {
@@ -531,6 +532,84 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     return View("verFactura", respuesta);
                 }
 
+            }
+            catch (DbUpdateException ex)
+            {
+                string error = ex.Message;
+
+                if (ex.InnerException != null)
+                    error += " | Inner Exception: " + ex.InnerException.Message;
+
+                ViewBag.Error = error;
+                return View(null);
+            }
+
+        }
+
+        [HttpGet]
+        public IActionResult comprobanteE310000000001ACECF()
+        {
+            var model = new FacturaDGIIModelACECF
+            {
+                ACECF = new ECFModelACECF
+                {
+                    DetalleAprobacionComercial = new DetalleAprobacionComercialACECF
+                    {
+                        Version = "",
+                        RNCEmisor = "131880681",
+                        eNCF = "E310000000001",
+                        FechaEmision = "01-04-2020",
+                        MontoTotal = "7080",
+                        RNCComprador = "130322791",
+                        Estado = "1",
+                        FechaHoraAprobacionComercial = "09-06-2026 16:11:06",
+                    }
+                }
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult comprobanteE310000000001ACECF(FacturaDGIIModelACECF model)
+        {
+            string jsonFactura = JsonConvert.SerializeObject(model, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
+
+            try
+            {
+                string factura = FacturacionElectronicaDGII.ObtenerFacturaAprobacionComercialSincrona(urlSemilla, passCert, jsonFactura);
+                string response = FacturacionElectronicaDGII.EnviarFacturaElectronicaAprobacionComercialSincrona(urlValidarSemilla, urlRecepcionFacturaAprobacionComercial, urlConsultaFactura);
+
+                JObject jsonObject = JObject.Parse(factura);
+                JObject jsonObjectResponse = JObject.Parse(response);
+
+                var respuesta = new FacturaDGIIResponseModel
+                {
+                    JsonInvoice = jsonObject.GetValue("json")?.ToString(),
+                    ENCF = jsonObject.GetValue("encf")?.ToString(),
+                    XmlSemilla = jsonObject.GetValue("xmlsemilla")?.ToString(),
+                    XmlSemillaFirmada = jsonObject.GetValue("xmlsemillafirmada")?.ToString(),
+                    Token = jsonObject.GetValue("token")?.ToString(),
+                    XmlFactura = jsonObject.GetValue("xmlfactura")?.ToString(),
+                    XmlFacturaFirmada = jsonObject.GetValue("xmlfacturafirmada")?.ToString(),
+                    CodigoSeguridad = jsonObject.GetValue("codigoseguridad")?.ToString(),
+                    CodigoRespuesta = jsonObjectResponse.GetValue("codigo")?.ToString(),
+                    EstadoRespuesta = jsonObjectResponse.GetValue("estado")?.ToString()
+                };
+
+                if (respuesta.CodigoRespuesta == "01")
+                {
+                    respuesta.CodigoRespuesta = "1";
+                    return View("verFactura", respuesta);
+                }
+                else
+                {
+                    ViewBag.MensajeError = respuesta.Mensaje;
+                    return View("verFactura", respuesta);
+                }
             }
             catch (DbUpdateException ex)
             {
