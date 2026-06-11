@@ -2,8 +2,9 @@
 using DGIIFacturadorLoginMVCApp.Data;
 using DGIIFacturadorLoginMVCApp.Data.Migrations;
 using DGIIFacturadorLoginMVCApp.Enums;
-using DGIIFacturadorLoginMVCApp.Models;
 using DGIIFacturadorLoginMVCApp.Extensions;
+using DGIIFacturadorLoginMVCApp.Models;
+using DGIIFacturadorLoginMVCApp.Services;
 using iText.Barcodes;
 using iText.IO.Font.Constants;
 using iText.IO.Image;
@@ -25,23 +26,25 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 {
     public class FacturacionDGIIController : Controller
     {
-
+        private readonly IDgiiConfigService _configService;
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _env;
-
-        private const string urlSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/Semilla";
         private const string passCert = "LD271167";
-        private const string urlValidarSemilla = "https://ecf.dgii.gov.do/certecf/autenticacion/api/Autenticacion/ValidarSemilla";
-        private const string urlRecepcionFactura = "https://ecf.dgii.gov.do/certecf/recepcion/api/FacturasElectronicas";
-        private const string urlRecepcionResumenFactura = "https://ecf.dgii.gov.do/certecf/recepcionfc/api/recepcion/ecf";
-        private const string urlConsultaFactura = "https://ecf.dgii.gov.do/certecf/consultaresultado/api/Consultas/Estado";
-        private const string urlRecepcionFacturaAprobacionComercial = "https://ecf.dgii.gov.do/certecf/AprobacionComercial/api/AprobacionComercial";
 
-        public FacturacionDGIIController(ApplicationDbContext context, IWebHostEnvironment env)
+        public FacturacionDGIIController(IDgiiConfigService configService, ApplicationDbContext context, IWebHostEnvironment env)
         {
+            _configService = configService;
             _context = context;
             _env = env;
         }
+
+        private string urlBase => _configService.GetBaseUrl();
+        public string urlSemilla => $"{urlBase}/autenticacion/api/Autenticacion/Semilla";
+        public string urlValidarSemilla => $"{urlBase}/autenticacion/api/Autenticacion/ValidarSemilla";
+        public string urlRecepcionFactura => $"{urlBase}/recepcion/api/FacturasElectronicas";
+        public string urlRecepcionResumenFactura => $"{urlBase}/recepcionfc/api/recepcion/ecf";
+        public string urlConsultaFactura => $"{urlBase}/consultaresultado/api/Consultas/Estado";
+        public string urlRecepcionFacturaAprobacionComercial => $"{urlBase}/AprobacionComercial/api/AprobacionComercial";
 
         public ActionResult RegistrarComprobante()
         {
@@ -61,6 +64,23 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             byte[] pdfBytes = CrearFacturaPDFInMemory(factura, codigoSeguridad, _env.WebRootPath);
 
             return File(pdfBytes, "application/pdf");
+        }
+
+        public IActionResult ConfiguracionAmbiente()
+        {
+            ViewBag.AmbienteActual = _configService.Ambient;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ConfiguracionAmbiente(string nuevoAmbiente)
+        {
+            if (nuevoAmbiente == "certecf" || nuevoAmbiente == "testecf" || nuevoAmbiente == "ecf")
+            {
+                _configService.Ambient = nuevoAmbiente;
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
@@ -2950,9 +2970,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 JObject jsonObject = JObject.Parse(invoice);
                 JObject jsonObjectResponse = JObject.Parse(response);
 
-                string mensajeValor = jsonObjectResponse["mensajes"]?[0]?["valor"]?.ToString();
-
-
                 var respuesta = new FacturaDGIIResponseModel
                 {
                     JsonInvoice = jsonObject.GetValue("json")?.ToString(),
@@ -2965,62 +2982,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     CodigoSeguridad = jsonObject.GetValue("codigoseguridad")?.ToString(),
                     CodigoRespuesta = jsonObjectResponse.GetValue("codigo")?.ToString(),
                     EstadoRespuesta = jsonObjectResponse.GetValue("estado")?.ToString(),
-                    Mensaje = mensajeValor
-
                 };
-
-                var registro = new FacturasDGII
-                {
-                    TipoeCF = model?.RFCE?.Encabezado?.IdDoc?.TipoeCF,
-                    ENCF = model?.RFCE?.Encabezado?.IdDoc?.eNCF,
-                    TipoPago = model?.RFCE?.Encabezado?.IdDoc?.TipoPago,
-                    IndicadorEnvioDiferido = model?.RFCE?.Encabezado?.IdDoc?.IndicadorEnvioDiferido,
-                    //IndicadorMontoGravado = model?.RFCE?.Encabezado?.IdDoc?.IndicadorMontoGravado,
-                    TipoIngresos = model?.RFCE?.Encabezado?.IdDoc?.TipoIngresos,
-
-                    RNCEmisor = model?.RFCE?.Encabezado?.Emisor?.RNCEmisor,
-                    RazonSocialEmisor = model?.RFCE?.Encabezado?.Emisor?.RazonSocialEmisor,
-                    NombreComercial = model?.RFCE?.Encabezado?.Emisor?.NombreComercial,
-                    DireccionEmisor = model?.RFCE?.Encabezado?.Emisor?.DireccionEmisor,
-                    Municipio = model?.RFCE?.Encabezado?.Emisor?.Municipio,
-                    Provincia = model?.RFCE?.Encabezado?.Emisor?.Provincia,
-                    CorreoEmisor = model?.RFCE?.Encabezado?.Emisor?.CorreoEmisor,
-                    WebSite = model?.RFCE?.Encabezado?.Emisor?.WebSite,
-                    CodigoVendedor = model?.RFCE?.Encabezado?.Emisor?.CodigoVendedor,
-                    NumeroFacturaInterna = model?.RFCE?.Encabezado?.Emisor?.NumeroFacturaInterna,
-                    NumeroPedidoInterno = model?.RFCE?.Encabezado?.Emisor?.NumeroPedidoInterno,
-                    ZonaVenta = model?.RFCE?.Encabezado?.Emisor?.ZonaVenta,
-                    FechaEmision = model?.RFCE?.Encabezado?.Emisor?.FechaEmision,
-
-                    RNCComprador = model?.RFCE?.Encabezado?.Comprador?.RNCComprador,
-                    RazonSocialComprador = model?.RFCE?.Encabezado?.Comprador?.RazonSocialComprador,
-                    ContactoComprador = model?.RFCE?.Encabezado?.Comprador?.ContactoComprador,
-                    CorreoComprador = model?.RFCE?.Encabezado?.Comprador?.CorreoComprador,
-                    DireccionComprador = model?.RFCE?.Encabezado?.Comprador?.DireccionComprador,
-                    MunicipioComprador = model?.RFCE?.Encabezado?.Comprador?.MunicipioComprador,
-                    ProvinciaComprador = model?.RFCE?.Encabezado?.Comprador?.ProvinciaComprador,
-                    FechaEntrega = model?.RFCE?.Encabezado?.Comprador?.FechaEntrega,
-                    FechaOrdenCompra = model?.RFCE?.Encabezado?.Comprador?.FechaOrdenCompra,
-                    NumeroOrdenCompra = model?.RFCE?.Encabezado?.Comprador?.NumeroOrdenCompra,
-                    CodigoInternoComprador = model?.RFCE?.Encabezado?.Comprador?.CodigoInternoComprador,
-
-                    MontoGravadoTotal = Convert.ToDecimal(model?.RFCE?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
-                    MontoGravadoI1 = Convert.ToDecimal(model?.RFCE?.Encabezado?.Totales?.MontoGravadoI1 ?? "0"),
-                    ITBIS1 = Convert.ToDecimal(model?.RFCE?.Encabezado?.Totales?.ITBIS1 ?? "0"),
-                    TotalITBIS = Convert.ToDecimal(model?.RFCE?.Encabezado?.Totales?.TotalITBIS ?? "0"),
-                    TotalITBIS1 = Convert.ToDecimal(model?.RFCE?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
-                    MontoTotal = Convert.ToDecimal(model?.RFCE?.Encabezado?.Totales?.MontoTotal ?? "0"),
-
-                    //FechaHoraFirma = model?.RFCE?.FechaHoraFirma,
-                    FechaRegistro = DateTime.Now
-                };
-
-                _context.FacturasDGII.Add(registro);
-                _context.SaveChanges();
-
-                respuesta.FacturaId = registro.Id;
-
-                _context.SaveChanges();
 
                 if (respuesta.CodigoRespuesta == "1")
                 {
@@ -3243,9 +3205,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 JObject jsonObject = JObject.Parse(invoice);
                 JObject jsonObjectResponse = JObject.Parse(response);
 
-                string mensajeValor = jsonObjectResponse["mensajes"]?[0]?["valor"]?.ToString();
-
-
                 var respuesta = new FacturaDGIIResponseModel
                 {
                     JsonInvoice = jsonObject.GetValue("json")?.ToString(),
@@ -3258,62 +3217,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     CodigoSeguridad = jsonObject.GetValue("codigoseguridad")?.ToString(),
                     CodigoRespuesta = jsonObjectResponse.GetValue("codigo")?.ToString(),
                     EstadoRespuesta = jsonObjectResponse.GetValue("estado")?.ToString(),
-                    Mensaje = mensajeValor
-
                 };
-
-                var registro = new FacturasDGII
-                {
-                    TipoeCF = model?.RFCE?.Encabezado?.IdDoc?.TipoeCF,
-                    ENCF = model?.RFCE?.Encabezado?.IdDoc?.eNCF,
-                    TipoPago = model?.RFCE?.Encabezado?.IdDoc?.TipoPago,
-                    IndicadorEnvioDiferido = model?.RFCE?.Encabezado?.IdDoc?.IndicadorEnvioDiferido,
-                    //IndicadorMontoGravado = model?.RFCE?.Encabezado?.IdDoc?.IndicadorMontoGravado,
-                    TipoIngresos = model?.RFCE?.Encabezado?.IdDoc?.TipoIngresos,
-
-                    RNCEmisor = model?.RFCE?.Encabezado?.Emisor?.RNCEmisor,
-                    RazonSocialEmisor = model?.RFCE?.Encabezado?.Emisor?.RazonSocialEmisor,
-                    NombreComercial = model?.RFCE?.Encabezado?.Emisor?.NombreComercial,
-                    DireccionEmisor = model?.RFCE?.Encabezado?.Emisor?.DireccionEmisor,
-                    Municipio = model?.RFCE?.Encabezado?.Emisor?.Municipio,
-                    Provincia = model?.RFCE?.Encabezado?.Emisor?.Provincia,
-                    CorreoEmisor = model?.RFCE?.Encabezado?.Emisor?.CorreoEmisor,
-                    WebSite = model?.RFCE?.Encabezado?.Emisor?.WebSite,
-                    CodigoVendedor = model?.RFCE?.Encabezado?.Emisor?.CodigoVendedor,
-                    NumeroFacturaInterna = model?.RFCE?.Encabezado?.Emisor?.NumeroFacturaInterna,
-                    NumeroPedidoInterno = model?.RFCE?.Encabezado?.Emisor?.NumeroPedidoInterno,
-                    ZonaVenta = model?.RFCE?.Encabezado?.Emisor?.ZonaVenta,
-                    FechaEmision = model?.RFCE?.Encabezado?.Emisor?.FechaEmision,
-
-                    RNCComprador = model?.RFCE?.Encabezado?.Comprador?.RNCComprador,
-                    RazonSocialComprador = model?.RFCE?.Encabezado?.Comprador?.RazonSocialComprador,
-                    ContactoComprador = model?.RFCE?.Encabezado?.Comprador?.ContactoComprador,
-                    CorreoComprador = model?.RFCE?.Encabezado?.Comprador?.CorreoComprador,
-                    DireccionComprador = model?.RFCE?.Encabezado?.Comprador?.DireccionComprador,
-                    MunicipioComprador = model?.RFCE?.Encabezado?.Comprador?.MunicipioComprador,
-                    ProvinciaComprador = model?.RFCE?.Encabezado?.Comprador?.ProvinciaComprador,
-                    FechaEntrega = model?.RFCE?.Encabezado?.Comprador?.FechaEntrega,
-                    FechaOrdenCompra = model?.RFCE?.Encabezado?.Comprador?.FechaOrdenCompra,
-                    NumeroOrdenCompra = model?.RFCE?.Encabezado?.Comprador?.NumeroOrdenCompra,
-                    CodigoInternoComprador = model?.RFCE?.Encabezado?.Comprador?.CodigoInternoComprador,
-
-                    MontoGravadoTotal = Convert.ToDecimal(model?.RFCE?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
-                    MontoGravadoI1 = Convert.ToDecimal(model?.RFCE?.Encabezado?.Totales?.MontoGravadoI1 ?? "0"),
-                    ITBIS1 = Convert.ToDecimal(model?.RFCE?.Encabezado?.Totales?.ITBIS1 ?? "0"),
-                    TotalITBIS = Convert.ToDecimal(model?.RFCE?.Encabezado?.Totales?.TotalITBIS ?? "0"),
-                    TotalITBIS1 = Convert.ToDecimal(model?.RFCE?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
-                    MontoTotal = Convert.ToDecimal(model?.RFCE?.Encabezado?.Totales?.MontoTotal ?? "0"),
-
-                    //FechaHoraFirma = model?.RFCE?.FechaHoraFirma,
-                    FechaRegistro = DateTime.Now
-                };
-
-                _context.FacturasDGII.Add(registro);
-                _context.SaveChanges();
-
-                respuesta.FacturaId = registro.Id;
-
-                _context.SaveChanges();
 
                 if (respuesta.CodigoRespuesta == "1")
                 {
@@ -3549,9 +3453,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 JObject jsonObject = JObject.Parse(invoice);
                 JObject jsonObjectResponse = JObject.Parse(response);
 
-                string mensajeValor = jsonObjectResponse["mensajes"]?[0]?["valor"]?.ToString();
-
-
                 var respuesta = new FacturaDGIIResponseModel
                 {
                     JsonInvoice = jsonObject.GetValue("json")?.ToString(),
@@ -3564,62 +3465,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     CodigoSeguridad = jsonObject.GetValue("codigoseguridad")?.ToString(),
                     CodigoRespuesta = jsonObjectResponse.GetValue("codigo")?.ToString(),
                     EstadoRespuesta = jsonObjectResponse.GetValue("estado")?.ToString(),
-                    Mensaje = mensajeValor
-
                 };
-
-                var registro = new FacturasDGII
-                {
-                    TipoeCF = model?.RFCE?.Encabezado?.IdDoc?.TipoeCF,
-                    ENCF = model?.RFCE?.Encabezado?.IdDoc?.eNCF,
-                    TipoPago = model?.RFCE?.Encabezado?.IdDoc?.TipoPago,
-                    IndicadorEnvioDiferido = model?.RFCE?.Encabezado?.IdDoc?.IndicadorEnvioDiferido,
-                    //IndicadorMontoGravado = model?.RFCE?.Encabezado?.IdDoc?.IndicadorMontoGravado,
-                    TipoIngresos = model?.RFCE?.Encabezado?.IdDoc?.TipoIngresos,
-
-                    RNCEmisor = model?.RFCE?.Encabezado?.Emisor?.RNCEmisor,
-                    RazonSocialEmisor = model?.RFCE?.Encabezado?.Emisor?.RazonSocialEmisor,
-                    NombreComercial = model?.RFCE?.Encabezado?.Emisor?.NombreComercial,
-                    DireccionEmisor = model?.RFCE?.Encabezado?.Emisor?.DireccionEmisor,
-                    Municipio = model?.RFCE?.Encabezado?.Emisor?.Municipio,
-                    Provincia = model?.RFCE?.Encabezado?.Emisor?.Provincia,
-                    CorreoEmisor = model?.RFCE?.Encabezado?.Emisor?.CorreoEmisor,
-                    WebSite = model?.RFCE?.Encabezado?.Emisor?.WebSite,
-                    CodigoVendedor = model?.RFCE?.Encabezado?.Emisor?.CodigoVendedor,
-                    NumeroFacturaInterna = model?.RFCE?.Encabezado?.Emisor?.NumeroFacturaInterna,
-                    NumeroPedidoInterno = model?.RFCE?.Encabezado?.Emisor?.NumeroPedidoInterno,
-                    ZonaVenta = model?.RFCE?.Encabezado?.Emisor?.ZonaVenta,
-                    FechaEmision = model?.RFCE?.Encabezado?.Emisor?.FechaEmision,
-
-                    RNCComprador = model?.RFCE?.Encabezado?.Comprador?.RNCComprador,
-                    RazonSocialComprador = model?.RFCE?.Encabezado?.Comprador?.RazonSocialComprador,
-                    ContactoComprador = model?.RFCE?.Encabezado?.Comprador?.ContactoComprador,
-                    CorreoComprador = model?.RFCE?.Encabezado?.Comprador?.CorreoComprador,
-                    DireccionComprador = model?.RFCE?.Encabezado?.Comprador?.DireccionComprador,
-                    MunicipioComprador = model?.RFCE?.Encabezado?.Comprador?.MunicipioComprador,
-                    ProvinciaComprador = model?.RFCE?.Encabezado?.Comprador?.ProvinciaComprador,
-                    FechaEntrega = model?.RFCE?.Encabezado?.Comprador?.FechaEntrega,
-                    FechaOrdenCompra = model?.RFCE?.Encabezado?.Comprador?.FechaOrdenCompra,
-                    NumeroOrdenCompra = model?.RFCE?.Encabezado?.Comprador?.NumeroOrdenCompra,
-                    CodigoInternoComprador = model?.RFCE?.Encabezado?.Comprador?.CodigoInternoComprador,
-
-                    MontoGravadoTotal = Convert.ToDecimal(model?.RFCE?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
-                    MontoGravadoI1 = Convert.ToDecimal(model?.RFCE?.Encabezado?.Totales?.MontoGravadoI1 ?? "0"),
-                    ITBIS1 = Convert.ToDecimal(model?.RFCE?.Encabezado?.Totales?.ITBIS1 ?? "0"),
-                    TotalITBIS = Convert.ToDecimal(model?.RFCE?.Encabezado?.Totales?.TotalITBIS ?? "0"),
-                    TotalITBIS1 = Convert.ToDecimal(model?.RFCE?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
-                    MontoTotal = Convert.ToDecimal(model?.RFCE?.Encabezado?.Totales?.MontoTotal ?? "0"),
-
-                    //FechaHoraFirma = model?.RFCE?.FechaHoraFirma,
-                    FechaRegistro = DateTime.Now
-                };
-
-                _context.FacturasDGII.Add(registro);
-                _context.SaveChanges();
-
-                respuesta.FacturaId = registro.Id;
-
-                _context.SaveChanges();
 
                 if (respuesta.CodigoRespuesta == "1")
                 {
@@ -3854,9 +3700,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 JObject jsonObject = JObject.Parse(invoice);
                 JObject jsonObjectResponse = JObject.Parse(response);
 
-                string mensajeValor = jsonObjectResponse["mensajes"]?[0]?["valor"]?.ToString();
-
-
                 var respuesta = new FacturaDGIIResponseModel
                 {
                     JsonInvoice = jsonObject.GetValue("json")?.ToString(),
@@ -3869,62 +3712,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     CodigoSeguridad = jsonObject.GetValue("codigoseguridad")?.ToString(),
                     CodigoRespuesta = jsonObjectResponse.GetValue("codigo")?.ToString(),
                     EstadoRespuesta = jsonObjectResponse.GetValue("estado")?.ToString(),
-                    Mensaje = mensajeValor
-
                 };
-
-                var registro = new FacturasDGII
-                {
-                    TipoeCF = model?.RFCE?.Encabezado?.IdDoc?.TipoeCF,
-                    ENCF = model?.RFCE?.Encabezado?.IdDoc?.eNCF,
-                    TipoPago = model?.RFCE?.Encabezado?.IdDoc?.TipoPago,
-                    IndicadorEnvioDiferido = model?.RFCE?.Encabezado?.IdDoc?.IndicadorEnvioDiferido,
-                    //IndicadorMontoGravado = model?.RFCE?.Encabezado?.IdDoc?.IndicadorMontoGravado,
-                    TipoIngresos = model?.RFCE?.Encabezado?.IdDoc?.TipoIngresos,
-
-                    RNCEmisor = model?.RFCE?.Encabezado?.Emisor?.RNCEmisor,
-                    RazonSocialEmisor = model?.RFCE?.Encabezado?.Emisor?.RazonSocialEmisor,
-                    NombreComercial = model?.RFCE?.Encabezado?.Emisor?.NombreComercial,
-                    DireccionEmisor = model?.RFCE?.Encabezado?.Emisor?.DireccionEmisor,
-                    Municipio = model?.RFCE?.Encabezado?.Emisor?.Municipio,
-                    Provincia = model?.RFCE?.Encabezado?.Emisor?.Provincia,
-                    CorreoEmisor = model?.RFCE?.Encabezado?.Emisor?.CorreoEmisor,
-                    WebSite = model?.RFCE?.Encabezado?.Emisor?.WebSite,
-                    CodigoVendedor = model?.RFCE?.Encabezado?.Emisor?.CodigoVendedor,
-                    NumeroFacturaInterna = model?.RFCE?.Encabezado?.Emisor?.NumeroFacturaInterna,
-                    NumeroPedidoInterno = model?.RFCE?.Encabezado?.Emisor?.NumeroPedidoInterno,
-                    ZonaVenta = model?.RFCE?.Encabezado?.Emisor?.ZonaVenta,
-                    FechaEmision = model?.RFCE?.Encabezado?.Emisor?.FechaEmision,
-
-                    RNCComprador = model?.RFCE?.Encabezado?.Comprador?.RNCComprador,
-                    RazonSocialComprador = model?.RFCE?.Encabezado?.Comprador?.RazonSocialComprador,
-                    ContactoComprador = model?.RFCE?.Encabezado?.Comprador?.ContactoComprador,
-                    CorreoComprador = model?.RFCE?.Encabezado?.Comprador?.CorreoComprador,
-                    DireccionComprador = model?.RFCE?.Encabezado?.Comprador?.DireccionComprador,
-                    MunicipioComprador = model?.RFCE?.Encabezado?.Comprador?.MunicipioComprador,
-                    ProvinciaComprador = model?.RFCE?.Encabezado?.Comprador?.ProvinciaComprador,
-                    FechaEntrega = model?.RFCE?.Encabezado?.Comprador?.FechaEntrega,
-                    FechaOrdenCompra = model?.RFCE?.Encabezado?.Comprador?.FechaOrdenCompra,
-                    NumeroOrdenCompra = model?.RFCE?.Encabezado?.Comprador?.NumeroOrdenCompra,
-                    CodigoInternoComprador = model?.RFCE?.Encabezado?.Comprador?.CodigoInternoComprador,
-
-                    MontoGravadoTotal = Convert.ToDecimal(model?.RFCE?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
-                    MontoGravadoI1 = Convert.ToDecimal(model?.RFCE?.Encabezado?.Totales?.MontoGravadoI1 ?? "0"),
-                    ITBIS1 = Convert.ToDecimal(model?.RFCE?.Encabezado?.Totales?.ITBIS1 ?? "0"),
-                    TotalITBIS = Convert.ToDecimal(model?.RFCE?.Encabezado?.Totales?.TotalITBIS ?? "0"),
-                    TotalITBIS1 = Convert.ToDecimal(model?.RFCE?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
-                    MontoTotal = Convert.ToDecimal(model?.RFCE?.Encabezado?.Totales?.MontoTotal ?? "0"),
-
-                    //FechaHoraFirma = model?.RFCE?.FechaHoraFirma,
-                    FechaRegistro = DateTime.Now
-                };
-
-                _context.FacturasDGII.Add(registro);
-                _context.SaveChanges();
-
-                respuesta.FacturaId = registro.Id;
-
-                _context.SaveChanges();
 
                 if (respuesta.CodigoRespuesta == "1")
                 {

@@ -1,0 +1,23 @@
+﻿@using DGIIFacturadorLoginMVCApp.Services
+@inject IDgiiConfigService ConfigService
+@{
+    ViewData["Title"] = "Configuración de Ambiente DGII";
+}
+
+<div class="container mt-4">
+    <h2>Configuración de Facturación Electrónica</h2>
+    <p>Ambiente activo actual: <strong>@ConfigService.Ambient.ToUpper()</strong></p>
+
+    <form asp-action="ConfiguracionAmbiente" method="post" class="col-md-4">
+        <div class="mb-3">
+            <label class="form-label">Selecciona el Ambiente:</label>
+            <select name="nuevoAmbiente" class="form-select">
+                <!- Compara para dejar seleccionado el actual ->
+                <option value="testecf" selected="@(ConfigService.Ambient == "testecf")">Pruebas / Test (testecf)</option>
+                <option value="certecf" selected="@(ConfigService.Ambient == "certecf")">Certificación (certecf)</option>
+                <option value="ecf" selected="@(ConfigService.Ambient == "ecf")">Producción (ecf)</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Aplicar Cambio</button>
+    </form>
+</div>

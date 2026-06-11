@@ -1,4 +1,5 @@
 using DGIIFacturadorLoginMVCApp.Data;
+using DGIIFacturadorLoginMVCApp.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography.X509Certificates;
@@ -56,6 +57,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddSingleton<IDgiiConfigService, DgiiConfigService>();
 
 builder.Services.AddSession(options =>
 {
