@@ -165,6 +165,11 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public string IndicadorBienoServicio { get; set; }
         public string CantidadItem { get; set; }
         public string UnidadMedida { get; set; }
+
+        public string FechaElaboracion { get; set; }
+
+        public string FechaVencimientoItem { get; set; }
+
         public string PrecioUnitarioItem { get; set; }
 
         public string DescuentoMonto { get; set; }

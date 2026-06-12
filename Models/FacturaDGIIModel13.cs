@@ -188,7 +188,6 @@ namespace DGIIFacturadorLoginMVCApp.Models
 
         public OtraMonedaDetalle13 OtraMonedaDetalle { get; set; }
 
-
         public string DescuentoMonto { get; set; }
         public TablaSubDescuento13 TablaSubDescuento { get; set; }
         public string RecargoMonto { get; set; }

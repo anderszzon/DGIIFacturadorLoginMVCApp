@@ -11,7 +11,19 @@ namespace DGIIFacturadorLoginMVCApp.Models
     {
         public EncabezadoModel3 Encabezado { get; set; } = new EncabezadoModel3();
         public DetallesItemsModel3 DetallesItems { get; set; } = new DetallesItemsModel3();
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public InformacionReferencia3 InformacionReferencia { get; set; }
         public string FechaHoraFirma { get; set; }
+    }
+
+    public class InformacionReferencia3
+    {
+        public string NCFModificado { get; set; }
+        public string FechaNCFModificado { get; set; }
+        public string CodigoModificacion { get; set; }
+        public string RazonModificacion { get; set; }
+
     }
 
     public class EncabezadoModel3
@@ -89,6 +101,8 @@ namespace DGIIFacturadorLoginMVCApp.Models
     {
         public string TipoImpuesto { get; set; }
         public string TasaImpuestoAdicional { get; set; }
+        public string MontoImpuestoSelectivoConsumoEspecifico { get; set; }
+        public string MontoImpuestoSelectivoConsumoAdvalorem { get; set; }
         public string OtrosImpuestosAdicionales { get; set; }
     }
 
@@ -105,10 +119,28 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public string IndicadorBienoServicio { get; set; }
         public string CantidadItem { get; set; }
         public string UnidadMedida { get; set; }
+        public string CantidadReferencia { get; set; }
+        public string UnidadReferencia { get; set; }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public TablaSubcantidadModel3 TablaSubcantidad { get; set; }
+        public string GradosAlcohol { get; set; }
+        public string PrecioUnitarioReferencia { get; set; }
         public string PrecioUnitarioItem { get; set; }
         public TablaImpuestoAdicionalModel3 TablaImpuestoAdicional { get; set; }
         public string MontoItem { get; set; }
 
+    }
+
+    public class TablaSubcantidadModel3
+    {
+        public List<SubcantidadItemModel3> SubcantidadItem { get; set; }
+    }
+
+    public class SubcantidadItemModel3
+    {
+        public string Subcantidad { get; set; }
+        public string CodigoSubcantidad { get; set; }
     }
 
     public class TablaImpuestoAdicionalModel3
