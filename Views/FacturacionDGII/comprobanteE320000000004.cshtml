@@ -383,6 +383,51 @@
         </div>
     </div>
 
+        <!-- Sección de ítems (dinámica) -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h3>Descuentos O Recargos</h3>
+                <button type="button" id="addItemBtn" class="btn btn-success">Agregar Descuento O Recargo</button>
+            </div>
+            <div class="card-body" id="itemsContainer">
+                @for (int i = 0; i < Model.ECF.DescuentosORecargos.DescuentoORecargo.Count; i++)
+                {
+                    <div class="item-row card mb-3">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5>Item @(i + 1)</h5>
+                            <button type="button" class="btn btn-danger btn-sm remove-item">Eliminar</button>
+                        </div>
+                        <div class="card-body row">
+
+                            <input type="hidden" asp-for="ECF.DescuentosORecargos.DescuentoORecargo[i].NumeroLinea" value="@(i + 1)" />
+
+                            <div class="form-group col-md-1">
+                                <label>Tipo Ajuste</label>
+                                <input asp-for="ECF.DescuentosORecargos.DescuentoORecargo[i].TipoAjuste" class="form-control" />
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Nombre del Item</label>
+                                <input asp-for="ECF.DescuentosORecargos.DescuentoORecargo[i].DescripcionDescuentooRecargo" class="form-control" />
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label>Indicador Bien ó Servicio</label>
+                                <input asp-for="ECF.DescuentosORecargos.DescuentoORecargo[i].TipoValor" class="form-control" />
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label>Cantidad Item</label>
+                                <input asp-for="ECF.DescuentosORecargos.DescuentoORecargo[i].MontoDescuentooRecargo" class="form-control" />
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label>Unidad Medida</label>
+                                <input asp-for="ECF.DescuentosORecargos.DescuentoORecargo[i].IndicadorFacturacionDescuentooRecargo" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+
     <!-- Sección de fecha y hora de firma -->
     <div class="card mb-4">
         <div class="card-header bg-primary text-white">

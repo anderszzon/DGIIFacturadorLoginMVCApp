@@ -4396,6 +4396,30 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                                 MontoItem = "15000.00"
                             }
                         }
+                    },
+                    DescuentosORecargos = new DescuentosORecargosModelE32
+                    {
+                        DescuentoORecargo = new List<DescuentosORecargoE32>
+                        {
+                            new DescuentosORecargoE32
+                            {
+                                NumeroLinea = "1",
+                                TipoAjuste = "R",
+                                DescripcionDescuentooRecargo = "Pronto Pago",
+                                TipoValor = "$",
+                                MontoDescuentooRecargo = "3500.00",
+                                IndicadorFacturacionDescuentooRecargo = "1"
+                            },
+                            new DescuentosORecargoE32
+                            {
+                                NumeroLinea = "2",
+                                TipoAjuste = "R",
+                                DescripcionDescuentooRecargo = "Pronto Pago",
+                                TipoValor = "$",
+                                MontoDescuentooRecargo = "2000.00",
+                                IndicadorFacturacionDescuentooRecargo = "2"
+                            }
+                        }
                     }
                 }
             };

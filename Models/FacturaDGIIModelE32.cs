@@ -12,6 +12,9 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public EncabezadoModelE32 Encabezado { get; set; } = new EncabezadoModelE32();
         public DetallesItemsModelE32 DetallesItems { get; set; } = new DetallesItemsModelE32();
         public InformacionReferenciaModelE32 InformacionReferencia { get; set; } = new InformacionReferenciaModelE32();
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public DescuentosORecargosModelE32? DescuentosORecargos { get; set; }
         public string FechaHoraFirma { get; set; }
     }
 
@@ -140,6 +143,21 @@ public class EncabezadoModelE32
 
         public string MontoItem { get; set; }
 
+    }
+
+    public class DescuentosORecargosModelE32
+    {
+        public List<DescuentosORecargoE32> DescuentoORecargo { get; set; }
+    }
+
+    public class DescuentosORecargoE32
+    {
+        public string NumeroLinea { get; set; }
+        public string TipoAjuste { get; set; }
+        public string DescripcionDescuentooRecargo { get; set; }
+        public string TipoValor { get; set; }
+        public string MontoDescuentooRecargo { get; set; }
+        public string IndicadorFacturacionDescuentooRecargo { get; set; }
     }
 
     public class TablaImpuestoAdicionalModelE32
