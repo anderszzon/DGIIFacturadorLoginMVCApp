@@ -76,6 +76,7 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public string TipoPago { get; set; }
         public string FechaLimitePago { get; set; }
         public string TerminoPago { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public TablaFormasPago14 TablaFormasPago { get; set; } = new TablaFormasPago14();
 
     }
