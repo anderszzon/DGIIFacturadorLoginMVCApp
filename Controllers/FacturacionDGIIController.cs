@@ -3512,6 +3512,81 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     root = jsonObject.GetValue("root")?.ToString()
                 };
 
+                var registro = new FacturasDGII
+                {
+                    TipoeCF = model?.ECF?.Encabezado?.IdDoc?.TipoeCF,
+                    ENCF = model?.ECF?.Encabezado?.IdDoc?.eNCF,
+                    TipoPago = model?.ECF?.Encabezado?.IdDoc?.TipoPago,
+                    IndicadorEnvioDiferido = model?.ECF?.Encabezado?.IdDoc?.IndicadorEnvioDiferido,
+                    IndicadorMontoGravado = model?.ECF?.Encabezado?.IdDoc?.IndicadorMontoGravado,
+                    TipoIngresos = model?.ECF?.Encabezado?.IdDoc?.TipoIngresos,
+
+                    RNCEmisor = model?.ECF?.Encabezado?.Emisor?.RNCEmisor,
+                    RazonSocialEmisor = model?.ECF?.Encabezado?.Emisor?.RazonSocialEmisor,
+                    NombreComercial = model?.ECF?.Encabezado?.Emisor?.NombreComercial,
+                    DireccionEmisor = model?.ECF?.Encabezado?.Emisor?.DireccionEmisor,
+                    Municipio = model?.ECF?.Encabezado?.Emisor?.Municipio,
+                    Provincia = model?.ECF?.Encabezado?.Emisor?.Provincia,
+                    CorreoEmisor = model?.ECF?.Encabezado?.Emisor?.CorreoEmisor,
+                    WebSite = model?.ECF?.Encabezado?.Emisor?.WebSite,
+                    CodigoVendedor = model?.ECF?.Encabezado?.Emisor?.CodigoVendedor,
+                    NumeroFacturaInterna = model?.ECF?.Encabezado?.Emisor?.NumeroFacturaInterna,
+                    NumeroPedidoInterno = model?.ECF?.Encabezado?.Emisor?.NumeroPedidoInterno,
+                    ZonaVenta = model?.ECF?.Encabezado?.Emisor?.ZonaVenta,
+                    FechaEmision = model?.ECF?.Encabezado?.Emisor?.FechaEmision,
+
+                    RNCComprador = model?.ECF?.Encabezado?.Comprador?.RNCComprador,
+                    RazonSocialComprador = model?.ECF?.Encabezado?.Comprador?.RazonSocialComprador,
+                    ContactoComprador = model?.ECF?.Encabezado?.Comprador?.ContactoComprador,
+                    CorreoComprador = model?.ECF?.Encabezado?.Comprador?.CorreoComprador,
+                    DireccionComprador = model?.ECF?.Encabezado?.Comprador?.DireccionComprador,
+                    MunicipioComprador = model?.ECF?.Encabezado?.Comprador?.MunicipioComprador,
+                    ProvinciaComprador = model?.ECF?.Encabezado?.Comprador?.ProvinciaComprador,
+                    FechaEntrega = model?.ECF?.Encabezado?.Comprador?.FechaEntrega,
+                    FechaOrdenCompra = model?.ECF?.Encabezado?.Comprador?.FechaOrdenCompra,
+                    NumeroOrdenCompra = model?.ECF?.Encabezado?.Comprador?.NumeroOrdenCompra,
+                    CodigoInternoComprador = model?.ECF?.Encabezado?.Comprador?.CodigoInternoComprador,
+
+                    MontoGravadoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
+                    MontoGravadoI1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoI1 ?? "0"),
+                    ITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.ITBIS1 ?? "0"),
+                    TotalITBIS = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS ?? "0"),
+                    TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
+                    MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
+
+                    NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
+
+                    FechaHoraFirma = model?.ECF?.FechaHoraFirma,
+                    FechaRegistro = DateTime.Now
+                };
+
+                _context.FacturasDGII.Add(registro);
+                _context.SaveChanges();
+
+                respuesta.FacturaId = registro.Id;
+
+                if (model?.ECF?.DetallesItems?.Item != null)
+                {
+                    foreach (var item in model.ECF.DetallesItems.Item)
+                    {
+                        var detalle = new ItemFactura
+                        {
+                            FacturaId = registro.Id,
+                            NumeroLinea = item.NumeroLinea,
+                            IndicadorFacturacion = item.IndicadorFacturacion,
+                            NombreItem = item.NombreItem,
+                            IndicadorBienoServicio = item.IndicadorBienoServicio,
+                            CantidadItem = Convert.ToDecimal(item.CantidadItem ?? "0"),
+                            UnidadMedida = item.UnidadMedida,
+                            PrecioUnitarioItem = Convert.ToDecimal(item.PrecioUnitarioItem ?? "0"),
+                            MontoItem = Convert.ToDecimal(item.MontoItem ?? "0")
+                        };
+
+                        _context.ItemsFactura.Add(detalle);
+                    }
+                }
+                _context.SaveChanges();
+
                 // Guardar en Session
                 HttpContext.Session.SetString("CodigoSeguridad",respuesta.CodigoSeguridad ?? string.Empty);
 
@@ -3746,6 +3821,81 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     CodigoSeguridad = jsonObject.GetValue("codigoseguridad")?.ToString(),
                     root = jsonObject.GetValue("root")?.ToString()
                 };
+
+                var registro = new FacturasDGII
+                {
+                    TipoeCF = model?.ECF?.Encabezado?.IdDoc?.TipoeCF,
+                    ENCF = model?.ECF?.Encabezado?.IdDoc?.eNCF,
+                    TipoPago = model?.ECF?.Encabezado?.IdDoc?.TipoPago,
+                    IndicadorEnvioDiferido = model?.ECF?.Encabezado?.IdDoc?.IndicadorEnvioDiferido,
+                    IndicadorMontoGravado = model?.ECF?.Encabezado?.IdDoc?.IndicadorMontoGravado,
+                    TipoIngresos = model?.ECF?.Encabezado?.IdDoc?.TipoIngresos,
+
+                    RNCEmisor = model?.ECF?.Encabezado?.Emisor?.RNCEmisor,
+                    RazonSocialEmisor = model?.ECF?.Encabezado?.Emisor?.RazonSocialEmisor,
+                    NombreComercial = model?.ECF?.Encabezado?.Emisor?.NombreComercial,
+                    DireccionEmisor = model?.ECF?.Encabezado?.Emisor?.DireccionEmisor,
+                    Municipio = model?.ECF?.Encabezado?.Emisor?.Municipio,
+                    Provincia = model?.ECF?.Encabezado?.Emisor?.Provincia,
+                    CorreoEmisor = model?.ECF?.Encabezado?.Emisor?.CorreoEmisor,
+                    WebSite = model?.ECF?.Encabezado?.Emisor?.WebSite,
+                    CodigoVendedor = model?.ECF?.Encabezado?.Emisor?.CodigoVendedor,
+                    NumeroFacturaInterna = model?.ECF?.Encabezado?.Emisor?.NumeroFacturaInterna,
+                    NumeroPedidoInterno = model?.ECF?.Encabezado?.Emisor?.NumeroPedidoInterno,
+                    ZonaVenta = model?.ECF?.Encabezado?.Emisor?.ZonaVenta,
+                    FechaEmision = model?.ECF?.Encabezado?.Emisor?.FechaEmision,
+
+                    RNCComprador = model?.ECF?.Encabezado?.Comprador?.RNCComprador,
+                    RazonSocialComprador = model?.ECF?.Encabezado?.Comprador?.RazonSocialComprador,
+                    ContactoComprador = model?.ECF?.Encabezado?.Comprador?.ContactoComprador,
+                    CorreoComprador = model?.ECF?.Encabezado?.Comprador?.CorreoComprador,
+                    DireccionComprador = model?.ECF?.Encabezado?.Comprador?.DireccionComprador,
+                    MunicipioComprador = model?.ECF?.Encabezado?.Comprador?.MunicipioComprador,
+                    ProvinciaComprador = model?.ECF?.Encabezado?.Comprador?.ProvinciaComprador,
+                    FechaEntrega = model?.ECF?.Encabezado?.Comprador?.FechaEntrega,
+                    FechaOrdenCompra = model?.ECF?.Encabezado?.Comprador?.FechaOrdenCompra,
+                    NumeroOrdenCompra = model?.ECF?.Encabezado?.Comprador?.NumeroOrdenCompra,
+                    CodigoInternoComprador = model?.ECF?.Encabezado?.Comprador?.CodigoInternoComprador,
+
+                    MontoGravadoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
+                    MontoGravadoI1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoI1 ?? "0"),
+                    ITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.ITBIS1 ?? "0"),
+                    TotalITBIS = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS ?? "0"),
+                    TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
+                    MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
+
+                    NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
+
+                    FechaHoraFirma = model?.ECF?.FechaHoraFirma,
+                    FechaRegistro = DateTime.Now
+                };
+
+                _context.FacturasDGII.Add(registro);
+                _context.SaveChanges();
+
+                respuesta.FacturaId = registro.Id;
+
+                if (model?.ECF?.DetallesItems?.Item != null)
+                {
+                    foreach (var item in model.ECF.DetallesItems.Item)
+                    {
+                        var detalle = new ItemFactura
+                        {
+                            FacturaId = registro.Id,
+                            NumeroLinea = item.NumeroLinea,
+                            IndicadorFacturacion = item.IndicadorFacturacion,
+                            NombreItem = item.NombreItem,
+                            IndicadorBienoServicio = item.IndicadorBienoServicio,
+                            CantidadItem = Convert.ToDecimal(item.CantidadItem ?? "0"),
+                            UnidadMedida = item.UnidadMedida,
+                            PrecioUnitarioItem = Convert.ToDecimal(item.PrecioUnitarioItem ?? "0"),
+                            MontoItem = Convert.ToDecimal(item.MontoItem ?? "0")
+                        };
+
+                        _context.ItemsFactura.Add(detalle);
+                    }
+                }
+                _context.SaveChanges();
 
                 // Guardar en Session
                 HttpContext.Session.SetString("CodigoSeguridad", respuesta.CodigoSeguridad ?? string.Empty);
@@ -3992,6 +4142,81 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     CodigoSeguridad = jsonObject.GetValue("codigoseguridad")?.ToString(),
                     root = jsonObject.GetValue("root")?.ToString()
                 };
+
+                var registro = new FacturasDGII
+                {
+                    TipoeCF = model?.ECF?.Encabezado?.IdDoc?.TipoeCF,
+                    ENCF = model?.ECF?.Encabezado?.IdDoc?.eNCF,
+                    TipoPago = model?.ECF?.Encabezado?.IdDoc?.TipoPago,
+                    IndicadorEnvioDiferido = model?.ECF?.Encabezado?.IdDoc?.IndicadorEnvioDiferido,
+                    IndicadorMontoGravado = model?.ECF?.Encabezado?.IdDoc?.IndicadorMontoGravado,
+                    TipoIngresos = model?.ECF?.Encabezado?.IdDoc?.TipoIngresos,
+
+                    RNCEmisor = model?.ECF?.Encabezado?.Emisor?.RNCEmisor,
+                    RazonSocialEmisor = model?.ECF?.Encabezado?.Emisor?.RazonSocialEmisor,
+                    NombreComercial = model?.ECF?.Encabezado?.Emisor?.NombreComercial,
+                    DireccionEmisor = model?.ECF?.Encabezado?.Emisor?.DireccionEmisor,
+                    Municipio = model?.ECF?.Encabezado?.Emisor?.Municipio,
+                    Provincia = model?.ECF?.Encabezado?.Emisor?.Provincia,
+                    CorreoEmisor = model?.ECF?.Encabezado?.Emisor?.CorreoEmisor,
+                    WebSite = model?.ECF?.Encabezado?.Emisor?.WebSite,
+                    CodigoVendedor = model?.ECF?.Encabezado?.Emisor?.CodigoVendedor,
+                    NumeroFacturaInterna = model?.ECF?.Encabezado?.Emisor?.NumeroFacturaInterna,
+                    NumeroPedidoInterno = model?.ECF?.Encabezado?.Emisor?.NumeroPedidoInterno,
+                    ZonaVenta = model?.ECF?.Encabezado?.Emisor?.ZonaVenta,
+                    FechaEmision = model?.ECF?.Encabezado?.Emisor?.FechaEmision,
+
+                    RNCComprador = model?.ECF?.Encabezado?.Comprador?.RNCComprador,
+                    RazonSocialComprador = model?.ECF?.Encabezado?.Comprador?.RazonSocialComprador,
+                    ContactoComprador = model?.ECF?.Encabezado?.Comprador?.ContactoComprador,
+                    CorreoComprador = model?.ECF?.Encabezado?.Comprador?.CorreoComprador,
+                    DireccionComprador = model?.ECF?.Encabezado?.Comprador?.DireccionComprador,
+                    MunicipioComprador = model?.ECF?.Encabezado?.Comprador?.MunicipioComprador,
+                    ProvinciaComprador = model?.ECF?.Encabezado?.Comprador?.ProvinciaComprador,
+                    FechaEntrega = model?.ECF?.Encabezado?.Comprador?.FechaEntrega,
+                    FechaOrdenCompra = model?.ECF?.Encabezado?.Comprador?.FechaOrdenCompra,
+                    NumeroOrdenCompra = model?.ECF?.Encabezado?.Comprador?.NumeroOrdenCompra,
+                    CodigoInternoComprador = model?.ECF?.Encabezado?.Comprador?.CodigoInternoComprador,
+
+                    MontoGravadoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
+                    MontoGravadoI1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoI1 ?? "0"),
+                    ITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.ITBIS1 ?? "0"),
+                    TotalITBIS = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS ?? "0"),
+                    TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
+                    MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
+
+                    NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
+
+                    FechaHoraFirma = model?.ECF?.FechaHoraFirma,
+                    FechaRegistro = DateTime.Now
+                };
+
+                _context.FacturasDGII.Add(registro);
+                _context.SaveChanges();
+
+                respuesta.FacturaId = registro.Id;
+
+                if (model?.ECF?.DetallesItems?.Item != null)
+                {
+                    foreach (var item in model.ECF.DetallesItems.Item)
+                    {
+                        var detalle = new ItemFactura
+                        {
+                            FacturaId = registro.Id,
+                            NumeroLinea = item.NumeroLinea,
+                            IndicadorFacturacion = item.IndicadorFacturacion,
+                            NombreItem = item.NombreItem,
+                            IndicadorBienoServicio = item.IndicadorBienoServicio,
+                            CantidadItem = Convert.ToDecimal(item.CantidadItem ?? "0"),
+                            UnidadMedida = item.UnidadMedida,
+                            PrecioUnitarioItem = Convert.ToDecimal(item.PrecioUnitarioItem ?? "0"),
+                            MontoItem = Convert.ToDecimal(item.MontoItem ?? "0")
+                        };
+
+                        _context.ItemsFactura.Add(detalle);
+                    }
+                }
+                _context.SaveChanges();
 
                 // Guardar en Session
                 HttpContext.Session.SetString("CodigoSeguridad", respuesta.CodigoSeguridad ?? string.Empty);
@@ -4605,6 +4830,81 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     CodigoSeguridad = jsonObject.GetValue("codigoseguridad")?.ToString(),
                     root = jsonObject.GetValue("root")?.ToString()
                 };
+
+                var registro = new FacturasDGII
+                {
+                    TipoeCF = model?.ECF?.Encabezado?.IdDoc?.TipoeCF,
+                    ENCF = model?.ECF?.Encabezado?.IdDoc?.eNCF,
+                    TipoPago = model?.ECF?.Encabezado?.IdDoc?.TipoPago,
+                    IndicadorEnvioDiferido = model?.ECF?.Encabezado?.IdDoc?.IndicadorEnvioDiferido,
+                    IndicadorMontoGravado = model?.ECF?.Encabezado?.IdDoc?.IndicadorMontoGravado,
+                    TipoIngresos = model?.ECF?.Encabezado?.IdDoc?.TipoIngresos,
+
+                    RNCEmisor = model?.ECF?.Encabezado?.Emisor?.RNCEmisor,
+                    RazonSocialEmisor = model?.ECF?.Encabezado?.Emisor?.RazonSocialEmisor,
+                    NombreComercial = model?.ECF?.Encabezado?.Emisor?.NombreComercial,
+                    DireccionEmisor = model?.ECF?.Encabezado?.Emisor?.DireccionEmisor,
+                    Municipio = model?.ECF?.Encabezado?.Emisor?.Municipio,
+                    Provincia = model?.ECF?.Encabezado?.Emisor?.Provincia,
+                    CorreoEmisor = model?.ECF?.Encabezado?.Emisor?.CorreoEmisor,
+                    WebSite = model?.ECF?.Encabezado?.Emisor?.WebSite,
+                    CodigoVendedor = model?.ECF?.Encabezado?.Emisor?.CodigoVendedor,
+                    NumeroFacturaInterna = model?.ECF?.Encabezado?.Emisor?.NumeroFacturaInterna,
+                    NumeroPedidoInterno = model?.ECF?.Encabezado?.Emisor?.NumeroPedidoInterno,
+                    ZonaVenta = model?.ECF?.Encabezado?.Emisor?.ZonaVenta,
+                    FechaEmision = model?.ECF?.Encabezado?.Emisor?.FechaEmision,
+
+                    RNCComprador = model?.ECF?.Encabezado?.Comprador?.RNCComprador,
+                    RazonSocialComprador = model?.ECF?.Encabezado?.Comprador?.RazonSocialComprador,
+                    ContactoComprador = model?.ECF?.Encabezado?.Comprador?.ContactoComprador,
+                    CorreoComprador = model?.ECF?.Encabezado?.Comprador?.CorreoComprador,
+                    DireccionComprador = model?.ECF?.Encabezado?.Comprador?.DireccionComprador,
+                    MunicipioComprador = model?.ECF?.Encabezado?.Comprador?.MunicipioComprador,
+                    ProvinciaComprador = model?.ECF?.Encabezado?.Comprador?.ProvinciaComprador,
+                    FechaEntrega = model?.ECF?.Encabezado?.Comprador?.FechaEntrega,
+                    FechaOrdenCompra = model?.ECF?.Encabezado?.Comprador?.FechaOrdenCompra,
+                    NumeroOrdenCompra = model?.ECF?.Encabezado?.Comprador?.NumeroOrdenCompra,
+                    CodigoInternoComprador = model?.ECF?.Encabezado?.Comprador?.CodigoInternoComprador,
+
+                    MontoGravadoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
+                    MontoGravadoI1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoI1 ?? "0"),
+                    ITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.ITBIS1 ?? "0"),
+                    TotalITBIS = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS ?? "0"),
+                    TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
+                    MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
+
+                    NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
+
+                    FechaHoraFirma = model?.ECF?.FechaHoraFirma,
+                    FechaRegistro = DateTime.Now
+                };
+
+                _context.FacturasDGII.Add(registro);
+                _context.SaveChanges();
+
+                respuesta.FacturaId = registro.Id;
+
+                if (model?.ECF?.DetallesItems?.Item != null)
+                {
+                    foreach (var item in model.ECF.DetallesItems.Item)
+                    {
+                        var detalle = new ItemFactura
+                        {
+                            FacturaId = registro.Id,
+                            NumeroLinea = item.NumeroLinea,
+                            IndicadorFacturacion = item.IndicadorFacturacion,
+                            NombreItem = item.NombreItem,
+                            IndicadorBienoServicio = item.IndicadorBienoServicio,
+                            CantidadItem = Convert.ToDecimal(item.CantidadItem ?? "0"),
+                            UnidadMedida = item.UnidadMedida,
+                            PrecioUnitarioItem = Convert.ToDecimal(item.PrecioUnitarioItem ?? "0"),
+                            MontoItem = Convert.ToDecimal(item.MontoItem ?? "0")
+                        };
+
+                        _context.ItemsFactura.Add(detalle);
+                    }
+                }
+                _context.SaveChanges();
 
                 // Guardar en Session
                 HttpContext.Session.SetString("CodigoSeguridad", respuesta.CodigoSeguridad ?? string.Empty);
