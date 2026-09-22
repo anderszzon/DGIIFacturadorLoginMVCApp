@@ -11754,6 +11754,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
+                    NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
+
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
