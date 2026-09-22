@@ -122,11 +122,14 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public string MontoGravadoTotal { get; set; }
         public string MontoGravadoI1 { get; set; }
         public string MontoGravadoI2 { get; set; }
+        public string MontoGravadoI3 { get; set; }
         public string ITBIS1 { get; set; }
         public string ITBIS2 { get; set; }
+        public string ITBIS3 { get; set; }
         public string TotalITBIS { get; set; }
         public string TotalITBIS1 { get; set; }
         public string TotalITBIS2 { get; set; }
+        public string TotalITBIS3 { get; set; }
         public string MontoImpuestoAdicional { get; set; }
         public ImpuestosAdicionalesModel13 ImpuestosAdicionales { get; set; }
         public string MontoExento { get; set; }
