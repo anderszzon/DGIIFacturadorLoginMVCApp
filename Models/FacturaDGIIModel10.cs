@@ -175,6 +175,7 @@ namespace DGIIFacturadorLoginMVCApp.Models
     public class SubRecargo10
     {
         public string TipoSubRecargo { get; set; }
+        public string SubRecargoPorcentaje { get; set; }
         public string MontoSubRecargo { get; set; }
 
     }
