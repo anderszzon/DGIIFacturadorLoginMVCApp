@@ -3676,7 +3676,23 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 string response = FacturacionElectronicaDGII.EnviarFacturaElectronicaSincrona(urlValidarSemilla, urlRecepcionResumenFactura, urlConsultaFactura);
 
                 JObject jsonObject = JObject.Parse(invoice);
-                JObject jsonObjectResponse = JObject.Parse(response);
+
+                string responseLimpia = response;
+
+                if (!string.IsNullOrEmpty(response) && response.Contains("{"))
+                {
+                    int inicioJson = response.IndexOf('{');
+                    responseLimpia = response.Substring(inicioJson);
+                }
+
+                JObject jsonObjectResponse = JObject.Parse(responseLimpia);
+
+                string mensajeValor = string.Empty;
+
+                if (jsonObjectResponse["mensajes"]?.HasValues == true)
+                {
+                    mensajeValor = jsonObjectResponse["mensajes"][0]?["valor"]?.ToString() ?? string.Empty;
+                }
 
                 var respuesta = new FacturaDGIIResponseModel
                 {
@@ -3690,16 +3706,18 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     CodigoSeguridad = jsonObject.GetValue("codigoseguridad")?.ToString(),
                     CodigoRespuesta = jsonObjectResponse.GetValue("codigo")?.ToString(),
                     EstadoRespuesta = jsonObjectResponse.GetValue("estado")?.ToString(),
+                    Mensaje = mensajeValor
+
                 };
 
                 if (respuesta.CodigoRespuesta == "1")
                 {
-                    return View("verFactura", respuesta);
+                    return View("verfacturaRFCE", respuesta);
                 }
                 else
                 {
                     ViewBag.MensajeError = respuesta.Mensaje;
-                    return View("verFactura", respuesta);
+                    return View("verfacturaRFCE", respuesta);
                 }
 
             }
@@ -3986,7 +4004,23 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 string response = FacturacionElectronicaDGII.EnviarFacturaElectronicaSincrona(urlValidarSemilla, urlRecepcionResumenFactura, urlConsultaFactura);
 
                 JObject jsonObject = JObject.Parse(invoice);
-                JObject jsonObjectResponse = JObject.Parse(response);
+
+                string responseLimpia = response;
+
+                if (!string.IsNullOrEmpty(response) && response.Contains("{"))
+                {
+                    int inicioJson = response.IndexOf('{');
+                    responseLimpia = response.Substring(inicioJson);
+                }
+
+                JObject jsonObjectResponse = JObject.Parse(responseLimpia);
+
+                string mensajeValor = string.Empty;
+
+                if (jsonObjectResponse["mensajes"]?.HasValues == true)
+                {
+                    mensajeValor = jsonObjectResponse["mensajes"][0]?["valor"]?.ToString() ?? string.Empty;
+                }
 
                 var respuesta = new FacturaDGIIResponseModel
                 {
@@ -4000,16 +4034,18 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     CodigoSeguridad = jsonObject.GetValue("codigoseguridad")?.ToString(),
                     CodigoRespuesta = jsonObjectResponse.GetValue("codigo")?.ToString(),
                     EstadoRespuesta = jsonObjectResponse.GetValue("estado")?.ToString(),
+                    Mensaje = mensajeValor
+
                 };
 
                 if (respuesta.CodigoRespuesta == "1")
                 {
-                    return View("verFactura", respuesta);
+                    return View("verfacturaRFCE", respuesta);
                 }
                 else
                 {
                     ViewBag.MensajeError = respuesta.Mensaje;
-                    return View("verFactura", respuesta);
+                    return View("verfacturaRFCE", respuesta);
                 }
 
             }
@@ -4309,7 +4345,23 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 string response = FacturacionElectronicaDGII.EnviarFacturaElectronicaSincrona(urlValidarSemilla, urlRecepcionResumenFactura, urlConsultaFactura);
 
                 JObject jsonObject = JObject.Parse(invoice);
-                JObject jsonObjectResponse = JObject.Parse(response);
+
+                string responseLimpia = response;
+
+                if (!string.IsNullOrEmpty(response) && response.Contains("{"))
+                {
+                    int inicioJson = response.IndexOf('{');
+                    responseLimpia = response.Substring(inicioJson);
+                }
+
+                JObject jsonObjectResponse = JObject.Parse(responseLimpia);
+
+                string mensajeValor = string.Empty;
+
+                if (jsonObjectResponse["mensajes"]?.HasValues == true)
+                {
+                    mensajeValor = jsonObjectResponse["mensajes"][0]?["valor"]?.ToString() ?? string.Empty;
+                }
 
                 var respuesta = new FacturaDGIIResponseModel
                 {
@@ -4323,16 +4375,18 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     CodigoSeguridad = jsonObject.GetValue("codigoseguridad")?.ToString(),
                     CodigoRespuesta = jsonObjectResponse.GetValue("codigo")?.ToString(),
                     EstadoRespuesta = jsonObjectResponse.GetValue("estado")?.ToString(),
+                    Mensaje = mensajeValor
+
                 };
 
                 if (respuesta.CodigoRespuesta == "1")
                 {
-                    return View("verFactura", respuesta);
+                    return View("verfacturaRFCE", respuesta);
                 }
                 else
                 {
                     ViewBag.MensajeError = respuesta.Mensaje;
-                    return View("verFactura", respuesta);
+                    return View("verfacturaRFCE", respuesta);
                 }
 
             }
@@ -4448,18 +4502,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                             eNCF = "E320000000004",
                             IndicadorMontoGravado = "0",
                             TipoIngresos = "01",
-                            TipoPago = "1",
-                            //TablaFormasPago = new TablaFormasPagoModelE32
-                            //{
-                            //    FormaDePago = new List<FormaDePagoModelE32>
-                            //    {
-                            //        new FormaDePagoModelE32
-                            //        {
-                            //            FormaPago = "1",
-                            //            MontoPago = "567375.00"
-                            //        }
-                            //    }
-                            //}
+                            TipoPago = "1"
                         },
                         Emisor = new EmisorModelE32
                         {
@@ -4996,7 +5039,23 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 string response = FacturacionElectronicaDGII.EnviarFacturaElectronicaSincrona(urlValidarSemilla, urlRecepcionResumenFactura, urlConsultaFactura);
 
                 JObject jsonObject = JObject.Parse(invoice);
-                JObject jsonObjectResponse = JObject.Parse(response);
+
+                string responseLimpia = response;
+
+                if (!string.IsNullOrEmpty(response) && response.Contains("{"))
+                {
+                    int inicioJson = response.IndexOf('{');
+                    responseLimpia = response.Substring(inicioJson);
+                }
+
+                JObject jsonObjectResponse = JObject.Parse(responseLimpia);
+
+                string mensajeValor = string.Empty;
+
+                if (jsonObjectResponse["mensajes"]?.HasValues == true)
+                {
+                    mensajeValor = jsonObjectResponse["mensajes"][0]?["valor"]?.ToString() ?? string.Empty;
+                }
 
                 var respuesta = new FacturaDGIIResponseModel
                 {
@@ -5010,16 +5069,18 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     CodigoSeguridad = jsonObject.GetValue("codigoseguridad")?.ToString(),
                     CodigoRespuesta = jsonObjectResponse.GetValue("codigo")?.ToString(),
                     EstadoRespuesta = jsonObjectResponse.GetValue("estado")?.ToString(),
+                    Mensaje = mensajeValor
+
                 };
 
                 if (respuesta.CodigoRespuesta == "1")
                 {
-                    return View("verFactura", respuesta);
+                    return View("verfacturaRFCE", respuesta);
                 }
                 else
                 {
                     ViewBag.MensajeError = respuesta.Mensaje;
-                    return View("verFactura", respuesta);
+                    return View("verfacturaRFCE", respuesta);
                 }
 
             }

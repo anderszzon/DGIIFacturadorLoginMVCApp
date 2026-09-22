@@ -1,0 +1,78 @@
+﻿@model FacturaDGIIResponseModel
+
+@if (Model?.CodigoRespuesta == "1")
+{
+    <div class="container mt-4">
+        <div class="alert alert-success" role="alert">
+            <strong></strong> La factura ha sido procesada.
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Detalles de la Factura DGII</h4> 
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-hover table-striped">
+                    <tbody>
+                        <tr>
+                            <th scope="row" class="w-25">Json Invoice</th> 
+                            <td>@Model.JsonInvoice</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">ENCF</th>
+                            <td>@Model.ENCF</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Xml Semilla</th>
+                            <td>@Model.XmlSemilla</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Xml Semilla Firmada</th>
+                            <td>@Model.XmlSemillaFirmada</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Token</th>
+                            <td>@Model.Token</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Xml Factura</th>
+                            <td>@Model.XmlFactura</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Xml Factura Firmada</th>
+                            <td>@Model.XmlFacturaFirmada</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Código Seguridad</th>
+                            <td>@Model.CodigoSeguridad</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Código Respuesta</th>
+                            <td>@Model.CodigoRespuesta</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Estado Respuesta</th>
+                            <td>@Model.EstadoRespuesta</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Mensaje</th>
+                            <td>@Model.Mensaje</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+else if (!string.IsNullOrEmpty(Model?.Mensaje))
+{
+    <div class="container mt-4">
+        <div class="alert alert-danger" role="alert">
+            <strong>Error:</strong> @Model?.Mensaje 
+        </div>
+    </div>
+}
+
+                              
