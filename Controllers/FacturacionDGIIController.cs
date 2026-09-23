@@ -98,6 +98,22 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             return File(pdfBytes, "application/pdf", $"Factura_{factura.ENCF}.pdf");
         }
 
+        [HttpGet]
+        public IActionResult GenerarXMLDownloads(int id)
+        {
+            var factura = _context.FacturasDGII
+                .FirstOrDefault(f => f.Id == id);
+
+            if (factura == null || string.IsNullOrWhiteSpace(factura.XmlFacturaFirmada))
+            {
+                return NotFound("No se encontró el comprobante o el XML no está disponible.");
+            }
+
+            byte[] xmlBytes = System.Text.Encoding.UTF8.GetBytes(factura.XmlFacturaFirmada);
+
+            return File(xmlBytes, "application/xml", $"eCF_{factura.ENCF}.xml");
+        }
+
         private byte[] CrearFacturaPDFInMemory(FacturasDGII factura, string codigoSeguridad, string webRootPath)
         {
 
@@ -3341,6 +3357,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
 
+                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
+
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -3555,6 +3573,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
+
+                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
 
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
@@ -3883,6 +3903,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
+
+                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
 
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
@@ -4222,6 +4244,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
+
+                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
 
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
@@ -4917,6 +4941,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
+
+                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
 
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now

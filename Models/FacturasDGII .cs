@@ -51,7 +51,7 @@
         public decimal MontoTotal { get; set; }
 
         public string NCFModificado { get; set; }
-
+        public string XmlFacturaFirmada { get; set; }
         public List<ItemFactura> Items { get; set; } = new List<ItemFactura>();
 
         // Fecha
