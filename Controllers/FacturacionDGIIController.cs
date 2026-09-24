@@ -525,6 +525,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
 
+                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
+
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -1265,6 +1267,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
 
+                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
+
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -1612,6 +1616,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
 
+                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
+
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -1892,6 +1898,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
 
+                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
+
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -2036,6 +2044,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
 
+                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
+
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -2179,6 +2189,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
+
+                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
 
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
@@ -4805,6 +4817,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
 
+                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
+
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -5345,6 +5359,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
+
+                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
 
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
@@ -6134,6 +6150,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado,
 
+                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
+
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -6395,6 +6413,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
+
+                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
 
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
@@ -6668,6 +6688,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
 
+                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
+
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -6935,6 +6957,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
+
+                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
 
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
@@ -7329,6 +7353,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
+
+                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
 
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
@@ -7726,6 +7752,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
 
+                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
+
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -7915,6 +7943,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
+
+                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
 
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
@@ -8205,6 +8235,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
 
+                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
+
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -8393,6 +8425,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
+
+                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
 
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
@@ -8942,6 +8976,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
 
+                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
+
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -9200,6 +9236,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
+
+                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
 
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
@@ -9673,6 +9711,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
 
+                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
+
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -9932,6 +9972,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
+
+                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
 
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
@@ -10304,6 +10346,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
 
+                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
+
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -10624,6 +10668,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
+
+                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
 
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
@@ -11073,6 +11119,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
 
+                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
+
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -11357,6 +11405,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
+
+                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
 
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
@@ -11645,6 +11695,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
 
+                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
+
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -11904,6 +11956,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
 
+                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
+
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -12142,6 +12196,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
+
+                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
 
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
@@ -12422,6 +12478,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
 
+                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
+
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
                 };
@@ -12689,6 +12747,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
 
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
+
+                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
 
                     FechaHoraFirma = model?.ECF?.FechaHoraFirma,
                     FechaRegistro = DateTime.Now
