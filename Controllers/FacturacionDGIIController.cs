@@ -145,9 +145,9 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 leftCell.Add(logo);
 
-                leftCell.Add(new Paragraph("Mora Tapia Peralta & Asociado, SRL").SetFontSize(9));
+                leftCell.Add(new Paragraph("MORA TAPIA PERALTA & ASOCIADOS SRL").SetFontSize(9));
                 leftCell.Add(new Paragraph($"RNC: {factura.RNCEmisor}").SetFontSize(9));
-                leftCell.Add(new Paragraph("Dirección: Calle Ciudad Heredia de Costa Rica No.37 Local 303 Hondura La Feria").SetFontSize(9));
+                leftCell.Add(new Paragraph("Dirección: CALLE CIUDAD HEREDIA DE COSTA RICA NO. 37, LOCAL 303, HONDURA LA FERIA.").SetFontSize(9));
                 leftCell.Add(new Paragraph("Teléfono: (829)-435-9277").SetFontSize(9));
                 leftCell.Add(new Paragraph("Email: mtp@mtpasociados.com").SetFontSize(9));
 
@@ -310,22 +310,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 Cell leftCell1 = new Cell().SetBorder(Border.NO_BORDER).SetTextAlignment(TextAlignment.LEFT);
 
-                Paragraph lineaFirma = new Paragraph("_____________________________________")
-                    .SetTextAlignment(TextAlignment.LEFT)
-                    .SetFontSize(9)
-                    .SetMarginBottom(0);
-
-                Paragraph autorizadoPor = new Paragraph("Autorizado por")
-                    .SetFontSize(9)
-                    .SetTextAlignment(TextAlignment.LEFT)
-                    .SetFont(boldFont)
-                    .SetMarginTop(2);
-
-                leftCell1.Add(lineaFirma);
-                leftCell1.Add(autorizadoPor);
-
-                Cell rightCell1 = new Cell().SetBorder(Border.NO_BORDER).SetTextAlignment(TextAlignment.RIGHT);
-
                 DateTime fechaFirma = DateTime.ParseExact(factura.FechaHoraFirma, "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture);
 
                 string soloFecha = fechaFirma.ToString("dd-MM-yyyy");
@@ -337,11 +321,27 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 BarcodeQRCode qrCode = new BarcodeQRCode(url);
                 Image qrCodeImage = new Image(qrCode.CreateFormXObject(pdf));
                 qrCodeImage.ScaleToFit(100, 100);
-                qrCodeImage.SetHorizontalAlignment(HorizontalAlignment.RIGHT);
+                qrCodeImage.SetHorizontalAlignment(HorizontalAlignment.LEFT);
 
-                rightCell1.Add(qrCodeImage);
-                rightCell1.Add(new Paragraph($"Código de Seguridad: {codigoSeguridad}").SetFontSize(9).SetTextAlignment(TextAlignment.RIGHT).SetMarginTop(5));
-                rightCell1.Add(new Paragraph($"FechaHoraFirma: {factura.FechaHoraFirma}").SetFontSize(9).SetTextAlignment(TextAlignment.RIGHT));
+                leftCell1.Add(qrCodeImage);
+                leftCell1.Add(new Paragraph($"Código de Seguridad: {codigoSeguridad}").SetFontSize(9).SetTextAlignment(TextAlignment.LEFT).SetMarginTop(5));
+                leftCell1.Add(new Paragraph($"FechaHoraFirma: {factura.FechaHoraFirma}").SetFontSize(9).SetTextAlignment(TextAlignment.LEFT));
+
+                Cell rightCell1 = new Cell().SetBorder(Border.NO_BORDER).SetTextAlignment(TextAlignment.CENTER);
+
+                Paragraph lineaFirma = new Paragraph("_____________________________________")
+                    .SetTextAlignment(TextAlignment.CENTER)
+                    .SetFontSize(9)
+                    .SetMarginBottom(0);
+
+                Paragraph autorizadoPor = new Paragraph("Autorizado por")
+                    .SetFontSize(9)
+                    .SetTextAlignment(TextAlignment.CENTER)
+                    .SetFont(boldFont)
+                    .SetMarginTop(2);
+
+                rightCell1.Add(lineaFirma);
+                rightCell1.Add(autorizadoPor);
 
                 finalTable.AddCell(leftCell1);
                 finalTable.AddCell(rightCell1);
@@ -377,8 +377,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModel1
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "010101",
                             Provincia = "010000",
@@ -392,8 +392,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Comprador = new CompradorModel1
                         {
-                            RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RNCComprador = "132390245",
+                            RazonSocialComprador = " FERREJEBA EIRL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -594,7 +594,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     DetalleAprobacionComercial = new DetalleAprobacionComercialACECF
                     {
                         Version = "",
-                        RNCEmisor = "131880681",
+                        RNCEmisor = "132390245",
                         eNCF = "E310000000001",
                         FechaEmision = "01-04-2020",
                         MontoTotal = "7080",
@@ -686,8 +686,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModel2
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "010100",
                             Provincia = "010000",
@@ -701,8 +701,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Comprador = new CompradorModel2
                         {
-                            RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RNCComprador = "132390245",
+                            RazonSocialComprador = " FERREJEBA EIRL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -863,8 +863,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModel2
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "010100",
                             Provincia = "010000",
@@ -878,8 +878,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Comprador = new CompradorModel2
                         {
-                            RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RNCComprador = "132390245",
+                            RazonSocialComprador = " FERREJEBA EIRL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -1085,8 +1085,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModel3
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "010100",
                             Provincia = "010000",
@@ -1100,8 +1100,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Comprador = new CompradorModel3
                         {
-                            RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RNCComprador = "132390245",
+                            RazonSocialComprador = " FERREJEBA EIRL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -1348,8 +1348,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModel2
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "010100",
                             Provincia = "010000",
@@ -1363,8 +1363,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Comprador = new CompradorModel2
                         {
-                            RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RNCComprador = "132390245",
+                            RazonSocialComprador = " FERREJEBA EIRL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -1696,8 +1696,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModel2
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "010100",
                             Provincia = "010000",
@@ -1711,8 +1711,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Comprador = new CompradorModel2
                         {
-                            RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RNCComprador = "132390245",
+                            RazonSocialComprador = " FERREJEBA EIRL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -2272,8 +2272,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModel3
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "010100",
                             Provincia = "010000",
@@ -2287,7 +2287,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Comprador = new CompradorModel3
                         {
-                            RNCComprador = "131880681",
+                            RNCComprador = "132390245",
                             RazonSocialComprador = "CONSEJO NACIONAL DE SEGURIDAD SOCIAL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
@@ -2537,8 +2537,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModel4
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "010101",
                             Provincia = "010000",
@@ -2552,7 +2552,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Comprador = new CompradorModel4
                         {
-                            RNCComprador = "131880681",
+                            RNCComprador = "132390245",
                             RazonSocialComprador = "CONSEJO NACIONAL DE SEGURIDAD SOCIAL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
@@ -2824,8 +2824,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModel5
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "010100",
                             Provincia = "010000",
@@ -2839,8 +2839,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Comprador = new CompradorModel5
                         {
-                            RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RNCComprador = "132390245",
+                            RazonSocialComprador = " FERREJEBA EIRL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -3125,8 +3125,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModelE32
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "010100",
                             Provincia = "010000",
@@ -3140,8 +3140,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Comprador = new CompradorModelE32
                         {
-                            RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RNCComprador = "132390245",
+                            RazonSocialComprador = " FERREJEBA EIRL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -3447,7 +3447,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModelE32
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS PRUEBA FACTURA DE CONSUMO MENOR 250MIL",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             NombreComercial = "DOCUMENTOS ELECTRONICOS",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             CorreoEmisor = "DOCUMENTOSELECTRONICOS@123.COM",
@@ -3455,8 +3455,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Comprador = new CompradorModelE32
                         {
-                            RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RNCComprador = "132390245",
+                            RazonSocialComprador = " FERREJEBA EIRL",
                             CorreoComprador = "DOCUMENTOSELECTRONICOSDE0612345678969789@123.COM",
                             DireccionComprador = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             MunicipioComprador = "170203",
@@ -3670,13 +3670,13 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModelE32RFCE
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS PRUEBA FACTURA DE CONSUMO MENOR 250MIL",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             FechaEmision = "01-04-2020"
                         },
                         Comprador = new CompradorModelE32RFCE
                         {
-                            RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RNCComprador = "132390245",
+                            RazonSocialComprador = " FERREJEBA EIRL",
                         },
                         Totales = new TotalesModelE32RFCE
                         {
@@ -3788,7 +3788,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModelE32
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS PRUEBA FACTURA DE CONSUMO MENOR 250MIL",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             NombreComercial = "DOCUMENTOS ELECTRONICOS",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             CorreoEmisor = "DOCUMENTOSELECTRONICOS@123.COM",
@@ -3796,8 +3796,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Comprador = new CompradorModelE32
                         {
-                            RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RNCComprador = "132390245",
+                            RazonSocialComprador = " FERREJEBA EIRL",
                             CorreoComprador = "DOCUMENTOSELECTRONICOSDE0612345678969789@123.COM",
                             DireccionComprador = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             MunicipioComprador = "170203",
@@ -4000,13 +4000,13 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModelE32RFCE
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS PRUEBA FACTURA DE CONSUMO MENOR 250MIL",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             FechaEmision = "01-04-2020"
                         },
                         Comprador = new CompradorModelE32RFCE
                         {
-                            RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RNCComprador = "132390245",
+                            RazonSocialComprador = " FERREJEBA EIRL",
                         },
                         Totales = new TotalesModelE32RFCE
                         {
@@ -4118,7 +4118,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModelE32
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS PRUEBA FACTURA DE CONSUMO MENOR 250MIL",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             NombreComercial = "DOCUMENTOS ELECTRONICOS",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             CorreoEmisor = "DOCUMENTOSELECTRONICOS@123.COM",
@@ -4126,8 +4126,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Comprador = new CompradorModelE32
                         {
-                            RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RNCComprador = "132390245",
+                            RazonSocialComprador = " FERREJEBA EIRL",
                             CorreoComprador = "DOCUMENTOSELECTRONICOSDE0612345678969789@123.COM",
                             DireccionComprador = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             MunicipioComprador = "170203",
@@ -4342,13 +4342,13 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModelE32RFCE
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS PRUEBA FACTURA DE CONSUMO MENOR 250MIL",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             FechaEmision = "01-04-2020"
                         },
                         Comprador = new CompradorModelE32RFCE
                         {
-                            RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RNCComprador = "132390245",
+                            RazonSocialComprador = " FERREJEBA EIRL",
                         },
                         Totales = new TotalesModelE32RFCE
                         {
@@ -4461,7 +4461,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModelE32
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS PRUEBA FACTURA DE CONSUMO MENOR 250MIL",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             NombreComercial = "DOCUMENTOS ELECTRONICOS",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             CorreoEmisor = "DOCUMENTOSELECTRONICOS@123.COM",
@@ -4469,8 +4469,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Comprador = new CompradorModelE32
                         {
-                            RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RNCComprador = "132390245",
+                            RazonSocialComprador = " FERREJEBA EIRL",
                             CorreoComprador = "DOCUMENTOSELECTRONICOSDE0612345678969789@123.COM",
                             DireccionComprador = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             MunicipioComprador = "170203",
@@ -4543,8 +4543,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModelE32
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "010100",
                             Provincia = "010000",
@@ -4558,8 +4558,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Comprador = new CompradorModelE32
                         {
-                            RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RNCComprador = "132390245",
+                            RazonSocialComprador = " FERREJEBA EIRL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -5041,13 +5041,13 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModelE32RFCE
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS PRUEBA FACTURA DE CONSUMO MENOR 250MIL",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             FechaEmision = "01-04-2020"
                         },
                         Comprador = new CompradorModelE32RFCE
                         {
-                            RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RNCComprador = "132390245",
+                            RazonSocialComprador = " FERREJEBA EIRL",
                         },
                         Totales = new TotalesModelE32RFCE
                         {
@@ -5158,8 +5158,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModel6
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "010100",
                             Provincia = "010000",
@@ -5173,8 +5173,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Comprador = new CompradorModel6
                         {
-                            RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RNCComprador = "132390245",
+                            RazonSocialComprador = " FERREJEBA EIRL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -5440,8 +5440,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModel6
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "320301",
                             Provincia = "320000",
@@ -5455,8 +5455,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Comprador = new CompradorModel6
                         {
-                            RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RNCComprador = "132390245",
+                            RazonSocialComprador = " FERREJEBA EIRL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -5657,8 +5657,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModel7
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "320301",
                             Provincia = "320000",
@@ -5672,8 +5672,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Comprador = new CompradorModel7
                         {
-                            RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RNCComprador = "132390245",
+                            RazonSocialComprador = " FERREJEBA EIRL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -5972,8 +5972,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModel8
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "010100",
                             Provincia = "010000",
@@ -5987,8 +5987,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Comprador = new CompradorModel8
                         {
-                            RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RNCComprador = "132390245",
+                            RazonSocialComprador = " FERREJEBA EIRL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -6231,8 +6231,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModel9
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "010100",
                             Provincia = "010000",
@@ -6246,8 +6246,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Comprador = new CompradorModel9
                         {
-                            RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RNCComprador = "132390245",
+                            RazonSocialComprador = " FERREJEBA EIRL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -6496,9 +6496,9 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModel9
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            //NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
-                            DireccionEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            //NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            DireccionEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             //Municipio = "010100",
                             //Provincia = "010000",
                             //CorreoEmisor = "DOCUMENTOSELECTRONICOSDE0612345678969789+9000000000000000000000000000001@123.COM",
@@ -6511,8 +6511,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Comprador = new CompradorModel9
                         {
-                            RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RNCComprador = "132390245",
+                            RazonSocialComprador = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             //ContactoComprador = "MARCOS LATIPLOL",
                             //CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             //DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -6780,7 +6780,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModel10
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "010101",
                             Provincia = "010000",
@@ -6788,8 +6788,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Comprador = new CompradorModel10
                         {
-                            RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RNCComprador = "132390245",
+                            RazonSocialComprador = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
                             MunicipioComprador = "010100",
@@ -7051,8 +7051,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModel10
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "010100",
                             Provincia = "010000",
@@ -7062,7 +7062,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Comprador = new CompradorModel10
                         {
                             RNCComprador = "533445861",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 11",
+                            RazonSocialComprador = " FERREJEBA EIRL",
                         },
                         Totales = new TotalesModel10
                         {
@@ -7446,8 +7446,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModel10
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "010100",
                             Provincia = "010000",
@@ -7457,7 +7457,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Comprador = new CompradorModel10
                         {
                             RNCComprador = "533445861",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 11",
+                            RazonSocialComprador = " FERREJEBA EIRL",
                         },
                         Totales = new TotalesModel10
                         {
@@ -7831,8 +7831,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModel11
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "010101",
                             Provincia = "010000",
@@ -8024,8 +8024,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModel11
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "010100",
                             Provincia = "010000",
@@ -8314,8 +8314,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModel11
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "010100",
                             Provincia = "010000",
@@ -8521,8 +8521,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModel12
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "010101",
                             Provincia = "010000",
@@ -8536,8 +8536,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Comprador = new CompradorModel12
                         {
-                            RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RNCComprador = "132390245",
+                            RazonSocialComprador = " FERREJEBA EIRL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -8791,8 +8791,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModel12
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "010100",
                             Provincia = "010000",
@@ -8806,8 +8806,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Comprador = new CompradorModel12
                         {
-                            RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RNCComprador = "132390245",
+                            RazonSocialComprador = " FERREJEBA EIRL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -9068,8 +9068,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModel12
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "010100",
                             Provincia = "010000",
@@ -9083,8 +9083,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Comprador = new CompradorModel12
                         {
-                            RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RNCComprador = "132390245",
+                            RazonSocialComprador = " FERREJEBA EIRL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -9329,8 +9329,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModel12
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "010100",
                             Provincia = "010000",
@@ -9344,8 +9344,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Comprador = new CompradorModel12
                         {
-                            RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RNCComprador = "132390245",
+                            RazonSocialComprador = " FERREJEBA EIRL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -9794,8 +9794,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModel13
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "010101",
                             Provincia = "010000",
@@ -9809,8 +9809,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Comprador = new CompradorModel13
                         {
-                            RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 04",
+                            RNCComprador = "132390245",
+                            RazonSocialComprador = " FERREJEBA EIRL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -10055,8 +10055,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModel13
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "010100",
                             Provincia = "010000",
@@ -10070,8 +10070,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Comprador = new CompradorModel13
                         {
-                            RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RNCComprador = "132390245",
+                            RazonSocialComprador = " FERREJEBA EIRL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -10428,8 +10428,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModel13
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "010100",
                             Provincia = "010000",
@@ -10443,8 +10443,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Comprador = new CompradorModel13
                         {
-                            RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RNCComprador = "132390245",
+                            RazonSocialComprador = " FERREJEBA EIRL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -10751,8 +10751,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModel13
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "010100",
                             Provincia = "010000",
@@ -10766,8 +10766,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Comprador = new CompradorModel13
                         {
-                            RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RNCComprador = "132390245",
+                            RazonSocialComprador = " FERREJEBA EIRL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -11213,8 +11213,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModel14
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "010101",
                             Provincia = "010000",
@@ -11227,7 +11227,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Comprador = new CompradorModel14
                         {
-                            RNCComprador = "131880681",
+                            RNCComprador = "132390245",
                             RazonSocialComprador = "ZONA FRANCA LOI",
                             ContactoComprador = "MARCOS LLUBERES",
                             CorreoComprador = "MARCOSLLUBERES@KKKK.COM",
@@ -11498,8 +11498,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModel14
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "010100",
                             Provincia = "010000",
@@ -11513,8 +11513,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Comprador = new CompradorModel14
                         {
-                            RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RNCComprador = "132390245",
+                            RazonSocialComprador = " FERREJEBA EIRL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -11776,8 +11776,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModel14
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "010100",
                             Provincia = "010000",
@@ -11791,8 +11791,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Comprador = new CompradorModel14
                         {
-                            RNCComprador = "131880681",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03",
+                            RNCComprador = "132390245",
+                            RazonSocialComprador = " FERREJEBA EIRL",
                             ContactoComprador = "MARCOS LATIPLOL",
                             CorreoComprador = "MARCOSLATIPLOL@KKKK.COM",
                             DireccionComprador = "CALLE JACINTO DE LA CONCHA FELIZ ESQUINA 27 DE FEBRERO,FRENTE A DOMINO",
@@ -12037,8 +12037,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModel15
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "010101",
                             Provincia = "010000",
@@ -12051,7 +12051,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Comprador = new CompradorModel15
                         {
                             IdentificadorExtranjero = "533445888",
-                            RazonSocialComprador = "ALEJA FERMIN SANTOS"
+                            RazonSocialComprador = " FERREJEBA EIRL"
                         },
                         Totales = new TotalesModel15
                         {
@@ -12288,8 +12288,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModel15
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "010100",
                             Provincia = "010000",
@@ -12302,7 +12302,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Comprador = new CompradorModel15
                         {
                             IdentificadorExtranjero = "350555123",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03"
+                            RazonSocialComprador = " FERREJEBA EIRL"
                         },
                         Totales = new TotalesModel15
                         {
@@ -12558,8 +12558,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Emisor = new EmisorModel15
                         {
                             RNCEmisor = "130322791",
-                            RazonSocialEmisor = "DOCUMENTOS ELECTRONICOS DE 02",
-                            NombreComercial = "DOCUMENTOS ELECTRONICOS DE 02",
+                            RazonSocialEmisor = "MORA TAPIA PERALTA & ASOCIADOS SRL",
+                            NombreComercial = "MORA TAPIA PERALTA & ASOCIADOS SRL",
                             DireccionEmisor = "AVE. ISABEL AGUIAR NO. 269, ZONA INDUSTRIAL DE HERRERA",
                             Municipio = "010100",
                             Provincia = "010000",
@@ -12572,7 +12572,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         Comprador = new CompradorModel15
                         {
                             IdentificadorExtranjero = "350555123",
-                            RazonSocialComprador = "DOCUMENTOS ELECTRONICOS DE 03"
+                            RazonSocialComprador = " FERREJEBA EIRL"
                         },
                         Totales = new TotalesModel15
                         {
