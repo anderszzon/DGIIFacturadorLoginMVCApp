@@ -69,7 +69,9 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
             string fechaFirmaFormateada = Uri.EscapeDataString(fechaFirma.ToString("dd-MM-yyyy HH:mm:ss"));
 
-            string url = $"{urlConsultaTimbre}?RncEmisor={factura.RNCEmisor}&RncComprador={factura.RNCComprador}&ENCF={factura.ENCF}&FechaEmision={factura.FechaEmision}&MontoTotal={factura.MontoTotal}&FechaFirma={fechaFirmaFormateada}&CodigoSeguridad={codigoSeguridad}";
+            string codigoSeguridadEscapeado = Uri.EscapeDataString(codigoSeguridad);
+
+            string url = $"{urlConsultaTimbre}?RncEmisor={factura.RNCEmisor}&RncComprador={factura.RNCComprador}&ENCF={factura.ENCF}&FechaEmision={factura.FechaEmision}&MontoTotal={factura.MontoTotal}&FechaFirma={fechaFirmaFormateada}&CodigoSeguridad={codigoSeguridadEscapeado}";
 
             byte[] pdfBytes = CrearFacturaPDFInMemory(factura, codigoSeguridad, _env.WebRootPath, url);
 
@@ -92,7 +94,9 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
             string fechaFirmaFormateada = Uri.EscapeDataString(fechaFirma.ToString("dd-MM-yyyy HH:mm:ss"));
 
-            string url = $"{urlConsultaTimbreResumenFactura}?RncEmisor={factura.RNCEmisor}&RncComprador={factura.RNCComprador}&ENCF={factura.ENCF}&FechaEmision={factura.FechaEmision}&MontoTotal={factura.MontoTotal}&FechaFirma={fechaFirmaFormateada}&CodigoSeguridad={codigoSeguridad}";
+            string codigoSeguridadEscapeado = Uri.EscapeDataString(codigoSeguridad);
+
+            string url = $"{urlConsultaTimbreResumenFactura}?RncEmisor={factura.RNCEmisor}&RncComprador={factura.RNCComprador}&ENCF={factura.ENCF}&FechaEmision={factura.FechaEmision}&MontoTotal={factura.MontoTotal}&FechaFirma={fechaFirmaFormateada}&CodigoSeguridad={codigoSeguridadEscapeado}";
 
             byte[] pdfBytes = CrearFacturaPDFInMemory(factura, codigoSeguridad, _env.WebRootPath, url);
 
