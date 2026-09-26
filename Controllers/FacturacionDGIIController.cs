@@ -53,6 +53,11 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             return View();
         }
 
+        public ActionResult RegistrarComprobantesDGII()
+        {
+            return View();
+        }
+
         [HttpGet]
         public IActionResult GenerarPDF(int id, string codigoSeguridad)
         {
