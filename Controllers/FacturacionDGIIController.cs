@@ -109,7 +109,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 ? $"RncComprador={factura.RNCComprador}&"
                 : string.Empty;
 
-            string url = $"{urlConsultaTimbre}?RncEmisor={factura.RNCEmisor}&{rncCompradorParam}ENCF={factura.ENCF}&FechaEmision={factura.FechaEmision}&MontoTotal={factura.MontoTotal}&FechaFirma={fechaFirmaFormateada}&CodigoSeguridad={codigoSeguridadEscapeado}";
+            string url = $"{urlConsultaTimbreResumenFactura}?RncEmisor={factura.RNCEmisor}&{rncCompradorParam}ENCF={factura.ENCF}&FechaEmision={factura.FechaEmision}&MontoTotal={factura.MontoTotal}&FechaFirma={fechaFirmaFormateada}&CodigoSeguridad={codigoSeguridadEscapeado}";
 
             byte[] pdfBytes = CrearFacturaPDFInMemory(factura, codigoSeguridad, _env.WebRootPath, url);
 
