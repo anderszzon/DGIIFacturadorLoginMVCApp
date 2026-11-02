@@ -6,7 +6,7 @@
 
         public DgiiConfigService(IConfiguration configuration)
         {
-            Ambient = configuration["DgiiConfig:DefaultAmbient"] ?? "certecf";
+            Ambient = configuration["DgiiConfig:DefaultAmbient"];
         }
 
         public string GetBaseUrl()
