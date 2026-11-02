@@ -12942,7 +12942,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                             eNCF = "E310000000001",
                             FechaVencimientoSecuencia = "31-12-2028",
                             IndicadorEnvioDiferido = "0",
-                            IndicadorMontoGravado = "0",
+                            IndicadorMontoGravado = "1",
                             TipoIngresos = "01",
                             TipoPago = "1"
                         },
@@ -13006,7 +13006,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                                 NombreItem = "",
                                 IndicadorBienoServicio = "1",
                                 CantidadItem = "1.00",
-                                UnidadMedida = "1",
+                                UnidadMedida = "43",
                                 PrecioUnitarioItem = "0.00",
                                 MontoItem = "0.00"
                             }
