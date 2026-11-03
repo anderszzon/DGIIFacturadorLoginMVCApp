@@ -280,7 +280,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     {
                         string content = i == 0 ? linea.CantidadItem.ToString("N0") :
                                         i == 1 ? linea.NombreItem ?? "" :
-                                        i == 2 ? Convert.ToDecimal(linea.UnidadMedida).ToString("N2") :
+                                        i == 2 ? Convert.ToDecimal(linea.CantidadItem).ToString("N2") :
                                         i == 3 ? linea.PrecioUnitarioItem.ToString("N2") :
                                         linea.MontoItem.ToString("N2");
 
