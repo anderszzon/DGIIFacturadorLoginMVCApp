@@ -263,6 +263,28 @@ namespace DGIIFacturadorLoginMVCApp.Data.Migrations
                     b.ToTable("ItemsFactura");
                 });
 
+            modelBuilder.Entity("DGIIFacturadorLoginMVCApp.Models.Monedas", b =>
+                {
+                    b.Property<int>("IdMoneda")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdMoneda"));
+
+                    b.Property<bool?>("Activo")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Moneda")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("TipoCambio")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdMoneda");
+
+                    b.ToTable("Monedas");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")

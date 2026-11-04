@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Monedas>
+
+@{
+    ViewData["Title"] = "Monedas Registradas";
+}
+
+@* <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Emisores Registrados</h2>
+    <a asp-action="RegistrarEmisor" class="btn btn-primary">Registrar Nuevo Emisor</a>
+</div> *@
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+<table class="table table-striped table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Tipo Moneda</th>
+            <th>Tipo Cambio</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var monedas in Model)
+        {
+            <tr>
+                <td>@monedas.Moneda</td>
+                <td>@monedas.TipoCambio</td>
+                <td>
+                    <a asp-controller="FacturacionDGII"
+                       asp-action="ComprobanteE31"
+                       asp-route-emisorId="@monedas.IdMoneda"
+                       class="btn btn-sm btn-outline-success">
+                        Seleccionar Moneda
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

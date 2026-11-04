@@ -13029,6 +13029,13 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             return View(emisores);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ConfigMoneda()
+        {
+            var monedas = await _context.Monedas.ToListAsync();
+            return View(monedas);
+        }
+
         [HttpPost]
         public async Task<IActionResult> comprobanteE31(FacturaDGIIModel2 model)
         {
