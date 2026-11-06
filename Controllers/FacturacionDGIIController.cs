@@ -13037,6 +13037,29 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> SeleccionarMoneda(int idMoneda, int tipoCambio)
+        {
+            var todasLasMonedas = await _context.Monedas.ToListAsync();
+
+            foreach (var m in todasLasMonedas)
+            {
+                if (m.IdMoneda == idMoneda)
+                {
+                    m.Activo = true;
+                    m.TipoCambio = tipoCambio;
+                }
+                else
+                {
+                    m.Activo = false;
+                }
+            }
+
+            await _context.SaveChangesAsync();
+            TempData["SuccessMessage"] = "Moneda de conversión actualizada correctamente.";
+            return RedirectToAction(nameof(ConfigMoneda));
+        }
+
+        [HttpPost]
         public async Task<IActionResult> comprobanteE31(FacturaDGIIModel2 model)
         {
 
