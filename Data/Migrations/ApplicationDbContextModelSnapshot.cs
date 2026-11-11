@@ -278,11 +278,32 @@ namespace DGIIFacturadorLoginMVCApp.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal?>("TipoCambio")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(18, 4)
+                        .HasColumnType("decimal(18,4)");
 
                     b.HasKey("IdMoneda");
 
                     b.ToTable("Monedas");
+                });
+
+            modelBuilder.Entity("DGIIFacturadorLoginMVCApp.Models.SecuenciaFactura", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Prefijo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UltimoNumero")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SecuenciaFacturas");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

@@ -16,7 +16,7 @@ namespace DGIIFacturadorLoginMVCApp.Data
         public DbSet<ItemFactura> ItemsFactura { get; set; }
         public DbSet<EmisorInfo> EmisorInfo { get; set; }
         public DbSet<Monedas> Monedas { get; set; }
-
+        public DbSet<SecuenciaFactura> SecuenciaFacturas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -26,6 +26,10 @@ namespace DGIIFacturadorLoginMVCApp.Data
                 .HasMany(f => f.Items)
                 .WithOne(i => i.Factura)
                 .HasForeignKey(i => i.FacturaId);
+
+            modelBuilder.Entity<Monedas>()
+                .Property(m => m.TipoCambio)
+                .HasPrecision(18, 4);
         }
 
     }
