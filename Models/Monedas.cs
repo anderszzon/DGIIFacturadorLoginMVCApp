@@ -7,7 +7,7 @@ namespace DGIIFacturadorLoginMVCApp.Models
         [Key]
         public int IdMoneda { get; set; }
         public string? Moneda { get; set; }
-        public int? TipoCambio { get; set; }
+        public decimal? TipoCambio { get; set; }
         public bool? Activo { get; set; }
 
     }

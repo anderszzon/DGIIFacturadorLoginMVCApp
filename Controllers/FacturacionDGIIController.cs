@@ -13037,7 +13037,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SeleccionarMoneda(int idMoneda, int tipoCambio)
+        public async Task<IActionResult> SeleccionarMoneda(int idMoneda, decimal tipoCambio)
         {
             var todasLasMonedas = await _context.Monedas.ToListAsync();
 

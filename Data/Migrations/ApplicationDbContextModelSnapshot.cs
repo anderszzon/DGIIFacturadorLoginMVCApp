@@ -277,8 +277,8 @@ namespace DGIIFacturadorLoginMVCApp.Data.Migrations
                     b.Property<string>("Moneda")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TipoCambio")
-                        .HasColumnType("int");
+                    b.Property<decimal?>("TipoCambio")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("IdMoneda");
 
