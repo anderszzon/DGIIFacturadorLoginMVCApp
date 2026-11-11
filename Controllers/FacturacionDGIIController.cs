@@ -12924,6 +12924,11 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
         {
             ViewBag.Emisores = await _context.EmisorInfo.ToListAsync();
 
+            var monedaActiva = await _context.Monedas.FirstOrDefaultAsync(m => m.Activo == true);
+
+            ViewBag.TipoMonedaActiva = monedaActiva?.Moneda;
+            ViewBag.TipoCambioActivo = monedaActiva?.TipoCambio;
+
             var emisorSeleccionado = emisorId.HasValue
                 ? await _context.EmisorInfo.FindAsync(emisorId.Value)
                 : await _context.EmisorInfo.FirstOrDefaultAsync();
