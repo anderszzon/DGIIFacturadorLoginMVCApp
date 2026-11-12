@@ -118,15 +118,15 @@
         <div class="card-body row">
             <div class="form-group col-md-4">
                 <label asp-for="ECF.Encabezado.Comprador.RNCComprador"></label>
-                <input asp-for="ECF.Encabezado.Comprador.RNCComprador" class="form-control" />
+                <input asp-for="ECF.Encabezado.Comprador.RNCComprador" class="form-control" required />
             </div>
             <div class="form-group col-md-4">
                 <label asp-for="ECF.Encabezado.Comprador.RazonSocialComprador"></label>
-                <input asp-for="ECF.Encabezado.Comprador.RazonSocialComprador" class="form-control" />
+                <input asp-for="ECF.Encabezado.Comprador.RazonSocialComprador" class="form-control" required />
             </div>
             <div class="form-group col-md-6">
                 <label asp-for="ECF.Encabezado.Comprador.DireccionComprador"></label>
-                <input asp-for="ECF.Encabezado.Comprador.DireccionComprador" class="form-control" />
+                <input asp-for="ECF.Encabezado.Comprador.DireccionComprador" class="form-control" required />
             </div>
         </div>
     </div>
@@ -241,14 +241,6 @@
                     <div class="card-body row">
                         <input type="hidden" asp-for="ECF.DetallesItems.Item[i].NumeroLinea" value="@(i + 1)" class="item-numero-linea" />
 
-
-                        @*
-                        <div class="form-group col-md-3">
-                            <label>Código del Ítem</label>
-                            <input asp-for="ECF.DetallesItems.Item[i].TablaCodigosItem.CodigosItem[0].CodigoItem" class="form-control" />
-                        </div> 
-                        *@
-
                         <div class="form-group col-md-3">
                             <label>Código del Ítem</label>
                             <input asp-for="ECF.DetallesItems.Item[i].TablaCodigosItem.CodigosItem[0].CodigoItem" class="form-control item-codigo" value="@($"MTP{(i + 1):D3}")" readonly />
@@ -256,7 +248,7 @@
 
                         <div class="form-group col-md-3">
                             <label>Nombre del Item</label>
-                            <input asp-for="ECF.DetallesItems.Item[i].NombreItem" class="form-control item-name" />
+                            <input asp-for="ECF.DetallesItems.Item[i].NombreItem" class="form-control item-name" required />
                         </div>
                         <div class="form-group col-md-2">
                             <label>Tipo</label>
@@ -271,7 +263,7 @@
                         </div>
                         <div class="form-group col-md-2">
                             <label>Cantidad</label>
-                            <input asp-for="ECF.DetallesItems.Item[i].CantidadItem" type="number" step="0.01" class="form-control item-quantity" />
+                            <input asp-for="ECF.DetallesItems.Item[i].CantidadItem" type="number" step="0.01" min="0.01" class="form-control item-quantity" required />
                         </div>
                         <div class="form-group col-md-2">
                             <label>Unidad</label>
@@ -279,7 +271,7 @@
                         </div>
                         <div class="form-group col-md-2">
                             <label>Precio Unitario</label>
-                            <input asp-for="ECF.DetallesItems.Item[i].PrecioUnitarioItem" type="number" step="0.01" class="form-control item-price" />
+                            <input asp-for="ECF.DetallesItems.Item[i].PrecioUnitarioItem" type="number" step="0.01" min="0.01" class="form-control item-price" required />
                         </div>
                         <div class="form-group col-md-2">
                             <label>Total</label>
@@ -395,7 +387,7 @@
                             </div>
                             <div class="form-group col-md-3">
                                 <label>Nombre del Item</label>
-                                <input name="ECF.DetallesItems.Item[${currentIndex}].NombreItem" class="form-control item-name" value="" />
+                                <input name="ECF.DetallesItems.Item[${currentIndex}].NombreItem" class="form-control item-name" value="" required />
                             </div>
                             <div class="form-group col-md-2">
                                 <label>Tipo</label>
@@ -410,7 +402,7 @@
                             </div>
                             <div class="form-group col-md-2">
                                 <label>Cantidad</label>
-                                <input name="ECF.DetallesItems.Item[${currentIndex}].CantidadItem" type="number" step="0.01" class="form-control item-quantity" value="1.00" />
+                                <input name="ECF.DetallesItems.Item[${currentIndex}].CantidadItem" type="number" step="0.01" min="0.01" class="form-control item-quantity" value="1.00" required />
                             </div>
                             <div class="form-group col-md-2">
                                 <label>Unidad</label>
@@ -418,7 +410,7 @@
                             </div>
                             <div class="form-group col-md-2">
                                 <label>Precio Unitario</label>
-                                <input name="ECF.DetallesItems.Item[${currentIndex}].PrecioUnitarioItem" type="number" step="0.01" class="form-control item-price" value="0.00" />
+                                <input name="ECF.DetallesItems.Item[${currentIndex}].PrecioUnitarioItem" type="number" step="0.01" min="0.01" class="form-control item-price" value="0.00" required />
                             </div>
                             <div class="form-group col-md-2">
                                 <label>Total</label>
