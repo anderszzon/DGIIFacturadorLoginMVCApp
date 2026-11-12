@@ -12930,16 +12930,28 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             ViewBag.TipoCambioActivo = monedaActiva?.TipoCambio;
 
 
-            var secuencia = await _context.SecuenciaFacturas.FirstOrDefaultAsync(s => s.Prefijo == "MTP");
-            if (secuencia == null)
+            // 1. Secuencia Interna (MTP000000001)
+            var secInterna = await _context.SecuenciaFacturas.FirstOrDefaultAsync(s => s.Prefijo == "MTP");
+            if (secInterna == null)
             {
-                secuencia = new SecuenciaFactura { Prefijo = "MTP", UltimoNumero = 0 };
-                _context.SecuenciaFacturas.Add(secuencia);
-                await _context.SaveChangesAsync();
+                secInterna = new SecuenciaFactura { Prefijo = "MTP", UltimoNumero = 0 };
+                _context.SecuenciaFacturas.Add(secInterna);
             }
 
-            int proximoNumero = secuencia.UltimoNumero + 1;
-            string numeroFacturaGenerado = $"{secuencia.Prefijo}{proximoNumero:D9}";
+            // 2. Secuencia Fiscal DGII (E310000054905 -> 10 dígitos numéricos)
+            var secE31 = await _context.SecuenciaFacturas.FirstOrDefaultAsync(s => s.Prefijo == "E31");
+            if (secE31 == null)
+            {
+                // Si ya llevabas un correlativo en DGII (ej. 54904), inícialo ahí para continuar desde el 54905
+                secE31 = new SecuenciaFactura { Prefijo = "E31", UltimoNumero = 0 };
+                _context.SecuenciaFacturas.Add(secE31);
+            }
+
+            await _context.SaveChangesAsync();
+
+            // Formatear los próximos números sin guardarlos aún como usados
+            string numeroFacturaGenerado = $"{secInterna.Prefijo}{(secInterna.UltimoNumero + 1):D9}";
+            string encfGenerado = $"{secE31.Prefijo}{(secE31.UltimoNumero + 1):D10}";
 
             var emisorSeleccionado = emisorId.HasValue
                 ? await _context.EmisorInfo.FindAsync(emisorId.Value)
@@ -12956,7 +12968,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         IdDoc = new VersionIdDocModel2
                         {
                             TipoeCF = "31",
-                            eNCF = "E310000000001",
+                            eNCF = encfGenerado,
                             FechaVencimientoSecuencia = "31-12-2028",
                             IndicadorEnvioDiferido = "0",
                             IndicadorMontoGravado = "1",
@@ -13112,6 +13124,13 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 string mensajeValor = jsonObjectResponse["mensajes"]?[0]?["valor"]?.ToString();
 
+                bool esSecuenciaUtilizada = false;
+                var mensajesArray = jsonObjectResponse["mensajes"] as JArray;
+
+                if (mensajesArray != null)
+                {
+                    esSecuenciaUtilizada = mensajesArray.Any(m => m["codigo"]?.ToString() == "1209");
+                }
 
                 var respuesta = new FacturaDGIIResponseModel
                 {
@@ -13207,20 +13226,50 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 }
                 _context.SaveChanges();
 
-
-
-                //var secuencia = await _context.SecuenciaFactura.FirstOrDefaultAsync(s => s.Prefijo == "MTP");
-                //if (secuencia != null)
-                //{
-                //    secuencia.UltimoNumero += 1;
-                //    _context.Update(secuencia);
-                //    await _context.SaveChangesAsync();
-                //}
-
                 if (respuesta.CodigoRespuesta == "1")
                 {
+
+                    var secInterna = await _context.SecuenciaFacturas.FirstOrDefaultAsync(s => s.Prefijo == "MTP");
+                    if (secInterna != null)
+                    {
+                        secInterna.UltimoNumero += 1;
+                    }
+
+                    var secE31 = await _context.SecuenciaFacturas.FirstOrDefaultAsync(s => s.Prefijo == "E31");
+                    if (secE31 != null)
+                    {
+                        if (int.TryParse(model.ECF.Encabezado.IdDoc.eNCF.Substring(3), out int numeroEnviado))
+                        {
+                            secE31.UltimoNumero = numeroEnviado;
+                        }
+                        else
+                        {
+                            secE31.UltimoNumero += 1;
+                        }
+                    }
+                    await _context.SaveChangesAsync();
+
                     return View("verFactura", respuesta);
 
+                }
+                else if (respuesta.CodigoRespuesta == "2" && esSecuenciaUtilizada)
+                {
+                    var secE31 = await _context.SecuenciaFacturas.FirstOrDefaultAsync(s => s.Prefijo == "E31");
+                    if (secE31 != null)
+                    {
+                        if (int.TryParse(model.ECF.Encabezado.IdDoc.eNCF.Substring(3), out int numeroEnviado))
+                        {
+                            secE31.UltimoNumero = numeroEnviado;
+                        }
+                        else
+                        {
+                            secE31.UltimoNumero += 1;
+                        }
+                        await _context.SaveChangesAsync();
+                    }
+
+                    ViewBag.MensajeError = $"{respuesta.Mensaje} Se ha actualizado el correlativo fiscal E31 al siguiente número disponible.";
+                    return View("verFactura", respuesta);
                 }
                 else
                 {
