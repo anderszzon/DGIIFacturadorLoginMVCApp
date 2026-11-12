@@ -13277,6 +13277,42 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
         }
 
+        [HttpGet]
+        public async Task<IActionResult> VisorPDFExitosos()
+        {
+            var facturas = await _context.FacturasDGII
+                .Where(f => !string.IsNullOrEmpty(f.XmlFacturaFirmada))
+                .OrderByDescending(f => f.Id)
+                .ToListAsync();
+
+            // Diccionario auxiliar [IdFactura -> CodigoSeguridad] para no alterar tu entidad FacturasDGII
+            var codigosSeguridad = new Dictionary<int, string>();
+
+            foreach (var f in facturas)
+            {
+                string codigo = string.Empty;
+                try
+                {
+                    var doc = System.Xml.Linq.XDocument.Parse(f.XmlFacturaFirmada);
+                    var sigValue = doc.Descendants().FirstOrDefault(x => x.Name.LocalName == "SignatureValue")?.Value;
+                    if (!string.IsNullOrEmpty(sigValue) && sigValue.Length >= 6)
+                    {
+                        codigo = sigValue.Substring(0, 6);
+                    }
+                }
+                catch 
+                { 
+                
+                }
+
+                codigosSeguridad[f.Id] = codigo;
+            }
+
+            ViewBag.CodigosSeguridad = codigosSeguridad;
+            return View(facturas);
+        }
+
+
         #endregion
     }
 }
