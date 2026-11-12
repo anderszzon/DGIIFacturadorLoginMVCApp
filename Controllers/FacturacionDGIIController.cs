@@ -198,11 +198,11 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 leftCell.Add(logo);
 
-                leftCell.Add(new Paragraph("MORA TAPIA PERALTA & ASOCIADOS SRL").SetFontSize(9));
+                leftCell.Add(new Paragraph($"{factura.RazonSocialEmisor}").SetFontSize(9));
                 leftCell.Add(new Paragraph($"RNC: {factura.RNCEmisor}").SetFontSize(9));
-                leftCell.Add(new Paragraph("Dirección: CALLE CIUDAD HEREDIA DE COSTA RICA NO. 37, LOCAL 303, HONDURA LA FERIA.").SetFontSize(9));
-                leftCell.Add(new Paragraph("Teléfono: (829)-435-9277").SetFontSize(9));
-                leftCell.Add(new Paragraph("Email: mtp@mtpasociados.com").SetFontSize(9));
+                leftCell.Add(new Paragraph($"Dirección: {factura.DireccionEmisor}").SetFontSize(9));
+                //leftCell.Add(new Paragraph("Teléfono: (829)-435-9277").SetFontSize(9));
+                leftCell.Add(new Paragraph($"Email: {factura.CorreoEmisor}").SetFontSize(9));
 
                 Cell spacerCell = new Cell().SetBorder(Border.NO_BORDER);
 
@@ -279,7 +279,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     for (int i = 0; i < 5; i++)
                     {
                         string content = i == 0 ? linea.CantidadItem.ToString("N0") :
-                                        i == 1 ? linea.NombreItem ?? "" :
+                                        i == 1 ? linea.NombreItem:
                                         i == 2 ? Convert.ToDecimal(linea.CantidadItem).ToString("N2") :
                                         i == 3 ? linea.PrecioUnitarioItem.ToString("N2") :
                                         linea.MontoItem.ToString("N2");
