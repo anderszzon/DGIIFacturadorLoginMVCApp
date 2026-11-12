@@ -1,6 +1,10 @@
 ﻿@using DGIIFacturadorLoginMVCApp.Helpers
 @model FacturaDGIIModel2
 
+@{
+    string monedaActiva = ViewBag.TipoMonedaActiva?.ToString()?.Trim().ToUpper();
+}
+
 <form asp-action="comprobanteE31" method="post" id="facturaForm">
     <!-- Sección de datos generales -->
     <div class="card mb-4">
@@ -168,55 +172,57 @@
         </div>
     </div>
 
-@*     <!-- Vista de Totales en Moneda Configurada (Informativo en UI) -->
-    <div class="card mb-4 border-info">
-        <div class="card-header bg-primary text-white">
-            <h3>Vista de Totales en Moneda Configurada</h3>
+    @if (monedaActiva != "DOP")
+    {
+        <div class="card mb-4 border-info">
+            <div class="card-header bg-primary text-white">
+                <h3>Totales en @monedaActiva</h3>
+            </div>
+            <div class="card-body row">
+                <div class="form-group col-md-3">
+                    <label class="fw-bold">TipoMoneda</label>
+                    <input type="text" id="tipoMonedaVisual" class="form-control" value="@monedaActiva" readonly />
+                </div>
+                <div class="form-group col-md-3">
+                    <label class="fw-bold">TipoCambio</label>
+                    <input type="text" id="tipoCambioVisual" class="form-control"
+                           value="@(ViewBag.TipoCambioActivo != null ? Convert.ToDecimal(ViewBag.TipoCambioActivo).ToString("0.0000", System.Globalization.CultureInfo.InvariantCulture) : "1.0000")" readonly />
+                </div>
+                <div class="form-group col-md-3">
+                    <label>MontoGravadoTotal</label>
+                    <input type="text" id="montoGravadoTotalVisual" class="form-control" value="0.00" readonly />
+                </div>
+                <div class="form-group col-md-3">
+                    <label>MontoGravadoI1</label>
+                    <input type="text" id="montoGravadoI1Visual" class="form-control" value="0.00" readonly />
+                </div>
+                <div class="form-group col-md-3">
+                    <label>ITBIS1</label>
+                    <input type="text" id="ITBIS1Visual" class="form-control" value="18" readonly />
+                </div>
+                <div class="form-group col-md-3">
+                    <label>TotalITBIS</label>
+                    <input type="text" id="totalITBISVisual" class="form-control" value="0.00" readonly />
+                </div>
+                <div class="form-group col-md-3">
+                    <label>TotalITBIS1</label>
+                    <input type="text" id="totalITBIS1Visual" class="form-control" value="0.00" readonly />
+                </div>
+                <div class="form-group col-md-3">
+                    <label>MontoTotal</label>
+                    <input type="text" id="totalGeneralVisual" class="form-control" value="0.00" readonly />
+                </div>
+                <div class="form-group col-md-3">
+                    <label>MontoPeriodo</label>
+                    <input type="text" id="MontoPeriodoVisual" class="form-control" value="0.00" readonly />
+                </div>
+                <div class="form-group col-md-3">
+                    <label>ValorPagar</label>
+                    <input type="text" id="ValorPagarVisual" class="form-control" value="0.00" readonly />
+                </div>
+            </div>
         </div>
-        <div class="card-body row">
-            <div class="form-group col-md-3">
-                <label class="fw-bold">TipoMoneda</label>
-                <input type="text" id="tipoMonedaVisual" class="form-control" value="@(ViewBag.TipoMonedaActiva)" readonly />
-            </div>
-            <div class="form-group col-md-3">
-                <label class="fw-bold">TipoCambio</label>
-                <input type="text" id="tipoCambioVisual" class="form-control"
-                       value="@(ViewBag.TipoCambioActivo != null ? Convert.ToDecimal(ViewBag.TipoCambioActivo).ToString("0.0000", System.Globalization.CultureInfo.InvariantCulture) : "1.0000")" readonly />
-            </div>
-            <div class="form-group col-md-3">
-                <label>MontoGravadoTotal</label>
-                <input type="text" id="montoGravadoTotalVisual" class="form-control" value="0.00" readonly />
-            </div>
-            <div class="form-group col-md-3">
-                <label>MontoGravadoI1</label>
-                <input type="text" id="montoGravadoI1Visual" class="form-control" value="0.00" readonly />
-            </div>
-            <div class="form-group col-md-3">
-                <label>ITBIS1</label>
-                <input type="text" id="ITBIS1Visual" class="form-control" value="18" readonly />
-            </div>
-            <div class="form-group col-md-3">
-                <label>TotalITBIS</label>
-                <input type="text" id="totalITBISVisual" class="form-control" value="0.00" readonly />
-            </div>
-            <div class="form-group col-md-3">
-                <label>TotalITBIS1</label>
-                <input type="text" id="totalITBIS1Visual" class="form-control" value="0.00" readonly />
-            </div>
-            <div class="form-group col-md-3">
-                <label>MontoTotal</label>
-                <input type="text" id="totalGeneralVisual" class="form-control" value="0.00" readonly />
-            </div>
-            <div class="form-group col-md-3">
-                <label>MontoPeriodo</label>
-                <input type="text" id="MontoPeriodoVisual" class="form-control" value="0.00" readonly />
-            </div>
-            <div class="form-group col-md-3">
-                <label>ValorPagar</label>
-                <input type="text" id="ValorPagarVisual" class="form-control" value="0.00" readonly />
-            </div>
-        </div>
-    </div> *@
+    }
 
     <!-- Sección de ítems (dinámica) -->
     <div class="card mb-4">
@@ -333,7 +339,6 @@
             const totalITBIS18 = montoGravado * tasaITBIS18;
             const montoTotalFactura = montoGravado + totalITBIS18;
 
-            // Totales Oficiales (DOP)
             document.getElementById('montoGravadoTotal').value = montoGravado.toFixed(2);
             document.getElementById('montoGravadoI1').value = montoGravado.toFixed(2);
             document.getElementById('ITBIS1').value = "18";
@@ -343,25 +348,24 @@
             document.getElementById('MontoPeriodo').value = montoTotalFactura.toFixed(2);
             document.getElementById('ValorPagar').value = montoTotalFactura.toFixed(2);
 
-            // 2. Totales Convertidos (Moneda Configurada - si la tarjeta está descomentada)
-            // const inputTasa = document.getElementById('tipoCambioVisual');
-            // if (inputTasa) {
-            //     const tasaVisual = parseFloat(inputTasa.value) || 1;
-            //     if (tasaVisual > 0) {
-            //         const gravadoVisual = (montoGravado / tasaVisual).toFixed(2);
-            //         const itbisVisual = (totalITBIS18 / tasaVisual).toFixed(2);
-            //         const totalVisual = (montoTotalFactura / tasaVisual).toFixed(2);
+// -           const inputTasa = document.getElementById('tipoCambioVisual');
+//             if (inputTasa) {
+//                 const tasaVisual = parseFloat(inputTasa.value) || 1;
+//                 if (tasaVisual > 0) {
+//                     const gravadoVisual = (montoGravado / tasaVisual).toFixed(2);
+//                     const itbisVisual = (totalITBIS18 / tasaVisual).toFixed(2);
+//                     const totalVisual = (montoTotalFactura / tasaVisual).toFixed(2);
 
-            //         document.getElementById('montoGravadoTotalVisual').value = gravadoVisual;
-            //         document.getElementById('montoGravadoI1Visual').value = gravadoVisual;
-            //         document.getElementById('ITBIS1Visual').value = "18";
-            //         document.getElementById('totalITBISVisual').value = itbisVisual;
-            //         document.getElementById('totalITBIS1Visual').value = itbisVisual;
-            //         document.getElementById('totalGeneralVisual').value = totalVisual;
-            //         document.getElementById('MontoPeriodoVisual').value = totalVisual;
-            //         document.getElementById('ValorPagarVisual').value = totalVisual;
-            //     }
-            // }
+//                     document.getElementById('montoGravadoTotalVisual').value = gravadoVisual;
+//                     document.getElementById('montoGravadoI1Visual').value = gravadoVisual;
+//                     document.getElementById('ITBIS1Visual').value = "18";
+//                     document.getElementById('totalITBISVisual').value = itbisVisual;
+//                     document.getElementById('totalITBIS1Visual').value = itbisVisual;
+//                     document.getElementById('totalGeneralVisual').value = totalVisual;
+//                     document.getElementById('MontoPeriodoVisual').value = totalVisual;
+//                     document.getElementById('ValorPagarVisual').value = totalVisual;
+//                 }
+//             }
         }
 
         document.addEventListener('DOMContentLoaded', function () {
