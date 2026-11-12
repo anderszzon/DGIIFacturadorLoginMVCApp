@@ -12971,7 +12971,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                             eNCF = encfGenerado,
                             FechaVencimientoSecuencia = "31-12-2028",
                             IndicadorEnvioDiferido = "0",
-                            IndicadorMontoGravado = "1",
+                            IndicadorMontoGravado = "0",
                             TipoIngresos = "01",
                             TipoPago = "1"
                         },
