@@ -156,7 +156,7 @@
         </div>
     </div>
 
-    <!-- Vista de Totales en Moneda Configurada (Informativo en UI) -->
+@*     <!-- Vista de Totales en Moneda Configurada (Informativo en UI) -->
     <div class="card mb-4 border-info">
         <div class="card-header bg-primary text-white">
             <h3>Vista de Totales en Moneda Configurada</h3>
@@ -204,7 +204,7 @@
                 <input type="text" id="ValorPagarVisual" class="form-control" value="0.00" readonly />
             </div>
         </div>
-    </div>
+    </div> *@
 
     <!-- Sección de ítems (dinámica) -->
     <div class="card mb-4">
@@ -223,10 +223,19 @@
                     <div class="card-body row">
                         <input type="hidden" asp-for="ECF.DetallesItems.Item[i].NumeroLinea" value="@(i + 1)" class="item-numero-linea" />
 
+
+                        @*
                         <div class="form-group col-md-3">
                             <label>Código del Ítem</label>
                             <input asp-for="ECF.DetallesItems.Item[i].TablaCodigosItem.CodigosItem[0].CodigoItem" class="form-control" />
+                        </div> 
+                        *@
+
+                        <div class="form-group col-md-3">
+                            <label>Código del Ítem</label>
+                            <input asp-for="ECF.DetallesItems.Item[i].TablaCodigosItem.CodigosItem[0].CodigoItem" class="form-control item-codigo" value="@($"MTP{(i + 1):D3}")" readonly />
                         </div>
+
                         <div class="form-group col-md-3">
                             <label>Nombre del Item</label>
                             <input asp-for="ECF.DetallesItems.Item[i].NombreItem" class="form-control item-name" />
@@ -248,7 +257,7 @@
                         </div>
                         <div class="form-group col-md-2">
                             <label>Unidad</label>
-                            <input asp-for="ECF.DetallesItems.Item[i].UnidadMedida" type="number" step="0.01" class="form-control" />
+                            <input asp-for="ECF.DetallesItems.Item[i].UnidadMedida" type="number" step="0.01" class="form-control" readonly />
                         </div>
                         <div class="form-group col-md-2">
                             <label>Precio Unitario</label>
@@ -284,6 +293,12 @@
 
 @section Scripts {
     <script>
+
+        function generarCodigoItem(numero) {
+            // Convierte el número (1, 2, 3...) al formato MTP001, MTP002, etc.
+            return 'MTP' + String(numero).padStart(3, '0');
+        }
+
         // 1. Declaración de la función de cálculo general (DOP y Moneda Configurada)
         function calcularTotalesE31() {
             let montoGravado = 0;
@@ -319,23 +334,29 @@
             document.getElementById('MontoPeriodo').value = montoTotalFactura.toFixed(2);
             document.getElementById('ValorPagar').value = montoTotalFactura.toFixed(2);
 
-            // Totales Convertidos (Moneda Configurada)
-            const tasaVisual = parseFloat(document.getElementById('tipoCambioVisual')?.value) || 1;
 
-            if (tasaVisual > 0) {
-                const gravadoVisual = (montoGravado / tasaVisual).toFixed(2);
-                const itbisVisual = (totalITBIS18 / tasaVisual).toFixed(2);
-                const totalVisual = (montoTotalFactura / tasaVisual).toFixed(2);
 
-                document.getElementById('montoGravadoTotalVisual').value = gravadoVisual;
-                document.getElementById('montoGravadoI1Visual').value = gravadoVisual;
-                document.getElementById('ITBIS1Visual').value = "18";
-                document.getElementById('totalITBISVisual').value = itbisVisual;
-                document.getElementById('totalITBIS1Visual').value = itbisVisual;
-                document.getElementById('totalGeneralVisual').value = totalVisual;
-                document.getElementById('MontoPeriodoVisual').value = totalVisual;
-                document.getElementById('ValorPagarVisual').value = totalVisual;
-            }
+
+            // // Totales Convertidos (Moneda Configurada)
+            // const tasaVisual = parseFloat(document.getElementById('tipoCambioVisual')?.value) || 1;
+
+            // if (tasaVisual > 0) {
+            //     const gravadoVisual = (montoGravado / tasaVisual).toFixed(2);
+            //     const itbisVisual = (totalITBIS18 / tasaVisual).toFixed(2);
+            //     const totalVisual = (montoTotalFactura / tasaVisual).toFixed(2);
+
+            //     document.getElementById('montoGravadoTotalVisual').value = gravadoVisual;
+            //     document.getElementById('montoGravadoI1Visual').value = gravadoVisual;
+            //     document.getElementById('ITBIS1Visual').value = "18";
+            //     document.getElementById('totalITBISVisual').value = itbisVisual;
+            //     document.getElementById('totalITBIS1Visual').value = itbisVisual;
+            //     document.getElementById('totalGeneralVisual').value = totalVisual;
+            //     document.getElementById('MontoPeriodoVisual').value = totalVisual;
+            //     document.getElementById('ValorPagarVisual').value = totalVisual;
+            // }
+
+
+
         }
 
         // 2. Lógica de manipulación del DOM y eventos
@@ -343,6 +364,8 @@
             const container = document.getElementById('itemsContainer');
             const addBtn = document.getElementById('addItemBtn');
             const form = document.getElementById('facturaForm');
+            const currentIndex = container.querySelectorAll('.item-row').length;
+            const codigoFormateado = generarCodigoItem(currentIndex + 1);
 
             // Recalcular al cargar la pantalla por si la vista viene con valores iniciales
             calcularTotalesE31();
@@ -358,12 +381,14 @@
                             <button type="button" class="btn btn-danger btn-sm remove-item">Eliminar</button>
                         </div>
                         <div class="card-body row">
+
                             <input type="hidden" name="ECF.DetallesItems.Item[${currentIndex}].NumeroLinea" value="${currentIndex + 1}" class="item-numero-linea" />
 
                             <div class="form-group col-md-3">
                                 <label>Código del Ítem</label>
-                                <input name="ECF.DetallesItems.Item[${currentIndex}].TablaCodigosItem.CodigosItem[0].CodigoItem" class="form-control" value="" />
+                                <input name="ECF.DetallesItems.Item[${currentIndex}].TablaCodigosItem.CodigosItem[0].CodigoItem" class="form-control item-codigo" value="${codigoFormateado}" readonly />
                             </div>
+
                             <div class="form-group col-md-3">
                                 <label>Nombre del Item</label>
                                 <input name="ECF.DetallesItems.Item[${currentIndex}].NombreItem" class="form-control item-name" value="" />
@@ -395,6 +420,9 @@
                                 <label>Total</label>
                                 <input name="ECF.DetallesItems.Item[${currentIndex}].MontoItem" type="number" step="0.01" class="form-control item-total" value="0.00" readonly />
                             </div>
+
+
+
                         </div>
                     </div>
                 `;

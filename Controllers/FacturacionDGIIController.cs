@@ -12929,6 +12929,18 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             ViewBag.TipoMonedaActiva = monedaActiva?.Moneda;
             ViewBag.TipoCambioActivo = monedaActiva?.TipoCambio;
 
+
+            var secuencia = await _context.SecuenciaFacturas.FirstOrDefaultAsync(s => s.Prefijo == "MTP");
+            if (secuencia == null)
+            {
+                secuencia = new SecuenciaFactura { Prefijo = "MTP", UltimoNumero = 0 };
+                _context.SecuenciaFacturas.Add(secuencia);
+                await _context.SaveChangesAsync();
+            }
+
+            int proximoNumero = secuencia.UltimoNumero + 1;
+            string numeroFacturaGenerado = $"{secuencia.Prefijo}{proximoNumero:D9}";
+
             var emisorSeleccionado = emisorId.HasValue
                 ? await _context.EmisorInfo.FindAsync(emisorId.Value)
                 : await _context.EmisorInfo.FirstOrDefaultAsync();
@@ -12953,18 +12965,21 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         },
                         Emisor = new EmisorModel2
                         {
-                            RNCEmisor = emisorSeleccionado?.RNCEmisor ?? "",
-                            RazonSocialEmisor = emisorSeleccionado?.RazonSocialEmisor ?? "",
-                            NombreComercial = emisorSeleccionado?.NombreComercial ?? "",
-                            DireccionEmisor = emisorSeleccionado?.DireccionEmisor ?? "",
-                            Municipio = emisorSeleccionado?.Municipio ?? "",
-                            Provincia = emisorSeleccionado?.Provincia ?? "",
-                            CorreoEmisor = emisorSeleccionado?.CorreoEmisor ?? "",
-                            WebSite = emisorSeleccionado?.WebSite ?? "",
-                            CodigoVendedor = emisorSeleccionado?.CodigoVendedor ?? "",
-                            NumeroFacturaInterna = emisorSeleccionado?.NumeroFacturaInterna ?? "",
-                            NumeroPedidoInterno = emisorSeleccionado?.NumeroPedidoInterno ?? "",
-                            ZonaVenta = emisorSeleccionado?.ZonaVenta ?? "",
+                            RNCEmisor = emisorSeleccionado?.RNCEmisor,
+                            RazonSocialEmisor = emisorSeleccionado?.RazonSocialEmisor,
+                            NombreComercial = emisorSeleccionado?.NombreComercial,
+                            DireccionEmisor = emisorSeleccionado?.DireccionEmisor,
+                            Municipio = emisorSeleccionado?.Municipio,
+                            Provincia = emisorSeleccionado?.Provincia,
+                            CorreoEmisor = emisorSeleccionado?.CorreoEmisor,
+                            WebSite = emisorSeleccionado?.WebSite,
+                            CodigoVendedor = emisorSeleccionado?.CodigoVendedor,
+
+                            //NumeroFacturaInterna = emisorSeleccionado?.NumeroFacturaInterna,
+                            NumeroFacturaInterna = numeroFacturaGenerado,
+
+                            NumeroPedidoInterno = emisorSeleccionado?.NumeroPedidoInterno,
+                            ZonaVenta = emisorSeleccionado?.ZonaVenta,
                             FechaEmision = DateTime.Now.ToString("dd-MM-yyyy")
                         },
                         Comprador = new CompradorModel2
@@ -13191,6 +13206,16 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     }
                 }
                 _context.SaveChanges();
+
+
+
+                //var secuencia = await _context.SecuenciaFactura.FirstOrDefaultAsync(s => s.Prefijo == "MTP");
+                //if (secuencia != null)
+                //{
+                //    secuencia.UltimoNumero += 1;
+                //    _context.Update(secuencia);
+                //    await _context.SaveChangesAsync();
+                //}
 
                 if (respuesta.CodigoRespuesta == "1")
                 {
