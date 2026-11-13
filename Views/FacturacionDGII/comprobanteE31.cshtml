@@ -65,7 +65,7 @@
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="ECF.Encabezado.Emisor.FechaEmision"></label>
-                <input asp-for="ECF.Encabezado.Emisor.FechaEmision" class="form-control" readonly />
+                <input asp-for="ECF.Encabezado.Emisor.FechaEmision" class="form-control" />
             </div>
 
         </div>
@@ -176,49 +176,72 @@
     {
         <div class="card mb-4 border-info">
             <div class="card-header bg-primary text-white">
-                <h3>Totales en @monedaActiva</h3>
+                <h3>OtraMoneda (@monedaActiva)</h3>
             </div>
             <div class="card-body row">
                 <div class="form-group col-md-3">
-                    <label class="fw-bold">TipoMoneda</label>
-                    <input type="text" id="tipoMonedaVisual" class="form-control" value="@monedaActiva" readonly />
+                    <label asp-for="ECF.Encabezado.OtraMoneda.TipoMoneda">TipoMoneda</label>
+                    <input asp-for="ECF.Encabezado.OtraMoneda.TipoMoneda"
+                           id="otraMonedaTipo"
+                           class="form-control"
+                           value="@monedaActiva"
+                           readonly />
                 </div>
                 <div class="form-group col-md-3">
-                    <label class="fw-bold">TipoCambio</label>
-                    <input type="text" id="tipoCambioVisual" class="form-control"
-                           value="@(ViewBag.TipoCambioActivo != null ? Convert.ToDecimal(ViewBag.TipoCambioActivo).ToString("0.0000", System.Globalization.CultureInfo.InvariantCulture) : "1.0000")" readonly />
+                    <label asp-for="ECF.Encabezado.OtraMoneda.TipoCambio">TipoCambio</label>
+                    <input asp-for="ECF.Encabezado.OtraMoneda.TipoCambio"
+                           id="otraMonedaCambio"
+                           class="form-control"
+                           value="@(ViewBag.TipoCambioActivo != null ? Convert.ToDecimal(ViewBag.TipoCambioActivo).ToString("0.0000", System.Globalization.CultureInfo.InvariantCulture) : "1.0000")"
+                           readonly />
                 </div>
                 <div class="form-group col-md-3">
-                    <label>MontoGravadoTotal</label>
-                    <input type="text" id="montoGravadoTotalVisual" class="form-control" value="0.00" readonly />
+                    <label asp-for="ECF.Encabezado.OtraMoneda.MontoGravadoTotalOtraMoneda">MontoGravadoTotalOtraMoneda</label>
+                    <input asp-for="ECF.Encabezado.OtraMoneda.MontoGravadoTotalOtraMoneda"
+                           id="otraMonedaGravadoTotal"
+                           class="form-control"
+                           value="0.00"
+                           readonly />
                 </div>
                 <div class="form-group col-md-3">
-                    <label>MontoGravadoI1</label>
-                    <input type="text" id="montoGravadoI1Visual" class="form-control" value="0.00" readonly />
+                    <label asp-for="ECF.Encabezado.OtraMoneda.MontoGravado1OtraMoneda">MontoGravado1OtraMoneda</label>
+                    <input asp-for="ECF.Encabezado.OtraMoneda.MontoGravado1OtraMoneda"
+                           id="otraMonedaGravado1"
+                           class="form-control"
+                           value="0.00"
+                           readonly />
                 </div>
                 <div class="form-group col-md-3">
-                    <label>ITBIS1</label>
-                    <input type="text" id="ITBIS1Visual" class="form-control" value="18" readonly />
+                    <label asp-for="ECF.Encabezado.OtraMoneda.MontoExentoOtraMoneda">MontoExentoOtraMoneda</label>
+                    <input asp-for="ECF.Encabezado.OtraMoneda.MontoExentoOtraMoneda"
+                           id="otraMonedaExento"
+                           class="form-control"
+                           value="0.00"
+                           readonly />
                 </div>
                 <div class="form-group col-md-3">
-                    <label>TotalITBIS</label>
-                    <input type="text" id="totalITBISVisual" class="form-control" value="0.00" readonly />
+                    <label asp-for="ECF.Encabezado.OtraMoneda.TotalITBISOtraMoneda">TotalITBISOtraMoneda</label>
+                    <input asp-for="ECF.Encabezado.OtraMoneda.TotalITBISOtraMoneda"
+                           id="otraMonedaTotalITBIS"
+                           class="form-control"
+                           value="0.00"
+                           readonly />
                 </div>
                 <div class="form-group col-md-3">
-                    <label>TotalITBIS1</label>
-                    <input type="text" id="totalITBIS1Visual" class="form-control" value="0.00" readonly />
+                    <label asp-for="ECF.Encabezado.OtraMoneda.TotalITBIS1OtraMoneda">TotalITBIS1OtraMoneda</label>
+                    <input asp-for="ECF.Encabezado.OtraMoneda.TotalITBIS1OtraMoneda"
+                           id="otraMonedaTotalITBIS1"
+                           class="form-control"
+                           value="0.00"
+                           readonly />
                 </div>
                 <div class="form-group col-md-3">
-                    <label>MontoTotal</label>
-                    <input type="text" id="totalGeneralVisual" class="form-control" value="0.00" readonly />
-                </div>
-                <div class="form-group col-md-3">
-                    <label>MontoPeriodo</label>
-                    <input type="text" id="MontoPeriodoVisual" class="form-control" value="0.00" readonly />
-                </div>
-                <div class="form-group col-md-3">
-                    <label>ValorPagar</label>
-                    <input type="text" id="ValorPagarVisual" class="form-control" value="0.00" readonly />
+                    <label asp-for="ECF.Encabezado.OtraMoneda.MontoTotalOtraMoneda">MontoTotalOtraMoneda</label>
+                    <input asp-for="ECF.Encabezado.OtraMoneda.MontoTotalOtraMoneda"
+                           id="otraMonedaTotal"
+                           class="form-control"
+                           value="0.00"
+                           readonly />
                 </div>
             </div>
         </div>
@@ -240,6 +263,12 @@
                     </div>
                     <div class="card-body row">
                         <input type="hidden" asp-for="ECF.DetallesItems.Item[i].NumeroLinea" value="@(i + 1)" class="item-numero-linea" />
+@* 
+                        @if (monedaActiva != "DOP")
+                        {
+                            <input type="hidden" asp-for="ECF.DetallesItems.Item[i].OtraMonedaDetalle.PrecioOtraMoneda" class="item-precio-otra" value="0.00" />
+                            <input type="hidden" asp-for="ECF.DetallesItems.Item[i].OtraMonedaDetalle.MontoItemOtraMoneda" class="item-monto-otra" value="0.00" />
+                        } *@
 
                         <div class="form-group col-md-3">
                             <label>Código del Ítem</label>
@@ -307,10 +336,24 @@
             return 'MTP' + String(numero).padStart(3, '0');
         }
 
-        function calcularTotalesE31() {
-            let montoGravado = 0;
-            const tasaITBIS18 = 0.18;
+        function setVal(id, valor) {
+            const el = document.getElementById(id);
+            if (el) el.value = valor;
+        }
 
+        function obtenerTasaCambio() {
+            const inputTasa = document.getElementById('otraMonedaCambio');
+            if (!inputTasa) return 1;
+            const tasa = parseFloat(inputTasa.value.replace(',', '.')) || 1;
+            return tasa > 0 ? tasa : 1;
+        }
+
+        function calcularTotalesE31() {
+            let subtotalMonedaSeleccionada = 0;
+            const tasaITBIS18 = 0.18;
+            const tasaCambio = obtenerTasaCambio();
+
+            // 1. Calcular líneas en la moneda activa (USD si != DOP, o DOP)
             const filas = document.querySelectorAll('.item-row');
             filas.forEach(fila => {
                 const cantInput = fila.querySelector('.item-quantity');
@@ -325,39 +368,42 @@
                     totalInput.value = montoLinea.toFixed(2);
                 }
 
-                montoGravado += montoLinea;
+                // Llenar OtraMonedaDetalle de la línea (si existe)
+                const precioOtroInput = fila.querySelector('.item-precio-otra');
+                const montoOtroInput = fila.querySelector('.item-monto-otra');
+                if (precioOtroInput) precioOtroInput.value = precio.toFixed(2);
+                if (montoOtroInput) montoOtroInput.value = montoLinea.toFixed(2);
+
+                subtotalMonedaSeleccionada += montoLinea;
             });
 
-            const totalITBIS18 = montoGravado * tasaITBIS18;
-            const montoTotalFactura = montoGravado + totalITBIS18;
+            const itbisMonedaSeleccionada = subtotalMonedaSeleccionada * tasaITBIS18;
+            const totalMonedaSeleccionada = subtotalMonedaSeleccionada + itbisMonedaSeleccionada;
 
-            document.getElementById('montoGravadoTotal').value = montoGravado.toFixed(2);
-            document.getElementById('montoGravadoI1').value = montoGravado.toFixed(2);
-            document.getElementById('ITBIS1').value = "18";
-            document.getElementById('totalITBIS').value = totalITBIS18.toFixed(2);
-            document.getElementById('totalITBIS1').value = totalITBIS18.toFixed(2);
-            document.getElementById('totalGeneral').value = montoTotalFactura.toFixed(2);
-            document.getElementById('MontoPeriodo').value = montoTotalFactura.toFixed(2);
-            document.getElementById('ValorPagar').value = montoTotalFactura.toFixed(2);
+            // 2. Llenar TODOS los campos de OtraMoneda (Encabezado)
+            const inputOtraMonedaTotal = document.getElementById('otraMonedaTotal');
+            if (inputOtraMonedaTotal) {
+                setVal('otraMonedaGravadoTotal', subtotalMonedaSeleccionada.toFixed(2));
+                setVal('otraMonedaGravado1', subtotalMonedaSeleccionada.toFixed(2));
+                setVal('otraMonedaExento', "0.00");
+                setVal('otraMonedaTotalITBIS', itbisMonedaSeleccionada.toFixed(2));
+                setVal('otraMonedaTotalITBIS1', itbisMonedaSeleccionada.toFixed(2));
+                setVal('otraMonedaTotal', totalMonedaSeleccionada.toFixed(2));
+            }
 
-// -           const inputTasa = document.getElementById('tipoCambioVisual');
-//             if (inputTasa) {
-//                 const tasaVisual = parseFloat(inputTasa.value) || 1;
-//                 if (tasaVisual > 0) {
-//                     const gravadoVisual = (montoGravado / tasaVisual).toFixed(2);
-//                     const itbisVisual = (totalITBIS18 / tasaVisual).toFixed(2);
-//                     const totalVisual = (montoTotalFactura / tasaVisual).toFixed(2);
+            // 3. Totales Oficiales (Siempre en DOP = MonedaSeleccionada * TipoCambio)
+            const montoGravadoDOP = subtotalMonedaSeleccionada * tasaCambio;
+            const totalITBISDOP = itbisMonedaSeleccionada * tasaCambio;
+            const montoTotalDOP = totalMonedaSeleccionada * tasaCambio;
 
-//                     document.getElementById('montoGravadoTotalVisual').value = gravadoVisual;
-//                     document.getElementById('montoGravadoI1Visual').value = gravadoVisual;
-//                     document.getElementById('ITBIS1Visual').value = "18";
-//                     document.getElementById('totalITBISVisual').value = itbisVisual;
-//                     document.getElementById('totalITBIS1Visual').value = itbisVisual;
-//                     document.getElementById('totalGeneralVisual').value = totalVisual;
-//                     document.getElementById('MontoPeriodoVisual').value = totalVisual;
-//                     document.getElementById('ValorPagarVisual').value = totalVisual;
-//                 }
-//             }
+            setVal('montoGravadoTotal', montoGravadoDOP.toFixed(2));
+            setVal('montoGravadoI1', montoGravadoDOP.toFixed(2));
+            setVal('ITBIS1', "18");
+            setVal('totalITBIS', totalITBISDOP.toFixed(2));
+            setVal('totalITBIS1', totalITBISDOP.toFixed(2));
+            setVal('totalGeneral', montoTotalDOP.toFixed(2));
+            setVal('MontoPeriodo', montoTotalDOP.toFixed(2));
+            setVal('ValorPagar', montoTotalDOP.toFixed(2));
         }
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -367,10 +413,16 @@
 
             calcularTotalesE31();
 
-            // Agregar nuevo Ítem
+            // Agregar nuevo Ítem dinámicamente
             addBtn.addEventListener('click', function () {
                 const currentIndex = container.querySelectorAll('.item-row').length;
                 const codigoFormateado = generarCodigoItem(currentIndex + 1);
+                const esOtraMoneda = document.getElementById('otraMonedaCambio') !== null;
+
+                const camposOtraMonedaItem = esOtraMoneda ? `
+                    <input type="hidden" name="ECF.DetallesItems.Item[${currentIndex}].OtraMonedaDetalle.PrecioOtraMoneda" class="item-precio-otra" value="0.00" />
+                    <input type="hidden" name="ECF.DetallesItems.Item[${currentIndex}].OtraMonedaDetalle.MontoItemOtraMoneda" class="item-monto-otra" value="0.00" />
+                ` : '';
 
                 const newRowHtml = `
                     <div class="item-row card mb-3">
@@ -380,6 +432,7 @@
                         </div>
                         <div class="card-body row">
                             <input type="hidden" name="ECF.DetallesItems.Item[${currentIndex}].NumeroLinea" value="${currentIndex + 1}" class="item-numero-linea" />
+                            ${camposOtraMonedaItem}
 
                             <div class="form-group col-md-3">
                                 <label>Código del Ítem</label>
@@ -476,6 +529,22 @@
             if (form) {
                 form.addEventListener('submit', function () {
                     calcularTotalesE31();
+
+                    const tasaCambio = obtenerTasaCambio();
+                    if (tasaCambio !== 1) {
+                        document.querySelectorAll('.item-row').forEach(fila => {
+                            const cantInput = fila.querySelector('.item-quantity');
+                            const precioInput = fila.querySelector('.item-price');
+                            const totalInput = fila.querySelector('.item-total');
+
+                            const cantidad = parseFloat(cantInput.value) || 0;
+                            const precioDOP = (parseFloat(precioInput.value) || 0) * tasaCambio;
+                            const montoDOP = cantidad * precioDOP;
+
+                            precioInput.value = precioDOP.toFixed(2);
+                            totalInput.value = montoDOP.toFixed(2);
+                        });
+                    }
                 });
             }
         });

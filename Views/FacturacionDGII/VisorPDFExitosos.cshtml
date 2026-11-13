@@ -39,7 +39,6 @@
                             <td>@item.RazonSocialComprador</td>
                             <td class="text-end fw-bold">@item.MontoTotal.ToString("N2")</td>
                             <td class="text-center">
-                                <!-- Llamada directa a [HttpGet] GenerarPDF(int id, string codigoSeguridad) -->
                                 <a asp-controller="FacturacionDGII"
                                    asp-action="GenerarPDF"
                                    asp-route-id="@item.Id"

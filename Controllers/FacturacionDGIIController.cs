@@ -13285,7 +13285,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 .OrderByDescending(f => f.Id)
                 .ToListAsync();
 
-            // Diccionario auxiliar [IdFactura -> CodigoSeguridad] para no alterar tu entidad FacturasDGII
             var codigosSeguridad = new Dictionary<int, string>();
 
             foreach (var f in facturas)

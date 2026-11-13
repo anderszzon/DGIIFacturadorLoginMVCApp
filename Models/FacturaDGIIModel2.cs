@@ -56,6 +56,21 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public EmisorModel2 Emisor { get; set; } = new EmisorModel2();
         public CompradorModel2 Comprador { get; set; } = new CompradorModel2();
         public TotalesModel2 Totales { get; set; } = new TotalesModel2();
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public OtraMoneda2 OtraMoneda { get; set; }
+    }
+
+    public class OtraMoneda2
+    {
+        public string TipoMoneda { get; set; }
+        public string TipoCambio { get; set; }
+        public string MontoGravadoTotalOtraMoneda { get; set; }
+        public string MontoGravado1OtraMoneda { get; set; }
+        public string MontoExentoOtraMoneda { get; set; }
+        public string TotalITBISOtraMoneda { get; set; }
+        public string TotalITBIS1OtraMoneda { get; set; }
+        public string MontoTotalOtraMoneda { get; set; }
     }
 
     public class VersionIdDocModel2
