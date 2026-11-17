@@ -227,6 +227,10 @@ namespace DGIIFacturadorLoginMVCApp.Data.Migrations
                     b.Property<decimal>("CantidadItem")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("CodigoItem")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("FacturaId")
                         .HasColumnType("int");
 

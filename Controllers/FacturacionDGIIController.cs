@@ -169,6 +169,56 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
         private byte[] CrearFacturaPDFInMemory(FacturasDGII factura, string codigoSeguridad, string webRootPath, string url)
         {
+            string tipoMoneda = "DOP";
+            decimal tipoCambio = 1m;
+            decimal subtotalMostrar = factura.MontoGravadoTotal;
+            decimal itbisMostrar = factura.TotalITBIS;
+            decimal totalMostrar = factura.MontoTotal;
+            bool esOtraMoneda = false;
+
+            // Buscar automáticamente la propiedad string de la entidad FacturasDGII que contiene el <ECF> XML
+            string xmlContent = factura.GetType()
+                .GetProperties()
+                .Where(p => p.PropertyType == typeof(string))
+                .Select(p => p.GetValue(factura) as string)
+                .FirstOrDefault(val => !string.IsNullOrWhiteSpace(val) && val.Contains("<ECF>"));
+
+            if (!string.IsNullOrWhiteSpace(xmlContent))
+            {
+                try
+                {
+                    var xDoc = System.Xml.Linq.XDocument.Parse(xmlContent);
+                    var otraMonedaNode = xDoc.Descendants().FirstOrDefault(x => x.Name.LocalName == "OtraMoneda");
+
+                    if (otraMonedaNode != null)
+                    {
+                        esOtraMoneda = true;
+                        tipoMoneda = otraMonedaNode.Elements().FirstOrDefault(x => x.Name.LocalName == "TipoMoneda")?.Value ?? "USD";
+
+                        decimal.TryParse(
+                            otraMonedaNode.Elements().FirstOrDefault(x => x.Name.LocalName == "TipoCambio")?.Value,
+                            NumberStyles.Any, CultureInfo.InvariantCulture, out tipoCambio);
+
+                        decimal.TryParse(
+                            otraMonedaNode.Elements().FirstOrDefault(x => x.Name.LocalName == "MontoGravadoTotalOtraMoneda")?.Value,
+                            NumberStyles.Any, CultureInfo.InvariantCulture, out subtotalMostrar);
+
+                        decimal.TryParse(
+                            otraMonedaNode.Elements().FirstOrDefault(x => x.Name.LocalName == "TotalITBISOtraMoneda")?.Value,
+                            NumberStyles.Any, CultureInfo.InvariantCulture, out itbisMostrar);
+
+                        decimal.TryParse(
+                            otraMonedaNode.Elements().FirstOrDefault(x => x.Name.LocalName == "MontoTotalOtraMoneda")?.Value,
+                            NumberStyles.Any, CultureInfo.InvariantCulture, out totalMostrar);
+                    }
+                }
+                catch
+                {
+                    // Si falla el parseo del XML, mantiene los valores base en DOP
+                }
+            }
+
+            if (tipoCambio <= 0) tipoCambio = 1m;
 
             using (var ms = new MemoryStream())
             {
@@ -224,7 +274,6 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 rightCell.Add(new Paragraph($"NCF: {factura.ENCF}").SetFontSize(9));
                 rightCell.Add(new Paragraph($"NCF Modificado: {factura.NCFModificado}").SetFontSize(9));
 
-
                 rightCell.Add(new Paragraph($"Fecha Vencimiento: {factura.FechaVencimientoSecuencia}").SetFontSize(9));
                 rightCell.Add(new Paragraph($"Fecha: {factura.FechaEmision}").SetFontSize(9));
                 rightCell.Add(new Paragraph($"Número Factura: {factura.NumeroFacturaInterna}").SetFontSize(9));
@@ -276,13 +325,16 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 foreach (var linea in factura.Items)
                 {
+                    decimal precioMostrar = esOtraMoneda ? Math.Round(linea.PrecioUnitarioItem / tipoCambio, 2) : linea.PrecioUnitarioItem;
+                    decimal montoMostrar = esOtraMoneda ? Math.Round(linea.MontoItem / tipoCambio, 2) : linea.MontoItem;
+
                     for (int i = 0; i < 5; i++)
                     {
-                        string content = i == 0 ? linea.CantidadItem.ToString("N0") :
-                                        i == 1 ? linea.NombreItem:
-                                        i == 2 ? Convert.ToDecimal(linea.CantidadItem).ToString("N2") :
-                                        i == 3 ? linea.PrecioUnitarioItem.ToString("N2") :
-                                        linea.MontoItem.ToString("N2");
+                        string content = i == 0 ? linea.CodigoItem :
+                                         i == 1 ? linea.NombreItem :
+                                         i == 2 ? Convert.ToDecimal(linea.CantidadItem).ToString("N2") :
+                                         i == 3 ? precioMostrar.ToString("N2") :
+                                                  montoMostrar.ToString("N2");
 
                         Cell dataCell = new Cell()
                             .Add(new Paragraph(content))
@@ -312,11 +364,10 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         .SetBorder(new SolidBorder(0.5f))
                         .SetTextAlignment(TextAlignment.LEFT)
                         .SetFont(boldFont2)
-
                 );
                 innerTable.AddCell(
                     new Cell()
-                        .Add(new Paragraph($"{factura.MontoGravadoTotal:N2}").SetFontSize(9))
+                        .Add(new Paragraph($"{subtotalMostrar:N2}").SetFontSize(9))
                         .SetBorder(new SolidBorder(0.5f))
                         .SetTextAlignment(TextAlignment.RIGHT)
                 );
@@ -327,25 +378,26 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         .SetBorder(new SolidBorder(0.5f))
                         .SetTextAlignment(TextAlignment.LEFT)
                         .SetFont(boldFont2)
-
                 );
                 innerTable.AddCell(
                     new Cell()
-                        .Add(new Paragraph($"{factura.TotalITBIS:N2}").SetFontSize(9))
+                        .Add(new Paragraph($"{itbisMostrar:N2}").SetFontSize(9))
                         .SetBorder(new SolidBorder(0.5f))
                         .SetTextAlignment(TextAlignment.RIGHT)
                 );
 
+                string etiquetaTotal = esOtraMoneda ? $"Total en {tipoMoneda}$:" : "Total:";
+
                 innerTable.AddCell(
                     new Cell()
-                        .Add(new Paragraph("Total:").SetFontSize(9))
+                        .Add(new Paragraph(etiquetaTotal).SetFontSize(9))
                         .SetBorder(new SolidBorder(0.5f))
                         .SetTextAlignment(TextAlignment.LEFT)
                         .SetFont(boldFont2)
                 );
                 innerTable.AddCell(
                     new Cell()
-                        .Add(new Paragraph($"{factura.MontoTotal:N2}").SetFontSize(9))
+                        .Add(new Paragraph($"{totalMostrar:N2}").SetFontSize(9))
                         .SetBorder(new SolidBorder(0.5f))
                         .SetTextAlignment(TextAlignment.RIGHT)
                 );

@@ -74,6 +74,8 @@
         public string UnidadMedida { get; set; }
         public decimal PrecioUnitarioItem { get; set; }
         public decimal MontoItem { get; set; }
+
+        public string CodigoItem { get; set; }
     }
 
 
