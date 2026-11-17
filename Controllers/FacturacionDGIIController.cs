@@ -13260,7 +13260,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                                 CantidadItem = Convert.ToDecimal(item.CantidadItem ?? "0"),
                                 UnidadMedida = item.UnidadMedida,
                                 PrecioUnitarioItem = Convert.ToDecimal(item.PrecioUnitarioItem ?? "0"),
-                                MontoItem = Convert.ToDecimal(item.MontoItem ?? "0")
+                                MontoItem = Convert.ToDecimal(item.MontoItem ?? "0"),
+                                CodigoItem = item.TablaCodigosItem?.CodigosItem?.FirstOrDefault()?.CodigoItem
                             };
 
                             _context.ItemsFactura.Add(detalle);
