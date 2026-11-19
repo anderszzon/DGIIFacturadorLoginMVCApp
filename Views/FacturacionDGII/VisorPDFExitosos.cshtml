@@ -21,7 +21,7 @@
                         <th>Fecha Emisión</th>
                         <th>RNC Comprador</th>
                         <th>Comprador</th>
-                        <th class="text-end">Monto Total</th>
+                        <th class="text-end">Monto Total (DOP)</th>
                         <th class="text-center">PDF</th>
                     </tr>
                 </thead>
@@ -32,8 +32,8 @@
 
                         <tr>
                             <td>@item.Id</td>
-                            <td class="fw-bold">@item.NumeroFacturaInterna</td>
-                            <td><span class="badge bg-success">@item.ENCF</span></td>
+                            <td>@item.NumeroFacturaInterna</td>
+                            <td class="fw-bold">@item.ENCF</td>
                             <td>@item.FechaEmision</td>
                             <td>@item.RNCComprador</td>
                             <td>@item.RazonSocialComprador</td>
@@ -45,7 +45,7 @@
                                    asp-route-codigoSeguridad="@codSeguridad"
                                    target="_blank"
                                    class="btn btn-danger btn-sm">
-                                    Descargar / Ver PDF
+                                    Ver PDF
                                 </a>
                             </td>
                         </tr>
