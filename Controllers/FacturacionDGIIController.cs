@@ -13023,7 +13023,8 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                             IndicadorEnvioDiferido = "0",
                             IndicadorMontoGravado = "0",
                             TipoIngresos = "01",
-                            TipoPago = "1"
+                            TipoPago = "1",
+                            FechaLimitePago = DateTime.Now.AddDays(1).ToString("dd-MM-yyyy")
                         },
                         Emisor = new EmisorModel2
                         {

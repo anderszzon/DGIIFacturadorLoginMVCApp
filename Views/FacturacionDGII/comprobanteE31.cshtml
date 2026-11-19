@@ -51,12 +51,21 @@
                         class="form-control">
                 </select>
             </div>
+
             <div class="form-group col-md-3">
                 <label asp-for="ECF.Encabezado.IdDoc.TipoPago"></label>
-                <select asp-for="ECF.Encabezado.IdDoc.TipoPago" class="form-control">
+                <select asp-for="ECF.Encabezado.IdDoc.TipoPago" id="tipoPagoSelect" class="form-control">
                     <option value="1">Contado</option>
                     <option value="2">Crédito</option>
                 </select>
+            </div>
+
+            <div class="form-group col-md-3" id="grupoFechaLimitePago" style="display: none;">
+                <label asp-for="ECF.Encabezado.IdDoc.FechaLimitePago"></label>
+                <input asp-for="ECF.Encabezado.IdDoc.FechaLimitePago"
+                       id="fechaLimitePagoInput"
+                       data-default="@Model.ECF?.Encabezado?.IdDoc?.FechaLimitePago"
+                       class="form-control" />
             </div>
 
             <div class="form-group col-md-3">
@@ -67,7 +76,6 @@
                 <label asp-for="ECF.Encabezado.Emisor.FechaEmision"></label>
                 <input asp-for="ECF.Encabezado.Emisor.FechaEmision" class="form-control" />
             </div>
-
         </div>
     </div>
 
@@ -97,16 +105,6 @@
                 <label asp-for="ECF.Encabezado.Emisor.CorreoEmisor"></label>
                 <input asp-for="ECF.Encabezado.Emisor.CorreoEmisor" type="email" class="form-control" readonly />
             </div>
-            @*
-            <div class="form-group col-md-3">
-                <label asp-for="ECF.Encabezado.Emisor.NumeroFacturaInterna"></label>
-                <input asp-for="ECF.Encabezado.Emisor.NumeroFacturaInterna" class="form-control" readonly />
-            </div>
-            <div class="form-group col-md-3">
-                <label asp-for="ECF.Encabezado.Emisor.FechaEmision"></label>
-                <input asp-for="ECF.Encabezado.Emisor.FechaEmision" class="form-control" readonly />
-            </div> 
-            *@
         </div>
     </div>
 
@@ -263,12 +261,6 @@
                     </div>
                     <div class="card-body row">
                         <input type="hidden" asp-for="ECF.DetallesItems.Item[i].NumeroLinea" value="@(i + 1)" class="item-numero-linea" />
-@* 
-                        @if (monedaActiva != "DOP")
-                        {
-                            <input type="hidden" asp-for="ECF.DetallesItems.Item[i].OtraMonedaDetalle.PrecioOtraMoneda" class="item-precio-otra" value="0.00" />
-                            <input type="hidden" asp-for="ECF.DetallesItems.Item[i].OtraMonedaDetalle.MontoItemOtraMoneda" class="item-monto-otra" value="0.00" />
-                        } *@
 
                         <div class="form-group col-md-3">
                             <label>Código del Ítem</label>
@@ -348,6 +340,37 @@
             return tasa > 0 ? tasa : 1;
         }
 
+        function toggleFechaLimitePago() {
+            const tipoPagoSelect = document.getElementById('tipoPagoSelect');
+            const grupoFechaLimite = document.getElementById('grupoFechaLimitePago');
+            const inputFechaLimite = document.getElementById('fechaLimitePagoInput');
+
+            if (!tipoPagoSelect || !grupoFechaLimite || !inputFechaLimite) return;
+
+            if (tipoPagoSelect.value === '2') {
+                grupoFechaLimite.style.display = 'block';
+                inputFechaLimite.required = true;
+
+                if (!inputFechaLimite.value.trim()) {
+                    const fechaModelo = inputFechaLimite.getAttribute('data-default');
+                    if (fechaModelo) {
+                        inputFechaLimite.value = fechaModelo;
+                    } else {
+                        const manana = new Date();
+                        manana.setDate(manana.getDate() + 1);
+                        const dd = String(manana.getDate()).padStart(2, '0');
+                        const mm = String(manana.getMonth() + 1).padStart(2, '0');
+                        const yyyy = manana.getFullYear();
+                        inputFechaLimite.value = `${dd}-${mm}-${yyyy}`;
+                    }
+                }
+            } else {
+                grupoFechaLimite.style.display = 'none';
+                inputFechaLimite.required = false;
+                inputFechaLimite.value = '';
+            }
+        }
+
         function calcularTotalesE31() {
             let subtotalMonedaSeleccionada = 0;
             const tasaITBIS18 = 0.18;
@@ -410,6 +433,13 @@
             const container = document.getElementById('itemsContainer');
             const addBtn = document.getElementById('addItemBtn');
             const form = document.getElementById('facturaForm');
+            const tipoPagoSelect = document.getElementById('tipoPagoSelect');
+
+            // Control en tiempo real de TipoPago -> FechaLimitePago
+            if (tipoPagoSelect) {
+                tipoPagoSelect.addEventListener('change', toggleFechaLimitePago);
+                toggleFechaLimitePago();
+            }
 
             calcularTotalesE31();
 

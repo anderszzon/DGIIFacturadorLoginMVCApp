@@ -82,6 +82,8 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public string IndicadorMontoGravado { get; set; }
         public string TipoIngresos { get; set; }
         public string TipoPago { get; set; }
+        public string FechaLimitePago { get; set; }
+
     }
 
     public class TablaFormasPago2
