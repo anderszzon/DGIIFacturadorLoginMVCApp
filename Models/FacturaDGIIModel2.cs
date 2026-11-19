@@ -173,7 +173,7 @@ namespace DGIIFacturadorLoginMVCApp.Models
     public class ItemModel2
     {
         public string NumeroLinea { get; set; }
-        public TablaCodigosItem7 TablaCodigosItem { get; set; }
+        public TablaCodigosItem2 TablaCodigosItem { get; set; }
 
         public string IndicadorFacturacion { get; set; }
         public string NombreItem { get; set; }
@@ -194,6 +194,19 @@ namespace DGIIFacturadorLoginMVCApp.Models
 
 
     }
+
+    public class TablaCodigosItem2
+    {
+        public List<CodigosItem2> CodigosItem { get; set; }
+    }
+
+    public class CodigosItem2
+    {
+        public string TipoCodigo { get; set; }
+        public string CodigoItem { get; set; }
+
+    }
+
 
     public class TablaSubDescuento2
     {

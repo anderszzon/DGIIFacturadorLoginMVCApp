@@ -330,14 +330,17 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                     for (int i = 0; i < 5; i++)
                     {
-                        string content = i == 0 ? linea.CodigoItem :
-                                         i == 1 ? linea.NombreItem :
-                                         i == 2 ? Convert.ToDecimal(linea.CantidadItem).ToString("N2") :
-                                         i == 3 ? precioMostrar.ToString("N2") :
-                                                  montoMostrar.ToString("N2");
+                        string content = i switch
+                        {
+                            0 => linea.CodigoItem,
+                            1 => linea.NombreItem,
+                            2 => Convert.ToDecimal(linea.CantidadItem).ToString("N2"),
+                            3 => precioMostrar.ToString("N2"),
+                            _ => montoMostrar.ToString("N2")
+                        };
 
                         Cell dataCell = new Cell()
-                            .Add(new Paragraph(content))
+                            .Add(new Paragraph(content ?? string.Empty))
                             .SetBorderTop(Border.NO_BORDER)
                             .SetBorderBottom(Border.NO_BORDER);
 
@@ -577,88 +580,89 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 };
 
-                var registro = new FacturasDGII
-                {
-                    TipoeCF = model?.ECF?.Encabezado?.IdDoc?.TipoeCF,
-                    ENCF = model?.ECF?.Encabezado?.IdDoc?.eNCF,
-                    FechaVencimientoSecuencia = model?.ECF?.Encabezado?.IdDoc?.FechaVencimientoSecuencia,
-                    TipoPago = model?.ECF?.Encabezado?.IdDoc?.TipoPago,
-                    IndicadorEnvioDiferido = model?.ECF?.Encabezado?.IdDoc?.IndicadorEnvioDiferido,
-                    IndicadorMontoGravado = model?.ECF?.Encabezado?.IdDoc?.IndicadorMontoGravado,
-                    TipoIngresos = model?.ECF?.Encabezado?.IdDoc?.TipoIngresos,
-
-                    RNCEmisor = model?.ECF?.Encabezado?.Emisor?.RNCEmisor,
-                    RazonSocialEmisor = model?.ECF?.Encabezado?.Emisor?.RazonSocialEmisor,
-                    NombreComercial = model?.ECF?.Encabezado?.Emisor?.NombreComercial,
-                    DireccionEmisor = model?.ECF?.Encabezado?.Emisor?.DireccionEmisor,
-                    Municipio = model?.ECF?.Encabezado?.Emisor?.Municipio,
-                    Provincia = model?.ECF?.Encabezado?.Emisor?.Provincia,
-                    CorreoEmisor = model?.ECF?.Encabezado?.Emisor?.CorreoEmisor,
-                    WebSite = model?.ECF?.Encabezado?.Emisor?.WebSite,
-                    CodigoVendedor = model?.ECF?.Encabezado?.Emisor?.CodigoVendedor,
-                    NumeroFacturaInterna = model?.ECF?.Encabezado?.Emisor?.NumeroFacturaInterna,
-                    NumeroPedidoInterno = model?.ECF?.Encabezado?.Emisor?.NumeroPedidoInterno,
-                    ZonaVenta = model?.ECF?.Encabezado?.Emisor?.ZonaVenta,
-                    FechaEmision = model?.ECF?.Encabezado?.Emisor?.FechaEmision,
-
-                    RNCComprador = model?.ECF?.Encabezado?.Comprador?.RNCComprador,
-                    RazonSocialComprador = model?.ECF?.Encabezado?.Comprador?.RazonSocialComprador,
-                    ContactoComprador = model?.ECF?.Encabezado?.Comprador?.ContactoComprador,
-                    CorreoComprador = model?.ECF?.Encabezado?.Comprador?.CorreoComprador,
-                    DireccionComprador = model?.ECF?.Encabezado?.Comprador?.DireccionComprador,
-                    MunicipioComprador = model?.ECF?.Encabezado?.Comprador?.MunicipioComprador,
-                    ProvinciaComprador = model?.ECF?.Encabezado?.Comprador?.ProvinciaComprador,
-                    FechaEntrega = model?.ECF?.Encabezado?.Comprador?.FechaEntrega,
-                    FechaOrdenCompra = model?.ECF?.Encabezado?.Comprador?.FechaOrdenCompra,
-                    NumeroOrdenCompra = model?.ECF?.Encabezado?.Comprador?.NumeroOrdenCompra,
-                    CodigoInternoComprador = model?.ECF?.Encabezado?.Comprador?.CodigoInternoComprador,
-
-                    MontoGravadoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
-                    MontoGravadoI1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoI1 ?? "0"),
-                    ITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.ITBIS1 ?? "0"),
-                    TotalITBIS = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS ?? "0"),
-                    TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
-                    MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
-
-                    NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
-
-                    XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
-
-                    FechaHoraFirma = model?.ECF?.FechaHoraFirma,
-                    FechaRegistro = DateTime.Now
-                };
-
-
-                _context.FacturasDGII.Add(registro);
-                _context.SaveChanges();
-
-                respuesta.FacturaId = registro.Id;
-
-                if (model?.ECF?.DetallesItems?.Item != null)
-                {
-                    foreach (var item in model.ECF.DetallesItems.Item)
-                    {
-                        var detalle = new ItemFactura
-                        {
-
-                            FacturaId = registro.Id,
-                            NumeroLinea = item.NumeroLinea,
-                            IndicadorFacturacion = item.IndicadorFacturacion,
-                            NombreItem = item.NombreItem,
-                            IndicadorBienoServicio = item.IndicadorBienoServicio,
-                            CantidadItem = Convert.ToDecimal(item.CantidadItem ?? "0"),
-                            UnidadMedida = item.UnidadMedida,
-                            PrecioUnitarioItem = Convert.ToDecimal(item.PrecioUnitarioItem ?? "0"),
-                            MontoItem = Convert.ToDecimal(item.MontoItem ?? "0")
-                        };
-
-                        _context.ItemsFactura.Add(detalle);
-                    }
-                }
-                _context.SaveChanges();
-
                 if (respuesta.CodigoRespuesta == "1")
                 {
+                    var registro = new FacturasDGII
+                    {
+                        TipoeCF = model?.ECF?.Encabezado?.IdDoc?.TipoeCF,
+                        ENCF = model?.ECF?.Encabezado?.IdDoc?.eNCF,
+                        FechaVencimientoSecuencia = model?.ECF?.Encabezado?.IdDoc?.FechaVencimientoSecuencia,
+                        TipoPago = model?.ECF?.Encabezado?.IdDoc?.TipoPago,
+                        IndicadorEnvioDiferido = model?.ECF?.Encabezado?.IdDoc?.IndicadorEnvioDiferido,
+                        IndicadorMontoGravado = model?.ECF?.Encabezado?.IdDoc?.IndicadorMontoGravado,
+                        TipoIngresos = model?.ECF?.Encabezado?.IdDoc?.TipoIngresos,
+
+                        RNCEmisor = model?.ECF?.Encabezado?.Emisor?.RNCEmisor,
+                        RazonSocialEmisor = model?.ECF?.Encabezado?.Emisor?.RazonSocialEmisor,
+                        NombreComercial = model?.ECF?.Encabezado?.Emisor?.NombreComercial,
+                        DireccionEmisor = model?.ECF?.Encabezado?.Emisor?.DireccionEmisor,
+                        Municipio = model?.ECF?.Encabezado?.Emisor?.Municipio,
+                        Provincia = model?.ECF?.Encabezado?.Emisor?.Provincia,
+                        CorreoEmisor = model?.ECF?.Encabezado?.Emisor?.CorreoEmisor,
+                        WebSite = model?.ECF?.Encabezado?.Emisor?.WebSite,
+                        CodigoVendedor = model?.ECF?.Encabezado?.Emisor?.CodigoVendedor,
+                        NumeroFacturaInterna = model?.ECF?.Encabezado?.Emisor?.NumeroFacturaInterna,
+                        NumeroPedidoInterno = model?.ECF?.Encabezado?.Emisor?.NumeroPedidoInterno,
+                        ZonaVenta = model?.ECF?.Encabezado?.Emisor?.ZonaVenta,
+                        FechaEmision = model?.ECF?.Encabezado?.Emisor?.FechaEmision,
+
+                        RNCComprador = model?.ECF?.Encabezado?.Comprador?.RNCComprador,
+                        RazonSocialComprador = model?.ECF?.Encabezado?.Comprador?.RazonSocialComprador,
+                        ContactoComprador = model?.ECF?.Encabezado?.Comprador?.ContactoComprador,
+                        CorreoComprador = model?.ECF?.Encabezado?.Comprador?.CorreoComprador,
+                        DireccionComprador = model?.ECF?.Encabezado?.Comprador?.DireccionComprador,
+                        MunicipioComprador = model?.ECF?.Encabezado?.Comprador?.MunicipioComprador,
+                        ProvinciaComprador = model?.ECF?.Encabezado?.Comprador?.ProvinciaComprador,
+                        FechaEntrega = model?.ECF?.Encabezado?.Comprador?.FechaEntrega,
+                        FechaOrdenCompra = model?.ECF?.Encabezado?.Comprador?.FechaOrdenCompra,
+                        NumeroOrdenCompra = model?.ECF?.Encabezado?.Comprador?.NumeroOrdenCompra,
+                        CodigoInternoComprador = model?.ECF?.Encabezado?.Comprador?.CodigoInternoComprador,
+
+                        MontoGravadoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoTotal ?? "0"),
+                        MontoGravadoI1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoGravadoI1 ?? "0"),
+                        ITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.ITBIS1 ?? "0"),
+                        TotalITBIS = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS ?? "0"),
+                        TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
+                        MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
+
+                        NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado ?? "",
+
+                        XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
+
+                        FechaHoraFirma = model?.ECF?.FechaHoraFirma,
+                        FechaRegistro = DateTime.Now
+                    };
+
+
+                    _context.FacturasDGII.Add(registro);
+                    _context.SaveChanges();
+
+                    respuesta.FacturaId = registro.Id;
+
+                    if (model?.ECF?.DetallesItems?.Item != null)
+                    {
+                        foreach (var item in model.ECF.DetallesItems.Item)
+                        {
+                            var detalle = new ItemFactura
+                            {
+
+                                FacturaId = registro.Id,
+                                NumeroLinea = item.NumeroLinea,
+                                IndicadorFacturacion = item.IndicadorFacturacion,
+                                NombreItem = item.NombreItem,
+                                IndicadorBienoServicio = item.IndicadorBienoServicio,
+                                CantidadItem = Convert.ToDecimal(item.CantidadItem ?? "0"),
+                                UnidadMedida = item.UnidadMedida,
+                                PrecioUnitarioItem = Convert.ToDecimal(item.PrecioUnitarioItem ?? "0"),
+                                MontoItem = Convert.ToDecimal(item.MontoItem ?? "0"),
+                                CodigoItem = item.TablaCodigosItem?.CodigosItem?.FirstOrDefault()?.CodigoItem
+                            };
+
+                            _context.ItemsFactura.Add(detalle);
+                        }
+                    }
+                    _context.SaveChanges();
+
                     return View("verFactura", respuesta);
                 }
                 else
@@ -829,11 +833,11 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         new ItemModel2
                         {
                             NumeroLinea = "1",
-                            TablaCodigosItem = new TablaCodigosItem7
+                            TablaCodigosItem = new TablaCodigosItem2
                             {
-                                CodigosItem = new List<CodigosItem7>
+                                CodigosItem = new List<CodigosItem2>
                                 {
-                                    new CodigosItem7
+                                    new CodigosItem2
                                     {
                                         TipoCodigo = "Interno",
                                         CodigoItem = "1561"
@@ -851,11 +855,11 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         new ItemModel2
                         {
                             NumeroLinea = "2",
-                            TablaCodigosItem = new TablaCodigosItem7
+                            TablaCodigosItem = new TablaCodigosItem2
                             {
-                                CodigosItem = new List<CodigosItem7>
+                                CodigosItem = new List<CodigosItem2>
                                 {
-                                    new CodigosItem7
+                                    new CodigosItem2
                                     {
                                         TipoCodigo = "Interno",
                                         CodigoItem = "1561"
@@ -873,11 +877,11 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         new ItemModel2
                         {
                             NumeroLinea = "3",
-                            TablaCodigosItem = new TablaCodigosItem7
+                            TablaCodigosItem = new TablaCodigosItem2
                             {
-                                CodigosItem = new List<CodigosItem7>
+                                CodigosItem = new List<CodigosItem2>
                                 {
-                                    new CodigosItem7
+                                    new CodigosItem2
                                     {
                                         TipoCodigo = "Interno",
                                         CodigoItem = "1561"
@@ -895,11 +899,11 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         new ItemModel2
                         {
                             NumeroLinea = "4",
-                            TablaCodigosItem = new TablaCodigosItem7
+                            TablaCodigosItem = new TablaCodigosItem2
                             {
-                                CodigosItem = new List<CodigosItem7>
+                                CodigosItem = new List<CodigosItem2>
                                 {
-                                    new CodigosItem7
+                                    new CodigosItem2
                                     {
                                         TipoCodigo = "Interno",
                                         CodigoItem = "1561"
@@ -1010,11 +1014,11 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         new ItemModel2
                         {
                             NumeroLinea = "1",
-                            TablaCodigosItem = new TablaCodigosItem7
+                            TablaCodigosItem = new TablaCodigosItem2
                             {
-                                CodigosItem = new List<CodigosItem7>
+                                CodigosItem = new List<CodigosItem2>
                                 {
-                                    new CodigosItem7
+                                    new CodigosItem2
                                     {
                                         TipoCodigo = "Interno",
                                         CodigoItem = "1521"
@@ -1034,11 +1038,11 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         new ItemModel2
                         {
                             NumeroLinea = "2",
-                            TablaCodigosItem = new TablaCodigosItem7
+                            TablaCodigosItem = new TablaCodigosItem2
                             {
-                                CodigosItem = new List<CodigosItem7>
+                                CodigosItem = new List<CodigosItem2>
                                 {
-                                    new CodigosItem7
+                                    new CodigosItem2
                                     {
                                         TipoCodigo = "Interno",
                                         CodigoItem = "1521"
@@ -1058,11 +1062,11 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         new ItemModel2
                         {
                             NumeroLinea = "3",
-                            TablaCodigosItem = new TablaCodigosItem7
+                            TablaCodigosItem = new TablaCodigosItem2
                             {
-                                CodigosItem = new List<CodigosItem7>
+                                CodigosItem = new List<CodigosItem2>
                                 {
-                                    new CodigosItem7
+                                    new CodigosItem2
                                     {
                                         TipoCodigo = "Interno",
                                         CodigoItem = "1521"
@@ -1082,11 +1086,11 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         new ItemModel2
                         {
                             NumeroLinea = "4",
-                            TablaCodigosItem = new TablaCodigosItem7
+                            TablaCodigosItem = new TablaCodigosItem2
                             {
-                                CodigosItem = new List<CodigosItem7>
+                                CodigosItem = new List<CodigosItem2>
                                 {
-                                    new CodigosItem7
+                                    new CodigosItem2
                                     {
                                         TipoCodigo = "Interno",
                                         CodigoItem = "1521"
@@ -1106,11 +1110,11 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         new ItemModel2
                         {
                             NumeroLinea = "5",
-                            TablaCodigosItem = new TablaCodigosItem7
+                            TablaCodigosItem = new TablaCodigosItem2
                             {
-                                CodigosItem = new List<CodigosItem7>
+                                CodigosItem = new List<CodigosItem2>
                                 {
-                                    new CodigosItem7
+                                    new CodigosItem2
                                     {
                                         TipoCodigo = "Interno",
                                         CodigoItem = "1521"
@@ -1130,11 +1134,11 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         new ItemModel2
                         {
                             NumeroLinea = "6",
-                            TablaCodigosItem = new TablaCodigosItem7
+                            TablaCodigosItem = new TablaCodigosItem2
                             {
-                                CodigosItem = new List<CodigosItem7>
+                                CodigosItem = new List<CodigosItem2>
                                 {
-                                    new CodigosItem7
+                                    new CodigosItem2
                                     {
                                         TipoCodigo = "Interno",
                                         CodigoItem = "1521"
@@ -3719,7 +3723,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 _context.SaveChanges();
 
                 // Guardar en Session
-                HttpContext.Session.SetString("CodigoSeguridad",respuesta.CodigoSeguridad ?? string.Empty);
+                HttpContext.Session.SetString("CodigoSeguridad", respuesta.CodigoSeguridad ?? string.Empty);
 
                 if (respuesta.root == "ECF")
                 {
@@ -3865,7 +3869,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
         }
 
- 
+
         [HttpGet]
         public IActionResult comprobanteE320000000013ECF()
         {
@@ -5315,7 +5319,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                             TotalITBIS3 = "0.00",
                             MontoTotal = "2282785.36",
                             MontoPeriodo = "2282785.36",
-                            ValorPagar  = "2282785.36"
+                            ValorPagar = "2282785.36"
                         }
                     },
                     DetallesItems = new DetallesItemsModel6
@@ -6247,7 +6251,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                     TotalITBIS = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS ?? "0"),
                     TotalITBIS1 = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.TotalITBIS1 ?? "0"),
                     MontoTotal = Convert.ToDecimal(model?.ECF?.Encabezado?.Totales?.MontoTotal ?? "0"),
-                    
+
                     NCFModificado = model?.ECF?.InformacionReferencia?.NCFModificado,
 
                     XmlFacturaFirmada = respuesta.XmlFacturaFirmada,
@@ -8443,7 +8447,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                                 UnidadMedida = "43",
                                 PrecioUnitarioItem = "330.00",
                                 MontoItem = "4950.00"
-                            }                        
+                            }
                         }
                     }
                 }
@@ -10190,9 +10194,9 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                             NumeroReferencia = "121517",
                             PesoBruto = "25.00",
                             PesoNeto = "24.50",
-                            UnidadPesoBruto = "23",  
+                            UnidadPesoBruto = "23",
                             UnidadPesoNeto = "23",
-                            CantidadBulto = "1.00",    
+                            CantidadBulto = "1.00",
                             UnidadBulto = "6",
                             VolumenBulto = "1.00",
                             UnidadVolumen = "6"
@@ -10503,7 +10507,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                 return View(null);
             }
 
-        } 
+        }
 
         [HttpGet]
         public IActionResult comprobanteE450000000011()
@@ -10676,7 +10680,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             {
                 if (string.IsNullOrWhiteSpace(model.ECF.Encabezado.OtraMoneda.TipoMoneda))
                 {
-                    model.ECF.Encabezado.OtraMoneda = null;     
+                    model.ECF.Encabezado.OtraMoneda = null;
                 }
             }
 
@@ -13072,11 +13076,11 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                             new ItemModel2
                             {
                                 NumeroLinea = "1",
-                                TablaCodigosItem = new TablaCodigosItem7
+                                TablaCodigosItem = new TablaCodigosItem2
                                 {
-                                    CodigosItem = new List<CodigosItem7>
+                                    CodigosItem = new List<CodigosItem2>
                                     {
-                                        new CodigosItem7 { TipoCodigo = "Interno", CodigoItem = "" }
+                                        new CodigosItem2 { TipoCodigo = "Interno", CodigoItem = "" }
                                     }
                                 },
                                 IndicadorFacturacion = "1",
@@ -13352,9 +13356,9 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
                         codigo = sigValue.Substring(0, 6);
                     }
                 }
-                catch 
-                { 
-                
+                catch
+                {
+
                 }
 
                 codigosSeguridad[f.Id] = codigo;

@@ -114,6 +114,9 @@ namespace DGIIFacturadorLoginMVCApp.Models
     public class ItemModel1
     {
         public string NumeroLinea { get; set; }
+
+        public TablaCodigosItem7 TablaCodigosItem { get; set; }
+
         public string IndicadorFacturacion { get; set; }
         public string NombreItem { get; set; }
         public string IndicadorBienoServicio { get; set; }
