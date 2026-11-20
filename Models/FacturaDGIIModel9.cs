@@ -32,8 +32,25 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public VersionIdDocModel9 IdDoc { get; set; } = new VersionIdDocModel9();
         public EmisorModel9 Emisor { get; set; } = new EmisorModel9();
         public CompradorModel9 Comprador { get; set; } = new CompradorModel9();
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public InformacionesAdicionales9 InformacionesAdicionales { get; set; } = new InformacionesAdicionales9();
         public TotalesModel9 Totales { get; set; } = new TotalesModel9();
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public OtraMoneda9 OtraMoneda { get; set; }
+
+        public class OtraMoneda9
+        {
+            public string TipoMoneda { get; set; }
+            public string TipoCambio { get; set; }
+            public string MontoGravadoTotalOtraMoneda { get; set; }
+            public string MontoGravado1OtraMoneda { get; set; }
+            public string MontoExentoOtraMoneda { get; set; }
+            public string TotalITBISOtraMoneda { get; set; }
+            public string TotalITBIS1OtraMoneda { get; set; }
+            public string MontoTotalOtraMoneda { get; set; }
+        }
     }
 
     public class VersionIdDocModel9
@@ -137,6 +154,8 @@ namespace DGIIFacturadorLoginMVCApp.Models
     public class ItemModel9
     {
         public string NumeroLinea { get; set; }
+        public TablaCodigosItem9 TablaCodigosItem { get; set; }
+
         public string IndicadorFacturacion { get; set; }
         public string NombreItem { get; set; }
         public string IndicadorBienoServicio { get; set; }
@@ -148,6 +167,18 @@ namespace DGIIFacturadorLoginMVCApp.Models
         public string RecargoMonto { get; set; }
         public TablaSubRecargo9 TablaSubRecargo { get; set; }
         public string MontoItem { get; set; }
+
+    }
+
+    public class TablaCodigosItem9
+    {
+        public List<CodigosItem9> CodigosItem { get; set; }
+    }
+
+    public class CodigosItem9
+    {
+        public string TipoCodigo { get; set; }
+        public string CodigoItem { get; set; }
 
     }
 
