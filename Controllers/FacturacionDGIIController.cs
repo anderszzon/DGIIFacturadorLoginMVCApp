@@ -317,7 +317,7 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
                 for (int i = 0; i < 5; i++)
                 {
-                    string titulo = i == 0 ? "ITEM" :
+                    string titulo = i == 0 ? "CÓDIGO" :
                                     i == 1 ? "DESCRIPCIÓN" :
                                     i == 2 ? "CANTIDAD" :
                                     i == 3 ? "PRECIO" : "MONTO";
