@@ -2,9 +2,7 @@
 @model FacturaDGIIModel9
 
 @{
-    string monedaActiva = string.IsNullOrWhiteSpace(ViewBag.TipoMonedaActiva?.ToString())
-        ? "DOP"
-        : ViewBag.TipoMonedaActiva.ToString().Trim().ToUpper();
+    string monedaActiva = ViewBag.TipoMonedaActiva?.ToString()?.Trim().ToUpper();
 }
 
 <form asp-action="comprobanteE34Estandar" method="post" id="facturaForm">
