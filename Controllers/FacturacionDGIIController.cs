@@ -13722,6 +13722,48 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
             return RedirectToAction(nameof(ConfigMoneda));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> BuscarComprobanteOrigen(string encf)
+        {
+            if (string.IsNullOrWhiteSpace(encf))
+                return Json(new { ok = false, mensaje = "Ingrese un eNCF válido." });
+
+            encf = encf.Trim().ToUpper();
+
+            if (encf.StartsWith("E33") || encf.StartsWith("E34"))
+                return Json(new { ok = false, mensaje = "No se puede aplicar una Nota de Crédito sobre otro E33 o E34." });
+
+            var factura = await _context.FacturasDGII
+                .Include(f => f.Items) 
+                .FirstOrDefaultAsync(f => f.ENCF == encf);
+
+            if (factura == null)
+                return Json(new { ok = false, mensaje = $"No se encontró el comprobante {encf}." });
+
+            return Json(new
+            {
+                ok = true,
+                encf = factura.ENCF,
+                fechaEmision = factura.FechaEmision, // formato dd-MM-yyyy
+                rncComprador = factura.RNCComprador,
+                razonSocialComprador = factura.RazonSocialComprador,
+                direccionComprador = factura.DireccionComprador,
+                tipoIngresos = factura.TipoIngresos,
+                tipoPago = factura.TipoPago,
+                montoTotal = factura.MontoTotal,
+                items = factura.Items.Select((it, idx) => new
+                {
+                    numeroLinea = idx + 1,
+                    nombreItem = it.NombreItem,
+                    indicadorBienoServicio = it.IndicadorBienoServicio,
+                    indicadorFacturacion = it.IndicadorFacturacion,
+                    cantidadItem = it.CantidadItem,
+                    unidadMedida = it.UnidadMedida,
+                    precioUnitarioItem = it.PrecioUnitarioItem
+                })
+            });
+        }
+
         #endregion
 
     }

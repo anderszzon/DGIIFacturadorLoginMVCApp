@@ -6,6 +6,17 @@
 }
 
 <form asp-action="comprobanteE34Estandar" method="post" id="facturaForm">
+
+    <div class="col-md-12 mb-3">
+        <div class="input-group">
+            <input type="text" id="buscarNcfInput" class="form-control" placeholder="Digite el eNCF a modificar" />
+            <div class="input-group-append">
+                <button type="button" id="btnCargarFactura" class="btn btn-info">Buscar Comprobante</button>
+            </div>
+        </div>
+        <small id="estadoBusquedaNcf" class="form-text text-muted"></small>
+    </div>
+
     <!-- Sección de datos generales -->
     <div class="card mb-4">
         <div class="card-header bg-primary text-white">
@@ -554,6 +565,115 @@
                 container.insertAdjacentHTML('beforeend', newRowHtml);
                 calcularTotalesE34();
             });
+
+
+        let itemsOriginalesCache = [];
+        let montoTotalOriginal = 0;
+
+        document.getElementById('btnCargarFactura')?.addEventListener('click', async function () {
+            const ncf = document.getElementById('buscarNcfInput').value.trim().toUpperCase();
+            const estado = document.getElementById('estadoBusquedaNcf');
+            // if (!ncf) return;
+
+            estado.textContent = 'Buscando comprobante...';
+            estado.className = 'form-text text-info';
+
+            try {
+                const resp = await fetch(`/FacturacionDGII/BuscarComprobanteOrigen?encf=${encodeURIComponent(ncf)}`);
+                const data = await resp.json();
+
+                if (!data.ok) {
+                    estado.textContent = data.mensaje;
+                    estado.className = 'form-text text-danger fw-bold';
+                    return;
+                }
+
+                // 1. Llenar Referencia
+                document.querySelector('[name="ECF.InformacionReferencia.NCFModificado"]').value = data.encf;
+                const inputFechaMod = document.getElementById('fechaNCFModificadoInput');
+                inputFechaMod.value = data.fechaEmision;
+                inputFechaMod.readOnly = true;
+
+                // 2. Llenar Comprador
+                document.querySelector('[name="ECF.Encabezado.Comprador.RNCComprador"]').value = data.rncComprador || '';
+                document.querySelector('[name="ECF.Encabezado.Comprador.RazonSocialComprador"]').value = data.razonSocialComprador || '';
+                document.querySelector('[name="ECF.Encabezado.Comprador.DireccionComprador"]').value = data.direccionComprador || '';
+
+                // 3. Evaluar regla de 30 días automáticamente
+                evaluarIndicadorNotaCredito();
+
+                // 4. Guardar copia original y reconstruir ítems
+                itemsOriginalesCache = data.items || [];
+                montoTotalOriginal = parseFloat(data.montoTotal) || 0;
+                renderizarItemsDesdeOrigen(itemsOriginalesCache);
+
+                // 5. Aplicar reglas del Código de Modificación seleccionado
+                aplicarReglaCodigoModificacion();
+
+                estado.textContent = `Comprobante ${data.encf} cargado correctamente.`;
+                estado.className = 'form-text text-success fw-bold';
+            } catch (err) {
+                estado.textContent = 'Error al consultar el comprobante.';
+                estado.className = 'form-text text-danger';
+            }
+        });
+
+        function renderizarItemsDesdeOrigen(listaItems) {
+            const container = document.getElementById('itemsContainer');
+            container.innerHTML = '';
+
+            listaItems.forEach((item, idx) => {
+                const codigoFormateado = generarCodigoItem(idx + 1);
+                const rowHtml = `
+                    <div class="item-row card mb-3">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5>Item ${idx + 1}</h5>
+                            <button type="button" class="btn btn-danger btn-sm remove-item">Eliminar</button>
+                        </div>
+                        <div class="card-body row">
+                            <input type="hidden" name="ECF.DetallesItems.Item[${idx}].NumeroLinea" value="${idx + 1}" class="item-numero-linea" />
+                            <div class="form-group col-md-3">
+                                <label>Código del Ítem</label>
+                                <input name="ECF.DetallesItems.Item[${idx}].TablaCodigosItem.CodigosItem[0].CodigoItem" class="form-control item-codigo" value="${codigoFormateado}" readonly />
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Nombre del Item</label>
+                                <input name="ECF.DetallesItems.Item[${idx}].NombreItem" class="form-control item-name" value="${item.nombreItem}" required />
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label>Tipo</label>
+                                <select name="ECF.DetallesItems.Item[${idx}].IndicadorBienoServicio" class="form-control">
+                                    <option value="1" ${item.indicadorBienoServicio == '1' ? 'selected' : ''}>Bien</option>
+                                    <option value="2" ${item.indicadorBienoServicio == '2' ? 'selected' : ''}>Servicio</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-1 border border-danger p-2 rounded bg-light">
+                                <label class="text-danger fw-bold">Ind. Fact.</label>
+                                <input name="ECF.DetallesItems.Item[${idx}].IndicadorFacturacion" class="form-control border-danger" value="${item.indicadorFacturacion || '1'}" readonly />
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label>Cantidad Item</label>
+                                <input name="ECF.DetallesItems.Item[${idx}].CantidadItem" type="number" step="0.01" min="0.01" class="form-control item-quantity" value="${parseFloat(item.cantidadItem).toFixed(2)}" required />
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label>Unidad</label>
+                                <input name="ECF.DetallesItems.Item[${idx}].UnidadMedida" type="number" step="0.01" class="form-control" value="${item.unidadMedida || '43'}" readonly />
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label>Precio Unitario</label>
+                                <input name="ECF.DetallesItems.Item[${idx}].PrecioUnitarioItem" type="number" step="0.01" min="0" class="form-control item-price" value="${parseFloat(item.precioUnitarioItem).toFixed(2)}" required />
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label>Total</label>
+                                <input name="ECF.DetallesItems.Item[${idx}].MontoItem" type="number" step="0.01" class="form-control item-total" readonly />
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', rowHtml);
+            });
+        }
+
 
             // Eliminar Ítem y reindexar
             container.addEventListener('click', function (e) {
