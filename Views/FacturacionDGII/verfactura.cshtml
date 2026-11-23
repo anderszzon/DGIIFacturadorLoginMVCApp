@@ -31,7 +31,7 @@
                         </tr>
                         <tr>
                             <th scope="row">Estado Respuesta</th>
-                            <td><span class="badge bg-success text-white">@Model.EstadoRespuesta</span> (Código: @Model.CodigoRespuesta)</td>
+                            <td><span class="badge bg-success text-white">@Model.EstadoRespuesta</span></td>
                         </tr>
                         <tr>
                             <th scope="row">Código de Seguridad</th>
@@ -47,7 +47,7 @@
 
                 <!-- Sección Agrupada: Trazabilidad Técnica en Popup -->
                 <div class="mt-4 pt-3 border-top">
-                    <h6 class="text-muted mb-3">Trazabilidad Técnica (XML / JSON / Tokens)</h6>
+                    <h6 class="text-muted mb-3">Trazabilidad Técnica</h6>
                     <div class="d-flex flex-wrap">
                         @if (!string.IsNullOrWhiteSpace(Model.XmlSemilla))
                         {
@@ -69,7 +69,7 @@
                         }
                         @if (!string.IsNullOrWhiteSpace(Model.JsonInvoice))
                         {
-                            <button type="button" class="btn btn-outline-info btn-sm mr-2 mb-2 btn-ver-detalle"
+                            <button type="button" class="btn btn-outline-dark btn-sm mr-2 mb-2 btn-ver-detalle"
                                     data-titulo="JSON Invoice (@Model.ENCF)"
                                     data-target="raw-json-invoice">
                                 Ver JSON Invoice
@@ -78,7 +78,7 @@
                         }
                         @if (!string.IsNullOrWhiteSpace(Model.Token))
                         {
-                            <button type="button" class="btn btn-outline-warning btn-sm mr-2 mb-2 btn-ver-detalle"
+                            <button type="button" class="btn btn-outline-dark btn-sm mr-2 mb-2 btn-ver-detalle"
                                     data-titulo="Token de Autenticación DGII"
                                     data-target="raw-token">
                                 Ver Token
@@ -87,7 +87,7 @@
                         }
                         @if (!string.IsNullOrWhiteSpace(Model.XmlFactura))
                         {
-                            <button type="button" class="btn btn-outline-secondary btn-sm mr-2 mb-2 btn-ver-detalle"
+                            <button type="button" class="btn btn-outline-dark btn-sm mr-2 mb-2 btn-ver-detalle"
                                     data-titulo="XML Factura (@Model.ENCF)"
                                     data-target="raw-xml-factura">
                                 Ver XML Factura
