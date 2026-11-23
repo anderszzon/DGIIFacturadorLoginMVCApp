@@ -67,15 +67,6 @@
                             </button>
                             <textarea id="raw-semilla-firmada" class="d-none">@Model.XmlSemillaFirmada</textarea>
                         }
-                        @if (!string.IsNullOrWhiteSpace(Model.JsonInvoice))
-                        {
-                            <button type="button" class="btn btn-outline-dark btn-sm mr-2 mb-2 btn-ver-detalle"
-                                    data-titulo="JSON Invoice (@Model.ENCF)"
-                                    data-target="raw-json-invoice">
-                                Ver JSON Invoice
-                            </button>
-                            <textarea id="raw-json-invoice" class="d-none">@Model.JsonInvoice</textarea>
-                        }
                         @if (!string.IsNullOrWhiteSpace(Model.Token))
                         {
                             <button type="button" class="btn btn-outline-dark btn-sm mr-2 mb-2 btn-ver-detalle"
@@ -84,6 +75,15 @@
                                 Ver Token
                             </button>
                             <textarea id="raw-token" class="d-none">@Model.Token</textarea>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(Model.JsonInvoice))
+                        {
+                            <button type="button" class="btn btn-outline-dark btn-sm mr-2 mb-2 btn-ver-detalle"
+                                    data-titulo="JSON Invoice (@Model.ENCF)"
+                                    data-target="raw-json-invoice">
+                                Ver JSON Invoice
+                            </button>
+                            <textarea id="raw-json-invoice" class="d-none">@Model.JsonInvoice</textarea>
                         }
                         @if (!string.IsNullOrWhiteSpace(Model.XmlFactura))
                         {
