@@ -51,6 +51,10 @@ namespace DGIIFacturadorLoginMVCApp.Controllers
 
         public ActionResult RegistrarComprobante()
         {
+            if (_env.IsProduction())
+            {
+                return NotFound();
+            }
             return View();
         }
 

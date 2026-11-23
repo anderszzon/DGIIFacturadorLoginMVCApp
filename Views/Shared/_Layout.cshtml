@@ -1,6 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Hosting
+@using Microsoft.Extensions.Hosting
+@inject IWebHostEnvironment Env
+
+<!DOCTYPE html>
 <html lang="en">
-<head>
+@* <span>Ambiente actual: @Env.EnvironmentName</span>*@
+ <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] MTP</title>
@@ -32,9 +37,14 @@
                             </li> 
                             *@
 
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="FacturacionDGII" asp-action="RegistrarComprobante">Archivados</a>
-                            </li>
+
+                            @if (!Env.IsProduction())
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="FacturacionDGII" asp-action="RegistrarComprobante">Archivados</a>
+                                </li>
+                            }
+
 
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="FacturacionDGII" asp-action="RegistrarComprobantesDGII">Registrar Comprobante</a>
