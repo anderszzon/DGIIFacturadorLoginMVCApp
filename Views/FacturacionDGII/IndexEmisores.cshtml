@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<EmisorInfo>
 
 @{
-    ViewData["Title"] = "Emisores Registrados";
+    ViewData["Title"] = "Emisores registrados";
 }
 
-<div class="d-flex justify-content-between align-items-center mb-3">
+@* <div class="d-flex justify-content-between align-items-center mb-3">
     <h2>Emisores Registrados</h2>
     <a asp-action="RegistrarEmisor" class="btn btn-primary">Registrar Nuevo Emisor</a>
-</div>
+</div> *@
 
 @if (TempData["SuccessMessage"] != null)
 {
