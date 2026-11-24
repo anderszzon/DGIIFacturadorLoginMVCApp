@@ -5,10 +5,11 @@
 }
 
 <div class="container mt-4">
-    <h2>Configuración de Facturación Electrónica</h2>
-    <p>Ambiente activo actual: <strong>@ConfigService.Ambient.ToUpper()</strong></p>
 
-    <form asp-action="ConfiguracionAmbiente" method="post" class="col-md-4">
+    <h2>Facturación Electronica</h2>
+    <p> Ambiente activo: <strong>@ConfigService.Ambient.ToUpper()</strong></p>
+
+@*     <form asp-action="ConfiguracionAmbiente" method="post" class="col-md-4">
         <div class="mb-3">
             <label class="form-label">Selecciona el Ambiente:</label>
             <select name="nuevoAmbiente" class="form-select">
@@ -19,5 +20,6 @@
             </select>
         </div>
         <button type="submit" class="btn btn-primary">Aplicar Cambio</button>
-    </form>
+    </form> *@
+
 </div>
